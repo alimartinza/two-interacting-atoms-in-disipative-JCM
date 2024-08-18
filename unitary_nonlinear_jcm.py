@@ -201,26 +201,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     def pr(estado):
         return estado.unit()*estado.unit().dag()
 
-
-    
-    # PARA HACER LA EVOLUCION NO UNITARIA, SI CONSIDERAMOS QUE TENEMOS UNA ECUACION MAESTRA DE TIPO LINBLAD,
-    # ENTONCES LO UNICO QUE TENEMOS QUE HACER ES USAR EL SOLVER mesolve(H, psi0,t,[operadores de linblad],[expect operators])
-
-    #FIJAMOS LOS PARAMETROS QUE VAMOS A USAR A LOS VALORES QUE QUERRAMOS
-
     '''---Hamiltoniano---'''
-    #ESCRIBIMOS EL HAMILTONIANO DE NUESTRO MODELO UTILIZANDO TODO LO QUE DEFINIMOS ANTES, y tambien vamos a visualizarlo
-    #usando una funcion de QuTip que nos permite representar la matriz con un histograma. El orden de la base es 
-    #cualquier cosa por eso no tiene mucho sentido mirarla si no le ponemos bien los labels.
 
     H=w_0*n*(h(n)-1)+d/2*(sz1+sz2)+g*((sm1+sm2)*f(n)*a.dag()+(sp1+sp2)*a*f(n)) +2*k*(sm1*sp2+sp1*sm2)+J*sz1*sz2
-
-    # '''---Steady states---'''
-
-    # rho_ss = steadystate(H, [np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)])
-    # hinton(rho_ss)
-
-    # plt.show()
 
     '''---Simulacion numerica---'''
 
@@ -228,7 +211,6 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
 
     sol=mesolve(H,psi0,t,[],progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
 
-    
     #Hacemos un array de las coherencias y las completamos con el for
     coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
                             '1,2':[],'1,3':[],'1,4':[],'1,5':[],'1,6':[],'1,7':[],'1,8':[],'1,9':[],'1,10':[],'1,11':[],
@@ -243,20 +225,18 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
                                                                                                     '10,11':[]}
     
     ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2)','pr(ge2)',
-          'pr(ee1)'] #NOMBRES PARA EL LEGEND DEL PLOT
+          'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
     ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(ge0-eg0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2),pr(ge2),pr(ee1),
-           0.5*(sz1+sz2),sz1,sz2,sx1,sx2]
+           0.5*(sz1+sz2),sx1,sx2]
     ops_expect=np.empty((len(ops),len(sol.states)))
     for i in range(len(sol.states)): 
         for j in range(len(ops)):
             ops_expect[j][i]=expect(ops[j],sol.states[i])
 
     for i in range(len(sol.states)):
-
         for j in range(12): 
             for l in range(j+1,12):
                 coherencias[str(j)+','+str(l)].append(sol.states[i][j]*sol.states[i][l])
-    print('despues del loop')
 
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     estados=np.empty_like(sol.states)
@@ -283,7 +263,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         ax[n_ax].set_xlabel(xlabel)
         ax[n_ax].set_ylabel(ylabel)
 
-    def plot_coherencias(n:int,n_ax:int,xlabel='t',ylabel='Abs(Coh)'):
+    def plot_coherencias(n:int,n_ax:int,xlabel='gt',ylabel='Abs(Coh)'):
         '''
         Parametros
         - n: numero del vector de la base del cual se quieren graficar las coherencias
@@ -299,7 +279,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         else:
             for key in coherencias.keys():
                 if key.split(',')[0].startswith(str(n)) or key.split(',')[1].startswith(str(n)):
-                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})'
+                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})')
                         i+=1
         ax[n_ax].legend()
         # ax[n_ax].set_xlabel(xlabel)
@@ -323,7 +303,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig.suptitle('N=0')
     ax[0].plot(g*t,ops_expect[0],label=ops_nomb[0],color='black')
     plot_coherencias(9,0) #N=0
-    # plt.savefig(f'0\{figname}',dpi=100)
+    ax[0].set_xlabel('gt')
 
     if save_plot==True:
         plt.savefig(f'0\{figname}',dpi=100)
@@ -348,7 +328,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     ax[2].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
     ax[2].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
     ax[2].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
-    ax[2].set_xlabel('t')
+    ax[2].set_xlabel('gt')
     plot_coherencias(10,2) #N=1
     if plot_show==True:
         plt.show()
@@ -379,14 +359,14 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     ax[2].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
     ax[2].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
     ax[2].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
-    ax[2].set_xlabel('t')
-    plot_coherencias(6,2) #N=2
+    ax[2].set_xlabel('gt')
+    plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
 
     ax[3].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
     ax[3].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
     ax[3].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
     ax[3].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
-    ax[3].set_xlabel('t')
+    ax[3].set_xlabel('gt')
     plot_coherencias(11,3) #N=2
     if plot_show==True:
         plt.show()
@@ -506,7 +486,7 @@ J=0
 t_final=100000
 steps=250000
 psi0=[eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['ee0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+psi0_folder=['eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):
     folders=['0','1','2','3','pauli','entropia','entropia_spin-spin']
     for folder in folders:
