@@ -483,8 +483,8 @@ else:
     os.chdir(path)
 
 J=0
-t_final=100000
-steps=250000
+t_final=10000
+steps=25000
 psi0=[eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
 psi0_folder=['eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):

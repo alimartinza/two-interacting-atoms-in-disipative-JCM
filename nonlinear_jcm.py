@@ -249,7 +249,6 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
             c_help=np.zeros(len(sol.states),dtype='complex_')
             for i in range(len(sol.states)):
                 c_help[i]=sol.states[i][j][l]
-                print('hola')
                 coherencias[str(j)+','+str(l)].append(c_help[i])
 
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
@@ -498,8 +497,8 @@ else:
     os.chdir(path)
 
 J=0
-t_final=100000
-steps=250000
+t_final=10000
+steps=25000
 psi0=[eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
 psi0_folder=['ee0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):
