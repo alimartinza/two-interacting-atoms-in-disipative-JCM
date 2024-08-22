@@ -270,16 +270,16 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         -n_ax: en que ax queres graficar todas las coherencias
         
         Pensado para usarlo semimanualmente, usar un plt.plots() e ir poniendo esta funcion en cada lugar donde queremos graficar las coherencias'''
-        colors = plt.cm.jet(np.linspace(0,1,12))
+        colors = ['#000000','#000000','#000000','#ff7043','#000000','#000000','#000000','#000000','#000000','#1976d2','#4caf50','#000000'] #plt.cm.jet(np.linspace(0,1,12))
         i=0
         if n==1:
             for key in ['0,1','1,2','1,3','1,4','1,5','1,6','1,7','1,8','1,9','1,10','1,11']:
-                ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})'
+                ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i],label=f'C({key})')
                 i+=1
         else:
             for key in coherencias.keys():
                 if key.split(',')[0].startswith(str(n)) or key.split(',')[1].startswith(str(n)):
-                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})')
+                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i],label=f'C({key})')
                         i+=1
         ax[n_ax].legend()
         # ax[n_ax].set_xlabel(xlabel)
@@ -483,10 +483,10 @@ else:
     os.chdir(path)
 
 J=0
-t_final=10000
-steps=25000
-psi0=[eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+t_final=5000
+steps=10000
+psi0=[eg0]   #,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['eg0']    #,'eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):
     folders=['0','1','2','3','pauli','entropia','entropia_spin-spin']
     for folder in folders:
@@ -497,11 +497,11 @@ for psi0,psi0_folder in zip(psi0,psi0_folder):
     os.chdir(psi0_path)
     g=[0.001*w_0]
     for g in g:
-        p=0.0005*g
+        p=0.005*g
         k=0.1*g
         x=[0,1/4*g,0.5*g]
         for x in x:
-            d=[0,0.1*g,2*g]
+            d=[0,0.5*g,2*g]
             for d in d:
                 gamma=[0.1*g,2*g]
                 for gamma in gamma:
