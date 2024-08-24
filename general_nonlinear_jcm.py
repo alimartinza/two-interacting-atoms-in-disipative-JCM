@@ -5,6 +5,35 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import Colormap 
 import time
 import os
+import tkinter as tk
+from tkinter import messagebox
+
+def respuesta_si():
+    global disipation
+    disipation = True
+    root.destroy()
+
+def respuesta_no():
+    global disipation
+    disipation = False
+    root.destroy()
+
+# Crear la ventana principal
+root = tk.Tk()
+root.title("Disipacion")
+
+# Crear el mensaje y los botones
+label = tk.Label(root, text="Hacemos la simulacion con disipacion?", font=("Arial", 14))
+label.pack(pady=20)
+
+boton_si = tk.Button(root, text="Sí", command=respuesta_si, width=10)
+boton_si.pack(side="left", padx=20, pady=20)
+
+boton_no = tk.Button(root, text="No", command=respuesta_no, width=10)
+boton_no.pack(side="right", padx=20, pady=20)
+
+# Ejecutar la ventana
+root.mainloop()
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
@@ -50,8 +79,10 @@ w_0=1
 # p=0.005*g
 
 
+
 def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation=True,plot_show=False,save_plot=True):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
+
     def entropy_vn(rho):
         """
         Von-Neumann entropy of density matrix
@@ -200,36 +231,19 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     def pr(estado):
         return estado.unit()*estado.unit().dag()
 
-
-    proy=[[pr(gg0)],[pr(gg1),pr(eg0+ge0),pr(ge0-eg0)],[pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0)],[pr(eg2),pr(ge2),pr(ee1)]] #VECTOR CON LAS POBLACIONES QUE QUEREMOS MIRAR
-    nomb=[['pr(gg0)'],['pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)'],['pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)'],['pr(eg2)','pr(ge2)','pr(ee1)']] #NOMBRES PARA EL LEGEND DEL PLOT
-
-    # PARA HACER LA EVOLUCION NO UNITARIA, SI CONSIDERAMOS QUE TENEMOS UNA ECUACION MAESTRA DE TIPO LINBLAD,
-    # ENTONCES LO UNICO QUE TENEMOS QUE HACER ES USAR EL SOLVER mesolve(H, psi0,t,[operadores de linblad],[expect operators])
-
-    #FIJAMOS LOS PARAMETROS QUE VAMOS A USAR A LOS VALORES QUE QUERRAMOS
-
     '''---Hamiltoniano---'''
-    #ESCRIBIMOS EL HAMILTONIANO DE NUESTRO MODELO UTILIZANDO TODO LO QUE DEFINIMOS ANTES, y tambien vamos a visualizarlo
-    #usando una funcion de QuTip que nos permite representar la matriz con un histograma. El orden de la base es 
-    #cualquier cosa por eso no tiene mucho sentido mirarla si no le ponemos bien los labels.
 
     H=w_0*n*(h(n)-1)+d/2*(sz1+sz2)+g*((sm1+sm2)*f(n)*a.dag()+(sp1+sp2)*a*f(n)) +2*k*(sm1*sp2+sp1*sm2)+J*sz1*sz2
-
-    # '''---Steady states---'''
-
-    # rho_ss = steadystate(H, [np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)])
-    # hinton(rho_ss)
-
-    # plt.show()
 
     '''---Simulacion numerica---'''
 
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    if disipation:
+        l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+    elif not disipation:
+        l_ops=[]
 
-
-    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
-    sol=mesolve(H,psi0,t,c_ops=l_ops,e_ops=proy[0]+proy[1]+proy[2]+proy[3]+[0.5*(sz1+sz2),sz1,sz2,sx1,sx2],progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
+    sol=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
 
     #Hacemos un array de las coherencias y las completamos con el for
     coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
@@ -243,13 +257,20 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
                                                                                     '8,9':[],'8,10':[],'8,11':[],
                                                                                             '9,10':[],'9,11':[],
                                                                                                     '10,11':[]}
+    
+    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2)','pr(ge2)',
+          'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(ge0-eg0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2),pr(ge2),pr(ee1),
+           0.5*(sz1+sz2),sx1,sx2]
+    ops_expect=np.empty((len(ops),len(sol.states)))
+    for i in range(len(sol.states)): 
+        for j in range(len(ops)):
+            ops_expect[j][i]=expect(ops[j],sol.states[i])
 
-    for j in range(12): 
-        for l in range(j+1,12):
-            c_help=np.zeros(len(sol.states),dtype='complex_')
-            for i in range(len(sol.states)):
-                c_help[i]=sol.states[i][j][l]
-                coherencias[str(j)+','+str(l)].append(c_help[i])
+    for i in range(len(sol.states)):
+        for j in range(12): 
+            for l in range(j+1,12):
+                coherencias[str(j)+','+str(l)].append(sol.states[i][j]*sol.states[i][l])
 
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     estados=np.empty_like(sol.states)
@@ -276,23 +297,23 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         ax[n_ax].set_xlabel(xlabel)
         ax[n_ax].set_ylabel(ylabel)
 
-    def plot_coherencias(n:int,n_ax:int,xlabel='t',ylabel='Abs(Coh)'):
+    def plot_coherencias(n:int,n_ax:int,xlabel='gt',ylabel='Abs(Coh)'):
         '''
         Parametros
         - n: numero del vector de la base del cual se quieren graficar las coherencias
         -n_ax: en que ax queres graficar todas las coherencias
         
         Pensado para usarlo semimanualmente, usar un plt.plots() e ir poniendo esta funcion en cada lugar donde queremos graficar las coherencias'''
-        colors = plt.cm.jet(np.linspace(0,1,12))
+        colors = ['#000000','#000000','#000000','#ff7043','#000000','#000000','#000000','#000000','#000000','#1976d2','#4caf50','#000000'] #plt.cm.jet(np.linspace(0,1,12))
         i=0
         if n==1:
             for key in ['0,1','1,2','1,3','1,4','1,5','1,6','1,7','1,8','1,9','1,10','1,11']:
-                ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})'
+                ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i],label=f'C({key})')
                 i+=1
         else:
             for key in coherencias.keys():
                 if key.split(',')[0].startswith(str(n)) or key.split(',')[1].startswith(str(n)):
-                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i]) #,label=f'C({key})'
+                        ax[n_ax].plot(g*t,np.abs(coherencias[key]),linestyle='dashed',color=colors[i],label=f'C({key})')
                         i+=1
         ax[n_ax].legend()
         # ax[n_ax].set_xlabel(xlabel)
@@ -314,9 +335,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
     ax=[ax]
     fig.suptitle('N=0')
-    ax[0].plot(g*t,sol.expect[0],label=nomb[0][0],color='black')
+    ax[0].plot(g*t,ops_expect[0],label=ops_nomb[0],color='black')
     plot_coherencias(9,0) #N=0
-    # plt.savefig(f'0\{figname}',dpi=100)
+    ax[0].set_xlabel('gt')
 
     if save_plot==True:
         plt.savefig(f'0\{figname}',dpi=100)
@@ -330,18 +351,18 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     '''--- N=1 ---'''
     fig,ax=plt.subplots(3,1,figsize=(16, 9),sharex=True) 
     fig.suptitle('N=1')
-    ax[0].plot(g*t,sol.expect[1],label=nomb[1][0],color='black')
-    ax[0].plot(g*t,sol.expect[2],label=nomb[1][1],color='blue')
-    ax[0].plot(g*t,sol.expect[3],label=nomb[1][2],color='red')
+    ax[0].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
+    ax[0].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
+    ax[0].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
     plot_coherencias(3,0) #N=1
-    ax[1].plot(g*t,sol.expect[1],label=nomb[1][0],color='black')
-    ax[1].plot(g*t,sol.expect[2],label=nomb[1][1],color='blue')
-    ax[1].plot(g*t,sol.expect[3],label=nomb[1][2],color='red')
+    ax[1].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
+    ax[1].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
+    ax[1].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
     plot_coherencias(4,1) #N=1
-    ax[2].plot(g*t,sol.expect[1],label=nomb[1][0],color='black')
-    ax[2].plot(g*t,sol.expect[2],label=nomb[1][1],color='blue')
-    ax[2].plot(g*t,sol.expect[3],label=nomb[1][2],color='red')
-    ax[2].set_xlabel('t')
+    ax[2].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
+    ax[2].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
+    ax[2].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
+    ax[2].set_xlabel('gt')
     plot_coherencias(10,2) #N=1
     if plot_show==True:
         plt.show()
@@ -356,30 +377,30 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(2,2,figsize=(16, 9),tight_layout=True,sharex=True) 
     ax=[ax[0][0],ax[0][1],ax[1][0],ax[1][1]]
     fig.suptitle('N=2')
-    ax[0].plot(g*t,sol.expect[4],label=nomb[2][0],color='black')
-    ax[0].plot(g*t,sol.expect[5],label=nomb[2][1],color='blue')
-    ax[0].plot(g*t,sol.expect[6],label=nomb[2][2],color='red')
-    ax[0].plot(g*t,sol.expect[7],label=nomb[2][3],color='green')
+    ax[0].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
+    ax[0].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
+    ax[0].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
+    ax[0].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
     plot_coherencias(0,0) #N=2
 
-    ax[1].plot(g*t,sol.expect[4],label=nomb[2][0],color='black')
-    ax[1].plot(g*t,sol.expect[5],label=nomb[2][1],color='blue')
-    ax[1].plot(g*t,sol.expect[6],label=nomb[2][2],color='red')
-    ax[1].plot(g*t,sol.expect[7],label=nomb[2][3],color='green')
+    ax[1].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
+    ax[1].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
+    ax[1].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
+    ax[1].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
     plot_coherencias(5,1) #N=2
 
-    ax[2].plot(g*t,sol.expect[4],label=nomb[2][0],color='black')
-    ax[2].plot(g*t,sol.expect[5],label=nomb[2][1],color='blue')
-    ax[2].plot(g*t,sol.expect[6],label=nomb[2][2],color='red')
-    ax[2].plot(g*t,sol.expect[7],label=nomb[2][3],color='green')
-    ax[2].set_xlabel('t')
-    plot_coherencias(6,2) #N=2
+    ax[2].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
+    ax[2].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
+    ax[2].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
+    ax[2].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[2].set_xlabel('gt')
+    plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
 
-    ax[3].plot(g*t,sol.expect[4],label=nomb[2][0],color='black')
-    ax[3].plot(g*t,sol.expect[5],label=nomb[2][1],color='blue')
-    ax[3].plot(g*t,sol.expect[6],label=nomb[2][2],color='red')
-    ax[3].plot(g*t,sol.expect[7],label=nomb[2][3],color='green')
-    ax[3].set_xlabel('t')
+    ax[3].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
+    ax[3].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
+    ax[3].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
+    ax[3].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[3].set_xlabel('gt')
     plot_coherencias(11,3) #N=2
     if plot_show==True:
         plt.show()
@@ -395,9 +416,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
     ax=[ax]
     fig.suptitle('N=3')
-    ax[0].plot(g*t,sol.expect[8],label=nomb[3][0],color='black')
-    ax[0].plot(g*t,sol.expect[9],label=nomb[3][1],color='blue')
-    ax[0].plot(g*t,sol.expect[10],label=nomb[3][2],color='red')
+    ax[0].plot(g*t,ops_expect[8],label=ops_nomb[8],color='black')
+    ax[0].plot(g*t,ops_expect[9],label=ops_nomb[9],color='blue')
+    ax[0].plot(g*t,ops_expect[10],label=ops_nomb[10],color='red')
     plot_coherencias(1,0) #N=3
     plot_coherencias(7,0) #N=3
     plot_coherencias(8,0) #N=3
@@ -413,9 +434,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     '''--- VM Pauli ---'''
     fig,ax=plt.subplots(1,1,figsize=(16, 9))
     fig.suptitle('V.M. Pauli')
-    plt.plot(g*t,sol.expect[11],label='2*D=<sz1+sz2>',color='black')
-    plt.plot(g*t,sol.expect[12],label='<sz1>',color='blue')
-    plt.plot(g*t,sol.expect[13],label='<sz2>',color='red')
+    plt.plot(g*t,ops_expect[11],label=ops_nomb[11],color='black')
+    plt.plot(g*t,ops_expect[12],label=ops_nomb[12],color='blue')
+    plt.plot(g*t,ops_expect[13],label=ops_nomb[13],color='red')
     plt.legend()
     if plot_show==True:
         plt.show()
@@ -488,7 +509,14 @@ yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
 mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
 script_path=os.path.dirname(__file__)
-relative_path="graficos"+"\\"+mesydiayhora
+if disipation:
+    relative_path="graficos"+"\\"+mesydiayhora+" disipativo"
+elif not disipation:
+    relative_path="graficos"+"\\"+mesydiayhora+" unitario"
+else:
+    print("Error! disipation tiene que ser True o False!")
+    exit()
+
 path=os.path.join(script_path, relative_path)
 
 if os.path.exists(path):
@@ -498,10 +526,10 @@ else:
     os.chdir(path)
 
 J=0
-t_final=100000
-steps=25000
-psi0=[eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+t_final=50000
+steps=10000
+psi0=[eg0]   #,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['eg0']    #,'eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):
     folders=['0','1','2','3','pauli','entropia','entropia_spin-spin']
     for folder in folders:
@@ -512,12 +540,12 @@ for psi0,psi0_folder in zip(psi0,psi0_folder):
     os.chdir(psi0_path)
     g=[0.001*w_0]
     for g in g:
-        p=0.0005*g
+        p=0.005*g
         k=0.1*g
         x=[0,1/4*g,0.5*g]
         for x in x:
-            d=[0,0.1*g,2*g]
+            d=[0,0.5*g,2*g]
             for d in d:
                 gamma=[0.1*g,2*g]
                 for gamma in gamma:
-                    main(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)#,plot_show=True,save_plot=False)
+                    main(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation)#,plot_show=True,save_plot=False)
