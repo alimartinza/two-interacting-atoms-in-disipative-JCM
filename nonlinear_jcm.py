@@ -487,8 +487,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
 yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
 mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
-
-path=r'C:\Users\alima\OneDrive\Estudios\code\universidad\tesis de licenciatura\graficos'+'\\'+mesydiayhora
+script_path=os.path.dirname(__file__)
+relative_path="graficos"+"\\"+mesydiayhora
+path=os.path.join(script_path, relative_path)
 
 if os.path.exists(path):
     os.chdir(path)
