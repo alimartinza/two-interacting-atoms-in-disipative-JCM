@@ -76,7 +76,8 @@ w_0=1
 # gamma=2*g
 # p=0.005*g
 
-
+medio='kerr'
+acoplamiento = 'lineal'
 
 def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,makePlots:bool=False,plot_show:bool=False,save_plot:bool=True):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
@@ -238,7 +239,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
     elif not disipation:
         l_ops=[]
-
+    print("------Comenzando nuevas condiciones iniciales-----")
     sol=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
 
     #Hacemos un array de las coherencias y las completamos con el for
@@ -301,7 +302,8 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     data['S lin atom']=entropy_linear(atoms_states)
     data['Concu atom']=concurrence(atoms_states)
     entropiaRunTime=time.process_time() - entropiaStartTime
-    
+    print("-----Tiempos de computo----")
+    print(f"expectRunTime: {expectRunTime}",f"coherenciasRunTime: {coherenciasRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n')
     #PLOT PARA LA DINAMICA (POBLACIONES Y COHERENCIAS) DEL SIST. TRAZANDO SOBRE LOS FOTONES
     
     def plot_ReIm_coherencias(n:int,n_ax:int,xlabel=None,ylabel=None):
@@ -535,7 +537,7 @@ mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
 script_path=os.path.dirname(__file__)
 if disipation:
-    relative_path="datos"+"\\"+mesydiayhora+" disipativo"
+    relative_path="datos"+"\\"+mesydiayhora+" disipativo "+medio+" "+acoplamiento
 elif not disipation:
     relative_path="datos"+"\\"+mesydiayhora+" unitario"
 else:
@@ -553,8 +555,8 @@ else:
 J=0
 t_final=100000
 steps=100000
-psi0=[gg1,gg2,ee0]#eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['gg1','gg2','ee0']#'eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+psi0=[gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
 '''------GUARDAR DATAFRAME COMO CSV-------'''
 for psi0,psi0_folder in zip(psi0,psi0_folder):
