@@ -1,12 +1,10 @@
 from qutip import *
 import numpy as np
-import scipy as sp
 import matplotlib.pyplot as plt
-from matplotlib.colors import Colormap 
 import time
 import os
 import tkinter as tk
-from tkinter import messagebox
+import pandas as pd
 
 def respuesta_si():
     global disipation
@@ -267,17 +265,30 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
         for j in range(len(ops)):
             ops_expect[j][i]=expect(ops[j],sol.states[i])
 
-    for i in range(len(sol.states)):
+    if not disipation:
+        for i in range(len(sol.states)):
+            for j in range(12): 
+                for l in range(j+1,12):
+                    coherencias[str(j)+','+str(l)].append(sol.states[i][j]*sol.states[i][l])        
+    else:
         for j in range(12): 
             for l in range(j+1,12):
-                coherencias[str(j)+','+str(l)].append(sol.states[i][j]*sol.states[i][l])
+                c_help=np.zeros(len(sol.states),dtype='complex')
+                for i in range(len(sol.states)):
+                    c_help[i]=sol.states[i][j][l]
+                    coherencias[str(j)+','+str(l)].append(c_help[i])
 
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     estados=np.empty_like(sol.states)
     for j in range(len(sol.states)):
         estados[j]=sol.states[j]
-    S_vn_tot=entropy_vn(estados)
-    S_lin_tot=entropy_linear(estados)
+
+    data=pd.DataFrame()
+    data['sol states']=estados
+    for nombres,valores_de_expectacion in zip(ops_nomb,ops_expect):
+        data[nombres]=valores_de_expectacion
+    data['S von Neuman tot']=entropy_vn(estados)
+    data['S lineal tot']=entropy_vn(estados)
 
     def plot_ReIm_coherencias(n:int,n_ax:int,xlabel=None,ylabel=None):
         '''
@@ -335,12 +346,12 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
     ax=[ax]
     fig.suptitle('N=0')
-    ax[0].plot(g*t,ops_expect[0],label=ops_nomb[0],color='black')
+    ax[0].plot(g*t,data['pr(gg0)'],label=ops_nomb[0],color='black')
     plot_coherencias(9,0) #N=0
     ax[0].set_xlabel('gt')
 
     if save_plot==True:
-        plt.savefig(f'0\{figname}',dpi=100)
+        plt.savefig(f'0\\{figname}',dpi=100)
     else:
         None
     if plot_show==True:
@@ -351,17 +362,17 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     '''--- N=1 ---'''
     fig,ax=plt.subplots(3,1,figsize=(16, 9),sharex=True) 
     fig.suptitle('N=1')
-    ax[0].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
-    ax[0].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
-    ax[0].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
+    ax[0].plot(g*t,data['pr(gg1)'],label=ops_nomb[1],color='black')
+    ax[0].plot(g*t,data['pr(eg0+ge0)'],label=ops_nomb[2],color='blue')
+    ax[0].plot(g*t,data['pr(eg0-ge0)'],label=ops_nomb[3],color='red')
     plot_coherencias(3,0) #N=1
-    ax[1].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
-    ax[1].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
-    ax[1].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
+    ax[1].plot(g*t,data['pr(gg1)'],label=ops_nomb[1],color='black')
+    ax[1].plot(g*t,data['pr(eg0+ge0)'],label=ops_nomb[2],color='blue')
+    ax[1].plot(g*t,data['pr(eg0-ge0)'],label=ops_nomb[3],color='red')
     plot_coherencias(4,1) #N=1
-    ax[2].plot(g*t,ops_expect[1],label=ops_nomb[1],color='black')
-    ax[2].plot(g*t,ops_expect[2],label=ops_nomb[2],color='blue')
-    ax[2].plot(g*t,ops_expect[3],label=ops_nomb[3],color='red')
+    ax[2].plot(g*t,data['pr(gg1)'],label=ops_nomb[1],color='black')
+    ax[2].plot(g*t,data['pr(eg0+ge0)'],label=ops_nomb[2],color='blue')
+    ax[2].plot(g*t,data['pr(eg0-ge0)'],label=ops_nomb[3],color='red')
     ax[2].set_xlabel('gt')
     plot_coherencias(10,2) #N=1
     if plot_show==True:
@@ -369,7 +380,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'1\{figname}',dpi=100)
+        plt.savefig(f'1\\{figname}',dpi=100)
     else: 
         None
     plt.close()
@@ -377,29 +388,29 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(2,2,figsize=(16, 9),tight_layout=True,sharex=True) 
     ax=[ax[0][0],ax[0][1],ax[1][0],ax[1][1]]
     fig.suptitle('N=2')
-    ax[0].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
-    ax[0].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
-    ax[0].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
-    ax[0].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[0].plot(g*t,data['pr(gg2)'],label=ops_nomb[4],color='black')
+    ax[0].plot(g*t,data['pr(eg1+ge1)'],label=ops_nomb[5],color='blue')
+    ax[0].plot(g*t,data['pr(eg1-ge1)'],label=ops_nomb[6],color='red')
+    ax[0].plot(g*t,data['pr(ee0)'],label=ops_nomb[7],color='green')
     plot_coherencias(0,0) #N=2
 
-    ax[1].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
-    ax[1].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
-    ax[1].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
-    ax[1].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[1].plot(g*t,data['pr(gg2)'],label=ops_nomb[4],color='black')
+    ax[1].plot(g*t,data['pr(eg1+ge1)'],label=ops_nomb[5],color='blue')
+    ax[1].plot(g*t,data['pr(eg1-ge1)'],label=ops_nomb[6],color='red')
+    ax[1].plot(g*t,data['pr(ee0)'],label=ops_nomb[7],color='green')
     plot_coherencias(5,1) #N=2
 
-    ax[2].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
-    ax[2].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
-    ax[2].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
-    ax[2].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[2].plot(g*t,data['pr(gg2)'],label=ops_nomb[4],color='black')
+    ax[2].plot(g*t,data['pr(eg1+ge1)'],label=ops_nomb[5],color='blue')
+    ax[2].plot(g*t,data['pr(eg1-ge1)'],label=ops_nomb[6],color='red')
+    ax[2].plot(g*t,data['pr(ee0)'],label=ops_nomb[7],color='green')
     ax[2].set_xlabel('gt')
     plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
 
-    ax[3].plot(g*t,ops_expect[4],label=ops_nomb[4],color='black')
-    ax[3].plot(g*t,ops_expect[5],label=ops_nomb[5],color='blue')
-    ax[3].plot(g*t,ops_expect[6],label=ops_nomb[6],color='red')
-    ax[3].plot(g*t,ops_expect[7],label=ops_nomb[7],color='green')
+    ax[3].plot(g*t,data['pr(gg2)'],label=ops_nomb[4],color='black')
+    ax[3].plot(g*t,data['pr(eg1+ge1)'],label=ops_nomb[5],color='blue')
+    ax[3].plot(g*t,data['pr(eg1-ge1)'],label=ops_nomb[6],color='red')
+    ax[3].plot(g*t,data['pr(ee0)'],label=ops_nomb[7],color='green')
     ax[3].set_xlabel('gt')
     plot_coherencias(11,3) #N=2
     if plot_show==True:
@@ -407,7 +418,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'2\{figname}',dpi=100)
+        plt.savefig(f'2\\{figname}',dpi=100)
     else: 
         None
     plt.close()
@@ -416,9 +427,9 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
     ax=[ax]
     fig.suptitle('N=3')
-    ax[0].plot(g*t,ops_expect[8],label=ops_nomb[8],color='black')
-    ax[0].plot(g*t,ops_expect[9],label=ops_nomb[9],color='blue')
-    ax[0].plot(g*t,ops_expect[10],label=ops_nomb[10],color='red')
+    ax[0].plot(g*t,data['pr(eg2)'],label=ops_nomb[8],color='black')
+    ax[0].plot(g*t,data['pr(ge2)'],label=ops_nomb[9],color='blue')
+    ax[0].plot(g*t,data['pr(ee1)'],label=ops_nomb[10],color='red')
     plot_coherencias(1,0) #N=3
     plot_coherencias(7,0) #N=3
     plot_coherencias(8,0) #N=3
@@ -427,23 +438,23 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'3\{figname}',dpi=100)
+        plt.savefig(f'3\\{figname}',dpi=100)
     else: 
         None
     plt.close()
     '''--- VM Pauli ---'''
     fig,ax=plt.subplots(1,1,figsize=(16, 9))
     fig.suptitle('V.M. Pauli')
-    plt.plot(g*t,ops_expect[11],label=ops_nomb[11],color='black')
-    plt.plot(g*t,ops_expect[12],label=ops_nomb[12],color='blue')
-    plt.plot(g*t,ops_expect[13],label=ops_nomb[13],color='red')
+    plt.plot(g*t,data['1/2 <sz1+sz2>'],label=ops_nomb[11],color='black')
+    plt.plot(g*t,data['<sx1>'],label=ops_nomb[12],color='blue')
+    plt.plot(g*t,data['<sx2>'],label=ops_nomb[13],color='red')
     plt.legend()
     if plot_show==True:
         plt.show()
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'pauli\{figname}',dpi=100)
+        plt.savefig(f'pauli\\{figname}',dpi=100)
     else: 
         None
     plt.close()
@@ -452,11 +463,11 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     #PLOT PARA LAS ENTROPIAS
     fig,ax=plt.subplots(2,1,figsize=(16, 9),sharex=True)
     fig.suptitle("Entropia en A-A-F")
-    ax[0].plot(g*t,S_vn_tot,color='black')
+    ax[0].plot(g*t,data['S von Neuman tot'],color='black')
     # ax[0].set_xlabel('t')
     ax[0].set_ylabel('S_vn')
 
-    ax[1].plot(g*t,S_lin_tot,color='red')
+    ax[1].plot(g*t,data['S lineal tot'],color='red')
     ax[1].set_xlabel('t')
     ax[1].set_ylabel('S_lin')
     if plot_show==True:
@@ -464,7 +475,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'entropia\{figname}',dpi=100)
+        plt.savefig(f'entropia\\{figname}',dpi=100)
     else: 
         None
     plt.close()
@@ -476,24 +487,25 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     atoms_states=np.empty_like(sol.states)
     for j in range(len(sol.states)):
         atoms_states[j]=sol.states[j].ptrace([0,1])
-        
-    S_vn_a=entropy_vn(atoms_states)
-    S_lin_a=entropy_linear(atoms_states)
-    concu_a=concurrence(atoms_states)
+    
+    data['Atom States']=atoms_states
+    data['S vN atom']=entropy_vn(atoms_states)
+    data['S lin atom']=entropy_linear(atoms_states)
+    data['Concu atom']=concurrence(atoms_states)
     #PLOT PARA LA DINAMICA (POBLACIONES Y COHERENCIAS) DEL SIST. TRAZANDO SOBRE LOS FOTONES
 
     #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
     fig,ax=plt.subplots(3,1,figsize=(16, 9),sharex=True)
     fig.suptitle("Sist. A-A sin foton")
-    ax[0].plot(g*t,S_vn_a,color='black')
+    ax[0].plot(g*t,data['S vN atom'],color='black')
     # ax[0].set_xlabel('t')
     ax[0].set_ylabel('S_vn')
 
-    ax[1].plot(g*t,S_lin_a,color='red')
+    ax[1].plot(g*t,data['S lin atom'],color='red')
     # ax[1].set_xlabel('t')
     ax[1].set_ylabel('S_lin')
 
-    ax[2].plot(g*t,concu_a,color='blue')
+    ax[2].plot(g*t,data['Concu atom'],color='blue')
     ax[2].set_xlabel('t')
     ax[2].set_ylabel('Concurrence')
     if plot_show==True:
@@ -501,10 +513,12 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     else: 
         None
     if save_plot==True:
-        plt.savefig(f'entropia_spin-spin\{figname}',dpi=100)
+        plt.savefig(f'entropia_spin-spin\\{figname}',dpi=100)
     else: 
         None
     plt.close()
+
+
 yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
 mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
@@ -526,10 +540,10 @@ else:
     os.chdir(path)
 
 J=0
-t_final=50000
-steps=10000
-psi0=[eg0]   #,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['eg0']    #,'eg0-','eg1-','eg1+ge0','eg1-ge0']
+t_final=100000
+steps=100000
+psi0=[gg1,gg2,ee0]#eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['gg1','gg2','ee0']#'eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 for psi0,psi0_folder in zip(psi0,psi0_folder):
     folders=['0','1','2','3','pauli','entropia','entropia_spin-spin']
     for folder in folders:
