@@ -36,6 +36,7 @@ root.mainloop()
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
 sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
+n2=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,4])))
 a=tensor(qeye(2),qeye(2),destroy(3))
 sm1=tensor(sigmam(),qeye(2),qeye(3))
 sp1=tensor(sigmap(),qeye(2),qeye(3))
@@ -77,10 +78,9 @@ w_0=1
 # gamma=2*g
 # p=0.005*g
 
-medio='kerr'
 acoplamiento = 'bs'
 
-def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,makePlots:bool=False,plot_show:bool=False,save_plot:bool=True):
+def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
 
     def entropy_vn(rho):
@@ -114,9 +114,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
 
             if rho[i].type == 'ket' or rho[i].type == 'bra':
                 rho[i] = ket2dm(rho[i])
-            if not rho[i].check_herm():
-                print(f'La matriz en el paso {i} no es hermitica, la truncamos')
-                # rho[i]=rho[i].trunc.neg()
+            rho[i]=rho[i].tidyup()
             vals = np.array(rho[i].eigenenergies())
             nzvals = vals[vals > 0]
             s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
@@ -202,21 +200,12 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
     
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
-    medio= 'kerr' #int(input('Escribir lineal: h(n)=1,kerr: h(n)=1+x/w_0 *n'))
     acoplamiento = 'lineal' #int(input('Escribir lineal: f(n)=1,2:bs (Buck-Sukumar): f(n)=np.sqrt(n)'))
 
-    modelo={'medio':medio,
-            'acoplamiento':acoplamiento}
-
-    def h(n:Qobj):
-        if modelo['medio']=='lineal':
+    def f():
+        if acoplamiento=='lineal':
             return 1
-        elif modelo['medio']=='kerr':
-            return 1+x/w_0*n
-    def f(n:Qobj):
-        if modelo['acoplamiento']=='lineal':
-            return 1
-        elif modelo['acoplamiento']=='bs':
+        elif acoplamiento=='bs':
             return sqrtN
 
     
@@ -231,7 +220,7 @@ def main(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,p
 
     '''---Hamiltoniano---'''
 
-    H=w_0*n*(h(n)-1) + d/2*(sz1+sz2) + g*((sm1+sm2)*f(n)*a.dag()+(sp1+sp2)*a*f(n)) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
     '''---Simulacion numerica---'''
 
@@ -327,9 +316,9 @@ mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
 script_path=os.path.dirname(__file__)
 if disipation:
-    relative_path="datos"+"\\"+mesydiayhora+" disipativo "+medio+" "+acoplamiento
+    relative_path="datos"+"\\"+mesydiayhora+" disipativo "+acoplamiento
 elif not disipation:
-    relative_path="datos"+"\\"+mesydiayhora+" unitario "+medio+" "+acoplamiento
+    relative_path="datos"+"\\"+mesydiayhora+" unitario "+acoplamiento
 else:
     print("Error! disipation tiene que ser True o False!")
     exit()
@@ -345,8 +334,8 @@ else:
 J=0
 t_final=100000
 steps=100000
-psi0=[gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+psi0=[ee0]#gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['ee0']#'gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
 '''------GUARDAR DATAFRAME COMO CSV-------'''
 for psi0,psi0_folder in zip(psi0,psi0_folder):
@@ -364,7 +353,7 @@ for psi0,psi0_folder in zip(psi0,psi0_folder):
             for d in d:
                 gamma=[0.1*g,2*g]
                 for gamma in gamma:
-                    main(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation)#,plot_show=True,save_plot=False)
+                    evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation)
 
 
 '''----PARA PLOTS---'''
