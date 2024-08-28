@@ -6,32 +6,7 @@ import os
 import tkinter as tk
 import pandas as pd
 
-def respuesta_si():
-    global disipation
-    disipation = True
-    root.destroy()
 
-def respuesta_no():
-    global disipation
-    disipation = False
-    root.destroy()
-
-# Crear la ventana principal
-root = tk.Tk()
-root.title("Disipacion")
-
-# Crear el mensaje y los botones
-label = tk.Label(root, text="Hacemos la simulacion con disipacion?", font=("Arial", 14))
-label.pack(pady=20)
-
-boton_si = tk.Button(root, text="Sí", command=respuesta_si, width=10)
-boton_si.pack(side="left", padx=20, pady=20)
-
-boton_no = tk.Button(root, text="No", command=respuesta_no, width=10)
-boton_no.pack(side="right", padx=20, pady=20)
-
-# Ejecutar la ventana
-root.mainloop()
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
@@ -78,9 +53,7 @@ w_0=1
 # gamma=2*g
 # p=0.005*g
 
-acoplamiento = 'bs'
-
-def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True):
+def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
 
     def entropy_vn(rho):
@@ -200,7 +173,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
-    acoplamiento = 'lineal' #int(input('Escribir lineal: f(n)=1,2:bs (Buck-Sukumar): f(n)=np.sqrt(n)'))
+    #acoplamiento = 'lineal' #int(input('Escribir lineal: f(n)=1,2:bs (Buck-Sukumar): f(n)=np.sqrt(n)'))
 
     def f():
         if acoplamiento=='lineal':
@@ -311,49 +284,50 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     data.to_csv(csvname)
 
 
-yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
-mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
+for disipation in [True,False]:
+    for acoplamiento in ['lineal','bs']:
+        yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
+        mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
+        script_path=os.path.dirname(__file__)
+        if disipation:
+            relative_path="datos"+"\\"+mesydiayhora+" disipativo "+acoplamiento
+        elif not disipation:
+            relative_path="datos"+"\\"+mesydiayhora+" unitario "+acoplamiento
+        else:
+            print("Error! disipation tiene que ser True o False!")
+            exit()
 
-script_path=os.path.dirname(__file__)
-if disipation:
-    relative_path="datos"+"\\"+mesydiayhora+" disipativo "+acoplamiento
-elif not disipation:
-    relative_path="datos"+"\\"+mesydiayhora+" unitario "+acoplamiento
-else:
-    print("Error! disipation tiene que ser True o False!")
-    exit()
+        path=os.path.join(script_path, relative_path)
 
-path=os.path.join(script_path, relative_path)
+        if os.path.exists(path):
+            os.chdir(path)
+        else: 
+            os.makedirs(path)
+            os.chdir(path)
 
-if os.path.exists(path):
-    os.chdir(path)
-else: 
-    os.makedirs(path)
-    os.chdir(path)
+        J=0
+        t_final=100000
+        steps=100000
+        psi0=[ee0,gg1,eg0]#gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+        psi0_folder=['ee0','gg1','eg0']#'gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
-J=0
-t_final=100000
-steps=100000
-psi0=[ee0]#gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['ee0']#'gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
-
-'''------GUARDAR DATAFRAME COMO CSV-------'''
-for psi0,psi0_folder in zip(psi0,psi0_folder):
-    folder_path=path+'\\'+psi0_folder
-    if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-    os.chdir(folder_path)
-    g=[0.001*w_0]
-    for g in g:
-        p=0.005*g
-        k=0.1*g
-        x=[0,1/4*g,0.5*g]
-        for x in x:
-            d=[0,0.5*g,2*g]
-            for d in d:
-                gamma=[0.1*g,2*g]
-                for gamma in gamma:
-                    evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation)
+        '''------GUARDAR DATAFRAME COMO CSV-------'''
+        for psi0,psi0_folder in zip(psi0,psi0_folder):
+            folder_path=path+'\\'+psi0_folder
+            if not os.path.exists(folder_path):
+                    os.makedirs(folder_path)
+            os.chdir(folder_path)
+            g=[0.001*w_0]
+            for g in g:
+                p=0.005*g
+                k=0.1*g
+                x=[0,1/4*g,0.5*g]
+                for x in x:
+                    d=[0,0.5*g,2*g]
+                    for d in d:
+                        gamma=[0.1*g,2*g]
+                        for gamma in gamma:
+                            evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
 
 '''----PARA PLOTS---'''
