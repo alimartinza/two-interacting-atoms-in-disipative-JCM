@@ -32,6 +32,55 @@ n=tensor(qeye(2),qeye(2),num(3))
 a=tensor(qeye(2),qeye(2),destroy(3))
 
 # print(eg1+2*eg2+3*ge0+4*ge1+5*ge2+6*gg0+7*gg1+8*gg2)
+def entropy_vn(rho):
+        """
+        Von-Neumann entropy of density matrix
+
+        Parameters
+        ----------
+        rho : qobj or list of qobjs
+            Density matrix.
+        base : {e,2}
+            Base of logarithm.
+        sparse : {False,True}
+            Use sparse eigensolver.
+
+        Returns
+        -------
+        entropy : list of floats
+            Von-Neumann entropy of `rho`.
+
+        Examples
+        --------
+        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
+        >>> entropy_vn(rho,2)
+        1.0
+
+        """
+
+        s=np.zeros(len(rho))
+        eigenvals=[]
+        eigenvecs=[]
+        print(eigenvecs)
+        for i in range(len(rho)):
+
+            if rho[i].type == 'ket' or rho[i].type == 'bra':
+                rho[i] = ket2dm(rho[i])
+            rho[i]=rho[i].tidyup()
+            eigenvals[i],eigenvecs[i] = rho[i].eigenstates()
+            eigenvecs[i]=np.array(eigenvecs[i].full())
+            nzvals = eigenvals[eigenvals > 0]
+            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
+
+        return s,eigenvals,eigenvecs
+
+dm=ket2dm(gg0)
+eigenen,eigenvecs=dm.eigenstates()
+print(eigenen)
+print(type(eigenen))
+
+
+# entropy_vn(dm)
 
 rho=[ket2dm(eg1),ket2dm(gg2),ket2dm((eg0+ge0).unit())]
 eigenenergievector=np.empty([len(rho),12])

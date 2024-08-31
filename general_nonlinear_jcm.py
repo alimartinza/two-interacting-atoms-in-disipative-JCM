@@ -54,6 +54,7 @@ w_0=1
 # gamma=2*g
 # p=0.005*g
 
+
 def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
 
@@ -216,8 +217,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
-    #acoplamiento = 'lineal' #int(input('Escribir lineal: f(n)=1,2:bs (Buck-Sukumar): f(n)=np.sqrt(n)'))
-
+    
     def f():
         if acoplamiento=='lineal':
             return 1
@@ -334,51 +334,51 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     fileio.qsave(eigenvecs,parameters_name+'eigen states')
 
 
+disipation=True
+acoplamiento='lineal'
+yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
+mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
 
-for disipation in [True,False]:
-    for acoplamiento in ['lineal','bs']:
-        yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
-        mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
-        script_path=os.path.dirname(__file__)
-        if disipation:
-            relative_path="datos"+"\\"+mesydiayhora+" disipativo "+acoplamiento
-        elif not disipation:
-            relative_path="datos"+"\\"+mesydiayhora+" unitario "+acoplamiento
-        else:
-            print("Error! disipation tiene que ser True o False!")
-            exit()
+script_path=os.path.dirname(__file__)
+if disipation:
+    relative_path="datos"+"\\"+mesydiayhora+" disipativo "+acoplamiento
+elif not disipation:
+    relative_path="datos"+"\\"+mesydiayhora+" unitario "+acoplamiento
+else:
+    print("Error! disipation tiene que ser True o False!")
+    exit()
 
-        path=os.path.join(script_path, relative_path)
+path=os.path.join(script_path, relative_path)
 
-        if os.path.exists(path):
-            os.chdir(path)
-        else: 
-            os.makedirs(path)
-            os.chdir(path)
+if os.path.exists(path):
+    os.chdir(path)
+else: 
+    os.makedirs(path)
+    os.chdir(path)
 
-        J=0
-        t_final=100000
-        steps=100000
-        psi0=[ee0,gg1,eg0,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-        psi0_folder=['ee0','gg1','eg0','gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
+J=0
+t_final=100000
+steps=100000
+psi0=[ee0,gg1,eg0,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['ee0','gg1','eg0','gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
-        '''------GUARDAR DATAFRAME COMO CSV-------'''
-        for psi0,psi0_folder in zip(psi0,psi0_folder):
-            folder_path=path+'\\'+psi0_folder
-            if not os.path.exists(folder_path):
-                    os.makedirs(folder_path)
-            os.chdir(folder_path)
-            g=[0.001*w_0]
-            for g in g:
-                p=0.005*g
-                k=0.1*g
-                x=[0,1/4*g,0.5*g]
-                for x in x:
-                    d=[0,0.5*g,2*g]
-                    for d in d:
-                        gamma=[0.1*g,2*g]
-                        for gamma in gamma:
-                            evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
+'''------GUARDAR DATAFRAME COMO CSV-------'''
+for psi0,psi0_folder in zip(psi0,psi0_folder):
+    folder_path=path+'\\'+psi0_folder
+    if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+    os.chdir(folder_path)
+    g=[0.001*w_0]
+    for g in g:
+        p=0.005*g
+        k=0.1*g
+        x=[0]#,1/4*g,0.5*g]
+        for x in x:
+            d=[0]#,0.5*g,2*g]
+            for d in d:
+                gamma=[0.1*g]#,2*g]
+                for gamma in gamma:
+                    evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)#,plot_show=True,save_plot=False)
 
 
 '''----PARA PLOTS---'''
