@@ -1,5 +1,6 @@
 from qutip import *
 import numpy as np
+import pandas as pd
 
 psi0=tensor(basis(2,0),basis(2,1))
 rho0=ket2dm(psi0)
@@ -25,30 +26,29 @@ gg0=tensor(gr,gr,basis(3,0))
 gg1=tensor(gr,gr,basis(3,1))
 gg2=tensor(gr,gr,basis(3,2))
 
+base=[gg0,gg1,(eg0+ge0).unit(),(eg0-ge0).unit(),gg2,(eg1+ge1).unit(),ee0,(eg1-ge1).unit(),(eg2+ge2).unit(),ee1,(eg2-ge2).unit(),ee2]
+
 n=tensor(qeye(2),qeye(2),num(3))
 a=tensor(qeye(2),qeye(2),destroy(3))
 
 # print(eg1+2*eg2+3*ge0+4*ge1+5*ge2+6*gg0+7*gg1+8*gg2)
 
-vals=ket2dm(gg0).eigenenergies()
-nzvals=vals[vals != 0]
-print(nzvals)
+rho=[ket2dm(eg1),ket2dm(gg2),ket2dm((eg0+ge0).unit())]
+eigenenergievector=np.empty([len(rho),12])
+eigenenstatesvetor=np.empty([len(rho),12,12,1],dtype="complex")
+data=pd.DataFrame()
+data['expect']=np.zeros(len(rho))
+# print(data['EigenE'][0])
+for j,d_matrix in enumerate(rho):
+    eigenvals,eigenvecs=d_matrix.eigenstates()
+    for i,vec in enumerate(eigenvecs):
+        eigenenstatesvetor[j][i]=vec.full()
+data['EigenEnergies']=eigenenergievector
+data['EigenStates']=eigenenstatesvetor
 
-m=np.arange(16).reshape([4,4])
-print(m)
-print(m[1][0])
-for i in range(13,12):
-    print(i)
 
-m=10
-coherencias={'0,10':[],'10,10':[]}
-for key in coherencias.keys():
-    if key.split(',')[0].startswith(str(m)) or key.split(',')[1].startswith(str(m)):
-        print('sape loquita')
-sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
-print(n)   
-print('----sqrt n----')
-print(sqrtN)
-print('-----sqrt n tidyup----')
-print(sqrtN.tidyup())
 
+# for vec in eigenvecs:
+#     print(vec)
+# print(type(eigenvecs[0]))
+    #vals = np.array(rho[i].eigenenergies())

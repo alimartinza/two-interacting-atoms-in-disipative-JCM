@@ -41,7 +41,7 @@ t=np.linspace(0,t_final,steps)
 save_plot=True
 plot_show=False
 
-figname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}'
+param_name=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}'
 csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
 
 data=pd.read_csv(csvname)
@@ -85,21 +85,22 @@ coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8
                                                                                             '9,10':[],'9,11':[],
                                                                                                     '10,11':[]}
 
-print(data['pr(ee0)'][1])
-print(type(data['pr(ee0)'][1]))
 
+sol_states=fileio.qload('sol states'+param_name)
+atom_states=fileio.qload('atom states'+param_name)
+eigen_states=fileio.qload('seigen states'+param_name)
 coherenciasStartTime = time.process_time()
 if not disipation:
-    for i in range(len(data['sol states'])):
+    for i in range(len(sol_states)):
         for j in range(12): 
             for l in range(j+1,12):
-                coherencias[str(j)+','+str(l)].append(data['sol states'][i][j]*data['sol states'][i][l])        
+                coherencias[str(j)+','+str(l)].append(sol_states[i][j]*sol_states[i][l])        
 else:
     for j in range(12): 
         for l in range(j+1,12):
-            c_help=np.zeros(len(data['sol states']),dtype='complex')
-            for i in range(len(data['sol states'])):
-                c_help[i]=data['sol states'][i][j][l]
+            c_help=np.zeros(len(sol_states),dtype='complex')
+            for i in range(len(sol_states)):
+                c_help[i]=sol_states[i][j][l]
                 coherencias[str(j)+','+str(l)].append(c_help[i])
 coherenciasRunTime = time.process_time()-coherenciasStartTime
 
@@ -154,7 +155,7 @@ plot_coherencias(9,0) #N=0
 ax[0].set_xlabel('gt')
 
 if save_plot==True:
-    plt.savefig(f'0\\{figname}',dpi=100)
+    plt.savefig(f'0\\{param_name}',dpi=100)
 else:
     None
 if plot_show==True:
@@ -183,7 +184,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'1\\{figname}',dpi=100)
+    plt.savefig(f'1\\{param_name}',dpi=100)
 else: 
     None
 plt.close()
@@ -221,7 +222,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'2\\{figname}',dpi=100)
+    plt.savefig(f'2\\{param_name}',dpi=100)
 else: 
     None
 plt.close()
@@ -241,7 +242,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'3\\{figname}',dpi=100)
+    plt.savefig(f'3\\{param_name}',dpi=100)
 else: 
     None
 plt.close()
@@ -257,7 +258,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'pauli\\{figname}',dpi=100)
+    plt.savefig(f'pauli\\{param_name}',dpi=100)
 else: 
     None
 plt.close()
@@ -278,7 +279,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'entropia\\{figname}',dpi=100)
+    plt.savefig(f'entropia\\{param_name}',dpi=100)
 else: 
     None
 plt.close()
@@ -307,7 +308,7 @@ if plot_show==True:
 else: 
     None
 if save_plot==True:
-    plt.savefig(f'entropia_spin-spin\\{figname}',dpi=100)
+    plt.savefig(f'entropia_spin-spin\\{param_name}',dpi=100)
 else: 
     None
 plt.close()

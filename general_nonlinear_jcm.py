@@ -42,6 +42,7 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
+
 w_0=1
 # g=0.01*w_0 #atom-cavity coupling
 # k=0 #atom-atom photon exchange rate
@@ -83,13 +84,55 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         """
 
         s=np.zeros(len(rho))
+        eigenvals=np.empty([len(rho),12])
+        eigenstatesvector=np.empty([len(rho),12,12,1],dtype="complex")
         for i in range(len(rho)):
 
             if rho[i].type == 'ket' or rho[i].type == 'bra':
                 rho[i] = ket2dm(rho[i])
             rho[i]=rho[i].tidyup()
-            vals = np.array(rho[i].eigenenergies())
-            nzvals = vals[vals > 0]
+            eigenvals[i],eigenvecs = rho[i].eigenstates()
+            nzvals = eigenvals[i][eigenvals[i] > 0]
+            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
+            for j,vec in enumerate(eigenvecs):
+                eigenstatesvector[i][j]=vec.full()
+
+        return eigenvals,eigenvecs,s
+    
+    def entropy_vn_atom(rho):
+        """
+        Von-Neumann entropy of density matrix
+
+        Parameters
+        ----------
+        rho : qobj or list of qobjs
+            Density matrix.
+        base : {e,2}
+            Base of logarithm.
+        sparse : {False,True}
+            Use sparse eigensolver.
+
+        Returns
+        -------
+        entropy : list of floats
+            Von-Neumann entropy of `rho`.
+
+        Examples
+        --------
+        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
+        >>> entropy_vn(rho,2)
+        1.0
+
+        """
+
+        s=np.zeros(len(rho))
+        for i in range(len(rho)):
+
+            if rho[i].type == 'ket' or rho[i].type == 'bra':
+                rho[i] = ket2dm(rho[i])
+            rho[i]=rho[i].tidyup()
+            eigenvals= rho[i].eigenenergies()
+            nzvals = eigenvals[eigenvals > 0]
             s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
 
         return s
@@ -251,22 +294,25 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         estados[j]=sol.states[j]
 
     data=pd.DataFrame()
-    data['sol states']=estados
+
     for nombres,valores_de_expectacion in zip(ops_nomb,ops_expect):
         data[nombres]=valores_de_expectacion
     pasajeRunTime=time.process_time() - pasajeStartTime
     entropiaStartTime = time.process_time()
-    data['S von Neuman tot']=entropy_vn(estados)
-    data['S lineal tot']=entropy_vn(estados)
+    eigenvals,eigenvecs,data['S von Neuman tot']=entropy_vn(estados)
+    data['S lineal tot']=entropy_linear(estados)
     atoms_states=np.empty_like(sol.states)
     for j in range(len(sol.states)):
         atoms_states[j]=sol.states[j].ptrace([0,1])
     
-    data['Atom States']=atoms_states
-    data['S vN atom']=entropy_vn(atoms_states)
+    # data['Atom States']=atoms_states
+    data['S vN atom']=entropy_vn_atom(atoms_states)
     data['S lin atom']=entropy_linear(atoms_states)
     data['Concu atom']=concurrence(atoms_states)
     entropiaRunTime=time.process_time() - entropiaStartTime
+    for i in range(12):
+        data['Eigenvalue '+str(i)]=eigenvals[:,i]
+
     print("-----Tiempos de computo----")
     print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
     #PLOT PARA LA DINAMICA (POBLACIONES Y COHERENCIAS) DEL SIST. TRAZANDO SOBRE LOS FOTONES
@@ -278,10 +324,15 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     x_str=str(x).replace('.','_')
     gamma_str=str(gamma).replace('.','_')
     p_str=str(p).replace('.','_')
+    parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
     csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
     #HACEMOS UN SUBPLOT PARA CADA ESPACIO DE N EXITACIONES + UNO PARA EL VALOR MEDIO DE LAS MATRICES DE PAULI
-    '''--------------SAVE TO CSV-------------------'''
+    '''--------------SAVE TO CSV OR TO QU FILE-------------------'''
     data.to_csv(csvname)
+    fileio.qsave(sol.states,parameters_name+'sol states')
+    fileio.qsave(atoms_states,parameters_name+'atom states')
+    fileio.qsave(eigenvecs,parameters_name+'eigen states')
+
 
 
 for disipation in [True,False]:
@@ -308,8 +359,8 @@ for disipation in [True,False]:
         J=0
         t_final=100000
         steps=100000
-        psi0=[ee0,gg1,eg0]#gg1,gg2,ee0,eg0,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-        psi0_folder=['ee0','gg1','eg0']#'gg1','gg2','ee0','eg0','eg0-','eg1-','eg1+ge0','eg1-ge0']
+        psi0=[ee0,gg1,eg0,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+        psi0_folder=['ee0','gg1','eg0','gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
         '''------GUARDAR DATAFRAME COMO CSV-------'''
         for psi0,psi0_folder in zip(psi0,psi0_folder):
