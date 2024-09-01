@@ -228,7 +228,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         for j in range(len(ops)):
             ops_expect[j][i]=expect(ops[j],sol.states[i])
     expectRunTime=time.process_time()-expectStartTime
-    """----Coherencias ---
+    """----Coherencias ---"""
     coherenciasStartTime = time.process_time()
     if not disipation:
         for i in range(len(sol.states)):
@@ -243,7 +243,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
                     c_help[i]=sol.states[i][j][l]
                     coherencias[str(j)+','+str(l)].append(c_help[i])
     coherenciasRunTime = time.process_time()-coherenciasStartTime
-    """
+
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     pasajeStartTime=time.process_time()
     estados=np.empty_like(sol.states)
@@ -251,9 +251,11 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         estados[j]=sol.states[j]
 
     data=pd.DataFrame()
-    data['sol states']=estados
+
     for nombres,valores_de_expectacion in zip(ops_nomb,ops_expect):
         data[nombres]=valores_de_expectacion
+
+
     pasajeRunTime=time.process_time() - pasajeStartTime
     entropiaStartTime = time.process_time()
     data['S von Neuman tot']=entropy_vn(estados)
@@ -262,13 +264,12 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     for j in range(len(sol.states)):
         atoms_states[j]=sol.states[j].ptrace([0,1])
     
-    data['Atom States']=atoms_states
     data['S vN atom']=entropy_vn(atoms_states)
     data['S lin atom']=entropy_linear(atoms_states)
     data['Concu atom']=concurrence(atoms_states)
     entropiaRunTime=time.process_time() - entropiaStartTime
     print("-----Tiempos de computo----")
-    print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+    print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",f"coherenciasRunTime: {coherenciasRunTime}",sep='\n')
     #PLOT PARA LA DINAMICA (POBLACIONES Y COHERENCIAS) DEL SIST. TRAZANDO SOBRE LOS FOTONES
     
     g_str=str(g).replace('.','_')
