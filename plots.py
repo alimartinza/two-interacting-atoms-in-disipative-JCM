@@ -3,15 +3,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import os
-import tkinter as tk
 import pandas as pd
 
 
 script_path=os.path.dirname(__file__)
 
-folder_names=["8_27_20 disipativo lineal","8_28_0 disipativo bs","8_28_2 unitario lineal","8_28_3 unitario bs"]
-condiciones_iniciales=["ee0","gg1","eg0"]
-relative_path="datos"+"\\"+folder_names[0]+"\\"+condiciones_iniciales[0]
+folder_names=["8_30_22 disipativo lineal","8_31_3 disipativo bs","8_31_8 unitario lineal","8_31_14 unitario bs"]
+condiciones_iniciales=["gg1","eg0"]
+
+for folder_names in folder_names:
+    for ci in condiciones_iniciales:
+        relative_path="datos"+"\\"+folder_names+"\\"+ci
 
 path=os.path.join(script_path, relative_path)
 if os.path.exists(path):
@@ -40,38 +42,11 @@ steps=100000
 t=np.linspace(0,t_final,steps)
 save_plot=True
 plot_show=False
-
 param_name=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}'
 csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
 
 data=pd.read_csv(csvname)
-
-def respuesta_si():
-    global disipation
-    disipation = True
-    root.destroy()
-
-def respuesta_no():
-    global disipation
-    disipation = False
-    root.destroy()
-
-# Crear la ventana principal
-root = tk.Tk()
-root.title("Disipacion")
-
-# Crear el mensaje y los botones
-label = tk.Label(root, text="La simulacion tenia disipacion?", font=("Arial", 14))
-label.pack(pady=20)
-
-boton_si = tk.Button(root, text="Sí", command=respuesta_si, width=10)
-boton_si.pack(side="left", padx=20, pady=20)
-
-boton_no = tk.Button(root, text="No", command=respuesta_no, width=10)
-boton_no.pack(side="right", padx=20, pady=20)
-
-# Ejecutar la ventana
-root.mainloop()
+print(data.keys())
 
 coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
                             '1,2':[],'1,3':[],'1,4':[],'1,5':[],'1,6':[],'1,7':[],'1,8':[],'1,9':[],'1,10':[],'1,11':[],
@@ -85,23 +60,25 @@ coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8
                                                                                             '9,10':[],'9,11':[],
                                                                                                     '10,11':[]}
 
+sol_states=fileio.qload(param_name+'sol states')
+atom_states=fileio.qload(param_name+'atom states')
+eigen_states=fileio.qload(param_name+'eigen states')
 
-sol_states=fileio.qload('sol states'+param_name)
-atom_states=fileio.qload('atom states'+param_name)
-eigen_states=fileio.qload('seigen states'+param_name)
 coherenciasStartTime = time.process_time()
-if not disipation:
-    for i in range(len(sol_states)):
+for folname in folder_names:
+    if folder_names.split(' ')[1]=='unitario': 
+        for i in range(len(sol_states)):
+            for j in range(12): 
+                for l in range(j+1,12):
+                    coherencias[str(j)+','+str(l)].append(sol_states[i][j]*sol_states[i][l])        
+
+    elif folder_names.split(' ')[1]=='disipativo':
         for j in range(12): 
             for l in range(j+1,12):
-                coherencias[str(j)+','+str(l)].append(sol_states[i][j]*sol_states[i][l])        
-else:
-    for j in range(12): 
-        for l in range(j+1,12):
-            c_help=np.zeros(len(sol_states),dtype='complex')
-            for i in range(len(sol_states)):
-                c_help[i]=sol_states[i][j][l]
-                coherencias[str(j)+','+str(l)].append(c_help[i])
+                c_help=np.zeros(len(sol_states),dtype='complex')
+                for i in range(len(sol_states)):
+                    c_help[i]=sol_states[i][j][l]
+                    coherencias[str(j)+','+str(l)].append(c_help[i])
 coherenciasRunTime = time.process_time()-coherenciasStartTime
 
 def plot_ReIm_coherencias(n:int,n_ax:int,xlabel=None,ylabel=None):
@@ -129,7 +106,8 @@ def plot_coherencias(n:int,n_ax:int,xlabel='gt',ylabel='Abs(Coh)'):
     -n_ax: en que ax queres graficar todas las coherencias
     
     Pensado para usarlo semimanualmente, usar un plt.plots() e ir poniendo esta funcion en cada lugar donde queremos graficar las coherencias'''
-    colors = ['#000000','#000000','#000000','#ff7043','#000000','#000000','#000000','#000000','#000000','#1976d2','#4caf50','#000000'] #plt.cm.jet(np.linspace(0,1,12))
+    #colors = ['#000000','#000000','#000000','#ff7043','#000000','#000000','#000000','#000000','#000000','#1976d2','#4caf50','#000000'] 
+    colors=plt.cm.jet(np.linspace(0,1,12))
     i=0
     if n==1:
         for key in ['0,1','1,2','1,3','1,4','1,5','1,6','1,7','1,8','1,9','1,10','1,11']:
