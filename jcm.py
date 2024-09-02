@@ -359,8 +359,8 @@ else:
 J=0
 t_final=100000
 steps=100000
-psi0=[ee0,gg1,eg0,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-psi0_folder=['ee0','gg1','eg0','gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
+psi0=[ee0,gg1,eg0]#,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
+psi0_folder=['ee0','gg1','eg0']#,'gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
 
 '''------GUARDAR DATAFRAME COMO CSV-------'''
 for psi0,psi0_folder in zip(psi0,psi0_folder):
@@ -376,7 +376,7 @@ for psi0,psi0_folder in zip(psi0,psi0_folder):
         for x in x:
             d=[0]#,0.5*g,2*g]
             for d in d:
-                gamma=[0.1*g]#,2*g]
+                gamma=[0.1*g,2*g]
                 for gamma in gamma:
                     evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)#,plot_show=True,save_plot=False)
 
