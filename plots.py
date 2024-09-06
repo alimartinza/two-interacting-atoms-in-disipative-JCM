@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import os
 import pandas as pd
-
+from mpl_toolkits.mplot3d import axes3d
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
@@ -409,7 +409,7 @@ def plot_x():
 def plot_delta():
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["8_30_22 disipativo lineal","8_31_3 disipativo bs","8_31_8 unitario lineal","8_31_14 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+    condiciones_iniciales=["gg1"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
     for ci in condiciones_iniciales:
@@ -440,6 +440,9 @@ def plot_delta():
             ax0.set_xlabel('gt')
             ax0.set_ylabel('d/g')
             ax0.set_zlabel('Amp. Prob. ')
+            ax0.view_init(30,-40,0)
+            ax0.set_yticks([0,1,2],np.array(d)/g)
+            ax0.set_zlim(0,1)
             '''N=1'''
             fig1 = plt.figure(figsize=(16,9))
             ax1 = fig1.add_subplot(projection='3d')
@@ -448,6 +451,10 @@ def plot_delta():
             ax1.set_ylabel('d/g')
             ax1.set_zlabel('Amp. Prob. ')
             ax1.set_yticks(np.array(d)/g)
+            ax1.view_init(30,-40,0)
+            ax1.set_yticks([0,1,2],np.array(d)/g)
+            ax1.set_zlim(0,1)
+
             '''N=2'''
             fig2 = plt.figure(figsize=(16,9))
             ax2 = fig2.add_subplot(projection='3d')
@@ -456,6 +463,10 @@ def plot_delta():
             ax2.set_ylabel('d/g')
             ax2.set_zlabel('Amp. Prob. ')
             ax2.set_yticks(np.array(d)/g)
+            ax2.view_init(30,-40,0)
+            ax2.set_yticks([0,1,2],np.array(d)/g)
+            ax2.set_zlim(0,1)
+
             '''PAULI'''
             fig_pauli = plt.figure(figsize=(16,9))
             ax_pauli = fig_pauli.add_subplot(projection='3d')
@@ -464,6 +475,10 @@ def plot_delta():
             ax_pauli.set_ylabel('d/g')
             ax_pauli.set_zlabel('Valor medio <>')
             ax_pauli.set_yticks(np.array(d)/g)
+            ax_pauli.view_init(30,-40,0)
+            ax_pauli.set_yticks([0,1,2],np.array(d)/g)
+            ax_pauli.set_zlim(-1,1)
+
             '''ENTROPIA VON NEUMAN Y LINEAL'''
             fig_S = plt.figure(figsize=(16,9))
             ax_Slin = fig_S.add_subplot(121,projection='3d')
@@ -474,8 +489,13 @@ def plot_delta():
             ax_Slin.set_ylabel('d/g')
             ax_Svn.set_ylabel('d/g')
             ax_Svn.set_xlabel('gt')
+            ax_Svn.view_init(30,-40,0)
+            ax_Slin.view_init(30,-40,0)
+            ax_Svn.set_yticks([0,1,2],np.array(d)/g)
+            ax_Slin.set_yticks([0,1,2],np.array(d)/g)
+            # ax_Svn.set_zlim(0,1)
+            ax_Slin.set_zlim(0,1)
     
-
             '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
             fig_Sr = plt.figure(figsize=(16,9))
             ax_Srlin = fig_Sr.add_subplot(131,projection='3d')
@@ -491,9 +511,19 @@ def plot_delta():
             ax_Con.set_xlabel('gt')
             ax_Srlin.set_xlabel('gt')
             ax_Srvn.set_xlabel('gt')
+            ax_Srvn.view_init(30,-40,0)
+            ax_Srlin.view_init(30,-40,0)
+            ax_Con.view_init(30,-40,0)
+            ax_Srvn.set_yticks([0,1,2],np.array(d)/g)
+            ax_Srlin.set_yticks([0,1,2],np.array(d)/g)
+            ax_Con.set_yticks([0,1,2],np.array(d)/g)
+            # ax_Srvn.set_zlim(0,1)
+            ax_Srlin.set_zlim(0,1)
+            ax_Con.set_zlim(0,1)
+
     
             #AHORA HACEMOS EL LOOP ENTRE LOS ARCHIVOS DE DIFERENTES PARAMETROS Y LOS PONEMOS EN SU CORRESPONDIENTE GRAFICO Y EJE
-            for d in d:
+            for i,d in enumerate(d):
                 g_str=str(g).replace('.','_')
                 k_str=str(k).replace('.','_')
                 J_str=str(J).replace('.','_')
@@ -510,7 +540,7 @@ def plot_delta():
                 '''----DATOS DE LOS PLOTS----'''
 
                 '''--- N=0 ---'''
-                line0,=ax0.plot(g*t, data['pr(gg0)'], zs=d/g, zdir='y', color=colors[0], alpha=0.8)
+                line0,=ax0.plot(g*t, data['pr(gg0)'], zs=i, zdir='y', color=colors[0], alpha=0.8)
                 ax0.legend([line0],[data.keys()[0]])
                 # plot_coherencias(9,ax0)#,0) #N=0
                 # # plot_coherencias(3,ax11) #N=1
@@ -526,17 +556,17 @@ def plot_delta():
 
                 
                 '''--- N=1 ---'''
-                line11,=ax1.plot(g*t,data['pr(gg1)'],zs=d/g, zdir='y', color=colors[0], alpha=0.8)
-                line12,=ax1.plot(g*t,data['pr(eg0+ge0)'],zs=d/g, zdir='y', color=colors[1], alpha=0.8)
-                line13,=ax1.plot(g*t,data['pr(ge0-eg0)'],zs=d/g, zdir='y', color=colors[2], alpha=0.8)
+                line11,=ax1.plot(g*t,data['pr(gg1)'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                line12,=ax1.plot(g*t,data['pr(eg0+ge0)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
+                line13,=ax1.plot(g*t,data['pr(ge0-eg0)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
                 ax1.legend([line11,line12,line13],[data.keys()[1],data.keys()[2],data.keys()[3]])
                 
                 '''--- N=2 ---'''
 
-                line21,=ax2.plot(g*t,data['pr(gg2)'],zs=d/g, zdir='y', color=colors[0], alpha=0.8)
-                line22,=ax2.plot(g*t,data['pr(eg1+ge1)'],zs=d/g, zdir='y', color=colors[1], alpha=0.8)
-                line23,=ax2.plot(g*t,data['pr(eg1-ge1)'],zs=d/g, zdir='y', color=colors[2], alpha=0.8)
-                line24,=ax2.plot(g*t,data['pr(ee0)'],zs=d/g, zdir='y', color=colors[3], alpha=0.8)
+                line21,=ax2.plot(g*t,data['pr(gg2)'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                line22,=ax2.plot(g*t,data['pr(eg1+ge1)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
+                line23,=ax2.plot(g*t,data['pr(eg1-ge1)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
+                line24,=ax2.plot(g*t,data['pr(ee0)'],zs=i, zdir='y', color=colors[3], alpha=0.8)
                 ax2.legend([line21,line22,line23,line24],[data.keys()[4],data.keys()[5],data.keys()[6],data.keys()[7]])
                 # '''--- N=3 ---'''
 
@@ -550,17 +580,17 @@ def plot_delta():
     
                 '''--- VM Pauli ---'''
 
-                line_p0,=ax_pauli.plot(g*t,data['1/2 <sz1+sz2>'],zs=d/g, zdir='y', color=colors[0], alpha=0.8)
-                line_p1,=ax_pauli.plot(g*t,data['<sx1>'],zs=d/g, zdir='y', color=colors[1], alpha=0.8)
-                line_p2,=ax_pauli.plot(g*t,data['<sx2>'],zs=d/g, zdir='y', color=colors[2], alpha=0.8)
+                line_p0,=ax_pauli.plot(g*t,data['1/2 <sz1+sz2>'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                line_p1,=ax_pauli.plot(g*t,data['<sx1>'],zs=i, zdir='y', color=colors[1], alpha=0.8)
+                line_p2,=ax_pauli.plot(g*t,data['<sx2>'],zs=i, zdir='y', color=colors[2], alpha=0.8)
 
                 ax_pauli.legend([line_p0,line_p1,line_p2],[data.keys()[11],data.keys()[12],data.keys()[13]])
 
                 '''--- Entropias ---'''
                 #PLOT PARA LAS ENTROPIAS
                 
-                lineSvn,=ax_Svn.plot(g*t,data['S von Neuman tot'],zs=d/g, zdir='y', color=colors[0], alpha=0.8)
-                lineSlin,=ax_Slin.plot(g*t,data['S lineal tot'],zs=d/g, zdir='y', color=colors[1], alpha=0.8)
+                lineSvn,=ax_Svn.plot(g*t,data['S von Neuman tot'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                lineSlin,=ax_Slin.plot(g*t,data['S lineal tot'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 ax_Svn.legend([lineSvn,lineSlin],['S_vN','S_lin'])
                 #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
 
@@ -568,9 +598,9 @@ def plot_delta():
                 #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
                 #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
 
-                lineSrvn,=ax_Srvn.plot(g*t,data['S vN atom'],zs=d/g, zdir='y', color=colors[0], alpha=0.8)
-                lineSrlin,=ax_Srlin.plot(g*t,data['S lin atom'],zs=d/g, zdir='y', color=colors[1], alpha=0.8)
-                lineCon,=ax_Con.plot(g*t,data['Concu atom'],zs=d/g, zdir='y', color=colors[2], alpha=0.8)
+                lineSrvn,=ax_Srvn.plot(g*t,data['S vN atom'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                lineSrlin,=ax_Srlin.plot(g*t,data['S lin atom'],zs=i, zdir='y', color=colors[1], alpha=0.8)
+                lineCon,=ax_Con.plot(g*t,data['Concu atom'],zs=i, zdir='y', color=colors[2], alpha=0.8)
 
                 ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN','S_lin','Conc'])
 
