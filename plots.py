@@ -98,6 +98,10 @@ def plot_gamma():
             ax0.set_xlabel('gt')
             ax0.set_ylabel('gamma/g')
             ax0.set_zlabel('Amp. Prob. ')
+            ax0.view_init(30,-40,0)
+            ax0.set_yticks([0,1,2],np.array(gamma)/g)
+            ax0.set_zlim(0,1)
+
             '''N=1'''
             fig1 = plt.figure(figsize=(16,9))
             ax1 = fig1.add_subplot(projection='3d')
@@ -106,6 +110,9 @@ def plot_gamma():
             ax1.set_ylabel('gamma/g')
             ax1.set_zlabel('Amp. Prob. ')
             ax1.set_yticks(np.array(gamma)/g)
+            ax1.view_init(30,-40,0)
+            ax1.set_yticks([0,1,2],np.array(gamma)/g)
+            ax1.set_zlim(0,1)
             '''N=2'''
             fig2 = plt.figure(figsize=(16,9))
             ax2 = fig2.add_subplot(projection='3d')
@@ -114,6 +121,9 @@ def plot_gamma():
             ax2.set_ylabel('gamma/g')
             ax2.set_zlabel('Amp. Prob. ')
             ax2.set_yticks(np.array(gamma)/g)
+            ax2.view_init(30,-40,0)
+            ax2.set_yticks([0,1,2],np.array(gamma)/g)
+            ax2.set_zlim(0,1)
             '''PAULI'''
             fig_pauli = plt.figure(figsize=(16,9))
             ax_pauli = fig_pauli.add_subplot(projection='3d')
@@ -122,6 +132,9 @@ def plot_gamma():
             ax_pauli.set_ylabel('gamma/g')
             ax_pauli.set_zlabel('Valor medio <>')
             ax_pauli.set_yticks(np.array(gamma)/g)
+            ax_pauli.view_init(30,-40,0)
+            ax_pauli.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_pauli.set_zlim(-1,1)
             '''ENTROPIA VON NEUMAN Y LINEAL'''
             fig_S = plt.figure(figsize=(16,9))
             ax_Slin = fig_S.add_subplot(121,projection='3d')
@@ -132,7 +145,12 @@ def plot_gamma():
             ax_Slin.set_ylabel('gamma/g')
             ax_Svn.set_ylabel('gamma/g')
             ax_Svn.set_xlabel('gt')
-    
+            ax_Svn.view_init(30,-40,0)
+            ax_Svn.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_Svn.set_zlim(0,np.log(8))
+            ax_Slin.view_init(30,-40,0)
+            ax_Slin.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_Slin.set_zlim(0,1-1/8)
 
             '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
             fig_Sr = plt.figure(figsize=(16,9))
@@ -149,6 +167,15 @@ def plot_gamma():
             ax_Con.set_xlabel('gt')
             ax_Srlin.set_xlabel('gt')
             ax_Srvn.set_xlabel('gt')
+            ax_Srvn.view_init(30,-40,0)
+            ax_Srvn.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_Srvn.set_zlim(0,np.log(4))
+            ax_Srlin.view_init(30,-40,0)
+            ax_Srlin.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_Srlin.set_zlim(0,1-1/4)
+            ax_Con.view_init(30,-40,0)
+            ax_Con.set_yticks([0,1,2],np.array(gamma)/g)
+            ax_Con.set_zlim(0,1)
     
             #AHORA HACEMOS EL LOOP ENTRE LOS ARCHIVOS DE DIFERENTES PARAMETROS Y LOS PONEMOS EN SU CORRESPONDIENTE GRAFICO Y EJE
             for gamma_m in gamma:
@@ -269,6 +296,10 @@ def plot_x():
             ax0.set_xlabel('gt')
             ax0.set_ylabel('x/g')
             ax0.set_zlabel('Amp. Prob. ')
+            ax0.view_init(30,-40,0)
+            ax0.set_yticks([0,1,2],np.array(x)/g)
+            ax0.set_zlim(0,1)
+
             '''N=1'''
             fig1 = plt.figure(figsize=(16,9))
             ax1 = fig1.add_subplot(projection='3d')
@@ -277,6 +308,10 @@ def plot_x():
             ax1.set_ylabel('x/g')
             ax1.set_zlabel('Amp. Prob. ')
             ax1.set_yticks(np.array(x)/g)
+            ax1.view_init(30,-40,0)
+            ax1.set_yticks([0,1,2],np.array(x)/g)
+            ax1.set_zlim(0,1)
+
             '''N=2'''
             fig2 = plt.figure(figsize=(16,9))
             ax2 = fig2.add_subplot(projection='3d')
@@ -285,6 +320,10 @@ def plot_x():
             ax2.set_ylabel('x/g')
             ax2.set_zlabel('Amp. Prob. ')
             ax2.set_yticks(np.array(x)/g)
+            ax2.view_init(30,-40,0)
+            ax2.set_yticks([0,1,2],np.array(x)/g)
+            ax2.set_zlim(0,1)
+
             '''PAULI'''
             fig_pauli = plt.figure(figsize=(16,9))
             ax_pauli = fig_pauli.add_subplot(projection='3d')
@@ -293,6 +332,10 @@ def plot_x():
             ax_pauli.set_ylabel('x/g')
             ax_pauli.set_zlabel('Valor medio <>')
             ax_pauli.set_yticks(np.array(x)/g)
+            ax_pauli.view_init(30,-40,0)
+            ax_pauli.set_yticks([0,1,2],np.array(x)/g)
+            ax_pauli.set_zlim(-1,1)
+
             '''ENTROPIA VON NEUMAN Y LINEAL'''
             fig_S = plt.figure(figsize=(16,9))
             ax_Slin = fig_S.add_subplot(121,projection='3d')
@@ -303,6 +346,12 @@ def plot_x():
             ax_Slin.set_ylabel('x/g')
             ax_Svn.set_ylabel('x/g')
             ax_Svn.set_xlabel('gt')
+            ax_Svn.view_init(30,-40,0)
+            ax_Svn.set_yticks([0,1,2],np.array(x)/g)
+            ax_Svn.set_zlim(0,np.log(8))
+            ax_Slin.view_init(30,-40,0)
+            ax_Slin.set_yticks([0,1,2],np.array(x)/g)
+            ax_Slin.set_zlim(0,np.log(8))
     
 
             '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
@@ -320,6 +369,15 @@ def plot_x():
             ax_Con.set_xlabel('gt')
             ax_Srlin.set_xlabel('gt')
             ax_Srvn.set_xlabel('gt')
+            ax_Srvn.view_init(30,-40,0)
+            ax_Srvn.set_yticks([0,1,2],np.array(x)/g)
+            ax_Srvn.set_zlim(0,np.log(4))
+            ax_Srlin.view_init(30,-40,0)
+            ax_Srlin.set_yticks([0,1,2],np.array(x)/g)
+            ax_Srlin.set_zlim(0,np.log(4))
+            ax_Con.view_init(30,-40,0)
+            ax_Con.set_yticks([0,1,2],np.array(x)/g)
+            ax_Con.set_zlim(0,1)
     
             #AHORA HACEMOS EL LOOP ENTRE LOS ARCHIVOS DE DIFERENTES PARAMETROS Y LOS PONEMOS EN SU CORRESPONDIENTE GRAFICO Y EJE
             for x in x:
@@ -408,8 +466,9 @@ def plot_x():
 
 def plot_delta():
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
-    folder_names=["8_30_22 disipativo lineal","8_31_3 disipativo bs","8_31_8 unitario lineal","8_31_14 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    condiciones_iniciales=["gg1"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+    folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
+    folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
+    condiciones_iniciales=["w2"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
     for ci in condiciones_iniciales:
@@ -424,7 +483,7 @@ def plot_delta():
 
             #POR AHORA LOS PARAMETROS VAN A SER MANUALES, Y DEBERIAN SER LOS MISMOS QUE USAMOS EN LA SIMULACION. YO POR AHORA LA SIMULACION LARGA
             #LA HICE CON LOS PARAMETROS x=[0,1/4*g,1/2*g], d=[0,0.5*g,2*g], gamma=[0.1*g,2*g] ASI QUE CREO QUE ESOS VAN A QUEDAR ASI POR UN BUEN RATO
-            x=0#[0,1/4*g,1/2*g]
+            x=1/4*g#[0,1/4*g,1/2*g]
             d=[0,0.5*g,2*g]
             gamma=0.1*g#[0.1*g,2*g] 
             colors=['red','black','blue','green']
