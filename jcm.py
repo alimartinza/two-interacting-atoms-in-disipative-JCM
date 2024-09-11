@@ -41,6 +41,9 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
+#Espacio N=0 [9]
+
+# N=1 [3,6,10] N=2 [0,4,7,11] N=3 [1,5,8]
 
 w_0=1
 # g=0.01*w_0 #atom-cavity coupling
@@ -225,7 +228,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     
     #Espacio N=0 [9]
 
-    # N=1 [3,4,10] N=2 [0,5,6,11] N=3 [1,7,8]
+    # N=1 [3,6,10] N=2 [0,4,7,11] N=3 [1,5,8]
 
     #DEFINIMOS LA FUNCION PR QUE DADO UN ESTADO NOS DA SU PROYECTOR 
 
@@ -239,6 +242,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     '''---Simulacion numerica---'''
 
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    #DEFINIMOS LOS DISIPADORES SI HAY DISIPACION, Y SI NO, ENTONCES ESTA VACIO
     if disipation:
         l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
     elif not disipation:
@@ -259,42 +263,50 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
                                                                                             '9,10':[],'9,11':[],
                                                                                                     '10,11':[]}
     
+    #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
     ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2)','pr(ge2)',
           'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
     ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(ge0-eg0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2),pr(ge2),pr(ee1),
            0.5*(sz1+sz2),sx1,sx2]
+    
     expectStartTime=time.process_time()
     ops_expect=np.empty((len(ops),len(sol.states)))
     for i in range(len(sol.states)): 
         for j in range(len(ops)):
             ops_expect[j][i]=expect(ops[j],sol.states[i])
     expectRunTime=time.process_time()-expectStartTime
-    """----Coherencias ---
-    coherenciasStartTime = time.process_time()
-    if not disipation:
-        for i in range(len(sol.states)):
-            for j in range(12): 
-                for l in range(j+1,12):
-                    coherencias[str(j)+','+str(l)].append(sol.states[i][j]*sol.states[i][l])        
-    else:
-        for j in range(12): 
-            for l in range(j+1,12):
-                c_help=np.zeros(len(sol.states),dtype='complex')
-                for i in range(len(sol.states)):
-                    c_help[i]=sol.states[i][j][l]
-                    coherencias[str(j)+','+str(l)].append(c_help[i])
-    coherenciasRunTime = time.process_time()-coherenciasStartTime
-    """
+
     #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     pasajeStartTime=time.process_time()
     estados=np.empty_like(sol.states)
     for j in range(len(sol.states)):
         estados[j]=sol.states[j]
 
+    #DEFINIMOS NUESTRO DATAFRAME DONDE VAMOS A GUARDAR TODO
     data=pd.DataFrame()
 
     for nombres,valores_de_expectacion in zip(ops_nomb,ops_expect):
         data[nombres]=valores_de_expectacion
+    for key in coherencias.keys():
+        data[key]=np.zeros(len(sol.states))
+
+    #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+    coherenciasStartTime = time.process_time()
+    if not disipation:
+        for i in range(len(sol.states)):
+            for j in range(12): 
+                for l in range(j+1,12):
+                    data[str(j)+','+str(l)][i]=sol.states[i][j]*sol.states[i][l]      
+    else:
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help=np.zeros(len(sol.states),dtype='complex')
+                for i in range(len(sol.states)):
+                    c_help[i]=sol.states[i][j][l]
+                    data[str(j)+','+str(l)]=c_help
+    coherenciasRunTime = time.process_time()-coherenciasStartTime
+    print(f"coherenciasRunTime: {coherenciasRunTime}")
+
     pasajeRunTime=time.process_time() - pasajeStartTime
     entropiaStartTime = time.process_time()
     eigenvals,eigenvecs,data['S von Neuman tot']=entropy_vn(estados)
@@ -313,8 +325,8 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
 
     print("-----Tiempos de computo----")
     print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
-    #PLOT PARA LA DINAMICA (POBLACIONES Y COHERENCIAS) DEL SIST. TRAZANDO SOBRE LOS FOTONES
     
+    #GUARDAMOS EL DATAFRAME EN CSV. 
     g_str=str(g).replace('.','_')
     k_str=str(k).replace('.','_')
     J_str=str(J).replace('.','_')
@@ -322,13 +334,13 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     x_str=str(x).replace('.','_')
     gamma_str=str(gamma).replace('.','_')
     p_str=str(p).replace('.','_')
-    parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
+    # parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
     csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
-    #HACEMOS UN SUBPLOT PARA CADA ESPACIO DE N EXITACIONES + UNO PARA EL VALOR MEDIO DE LAS MATRICES DE PAULI
+
     '''--------------SAVE TO CSV OR TO QU FILE-------------------'''
     data.to_csv(csvname)
-    # fileio.qsave(sol.states,parameters_name+'sol states')
-    # fileio.qsave(atoms_states,parameters_name+'atom states')
+    #EN ESTA VERSION NO GUARDAMOS LOS ESTADOS DIAGONALIZADOS PORQUE OCUPAN ESPACIO
+    #  Y TIEMPO Y QUIZAS COMBIENE HACERLO SOLO ESPECIALMENTE PARA LA SIMULACION QUE QUEREMOS ANALIZAR
     # fileio.qsave(eigenvecs,parameters_name+'eigen states')
 
 
@@ -375,26 +387,5 @@ for disipation in [True,False]:
                     for d in d:
                         gamma=[0.1*g,2*g]
                         for gamma in gamma:
-                            evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)#,plot_show=True,save_plot=False)
+                            evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
-
-'''----PARA PLOTS---'''
-# for psi0,psi0_folder in zip(psi0,psi0_folder):
-#     folders=['0','1','2','3','pauli','entropia','entropia_spin-spin']
-#     for folder in folders:
-#         folder_path=path+'\\'+psi0_folder+'\\'+folder
-#         if not os.path.exists(folder_path):
-#             os.makedirs(folder_path)
-#     psi0_path=path+'\\'+psi0_folder
-#     os.chdir(psi0_path)
-#     g=[0.001*w_0]
-#     for g in g:
-#         p=0.005*g
-#         k=0.1*g
-#         x=[0,1/4*g,0.5*g]
-#         for x in x:
-#             d=[0,0.5*g,2*g]
-#             for d in d:
-#                 gamma=[0.1*g,2*g]
-#                 for gamma in gamma:
-#                     main(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation)#,plot_show=True,save_plot=False)
