@@ -21,8 +21,8 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-folder_names=["8_30_22 disipativo lineal","8_31_3 disipativo bs","8_31_8 unitario lineal","8_31_14 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+# folder_names=["8_30_22 disipativo lineal","8_31_3 disipativo bs","8_31_8 unitario lineal","8_31_14 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
+# condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
 #DEFINIMOS LOS PARAMETROS QUE NO VAMOS A QUERER MODIFICAR EN LOS GRAFICOS
 w0=1
@@ -77,10 +77,10 @@ def plot_coherencias(n:int,ax,xlabel='gt',ylabel='Abs(Coh)'):
     # # ax[n_ax].set_xlabel(xlabel)
     # ax[n_ax].set_ylabel(ylabel)
 
-def plot_gamma():
+def plot_gamma(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    condiciones_iniciales=["eg0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+    # condiciones_iniciales=["eg0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
     for ci in condiciones_iniciales:
@@ -287,7 +287,7 @@ def plot_gamma():
                 ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN','S_lin','Conc'])
             
             script_path=os.path.dirname(__file__)            
-            relative_path="graficos resumen"+"\\"+ci
+            relative_path="graficos resumen"+"\\"+ci+"\\"+"gamma"
             path=os.path.join(script_path, relative_path)
             if os.path.exists(path):
                 os.chdir(path)
@@ -301,13 +301,12 @@ def plot_gamma():
             fig_pauli.savefig(ci+' pauli '+folder_names,dpi=100)
             fig_S.savefig(ci+' entropia '+folder_names,dpi=100)
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
+            plt.close()
 
-
-
-def plot_x():
+def plot_x(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+    # condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
     for ci in condiciones_iniciales:
@@ -364,7 +363,7 @@ def plot_x():
             ax2.set_yticks([0,1,2],np.array(x)/g)
             ax2.view_init(30,-40,0)
             ax2.set_yticks([0,1,2],np.array(x)/g)
-            ax2.set_zlim(0,1)
+            # ax2.set_zlim(0,1)
 
             '''PAULI'''
             fig_pauli = plt.figure(figsize=(16,9))
@@ -502,15 +501,29 @@ def plot_x():
                 lineCon,=ax_Con.plot(g*t,data['Concu atom'],zs=i, zdir='y', color=colors[2], alpha=0.8)
 
                 ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN','S_lin','Conc'])
+            
+            script_path=os.path.dirname(__file__)            
+            relative_path="graficos resumen"+"\\"+ci+"\\"+"x"
+            path=os.path.join(script_path, relative_path)
+            if os.path.exists(path):
+                os.chdir(path)
+            else: 
+                os.makedirs(path)
+                os.chdir(path)
 
+            fig0.savefig(ci+' n=0 '+folder_names,dpi=100)
+            fig2.savefig(ci+' n=2 '+folder_names,dpi=100)
+            fig1.savefig(ci+' n=1 '+folder_names,dpi=100)
+            fig_pauli.savefig(ci+' pauli '+folder_names,dpi=100)
+            fig_S.savefig(ci+' entropia '+folder_names,dpi=100)
+            fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
+            plt.close()
 
-    plt.show()
-
-def plot_delta():
+def plot_delta(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    condiciones_iniciales=["w2"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
+    # folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
+    # condiciones_iniciales=["w2"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
     for ci in condiciones_iniciales:
@@ -566,7 +579,7 @@ def plot_delta():
             ax2.set_yticks([0,1,2],np.array(d)/g)
             ax2.view_init(30,-40,0)
             ax2.set_yticks([0,1,2],np.array(d)/g)
-            ax2.set_zlim(0,1)
+            # ax2.set_zlim(0,1)
 
             '''PAULI'''
             fig_pauli = plt.figure(figsize=(16,9))
@@ -707,6 +720,24 @@ def plot_delta():
                 ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN','S_lin','Conc'])
 
 
-    plt.show()
+            script_path=os.path.dirname(__file__)            
+            relative_path="graficos resumen"+"\\"+ci+"\\"+"delta"
+            path=os.path.join(script_path, relative_path)
+            if os.path.exists(path):
+                os.chdir(path)
+            else: 
+                os.makedirs(path)
+                os.chdir(path)
 
-plot_gamma()
+            fig0.savefig(ci+' n=0 '+folder_names,dpi=100)
+            fig2.savefig(ci+' n=2 '+folder_names,dpi=100)
+            fig1.savefig(ci+' n=1 '+folder_names,dpi=100)
+            fig_pauli.savefig(ci+' pauli '+folder_names,dpi=100)
+            fig_S.savefig(ci+' entropia '+folder_names,dpi=100)
+            fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
+            plt.close()
+#CONDICIONES INICIALES EN FOLDER condiciones_iniciales=["ee0","eg0","gg1","eg0-","eg1-","eg1+ge0","gg2","w1","eg1-ge0"] 
+#PARECE NO FUNCIONAR CON MAS DE UNA CONDICION INICIAL A LA VEZ
+plot_gamma(['w1'])
+plot_delta(["w1"])
+plot_x(["w1"])
