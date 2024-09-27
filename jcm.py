@@ -60,7 +60,7 @@ w_0=1
 def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
 
-    def entropy_vn(rho):
+    def entropy_vn_rho(rho):
         """
         Von-Neumann entropy of density matrix
 
@@ -102,6 +102,39 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
 
         return eigenvals,eigenvecs,s
     
+    def entropy_vn(evals):
+        """
+        Von-Neumann entropy of density matrix
+
+        Parameters
+        ----------
+        rho : qobj or list of qobjs
+            Density matrix.
+        base : {e,2}
+            Base of logarithm.
+        sparse : {False,True}
+            Use sparse eigensolver.
+
+        Returns
+        -------
+        entropy : list of floats
+            Von-Neumann entropy of `rho`.
+
+        Examples
+        --------
+        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
+        >>> entropy_vn(rho,2)
+        1.0
+
+        """
+        l=len(evals)
+        s=np.zeros(l)     
+        for i in range(l):
+            eigenvals= evals[i]
+            nzvals = eigenvals[i][eigenvals[i] > 0]
+            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
+        return s
+
     def entropy_vn_atom(rho):
         """
         Von-Neumann entropy of density matrix
@@ -217,6 +250,49 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
             c[i]=max(0, lsum)
         return c
     
+    def fases(sol):
+        """params:
+        -sol: solucion numerica de la evolucion temporal"""
+        
+        len_t=len(sol.states)
+        if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
+            rho0 = ket2dm(sol.states[0])
+        else:
+            rho0 = sol.states[0]
+        eval0,evec0=rho0.eigenstates()
+        eigenvals_t = np.array([eval0])
+        max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+        psi0 = evec0[max_eigenvalue_idx]
+        psi_old = psi0
+        Psi = []
+        norma = []
+        pan = 0
+        Pan = []
+        argumento = np.zeros(len_t)
+        signo = 0
+        for i in range(len_t):
+            if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
+                rho = ket2dm(sol.states[i])
+            else:
+                rho = sol.states[i]
+            
+            eigenval,eigenvec = rho.eigenstates()
+            eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
+
+            psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+    
+            # norma.append(psi.overlap(psi0))
+
+            pan += np.angle(psi.overlap(psi_old))
+            Pan.append(pan - np.angle(psi.overlap(psi0)))
+            psi_old = psi
+
+            # Almaceno el argumento para cada tiempo
+            argumento[i] = np.angle(psi0.dag() * psi)
+
+        eigenvals_t=np.delete(eigenvals_t,0,axis=0)
+        Pan = np.array(Pan)
+        return np.unwrap(Pan), argumento, np.array(eigenvals_t)
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
     def f():
@@ -249,6 +325,8 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         l_ops=[]
     print("------Comenzando nuevas condiciones iniciales-----")
     sol=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
+
+    fg_pan,arg,eigenvals_t = fases(sol)
 
     #Hacemos un array de las coherencias y las completamos con el for
     coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
@@ -289,7 +367,6 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         data[nombres]=valores_de_expectacion
     for key in coherencias.keys():
         data[key]=np.zeros(len(sol.states))
-
     #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
     coherenciasStartTime = time.process_time()
     if not disipation:
@@ -306,10 +383,11 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
                     data[str(j)+','+str(l)]=c_help
     coherenciasRunTime = time.process_time()-coherenciasStartTime
     print(f"coherenciasRunTime: {coherenciasRunTime}")
-
+    data['FG']=fg_pan
     pasajeRunTime=time.process_time() - pasajeStartTime
     entropiaStartTime = time.process_time()
-    eigenvals,eigenvecs,data['S von Neuman tot']=entropy_vn(estados)
+    
+    data['S von Neuman tot']=entropy_vn(eigenvals_t)
     data['S lineal tot']=entropy_linear(estados)
     atoms_states=np.empty_like(sol.states)
     for j in range(len(sol.states)):
@@ -321,7 +399,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     data['Concu atom']=concurrence(atoms_states)
     entropiaRunTime=time.process_time() - entropiaStartTime
     for i in range(12):
-        data['Eigenvalue '+str(i)]=eigenvals[:,i]
+        data['Eigenvalue '+str(i)]=eigenvals_t[:,i]
 
     print("-----Tiempos de computo----")
     print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"

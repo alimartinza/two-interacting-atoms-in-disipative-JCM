@@ -52,6 +52,20 @@ k=0.1*g
 x=[0,1/4*g,0.5*g]
 d=[0,0.5*g,2*g]
 gamma=[0.1*g,2*g]
+acoplamiento='lineal'
+if acoplamiento=='lineal':
+    a=1/2
+elif acoplamiento=='bs':
+    a=1
+else:
+    print(f"Acoplamietno tiene que ser lineal o bs pero es {acoplamiento}")
+    exit()
 
+def beta_n(n_:int):
+    return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
+def gamma_n(n_:int,a:float):
+    return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
+def eta_n(n_,a):
+    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
 # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
-E=[[-d+J],[]]
+E=[[-d+J],[1/2*x-d+2*k+np.sqrt(8*g**2+(2*k-2*J+d-x)**2),1/2*x-d+2*k-np.sqrt(8*g**2+(2*k-2*J+d-x)**2),-2*k-J],[]]
