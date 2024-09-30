@@ -51,8 +51,10 @@ w_0=1
 #HAGO UNA FUNCION DONDE PONGO TODO LO QUE HACE EL CODIGO. LA IDEA ERA HACERLO ASI PARA PODER HACER ITERACIONES SOBRE LOS PARAMETROS, PERO EN ESTE
 #CASO NO ES NECESARIO... PERO QUEDO ASI
 
-def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
-   
+def evolucion(psi0:list,psi0_names:list,w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
+    if len(psi0) != len(psi0_names):
+        print(f"ERROR: La lista de condiciones iniciales y sus nombres tienen que tener la misma longitud pero tienen tamanios {len(psi0)} y {len(psi0_names)}")
+        exit()
     #DEFINIMOS CUAL MODELO PARA EL ACOPLAMIENTO QUE VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
     def f():
@@ -60,6 +62,9 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
             return 1
         elif acoplamiento=='bs':
             return sqrtN
+        else:
+            print(f"ERROR: el acoplamiento tiene que ser lineal o bs pero es {acoplamiento}")
+            exit()
 
     #Espacio N=0 [9]
 
@@ -161,6 +166,16 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
 
         return GP,EV
 
+    g_str=str(g).replace('.','_')
+    k_str=str(k).replace('.','_')
+    J_str=str(J).replace('.','_')
+    d_str=str(d).replace('.','_')
+    x_str=str(x).replace('.','_')
+    gamma_str=str(gamma).replace('.','_')
+    p_str=str(p).replace('.','_')
+    parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
+    csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
+
 
     '''---Simulacion numerica---'''
 
@@ -173,75 +188,34 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     
     #SIMULACIONES PARA LAS CONDICIONES INICIALES QUE COMPARAMOS. LA ULTIMA ES UN ESTADO QUE ES DENTRO DEL BLOQUE DE MISMA CANTIDAD DE EXITACIONES,
     #DE LOS MAS ENTRELAZADO POSIBLE
-    sol=mesolve(H,eg0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
-    pan,arg,eigenvals_t = fases(sol)
-
-    sol_sim=mesolve(H,(eg0+ge0).unit(),t,c_ops=l_ops,progress_bar=True) 
-    pan_sim,arg,eigenvals_t_sim=fases(sol_sim)
-
-    sol_asim=mesolve(H,(eg0-ge0).unit(),t,c_ops=l_ops,progress_bar=True) 
-    pan_asim,arg,eigenvals_t_asim=fases(sol_asim)
-
-    sol1=mesolve(H,eg1,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
-    pan1,arg,eigenvals_t1 = fases(sol1)
-
-    sol_sim1=mesolve(H,(eg1+ge1).unit(),t,c_ops=l_ops,progress_bar=True) 
-    pan_sim1,arg,eigenvals_t_sim1=fases(sol_sim1)
-
-    sol_asim1=mesolve(H,(eg1-ge1).unit(),t,c_ops=l_ops,progress_bar=True) 
-    pan_asim1,arg,eigenvals_t_asim1=fases(sol_asim1)
-
-    # sol_w=mesolve(H,(ge0+eg0-ge0+gg1).unit(),t,c_ops=l_ops,progress_bar=True)
-    # pan_w,arg,eigenvals_t_w=fases(sol_w)
-
-    """#########################################
-    ####    GRAFICOS AUTOVALORES NUMERICOS  ####
-    # ##########################################"""
-    
     cmap=mpl.colormaps["plasma"]
-    colors=cmap(np.linspace(0,1,12))
-    fig_autoval=plt.figure()
-    ax_eval=fig_autoval.add_subplot()
-    for i,evals in enumerate(eigenvals_t.transpose()):
-        ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
-    ax_eval.set_xlabel(r"$gt$")
-    ax_eval.set_ylabel("Autovalores")
-    plt.show()
+    colors_evals=cmap(np.linspace(0,1,12))
+    colors=cmap(np.linspace(0,1,len(psi0)))
 
     fig_autoval=plt.figure()
     ax_eval=fig_autoval.add_subplot()
-    for i,evals in enumerate(eigenvals_t_sim.transpose()):
-        ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
-    ax_eval.set_xlabel(r"$gt$")
-    ax_eval.set_ylabel("Autovalores sim")
-    plt.show()
-
-    fig_autoval=plt.figure()
-    ax_eval=fig_autoval.add_subplot()
-    for i,evals in enumerate(eigenvals_t_asim.transpose()):
-        ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
-    ax_eval.set_xlabel(r"$gt$")
-    ax_eval.set_ylabel("Autovalores asim")
-    plt.show()
-
-    # fig_autoval=plt.figure()
-    # ax_eval=fig_autoval.add_subplot()
-    # for i,evals in enumerate(eigenvals_t_w.transpose()):
-    #     ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
-    # ax_eval.set_xlabel(r"$gt$")
-    # ax_eval.set_ylabel("Autovalores w")
-    # plt.show()
 
     fig_fg=plt.figure()
-    fig_fg.suptitle("Fase Geometrica")
+    if disipation == True:
+        fig_fg.suptitle(f"Fase Geometrica no-uni {acoplamiento}")
+    elif disipation == False:
+        fig_fg.suptitle(f"Fase Geometrica uni {acoplamiento}")
+
     ax_fg=fig_fg.add_subplot()
-    ax_fg.plot(g*t,pan,color='black',label=r"$\psi_0=|eg0>$")
-    ax_fg.plot(g*t,pan_sim,color='red',label=r"$\psi_0=|eg0>+|ge0>$")
-    ax_fg.plot(g*t,pan_asim,color='blue',label=r"$\psi_0=|eg0>-|ge0>$")
-    ax_fg.plot(g*t,pan1,linestyle='dashed',color='black',label=r"$\psi_0=|eg1>$")
-    ax_fg.plot(g*t,pan_sim1,linestyle='dashed',color='red',label=r"$\psi_0=|eg1>+|ge1>$")
-    ax_fg.plot(g*t,pan_asim1,linestyle='dashed',color='blue',label=r"$\psi_0=|eg1>-|ge1>$")
-    # ax_fg.plot(g*t,pan_w,color='grey',label=r"$\psi_0=|w>$")
+    ax_fg.set_title(parameters_name)
+    for i,psi in enumerate(psi0):
+
+        sol=mesolve(H,psi,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
+        fg_pan,arg,eigenvals_t = fases(sol)
+        
+        for j,evals in enumerate(eigenvals_t.transpose()):
+            ax_eval.scatter(g*t,evals,color=colors_evals[j],label=f"$\lambda_{i}$")
+        ax_eval.set_xlabel(r"$gt$")
+        ax_eval.set_ylabel("Autovalores")
+
+
+        ax_fg.plot(g*t,fg_pan,color=colors[i],label=rf"$\psi_0=|{psi0_names[i]}>$")
+    
     ax_fg.legend()
     ax_fg.grid()
     plt.show()
@@ -249,16 +223,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     #ESTO ULTIMO NO HACE NADA, ESTA HECHO PARA GUARDAR LOS DATOS O LOS GRAFICOS DIRECTO EN LA COMPU. PERO AHORA ESTA COMENTADO ASI QUE NO HACE NADA
 
     #GUARDAMOS EL DATAFRAME EN CSV. 
-    g_str=str(g).replace('.','_')
-    k_str=str(k).replace('.','_')
-    J_str=str(J).replace('.','_')
-    d_str=str(d).replace('.','_')
-    x_str=str(x).replace('.','_')
-    gamma_str=str(gamma).replace('.','_')
-    p_str=str(p).replace('.','_')
-    # parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
-    csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
-
+    
     '''--------------SAVE TO CSV OR TO QU FILE-------------------'''
     # data.to_csv(csvname)
     #EN ESTA VERSION NO GUARDAMOS LOS ESTADOS DIAGONALIZADOS PORQUE OCUPAN ESPACIO
@@ -267,6 +232,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
 
 
 #ACA ES DONDE CORRE EL CODIGO DIGAMOS. LOS PARAMETROS HAY QUE CAMBIARLOS DESDE ACA.
+
 disipation=False #PUEDE SER False o True. False para unitario, True para decoherencia
 acoplamiento='bs' #por ahora no vi que haya cambios significativos, pero puede ser "lineal" o "bs". Solo es un acoplamiento que depende del numero de fotones de la cavidad, pero no hace mucho la verdad
 g=0.001*w_0 #acoplamiento atomo-cavidad
@@ -278,8 +244,20 @@ gamma=0.1*g #rate de perdida de fotones (igual que el p)
 J=0 #interaccion tipo ising entre atomos 
 t_final=25000
 steps=2000
+psi0=[eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
+psi0_names=['eg0','eg0+ge0','eg0-ge0','eg1-ge1']
+for disipation in [True,False]:
+    for acoplamiento in ['lineal','bs']:
+        g=[0.001*w_0]
+        for g in g:
+            p=0.005*g
+            k=0.1*g
+            x=[0,1/4*g,0.5*g]
+            for x in x:
+                d=[0,0.5*g,2*g]
+                for d in d:
+                    evolucion(psi0,psi0_names,w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
-evolucion(w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
 
 #Lo de abajo no importa, es lo de las iteraciones que decia al principio para hacer un barrido de parametros y que guarde automaticamente los graficos
