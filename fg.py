@@ -21,6 +21,7 @@ sp2=tensor(qeye(2),sigmap(),qeye(3))
 sz2=tensor(qeye(2),sigmaz(),qeye(3))
 sx2=tensor(qeye(2),sigmax(),qeye(3))
 
+#DEFINIMOS LOS VECTORES DE LA BASE
 e=basis(2,0)
 gr=basis(2,1)
 
@@ -46,19 +47,13 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 # N=1 [3,6,10] N=2 [0,4,7,11] N=3 [1,5,8]
 
 w_0=1
-# g=0.01*w_0 #atom-cavity coupling
-# k=0 #atom-atom photon exchange rate
-# J=0 #spin-spin coupling por lo que estuve viendo el efecto de k-J es enorme en la seleccion del estado estacionario
-# d=2*g #atom frequency
-# x=1/8*g #kerr medium
 
-# #gamma/g>1 weak coupling es decir que el acople atom-field es weak en comparacion al entorno, gamma/g<1 strong coupling
-# gamma=2*g
-# p=0.005*g
-
+#HAGO UNA FUNCION DONDE PONGO TODO LO QUE HACE EL CODIGO. LA IDEA ERA HACERLO ASI PARA PODER HACER ITERACIONES SOBRE LOS PARAMETROS, PERO EN ESTE
+#CASO NO ES NECESARIO... PERO QUEDO ASI
 
 def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
-    #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
+   
+    #DEFINIMOS CUAL MODELO PARA EL ACOPLAMIENTO QUE VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
     def f():
         if acoplamiento=='lineal':
@@ -78,17 +73,6 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     '''---Hamiltoniano---'''
 
     H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-
-    '''---Simulacion numerica---'''
-
-    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
-    #DEFINIMOS LOS DISIPADORES SI HAY DISIPACION, Y SI NO, ENTONCES ESTA VACIO
-    if disipation:
-        l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
-    elif not disipation:
-        l_ops=[]
-    print("------Comenzando nuevas condiciones iniciales-----")
-    sol=mesolve(H,eg0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
 
     """
     ###################################################################
@@ -178,13 +162,37 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         return GP,EV
 
 
+    '''---Simulacion numerica---'''
+
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    #DEFINIMOS LOS DISIPADORES SI HAY DISIPACION, Y SI NO, ENTONCES ESTA VACIO
+    if disipation:
+        l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+    elif not disipation:
+        l_ops=[]
+    
+    #SIMULACIONES PARA LAS CONDICIONES INICIALES QUE COMPARAMOS. LA ULTIMA ES UN ESTADO QUE ES DENTRO DEL BLOQUE DE MISMA CANTIDAD DE EXITACIONES,
+    #DE LOS MAS ENTRELAZADO POSIBLE
+    sol=mesolve(H,eg0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
     pan,arg,eigenvals_t = fases(sol)
-    sol_sim=mesolve(H,(eg0+ge0).unit(),t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
-    sol_asim=mesolve(H,(eg0-ge0).unit(),t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
+
+    sol_sim=mesolve(H,(eg0+ge0).unit(),t,c_ops=l_ops,progress_bar=True) 
     pan_sim,arg,eigenvals_t_sim=fases(sol_sim)
+
+    sol_asim=mesolve(H,(eg0-ge0).unit(),t,c_ops=l_ops,progress_bar=True) 
     pan_asim,arg,eigenvals_t_asim=fases(sol_asim)
-    sol_w=mesolve(H,(ge0+eg0+2*gg1).unit(),t,c_ops=l_ops,progress_bar=True)
-    pan_w,arg,eigenvals_t_sim=fases(sol_w)
+
+    sol1=mesolve(H,eg1,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
+    pan1,arg,eigenvals_t1 = fases(sol1)
+
+    sol_sim1=mesolve(H,(eg1+ge1).unit(),t,c_ops=l_ops,progress_bar=True) 
+    pan_sim1,arg,eigenvals_t_sim1=fases(sol_sim1)
+
+    sol_asim1=mesolve(H,(eg1-ge1).unit(),t,c_ops=l_ops,progress_bar=True) 
+    pan_asim1,arg,eigenvals_t_asim1=fases(sol_asim1)
+
+    # sol_w=mesolve(H,(ge0+eg0-ge0+gg1).unit(),t,c_ops=l_ops,progress_bar=True)
+    # pan_w,arg,eigenvals_t_w=fases(sol_w)
 
     """#########################################
     ####    GRAFICOS AUTOVALORES NUMERICOS  ####
@@ -216,13 +224,13 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     ax_eval.set_ylabel("Autovalores asim")
     plt.show()
 
-    fig_autoval=plt.figure()
-    ax_eval=fig_autoval.add_subplot()
-    for i,evals in enumerate(eigenvals_t_asim.transpose()):
-        ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
-    ax_eval.set_xlabel(r"$gt$")
-    ax_eval.set_ylabel("Autovalores w")
-    plt.show()
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # for i,evals in enumerate(eigenvals_t_w.transpose()):
+    #     ax_eval.scatter(g*t,evals,color=colors[i],label=f"$\lambda_{i}$")
+    # ax_eval.set_xlabel(r"$gt$")
+    # ax_eval.set_ylabel("Autovalores w")
+    # plt.show()
 
     fig_fg=plt.figure()
     fig_fg.suptitle("Fase Geometrica")
@@ -230,10 +238,15 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     ax_fg.plot(g*t,pan,color='black',label=r"$\psi_0=|eg0>$")
     ax_fg.plot(g*t,pan_sim,color='red',label=r"$\psi_0=|eg0>+|ge0>$")
     ax_fg.plot(g*t,pan_asim,color='blue',label=r"$\psi_0=|eg0>-|ge0>$")
-    ax_fg.plot(g*t,pan_w,color='grey',label=r"$\psi_0=|w>$")
+    ax_fg.plot(g*t,pan1,linestyle='dashed',color='black',label=r"$\psi_0=|eg1>$")
+    ax_fg.plot(g*t,pan_sim1,linestyle='dashed',color='red',label=r"$\psi_0=|eg1>+|ge1>$")
+    ax_fg.plot(g*t,pan_asim1,linestyle='dashed',color='blue',label=r"$\psi_0=|eg1>-|ge1>$")
+    # ax_fg.plot(g*t,pan_w,color='grey',label=r"$\psi_0=|w>$")
     ax_fg.legend()
     ax_fg.grid()
     plt.show()
+
+    #ESTO ULTIMO NO HACE NADA, ESTA HECHO PARA GUARDAR LOS DATOS O LOS GRAFICOS DIRECTO EN LA COMPU. PERO AHORA ESTA COMENTADO ASI QUE NO HACE NADA
 
     #GUARDAMOS EL DATAFRAME EN CSV. 
     g_str=str(g).replace('.','_')
@@ -252,19 +265,25 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     #  Y TIEMPO Y QUIZAS COMBIENE HACERLO SOLO ESPECIALMENTE PARA LA SIMULACION QUE QUEREMOS ANALIZAR
     # fileio.qsave(eigenvecs,parameters_name+'eigen states')
 
-disipation=False
-acoplamiento='bs'
-g=0.001*w_0
-p=0.005*g
-k=0.1*g
-x=0.5*g
-d=0# 0.5*g
-gamma=0.1*g
-J=0
+
+#ACA ES DONDE CORRE EL CODIGO DIGAMOS. LOS PARAMETROS HAY QUE CAMBIARLOS DESDE ACA.
+disipation=False #PUEDE SER False o True. False para unitario, True para decoherencia
+acoplamiento='bs' #por ahora no vi que haya cambios significativos, pero puede ser "lineal" o "bs". Solo es un acoplamiento que depende del numero de fotones de la cavidad, pero no hace mucho la verdad
+g=0.001*w_0 #acoplamiento atomo-cavidad
+p=0.005*g #pumping rate para disipador sigma+ (no hace falta poner en 0 si pones sin disipacion, solo se activa si disipation=True)
+k=0.1*g #interaccion sigma+sigma- entre atomos
+x=0.5*g #medio kerr
+d=0# 0.5*g #detuning
+gamma=0.1*g #rate de perdida de fotones (igual que el p)
+J=0 #interaccion tipo ising entre atomos 
 t_final=25000
 steps=2000
-psi0=(eg0+ge0).unit() #(ge0+eg0+2*gg1).unit()
+
 evolucion(w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
+
+
+#Lo de abajo no importa, es lo de las iteraciones que decia al principio para hacer un barrido de parametros y que guarde automaticamente los graficos
+
 
 # for disipation in [True,False]:
 #     for acoplamiento in ['lineal','bs']:

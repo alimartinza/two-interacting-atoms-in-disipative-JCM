@@ -738,6 +738,7 @@ def plot_delta(condiciones_iniciales:list):
             plt.close()
 #CONDICIONES INICIALES EN FOLDER condiciones_iniciales=["ee0","eg0","gg1","eg0-","eg1-","eg1+ge0","gg2","w1","eg1-ge0"] 
 #PARECE NO FUNCIONAR CON MAS DE UNA CONDICION INICIAL A LA VEZ
+
 plot_gamma(['w1'])
 plot_delta(["w1"])
 plot_x(["w1"])
