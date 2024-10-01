@@ -2,10 +2,7 @@ from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-import time
-import os
-import tkinter as tk
-import pandas as pd
+
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
@@ -246,17 +243,7 @@ t_final=25000
 steps=2000
 psi0=[eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
 psi0_names=['eg0','eg0+ge0','eg0-ge0','eg1-ge1']
-for disipation in [True,False]:
-    for acoplamiento in ['lineal','bs']:
-        g=[0.001*w_0]
-        for g in g:
-            p=0.005*g
-            k=0.1*g
-            x=[0,1/4*g,0.5*g]
-            for x in x:
-                d=[0,0.5*g,2*g]
-                for d in d:
-                    evolucion(psi0,psi0_names,w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
+evolucion(psi0,psi0_names,w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
 
 

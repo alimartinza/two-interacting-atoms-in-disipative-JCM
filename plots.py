@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import time
 import os
 import pandas as pd
+import matplotlib as mpl
 # from mpl_toolkits.mplot3d import axes3d
 
 
@@ -30,13 +31,25 @@ J=0
 g=0.001*w0
 k=0.1*g
 p=0.005*g
-t_final=100000
-steps=100000
+t_final=25000
+steps=2000
 t=np.linspace(0,t_final,steps)
 save_plot=False
 plot_show=True
 
-def plot_ReIm_coherencias(n:int,ax,xlabel=None,ylabel=None):
+coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
+                            '1,2':[],'1,3':[],'1,4':[],'1,5':[],'1,6':[],'1,7':[],'1,8':[],'1,9':[],'1,10':[],'1,11':[],
+                                    '2,3':[],'2,4':[],'2,5':[],'2,6':[],'2,7':[],'2,8':[],'2,9':[],'2,10':[],'2,11':[],
+                                            '3,4':[],'3,5':[],'3,6':[],'3,7':[],'3,8':[],'3,9':[],'3,10':[],'3,11':[],
+                                                    '4,5':[],'4,6':[],'4,7':[],'4,8':[],'4,9':[],'4,10':[],'4,11':[],
+                                                            '5,6':[],'5,7':[],'5,8':[],'5,9':[],'5,10':[],'5,11':[],
+                                                                    '6,7':[],'6,8':[],'6,9':[],'6,10':[],'6,11':[],
+                                                                            '7,8':[],'7,9':[],'7,10':[],'7,11':[],
+                                                                                    '8,9':[],'8,10':[],'8,11':[],
+                                                                                            '9,10':[],'9,11':[],
+                                                                                                    '10,11':[]}
+
+def plot_ReIm_coherencias(data,n:int,ax,xlabel=None,ylabel=None):
     '''
     Parametros
     - n: numero del vector de la base del cual se quieren graficar las coherencias
@@ -47,37 +60,40 @@ def plot_ReIm_coherencias(n:int,ax,xlabel=None,ylabel=None):
     i=0
     for key in coherencias.keys():
         if key.split(',')[0].startswith(str(n)) or key.split(',')[1].startswith(str(n)):
-                ax.plot(g*t,np.real(coherencias[key]),linestyle='dashed',label=f'Re[C({key})]',color=colors[i])
-                ax.plot(g*t,np.imag(coherencias[key]),linestyle='dashdot',label=f'Im[C({key})]',color=colors[i])
+                ax.plot(g*t,np.real(data[key]),linestyle='dashed',label=f'Re[C({key})]',color=colors[i])
+                ax.plot(g*t,np.imag(data[key]),linestyle='dashdot',label=f'Im[C({key})]',color=colors[i])
                 i+=1
     ax.legend()
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-def plot_coherencias(n:int,ax,xlabel='gt',ylabel='Abs(Coh)'):
+def plot_coherencias(data,n:int,ax,xlabel='gt',ylabel='Abs(Coh)'):
     '''
     Parametros
     - n: numero del vector de la base del cual se quieren graficar las coherencias
     -n_ax: en que ax queres graficar todas las coherencias
     
     Pensado para usarlo semimanualmente, usar un plt.plots() e ir poniendo esta funcion en cada lugar donde queremos graficar las coherencias'''
-    #colors = ['#000000','#000000','#000000','#ff7043','#000000','#000000','#000000','#000000','#000000','#1976d2','#4caf50','#000000'] 
-    colors=plt.cm.jet(np.linspace(0,1,12))
+    cmap=mpl.colormaps["plasma"]
+    colors=cmap(np.linspace(0,1,12))
+
     i=0
     if n==1:
         for key in ['0,1','1,2','1,3','1,4','1,5','1,6','1,7','1,8','1,9','1,10','1,11']:
-            ax.plot(g*t,np.abs(data[key]),linestyle='dashed',color=colors[i])#,label=f'C({key})')
+            ax.plot(g*t,np.abs(data[key]),linestyle='dashed',color=colors[i],alpha=0.5)#,label=f'C({key})')
             i+=1
     else:
-        for key in data.keys():
+        for key in coherencias.keys():
+            print(key)
             if key.split(',')[0].startswith(str(n)) or key.split(',')[1].startswith(str(n)):
-                    ax.plot(g*t,np.abs(data[key]),linestyle='dashed',color=colors[i])#,label=f'C({key})')
+                    print(type(data[key][0]))
+                    ax.plot(g*t,np.abs(data[key]),linestyle='dashed',color=colors[i],alpha=0.5)#,label=f'C({key})')
                     i+=1
     # ax.legend()
     # # ax[n_ax].set_xlabel(xlabel)
     # ax[n_ax].set_ylabel(ylabel)
 
-def plot_gamma(condiciones_iniciales:list):
+def plot3D_gamma(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # condiciones_iniciales=["eg0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
@@ -217,6 +233,17 @@ def plot_gamma(condiciones_iniciales:list):
                 
                 data=pd.read_csv(csvname,header=0,index_col=0)
 
+                # dataKeys=np.loadtxt(csvname,dtype='object',delimiter=',',max_rows=1)
+                # print(dataKeys)
+                # data={}
+                # for i,keys in enumerate(dataKeys):
+                #     try:
+                #         print(str(keys))
+                #         data[str(keys)]=np.loadtxt(csvname,dtype='complex',delimiter=',',skiprows=1,usecols=i)
+                #     except TypeError as e:
+                #         print(e)
+                
+
                 '''----DATOS DE LOS PLOTS----'''
                 '''CHECK TR=1'''
                 trace=data['pr(gg0)']+data['pr(gg1)']+data['pr(gg2)']+data['pr(ee0)']+data['pr(eg0+ge0)']+data['pr(ge0-eg0)']+data['pr(eg1+ge1)']+data['pr(eg1-ge1)']
@@ -224,23 +251,15 @@ def plot_gamma(condiciones_iniciales:list):
                 '''--- N=0 ---'''
                 line0,=ax0.plot(g*t, data['pr(gg0)'], zs=i, zdir='y', color=colors[0], alpha=0.8)
                 ax0.legend([line0],[data.keys()[0]])
-                # plot_coherencias(9,ax0)#,0) #N=0
-                # # plot_coherencias(3,ax11) #N=1
-                # # plot_coherencias(4,ax12) #N=1
-                # # plot_coherencias(10,ax13) #N=1
-                # plot_coherencias(0,0) #N=2
-                # plot_coherencias(5,1) #N=2
-                # plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
-                # plot_coherencias(11,3) #N=2
-                # plot_coherencias(1,0) #N=3
-                # plot_coherencias(7,0) #N=3
-                # plot_coherencias(8,0) #N=3
-
+                # plot_coherencias(data,9,ax0)#,0) #N=0
                 
                 '''--- N=1 ---'''
-                line11,=ax1.plot(g*t,data['pr(gg1)'],zs=i, zdir='y', color=colors[0], alpha=0.8)
+                line11,=ax1.plot(g*t,data['pr(gg1)'],zs=i, zdir='y', color=colors[0], alpha=0.8,zorder=10-i)
                 line12,=ax1.plot(g*t,data['pr(eg0+ge0)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line13,=ax1.plot(g*t,data['pr(ge0-eg0)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
+                # plot_coherencias(data,3,ax1) #N=1
+                # plot_coherencias(data,6,ax1) #N=1
+                # plot_coherencias(data,10,ax1) #N=1
                 ax1.legend([line11,line12,line13],[data.keys()[1],data.keys()[2],data.keys()[3]])
                 
                 '''--- N=2 ---'''
@@ -249,6 +268,10 @@ def plot_gamma(condiciones_iniciales:list):
                 line22,=ax2.plot(g*t,data['pr(eg1+ge1)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line23,=ax2.plot(g*t,data['pr(eg1-ge1)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
                 line24,=ax2.plot(g*t,data['pr(ee0)'],zs=i, zdir='y', color=colors[3], alpha=0.8)
+                # plot_coherencias(data,0,ax2) #N=2
+                # plot_coherencias(data,4,ax2) #N=2
+                # plot_coherencias(data,7,ax2) #N=2 
+                # plot_coherencias(data,11,ax2) #N=2
                 ax2.legend([line21,line22,line23,line24],[data.keys()[4],data.keys()[5],data.keys()[6],data.keys()[7]])
                 # '''--- N=3 ---'''
 
@@ -303,7 +326,7 @@ def plot_gamma(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot_x(condiciones_iniciales:list):
+def plot3D_x(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
@@ -440,23 +463,16 @@ def plot_x(condiciones_iniciales:list):
                 '''--- N=0 ---'''
                 line0,=ax0.plot(g*t, data['pr(gg0)'], zs=i, zdir='y', color=colors[0], alpha=0.8)
                 ax0.legend([line0],[data.keys()[0]])
-                # plot_coherencias(9,ax0)#,0) #N=0
-                # # plot_coherencias(3,ax11) #N=1
-                # # plot_coherencias(4,ax12) #N=1
-                # # plot_coherencias(10,ax13) #N=1
-                # plot_coherencias(0,0) #N=2
-                # plot_coherencias(5,1) #N=2
-                # plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
-                # plot_coherencias(11,3) #N=2
-                # plot_coherencias(1,0) #N=3
-                # plot_coherencias(7,0) #N=3
-                # plot_coherencias(8,0) #N=3
+                # plot_coherencias(data,9,ax0)#,0) #N=0                
 
                 
                 '''--- N=1 ---'''
                 line11,=ax1.plot(g*t,data['pr(gg1)'],zs=i, zdir='y', color=colors[0], alpha=0.8)
                 line12,=ax1.plot(g*t,data['pr(eg0+ge0)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line13,=ax1.plot(g*t,data['pr(ge0-eg0)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
+                # plot_coherencias(data,3,ax1) #N=1
+                # plot_coherencias(data,6,ax1) #N=1
+                # plot_coherencias(data,10,ax1) #N=1
                 ax1.legend([line11,line12,line13],[data.keys()[1],data.keys()[2],data.keys()[3]])
                 
                 '''--- N=2 ---'''
@@ -465,6 +481,10 @@ def plot_x(condiciones_iniciales:list):
                 line22,=ax2.plot(g*t,data['pr(eg1+ge1)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line23,=ax2.plot(g*t,data['pr(eg1-ge1)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
                 line24,=ax2.plot(g*t,data['pr(ee0)'],zs=i, zdir='y', color=colors[3], alpha=0.8)
+                # plot_coherencias(data,0,ax2) #N=2
+                # plot_coherencias(data,4,ax2) #N=2
+                # plot_coherencias(data,7,ax2) #N=2 
+                # plot_coherencias(data,11,ax2) #N=2
                 ax2.legend([line21,line22,line23,line24],[data.keys()[4],data.keys()[5],data.keys()[6],data.keys()[7]])
                 # '''--- N=3 ---'''
 
@@ -519,7 +539,7 @@ def plot_x(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot_delta(condiciones_iniciales:list):
+def plot3D_delta(condiciones_iniciales:list):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
@@ -657,23 +677,16 @@ def plot_delta(condiciones_iniciales:list):
                 '''--- N=0 ---'''
                 line0,=ax0.plot(g*t, data['pr(gg0)'], zs=i, zdir='y', color=colors[0], alpha=0.8)
                 ax0.legend([line0],[data.keys()[0]])
-                # plot_coherencias(9,ax0)#,0) #N=0
-                # # plot_coherencias(3,ax11) #N=1
-                # # plot_coherencias(4,ax12) #N=1
-                # # plot_coherencias(10,ax13) #N=1
-                # plot_coherencias(0,0) #N=2
-                # plot_coherencias(5,1) #N=2
-                # plot_coherencias(6,2) #N=2 ESTA TIENE ALGUN PROBLEMA, SE GRAFICAN EL C(6,9) Y c(6,3) (CREO QUE ESOS) PERO DEBERIAN SER 0, Y SE GRAFICAN MUCHO NO ES ERROR NUMERICO
-                # plot_coherencias(11,3) #N=2
-                # plot_coherencias(1,0) #N=3
-                # plot_coherencias(7,0) #N=3
-                # plot_coherencias(8,0) #N=3
+                # plot_coherencias(data,9,ax0)#,0) #N=0
 
-                
+      
                 '''--- N=1 ---'''
                 line11,=ax1.plot(g*t,data['pr(gg1)'],zs=i, zdir='y', color=colors[0], alpha=0.8)
                 line12,=ax1.plot(g*t,data['pr(eg0+ge0)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line13,=ax1.plot(g*t,data['pr(ge0-eg0)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
+                # plot_coherencias(data,3,ax1) #N=1
+                # plot_coherencias(data,6,ax1) #N=1
+                # plot_coherencias(data,10,ax1) #N=1
                 ax1.legend([line11,line12,line13],[data.keys()[1],data.keys()[2],data.keys()[3]])
                 
                 '''--- N=2 ---'''
@@ -682,6 +695,10 @@ def plot_delta(condiciones_iniciales:list):
                 line22,=ax2.plot(g*t,data['pr(eg1+ge1)'],zs=i, zdir='y', color=colors[1], alpha=0.8)
                 line23,=ax2.plot(g*t,data['pr(eg1-ge1)'],zs=i, zdir='y', color=colors[2], alpha=0.8)
                 line24,=ax2.plot(g*t,data['pr(ee0)'],zs=i, zdir='y', color=colors[3], alpha=0.8)
+                # plot_coherencias(data,0,ax2) #N=2
+                # plot_coherencias(data,4,ax2) #N=2
+                # plot_coherencias(data,7,ax2) #N=2 
+                # plot_coherencias(data,11,ax2) #N=2
                 ax2.legend([line21,line22,line23,line24],[data.keys()[4],data.keys()[5],data.keys()[6],data.keys()[7]])
                 # '''--- N=3 ---'''
 
@@ -739,6 +756,6 @@ def plot_delta(condiciones_iniciales:list):
 #CONDICIONES INICIALES EN FOLDER condiciones_iniciales=["ee0","eg0","gg1","eg0-","eg1-","eg1+ge0","gg2","w1","eg1-ge0"] 
 #PARECE NO FUNCIONAR CON MAS DE UNA CONDICION INICIAL A LA VEZ
 
-plot_gamma(['w1'])
-plot_delta(["w1"])
-plot_x(["w1"])
+# plot3D_gamma(['W'])
+plot3D_delta(["W"])
+plot3D_x(["W"])

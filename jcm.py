@@ -41,9 +41,10 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
+
 #Espacio N=0 [9]
 
-# N=1 [3,6,10] N=2 [0,4,7,11] N=3 [1,5,8]
+# N=1 [3,6,10] N=2 [0,4,7,11] N=3 [1,5,8,12]
 
 w_0=1
 # g=0.01*w_0 #atom-cavity coupling
@@ -57,7 +58,7 @@ w_0=1
 # p=0.005*g
 
 
-def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal'):
+def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,psi0_folder,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal',saveData:bool=True,returnData:bool=False):
     #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
 
     def entropy_vn_rho(rho):
@@ -131,7 +132,8 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
         s=np.zeros(l)     
         for i in range(l):
             eigenvals= evals[i]
-            nzvals = eigenvals[i][eigenvals[i] > 0]
+            # print(eigenvals)
+            nzvals = eigenvals[eigenvals > 0]
             s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
         return s
 
@@ -252,7 +254,11 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     
     def fases(sol):
         """params:
-        -sol: solucion numerica de la evolucion temporal"""
+        -sol: solucion numerica de la evolucion temporal
+        RETURNS
+        -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
+        -arg: no se
+        -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
         
         len_t=len(sol.states)
         if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
@@ -327,24 +333,24 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     sol=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True) #SOLVER QUE HACE LA RESOLUCION NUMERICA PARA LINBLAD
 
     fg_pan,arg,eigenvals_t = fases(sol)
-
+    # print(len(eigenvals_t))
     #Hacemos un array de las coherencias y las completamos con el for
-    coherencias={'0,1':[],'0,2':[],'0,3':[],'0,4':[],'0,5':[],'0,6':[],'0,7':[],'0,8':[],'0,9':[],'0,10':[],'0,11':[],
-                            '1,2':[],'1,3':[],'1,4':[],'1,5':[],'1,6':[],'1,7':[],'1,8':[],'1,9':[],'1,10':[],'1,11':[],
-                                    '2,3':[],'2,4':[],'2,5':[],'2,6':[],'2,7':[],'2,8':[],'2,9':[],'2,10':[],'2,11':[],
-                                            '3,4':[],'3,5':[],'3,6':[],'3,7':[],'3,8':[],'3,9':[],'3,10':[],'3,11':[],
-                                                    '4,5':[],'4,6':[],'4,7':[],'4,8':[],'4,9':[],'4,10':[],'4,11':[],
-                                                            '5,6':[],'5,7':[],'5,8':[],'5,9':[],'5,10':[],'5,11':[],
-                                                                    '6,7':[],'6,8':[],'6,9':[],'6,10':[],'6,11':[],
-                                                                            '7,8':[],'7,9':[],'7,10':[],'7,11':[],
-                                                                                    '8,9':[],'8,10':[],'8,11':[],
-                                                                                            '9,10':[],'9,11':[],
-                                                                                                    '10,11':[]}
+    coherencias={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                            '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                    '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                            '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                    '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                            '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                    '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                            '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                    '8;9':[],'8;10':[],'8;11':[],
+                                                                                            '9;10':[],'9;11':[],
+                                                                                                    '10;11':[]}
     
     #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
-    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2)','pr(ge2)',
+    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(ge0-eg0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
           'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
-    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(ge0-eg0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2),pr(ge2),pr(ee1),
+    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(ge0-eg0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
            0.5*(sz1+sz2),sx1,sx2]
     
     expectStartTime=time.process_time()
@@ -370,17 +376,19 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
     coherenciasStartTime = time.process_time()
     if not disipation:
-        for i in range(len(sol.states)):
-            for j in range(12): 
-                for l in range(j+1,12):
-                    data[str(j)+','+str(l)][i]=sol.states[i][j]*sol.states[i][l]      
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help=np.zeros(len(sol.states),dtype='complex')
+                for i in range(len(sol.states)):
+                    c_help[i]=(sol.states[i][j]*sol.states[i][l])[0]
+                data[str(j)+';'+str(l)]=c_help
     else:
         for j in range(12): 
             for l in range(j+1,12):
                 c_help=np.zeros(len(sol.states),dtype='complex')
                 for i in range(len(sol.states)):
                     c_help[i]=sol.states[i][j][l]
-                    data[str(j)+','+str(l)]=c_help
+                data[str(j)+';'+str(l)]=c_help
     coherenciasRunTime = time.process_time()-coherenciasStartTime
     print(f"coherenciasRunTime: {coherenciasRunTime}")
     data['FG']=fg_pan
@@ -404,26 +412,20 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     print("-----Tiempos de computo----")
     print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: {pasajeRunTime}",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
     
-    #GUARDAMOS EL DATAFRAME EN CSV. 
-    g_str=str(g).replace('.','_')
-    k_str=str(k).replace('.','_')
-    J_str=str(J).replace('.','_')
-    d_str=str(d).replace('.','_')
-    x_str=str(x).replace('.','_')
-    gamma_str=str(gamma).replace('.','_')
-    p_str=str(p).replace('.','_')
-    # parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
-    csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
+    
+    '''--------------SAVE TO CSV-------------------'''
+    if saveData==True:
+        #GUARDAMOS EL DATAFRAME EN CSV. 
+        g_str=str(g).replace('.','_')
+        k_str=str(k).replace('.','_')
+        J_str=str(J).replace('.','_')
+        d_str=str(d).replace('.','_')
+        x_str=str(x).replace('.','_')
+        gamma_str=str(gamma).replace('.','_')
+        p_str=str(p).replace('.','_')
+        # parameters_name=f"g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}"
+        csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
 
-    '''--------------SAVE TO CSV OR TO QU FILE-------------------'''
-    data.to_csv(csvname)
-    #EN ESTA VERSION NO GUARDAMOS LOS ESTADOS DIAGONALIZADOS PORQUE OCUPAN ESPACIO
-    #  Y TIEMPO Y QUIZAS COMBIENE HACERLO SOLO ESPECIALMENTE PARA LA SIMULACION QUE QUEREMOS ANALIZAR
-    # fileio.qsave(eigenvecs,parameters_name+'eigen states')
-
-
-for disipation in [True,False]:
-    for acoplamiento in ['lineal','bs']:
         yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
         mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
         script_path=os.path.dirname(__file__)
@@ -442,28 +444,29 @@ for disipation in [True,False]:
         else: 
             os.makedirs(path)
             os.chdir(path)
+        folder_path=path+'\\'+psi0_folder
+        if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
+        os.chdir(folder_path)
 
-        J=0
-        t_final=100000
-        steps=100000
-        psi0=[(ge0+eg0+2*gg1).unit()]#ee0,gg1,eg0,gg2,(eg0-ge0)/np.sqrt(2),(eg1-ge1)/np.sqrt(2),(eg1+ge0)/np.sqrt(2),(eg1-ge0)/np.sqrt(2)]
-        psi0_folder=['W2']#'ee0','gg1','eg0','gg2','eg0-','eg1-','eg1+ge0','eg1-ge0']
+        data.to_csv(csvname)
 
-        '''------GUARDAR DATAFRAME COMO CSV-------'''
-        for psi0,psi0_folder in zip(psi0,psi0_folder):
-            folder_path=path+'\\'+psi0_folder
-            if not os.path.exists(folder_path):
-                    os.makedirs(folder_path)
-            os.chdir(folder_path)
-            g=[0.001*w_0]
-            for g in g:
-                p=0.005*g
-                k=0.1*g
-                x=[0,1/4*g,0.5*g]
-                for x in x:
-                    d=[0,0.5*g,2*g]
-                    for d in d:
-                        gamma=[0.1*g,2*g]
-                        for gamma in gamma:
-                            evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
+    if returnData==True:
+        return data
+
+w_0=1
+g=0.001*w_0
+p=0.005*g
+k=0.1*g
+x=0*g
+d=0.1*g
+gamma=0.1*g
+J=0
+t_final=25000
+steps=2000
+disipation=False
+acoplamiento='lineal'
+psi0=eg0
+psi0Name='eg0'
+evolucion(w_0,g,k,J,d,x,gamma,p,psi0,psi0Name,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
