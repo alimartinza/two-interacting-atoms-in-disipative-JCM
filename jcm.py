@@ -368,7 +368,7 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
 
     #DEFINIMOS NUESTRO DATAFRAME DONDE VAMOS A GUARDAR TODO
     data=pd.DataFrame()
-
+    data['t']=t
     for nombres,valores_de_expectacion in zip(ops_nomb,ops_expect):
         data[nombres]=valores_de_expectacion
     for key in coherencias.keys():
@@ -449,24 +449,30 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
                 os.makedirs(folder_path)
         os.chdir(folder_path)
 
-        data.to_csv(csvname)
+        data.to_csv(csvname,index=False)
 
     if returnData==True:
         return data
-
+disipation=[False,True]
 w_0=1
 g=0.001*w_0
 p=0.005*g
 k=0.1*g
-x=0*g
-d=0.1*g
 gamma=0.1*g
 J=0
-t_final=25000
-steps=2000
-disipation=False
-acoplamiento='lineal'
-psi0=eg0
-psi0Name='eg0'
-evolucion(w_0,g,k,J,d,x,gamma,p,psi0,psi0Name,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
+t_final=50000
+steps=4000
+for disipation in disipation:
+    acoplamiento=['lineal','bs']
+    for acoplamiento in acoplamiento:
+        psi0=[eg0,(eg0+ge0).unit(),(eg0-ge0).unit()]#,(eg0+eg1).unit(),(ee0+gg2).unit(),(eg0+ge0+gg1)]
+        for psi0 in psi0:
+            psi0Name=['eg0','eg0+','eg0-']#,'eg0+eg1','ee0+gg2','w']
+            for psi0Name in psi0Name:
+                x=[0,1/2*g]
+                for x in x:
+                    d=[0,0.5*g,g,2*g]
+                    for d in d:
+                        
+                        evolucion(w_0,g,k,J,d,x,gamma,p,psi0,psi0Name,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
