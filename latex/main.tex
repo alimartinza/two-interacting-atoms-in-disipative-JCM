@@ -1,0 +1,58 @@
+\documentclass[11pt,a4paper,twoside,openright]{book}
+\usepackage{amsmath}
+\input{paquetes-y-customizaciones}
+
+\titulo{}
+\subtitulo{}
+\autor{Ali Martin Zynda Aiub}
+\numerodelibreta{342/20}
+\lugardetrabajo{Departamento de Física, FCEN, UBA}
+\director{Dr. Fernando Lombardo}
+\codirector{Dra. Paula Villar}
+\colaborador{Lic. Nicolás del Grosso}
+\fechadeinicio{Marzo de 2024}
+\fechadefinalizacion{Diciembre de 2024}
+\fechadeexamen{18 de diciembre de 2024}
+
+
+
+\begin{document}
+
+% Organizacion del manuscrito
+%
+% Frontmatter
+    %\frontmatter
+%   Titlepage
+    \maketitle
+%   Dedication
+   \input{dedicacion}
+%   Resumen (en espanol e ingles)
+    \frontmatter
+    \spanishlcroman
+    \input{tabladecontenidos}
+    \listoffigures
+    \input{resumen}
+    \input{agradecimientos}
+
+    
+%   Tabla de simbolos y notacion (si corresponde)
+    
+%    \listoftables
+% Mainmatter
+    \mainmatter
+    \pagestyle{fancy}
+%   Capitulos de la tesis
+    %\pagestyle{fancy}
+    \input{ch0_introduccion}
+
+%   Apendices varios
+    \appendix
+    \input{ap_ecsmaestras}
+% Backmatter
+    %\backmatter
+%   Bibliografia
+    \input{zbibliografia}
+    \input{licencia}
+% Fin del documento
+
+\end{document}

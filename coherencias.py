@@ -27,12 +27,12 @@ ee1=tensor(e,e,basis(3,1)) #1
 ee2=tensor(e,e,basis(3,2)) #2
 
 eg0=tensor(e,gr,basis(3,0)) #3
-ge0=tensor(gr,e,basis(3,0)) #4
+ge0=tensor(gr,e,basis(3,0)) #6
 
-eg1=tensor(e,gr,basis(3,1)) #5
-ge1=tensor(gr,e,basis(3,1)) #6
+eg1=tensor(e,gr,basis(3,1)) #4
+ge1=tensor(gr,e,basis(3,1)) #7
 
-eg2=tensor(e,gr,basis(3,2)) #7
+eg2=tensor(e,gr,basis(3,2)) #5
 ge2=tensor(gr,e,basis(3,2)) #8
 
 gg0=tensor(gr,gr,basis(3,0)) #9

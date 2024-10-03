@@ -1,0 +1,94 @@
+% Copyright note: This package defines how titles should
+% be typeset for the MSC thesis style for the DF FCEN UBA. 
+% Pablo Cobelli - January 2018
+%
+% Please check for updates
+\ProvidesPackage{DF-MSc-titlepage}[2018/01/11 Paquete para construir la caratula de tesis de licenciatura de acuerdo al estilo sugerido por DF UBA - por Pablo Cobelli]
+
+% For including the logo, if necessary
+\RequirePackage{graphicx}
+
+\newcommand{\blankpage}{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
+% Option for including logo (defaults to titlepage without logo)
+\DeclareOption{usarlogouba}{\newcommand{\usarlogouba}{1}}
+\DeclareOption*{\PackageWarning{DF-MSc-titlepage}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
+
+% Variables for the titlepage, pages #1 and #2
+\newcommand*{\titulo}[1]{\gdef\@titulo{#1}}
+\newcommand*{\subtitulo}[1]{\gdef\@subtitulo{#1}}
+\newcommand*{\autor}[1]{\gdef\@autor{#1}}
+\newcommand*{\numerodelibreta}[1]{\gdef\@numerodelibreta{#1}}
+\newcommand*{\lugardetrabajo}[1]{\gdef\@lugardetrabajo{#1}}
+\newcommand*{\director}[1]{\gdef\@director{#1}}
+\newcommand*{\codirector}[1]{\gdef\@codirector{#1}}
+\newcommand*{\colaborador}[1]{\gdef\@colaborador{#1}}
+\newcommand*{\fechadeinicio}[1]{\gdef\@fechadeinicio{#1}}
+\newcommand*{\fechadefinalizacion}[1]{\gdef\@fechadefinalizacion{#1}}
+\newcommand*{\fechadeexamen}[1]{\gdef\@fechadeexamen{#1}}
+
+\renewcommand*{\maketitle}{%
+\begin{titlepage}
+\begin{center}
+    \includegraphics[height=4cm]{figuras/logouba.pdf}\par \vspace{1cm} 
+    {\huge  \textbf{ \@titulo\unskip\strut }  \par } \vspace{0.5cm} 
+    {\LARGE \textbf{ \@subtitulo\unskip\strut } \par } \vspace{1cm} 
+    {\large { \@autor\unskip\strut } } \par 
+    \vfill
+    {\large Tesis de Licenciatura en Ciencias Físicas}\par \vspace{0.5cm}
+    {\large Facultad de Ciencias Exactas y Naturales}\par \vspace{0.5cm}
+    {\large Universidad de Buenos Aires}\par \vspace{1.5cm}
+    {\large \@fechadefinalizacion\unskip\strut\par}
+\end{center}
+
+\blankpage
+
+\newpage
+\thispagestyle{empty}
+
+\begin{flushleft}
+    \begin{tabular}{p{0.45\linewidth}p{0.55\linewidth}}
+        TEMA:                       & \@titulo\unskip\strut \ \@subtitulo\unskip\strut\par \\
+        ALUMNO:                     & \@autor\unskip\strut\par \\
+        L.U. N$^{\circ}$:           & \@numerodelibreta\unskip\strut\par \\
+        LUGAR DE TRABAJO:           & \@lugardetrabajo\unskip\strut\par \\
+        DIRECTOR DEL TRABAJO:       & \@director\unskip\strut\par \\
+        CODIRECTORA:                & \@codirector\unskip\strut\par \\
+        COLABORADOR:                & \@colaborador\unskip\strut\par \\ 
+        FECHA DE INICIO:        & \@fechadeinicio\unskip\strut\par \\
+        FECHA DE FINALIZACIÓN:      & \@fechadefinalizacion\unskip\strut\par \\
+        FECHA DE EXAMEN:            & \@fechadeexamen\unskip\strut\par \\
+        INFORME FINAL APROBADO POR: & \\
+    \end{tabular}
+\end{flushleft}                              
+
+\vfill
+
+% Table for signatures
+\begin{flushleft}
+    \begin{tabular}{p{0.4\linewidth}p{0.1\linewidth}p{0.4\linewidth}}
+        \hrulefill                           &  & \hrulefill \\
+        Autor                                &  & Jurado \\
+        \\ \\
+        \hrulefill                           &  & \hrulefill \\
+        Director                             &  & Jurado \\
+        \\ \\                                
+        \hrulefill                           &  & \hrulefill \\
+        Profesora de Tesis de Licenciatura &  & Jurado \\
+        \\ \\ 
+    \end{tabular}
+\end{flushleft}
+
+% Extra page, as required
+\blankpage
+
+
+\end{titlepage}
+}
+
+\endinput
