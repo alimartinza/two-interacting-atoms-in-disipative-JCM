@@ -5,6 +5,11 @@ import time
 import os
 import pandas as pd
 import matplotlib as mpl
+import matplotlib.colors as mcolors
+from matplotlib.animation import FuncAnimation
+from matplotlib.patches import Rectangle
+from matplotlib.animation import FuncAnimation
+
 # from mpl_toolkits.mplot3d import axes3d
 
 
@@ -1203,29 +1208,40 @@ def plot_cis(cis:list,x:float,d:float,gamma:float,modelo:int=0,savePlots:bool=Fa
     else:
         plt.show()
 
-def plot_fg_delta(ci:str,delta:list,x:float,modelo:int):
+def plot_fg_delta(ci:str,delta:list,x:float,folder_name:str="unitario lineal"):
     gamma=0.1*g
-    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
-    folder_name=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
-    if modelo==0:
-        folder_name=folder_name[0]
-    elif modelo==1:
-        folder_name=folder_name[1]
-    elif modelo==2:
-        folder_name=folder_name[2]
-    elif modelo==3:
-        folder_name=folder_name[3]
-    else:
-        print("Param \'modelo\' tiene que ser 0:\'disipativo lineal\', 1:\'disipativo bs\', 2:\'unitario lineal\', 3:\'unitario bs\'")
-    
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU    
     cmap=mpl.colormaps["viridis"]
     colors=cmap(np.linspace(0,1,len(delta)))
+    norm = mcolors.Normalize(vmin=delta[0]/g, vmax=delta[-1]/g)
     
+    fig_n0=plt.figure()
+    fig_n0.suptitle("N=0 "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+    ax_n0=fig_n0.add_subplot()
+    ax_n0.set_xlabel('gt')
+    fig_n0.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+             ax=ax_n0,orientation='vertical',label='$\Delta$')
+    
+    fig_n1=plt.figure()
+    fig_n1.suptitle("N=1 "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+    ax_n1_1=fig_n1.add_subplot(131,)
+    ax_n1_1.set_xlabel('gt')
+    ax_n1_1.set_title('gg1')
+    ax_n1_2=fig_n1.add_subplot(132)
+    ax_n1_2.set_xlabel('gt')
+    ax_n1_2.set_title('eg0+ge0')
+    ax_n1_3=fig_n1.add_subplot(133)
+    ax_n1_3.set_xlabel('gt')
+    ax_n1_3.set_title('eg0-ge0')
+
+    fig_n1.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
+             ax=ax_n1_3,orientation='vertical',label='$\Delta$')
+
     fig_fg=plt.figure()
     fig_fg.suptitle("Fase Geometrica "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
     ax_fg=fig_fg.add_subplot()
     ax_fg.set_xlabel('gt')
-    norm = mpl.colors.Normalize(vmin=delta[0]/g, vmax=delta[-1]/g)
+    ax_fg.set_title(ci)
     fig_fg.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
              ax=ax_fg,orientation='vertical',label='$\Delta$')
     for i,d in enumerate(delta):
@@ -1247,11 +1263,111 @@ def plot_fg_delta(ci:str,delta:list,x:float,modelo:int):
         csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
         
         data=pd.read_csv(csvname,header=0)
+
+        ax_n0.plot(g*data['t'],data['pr(gg0)'],color=colors[i])
+
+        ax_n1_1.plot(g*data['t'],data['pr(gg1)'],color=colors[i])
+        ax_n1_2.plot(g*data['t'],data['pr(eg0+ge0)'],color=colors[i])
+        ax_n1_3.plot(g*data['t'],data['pr(eg0-ge0)'],color=colors[i])
+
         ax_fg.plot(g*data['t'],data['FG'],color=colors[i])
 
-    ax_fg.set_title(ci)
     plt.show()
 
+def anim(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float):
+    mpl.use('TkAgg')
+    relative_path="datos"+"\\"+folder_name+"\\"+ci 
+    path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
+    if os.path.exists(path):
+        os.chdir(path)
+    else: 
+        print("Dir %s does not exist", path)
+    g_str=str(g).replace('.','_')
+    k_str=str(k).replace('.','_')
+    J_str=str(J).replace('.','_')
+    x_str=str(x).replace('.','_')
+    gamma_str=str(gamma).replace('.','_')
+    p_str=str(p).replace('.','_')
+
+        # Create the figure and axes
+    fig= plt.figure()
+    fig.suptitle("$|\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+    ax1=fig.add_subplot(131)
+    ax2=fig.add_subplot(132)
+    ax3=fig.add_subplot(133)
+
+
+    # Initialize a plot object (e.g., a line plot)
+    line1, = ax1.plot([], [], lw=2)
+    line2, = ax2.plot([], [], lw=2)
+    line3, = ax3.plot([], [], lw=2)
+
+    # Create a colormap and normalize it to the number of frames
+    cmap = mpl.colormaps['viridis']   # Viridis colormap with as many colors as CSV files
+    norm = mcolors.Normalize(vmin=delta[0]/g, vmax=delta[-1]/g)
+
+    # Add the colorbar
+    sm = mpl.cm.ScalarMappable(cmap=cmap, norm=norm)
+    sm.set_array([])  # ScalarMappable requires an array, but we don't need it
+    cbar = plt.colorbar(sm, ax=ax3, orientation='vertical')
+    cbar.set_label('$\Delta/g$')
+
+    # Create a black rectangle to indicate the current position in the colorbar
+    rect_height = 1 / len(delta)  # Height of the rectangle
+    current_color_rect = Rectangle((0, 0), width=1, height=rect_height, color='black', lw=2, transform=cbar.ax.transAxes)
+    cbar.ax.add_patch(current_color_rect)  # Add the rectangle to the colorbar axes
+
+    # Set up the axis limits and labels
+    ax1.set_ylim(0,1)
+    ax2.set_ylim(0,1)
+    ax3.set_ylim(-1.5, 0.1)
+    ax1.set_xlim(0, 50)
+    ax2.set_xlim(0, 50)
+    ax3.set_xlim(0, 20)
+    ax1.set_xlabel('gt')
+    ax2.set_xlabel('gt')
+    ax3.set_xlabel('gt')
+    ax1.set_title(key[0])
+    ax2.set_title(key[1])
+    ax3.set_title(key[2])
+
+    # Define the initialization function
+    def init():
+        """Initialize the plot with empty data."""
+        line1.set_data([], [])
+        line2.set_data([], [])
+        line3.set_data([], [])
+        return line1,line2,line3
+
+    # Define the update function for each frame
+    def update(frame):
+        """Read the CSV data and update the plot."""
+        # Read the CSV file for the current frame
+        d_str=str(delta[frame]).replace('.','_')
+        csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
+        data=pd.read_csv(csvname,header=0)
+
+        # Update the plot data
+        line1.set_data(g*data['t'], data[key[0]])
+        line2.set_data(g*data['t'], data[key[1]])
+        line3.set_data(g*data['t'], data[key[2]])
+        # Update the line color based on the current frame
+        color = cmap(norm(delta[0]/g+frame*(delta[-1]/g-delta[0]/g)/(len(delta) - 1)))
+        line1.set_color(color)
+        line2.set_color(color)
+        line3.set_color(color)
+
+        # Move the rectangle to the current position in the colorbar (keep it black)
+        current_color_rect.set_y(frame / len(delta))  # Adjust y based on current frame
+        return line1,line2,line3, current_color_rect
+
+    # Create the animation object
+    ani = FuncAnimation(fig, update, frames=len(delta), init_func=init, repeat=True)
+
+    # Show the plot
+    plt.show()
+
+    ani.save(script_path+"\\"+"gifs"+"\\"+"animation "+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
 
 #CONDICIONES INICIALES EN FOLDER condiciones_iniciales=["ee0","eg0","gg1","eg0-","eg1-","eg1+ge0","gg2","w1","eg1-ge0"] 
@@ -1260,4 +1376,9 @@ def plot_fg_delta(ci:str,delta:list,x:float,modelo:int):
 #     for d in [0.5*g,g,2*g]:
 #         plot_cis(['w'],x=x,d=d,gamma=0.1*g,savePlots=True)
 # plot3D_delta(['eg0+'])#,'eg0-','eg0+'])
-plot_fg_delta('eg0',delta=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g],x=0,modelo=2)
+
+# plot_fg_delta('w',delta=[0,0.2*g,0.5*g,0.9*g,g,1.2*g,1.5*g,1.6*g,2*g],x=0,folder_name="10_3_8 unitario lineal")
+delta=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+anim('w',"10_3_8 unitario bs",['pr(gg1)','pr(eg0+ge0)','FG'],delta,0,0.1*g)
+
+

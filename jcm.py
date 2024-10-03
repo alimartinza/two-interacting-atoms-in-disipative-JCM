@@ -431,27 +431,11 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     # if returnFG==True:
     #     return t,data['t'],fg_pan,data['FG']
     
-
-disipation=False
-acoplamiento='lineal'
-x=0
 w_0=1
-g=0.001*w_0
-p=0.005*g
-k=0.1*g
-gamma=0.1*g
-J=0
-t_final=50000
-steps=4000
-
-# for x in [0,1/4*g,1/2*g,g,3/2*g,2*g]:
-#     for d in [0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]:
-
-#         evolucion(w_0,g,k,J,d,x,gamma,p,eg0,'eg0',t_final,steps,disipation=disipation,acoplamiento=acoplamiento,returnFG=True)
 
 iteration_number=0
-for disipation in [True,False]:
-    for acoplamiento in ['lineal','bs']:
+for disipation in [False]:#[True,False]:
+    for acoplamiento in ['lineal']:#,'bs']:
         yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
         mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
         script_path=os.path.dirname(__file__)
@@ -473,9 +457,9 @@ for disipation in [True,False]:
 
         J=0
         t_final=50000
-        steps=4000
-        psi0=[(ge0+eg0+gg1).unit(),(ee0+gg2).unit(),(ee0-gg2).unit(),eg0,(eg0+ge0)/np.sqrt(2)]
-        psi0_folder=['W','ee0+gg2','ee0-gg2','eg0','eg0 sim']
+        steps=3000
+        psi0=[(ge0+eg0-gg1).unit()]#,(ee0+gg2).unit(),(ee0-gg2).unit(),eg0,(eg0+ge0)/np.sqrt(2)]
+        psi0_folder=['W-']#,'ee0+gg2','ee0-gg2','eg0','eg0 sim']
 
         '''------GUARDAR DATAFRAME COMO CSV-------'''
         for psi0,psi0_folder in zip(psi0,psi0_folder):
@@ -487,15 +471,14 @@ for disipation in [True,False]:
             for g in g:
                 p=0.005*g
                 k=0.1*g
-                x=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+                x=[0]#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
                 for x in x:
-                    d=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+                    d=[0,0.5*g,0.8*g,g,1.5*g,2*g]#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
                     for d in d:
                         gamma=[0.1*g]
                         for gamma in gamma:
                             
                             evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
                             print(f"ITERACION NUMERO {iteration_number}")
-                            print(f"Progreso GLOBAL aproximado {iteration_number*100/(2*2*7*20*20*3):.2f}%")
                             iteration_number+=1
 
