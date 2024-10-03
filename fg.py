@@ -211,7 +211,7 @@ def evolucion(psi0:list,psi0_names:list,w_0:float,g:float,k:float,J:float,d:floa
         ax_eval.set_ylabel("Autovalores")
 
 
-        ax_fg.plot(g*t,fg_pan,color=colors[i],label=rf"$\psi_0=|{psi0_names[i]}>$")
+        ax_fg.scatter(g*t,fg_pan,color=colors[i],label=rf"$\psi_0=|{psi0_names[i]}>$")
     
     ax_fg.legend()
     ax_fg.grid()
@@ -231,18 +231,18 @@ def evolucion(psi0:list,psi0_names:list,w_0:float,g:float,k:float,J:float,d:floa
 #ACA ES DONDE CORRE EL CODIGO DIGAMOS. LOS PARAMETROS HAY QUE CAMBIARLOS DESDE ACA.
 
 disipation=False #PUEDE SER False o True. False para unitario, True para decoherencia
-acoplamiento='bs' #por ahora no vi que haya cambios significativos, pero puede ser "lineal" o "bs". Solo es un acoplamiento que depende del numero de fotones de la cavidad, pero no hace mucho la verdad
+acoplamiento='lineal' #por ahora no vi que haya cambios significativos, pero puede ser "lineal" o "bs". Solo es un acoplamiento que depende del numero de fotones de la cavidad, pero no hace mucho la verdad
 g=0.001*w_0 #acoplamiento atomo-cavidad
 p=0.005*g #pumping rate para disipador sigma+ (no hace falta poner en 0 si pones sin disipacion, solo se activa si disipation=True)
 k=0.1*g #interaccion sigma+sigma- entre atomos
-x=0.5*g #medio kerr
-d=0# 0.5*g #detuning
+x=0#0.5*g #medio kerr
+d=0.0002# 0.5*g #detuning
 gamma=0.1*g #rate de perdida de fotones (igual que el p)
 J=0 #interaccion tipo ising entre atomos 
-t_final=25000
-steps=2000
-psi0=[eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
-psi0_names=['eg0','eg0+ge0','eg0-ge0','eg1-ge1']
+t_final=50000
+steps=4000
+psi0=[(eg0-ge0).unit()]#eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
+psi0_names=['eg0-']#'eg0','eg0+ge0','eg0-ge0','eg1-ge1']
 evolucion(psi0,psi0_names,w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
 
