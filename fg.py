@@ -236,13 +236,13 @@ g=0.001*w_0 #acoplamiento atomo-cavidad
 p=0.005*g #pumping rate para disipador sigma+ (no hace falta poner en 0 si pones sin disipacion, solo se activa si disipation=True)
 k=0.1*g #interaccion sigma+sigma- entre atomos
 x=0#0.5*g #medio kerr
-d=0.0002# 0.5*g #detuning
+d=0.8*g# 0.5*g #detuning
 gamma=0.1*g #rate de perdida de fotones (igual que el p)
 J=0 #interaccion tipo ising entre atomos 
 t_final=50000
 steps=4000
-psi0=[(eg0-ge0).unit()]#eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
-psi0_names=['eg0-']#'eg0','eg0+ge0','eg0-ge0','eg1-ge1']
+psi0=[(eg0+ge0-2*gg1).unit()]#eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),(eg1-ge1).unit()]
+psi0_names=['w']#'eg0','eg0+ge0','eg0-ge0','eg1-ge1']
 evolucion(psi0,psi0_names,w_0,g,k,J,d,x,gamma,p,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
 
 
