@@ -10,9 +10,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 from matplotlib.animation import FuncAnimation
 
-from jcm_lib import simu_unit_y_disip,anim_univsdis
-
-
+from jcm_lib import simu_unit_y_disip,canberra
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
 sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
@@ -65,48 +63,33 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-psi0=(eg0+ge0).unit()
-psi0Name="eg0+ge0"
+psi0=(ee0+gg2).unit()
+psi0Name="ee0+gg2"
 steps=3000
 t_final=50000
 w_0=1
 J=0
 g=0.001*w_0
 p=0.005*g
-d=0
-x=0
+delta=np.linspace(0,2*g,21)
+x=g
 gamma=0.1*g
-kappa=np.linspace(0,4*g,41)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+kappa=np.linspace(0,2*g,21)
+k_ax, delta_ax = np.meshgrid(kappa,delta,sparse=True)
+zs=np.zeros((len(kappa),len(delta)))
+for j,d in enumerate(delta):
+    for i,k in enumerate(kappa):  
+        ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+        zs[j][i]=canberra(fg_u,fg_d)
 
-param=kappa
-ops_expect_u=np.zeros((len(param),14,steps))
-ops_expect_d=np.zeros((len(param),14,steps))
-# coherencias_u=np.zeros((len(param),66,steps))
-# coherencias_d=np.zeros((len(param),66,steps))
-fg_u=np.zeros((len(param),steps))
-fg_d=np.zeros((len(param),steps))
-SvN_u=np.zeros((len(param),steps))
-SvN_d=np.zeros((len(param),steps))
-Slin_u=np.zeros((len(param),steps))
-Slin_d=np.zeros((len(param),steps))
-SvN_at_u=np.zeros((len(param),steps))
-SvN_at_d=np.zeros((len(param),steps))
-Slin_at_u=np.zeros((len(param),steps))
-Slin_at_d=np.zeros((len(param),steps))
-conc_at_u=np.zeros((len(param),steps))
-conc_at_d=np.zeros((len(param),steps))
-for i,k in enumerate(param):
-    #,coherencias_u[i],coherencias_d[i]
-    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
-
-fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
-fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
-#anim uni vs disip
-
-
-anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
-anim_concu=anim_univsdis("Concu",conc_at_u,conc_at_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,0,1])
-
-
-anim_FG.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} FG kappa uni vs disip chi={x/g}g delta={d/g}g.gif", writer='pillow')
-anim_concu.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} Concu kappa uni vs disip FG chi={x/g}g delta={d/g}g.gif", writer='pillow')
+#color entre z.min() y z.max()
+fig=plt.figure(figsize=(16,9))
+ax=fig.add_subplot()
+fig.suptitle(f"$\psi_0$={psi0Name} chi={x/g}g")
+z_min, z_max = zs.min(), zs.max()
+#plotear el pcolormesh()
+c = ax.pcolor(k_ax/g, delta_ax/g, zs, cmap='plasma', vmin=z_min, vmax=z_max)
+ax.set_xlabel("$k/g$")
+ax.set_ylabel("$\Delta/g$")
+fig.colorbar(c, ax=ax)
+plt.show()

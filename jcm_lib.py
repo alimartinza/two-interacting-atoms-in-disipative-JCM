@@ -12,6 +12,40 @@ from matplotlib.animation import FuncAnimation
 
 # from mpl_toolkits.mplot3d import axes3d
 
+#DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
+n=tensor(qeye(2),qeye(2),num(3))
+sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
+n2=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,4])))
+a=tensor(qeye(2),qeye(2),destroy(3))
+sm1=tensor(sigmam(),qeye(2),qeye(3))
+sp1=tensor(sigmap(),qeye(2),qeye(3))
+sz1=tensor(sigmaz(),qeye(2),qeye(3))
+sx1=tensor(sigmax(),qeye(2),qeye(3))
+sm2=tensor(qeye(2),sigmam(),qeye(3))
+sp2=tensor(qeye(2),sigmap(),qeye(3))
+sz2=tensor(qeye(2),sigmaz(),qeye(3))
+sx2=tensor(qeye(2),sigmax(),qeye(3))
+
+#DEFINIMOS LOS VECTORES DE LA BASE
+e=basis(2,0)
+gr=basis(2,1)
+
+ee0=tensor(e,e,basis(3,0)) #0
+ee1=tensor(e,e,basis(3,1)) #1
+ee2=tensor(e,e,basis(3,2)) #2
+
+eg0=tensor(e,gr,basis(3,0)) #3
+ge0=tensor(gr,e,basis(3,0)) #6
+
+eg1=tensor(e,gr,basis(3,1)) #4
+ge1=tensor(gr,e,basis(3,1)) #7
+
+eg2=tensor(e,gr,basis(3,2)) #5
+ge2=tensor(gr,e,basis(3,2)) #8
+
+gg0=tensor(gr,gr,basis(3,0)) #9
+gg1=tensor(gr,gr,basis(3,1)) #10
+gg2=tensor(gr,gr,basis(3,2)) #11
 
 SMALL_SIZE = 12
 MEDIUM_SIZE = 15
@@ -1850,16 +1884,16 @@ def anim2x2_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float
 
     ani.save(script_path+"\\"+"gifs"+"\\"+"animation chi ; "+saveword+";"+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
-def anim_univsdis(data_uni:list,data_dis:list,param:list,param_name:str,steps:int,psi0Name:str,ax_lims:list):
-    t=np.linspace(0,len(data_uni),steps)
+def anim_univsdis(title:str,data_uni:list,data_dis:list,param:list,param_name:str,t_final:int,steps:int,psi0Name:str,ax_lims:list):
+    t=np.linspace(0,t_final,steps)
     mpl.use('TkAgg')
     # Create the figure and axes
     fig= plt.figure(figsize=(16,9))
-    fig.suptitle("$|\psi_0>=$"+psi0Name)
+    fig.suptitle(title+" ; $|\psi_0>=$"+psi0Name)
     ax1=fig.add_subplot()
     # Initialize a plot object (e.g., a line plot)
-    # line11, = ax1.plot([], [], label='uni",color='black',lw=2)
-    line12, = ax1.plot([], [], lw=2)
+    line_u, = ax1.plot([], [], label='unitario',color='black',lw=2)
+    line_d, = ax1.plot([], [], label="disipativo",color="red",lw=2)
 
     # Create a colormap and normalize it to the number of frames
     cmap = mpl.colormaps['viridis']   # Viridis colormap with as many colors as CSV files
@@ -1878,18 +1912,18 @@ def anim_univsdis(data_uni:list,data_dis:list,param:list,param_name:str,steps:in
     ax1.set_xlim(ax_lims[0],ax_lims[1])
     ax1.set_ylim(ax_lims[2],ax_lims[3])
     ax1.set_xlabel('gt')
-    ax1.set_ylabel('gt')
+    ax1.set_ylabel('')
     # Define the initialization function
     def init():
         """Initialize the plot with empty data."""
-        line11.set_data([], [])
-        line12.set_data([], [])
+        line_u.set_data([], [])
+        line_d.set_data([], [])
         # Define the update function for each frame
     def update(frame):
         """Read the CSV data and update the plot."""
         # Update the plot data
-        line11.set_data(g*t, data_uni)
-        line12.set_data(g*t, data_dis)
+        line_u.set_data(g*t, data_uni[frame])
+        line_d.set_data(g*t, data_dis[frame])
 
         # Update the line color based on the current frame
         # color = cmap(norm(chi[0]/g+frame*(chi[-1]/g-chi[0]/g)/(len(chi) - 1)))
@@ -1899,13 +1933,15 @@ def anim_univsdis(data_uni:list,data_dis:list,param:list,param_name:str,steps:in
 
         # Move the rectangle to the current position in the colorbar (keep it black)
         current_color_rect.set_y(frame / len(param))  # Adjust y based on current frame
-        return line11,line12, current_color_rect
+        return line_u,line_d, current_color_rect
 
     # Create the animation object
     ani = FuncAnimation(fig, update, frames=len(param), init_func=init, repeat=True)
 
     # Show the plot
+    plt.legend()
     plt.show()
+    return ani
 
 def canberra(data1,data2):
     d=0
@@ -1957,4 +1993,126 @@ def canberra_mesh(ci:str):
     fig.colorbar(c, ax=ax)
     plt.show()
 
+def simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal'):
+    """Returns: 
+        devuelve todos estas 14 listas que representan la evolucion de cada simulacion
+        -ops_expect_u,ops_expect_d
+        -fg_u,fg_d
+        -SvN_u,SvN_d
+        -Slin_u,Slin_d
+        -SvN_at_u,SvN_at_d
+        -Slin_at_u,Slin_at_d
+        -conc_at_u,conc_at_d"""
+    #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
+
+    def f():
+        if acoplamiento=='lineal':
+            return 1
+        elif acoplamiento=='bs':
+            return sqrtN
+  
+    def pr(estado):
+        return estado.unit()*estado.unit().dag()
+
+    '''---Hamiltoniano---'''
+
+    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+
+    '''---Simulacion numerica---'''
+    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    sol_u=mesolve(H,psi0,t,c_ops=[],progress_bar=True)
+    sol_d=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True)
+    fg_u,arg,eigenvals_t_u = fases(sol_u)
+    fg_d,arg,eigenvals_t_d = fases(sol_d)
+
+    #Hacemos un array de las coherencias y las completamos con el for
+    coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                            '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                    '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                            '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                    '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                            '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                    '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                            '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                    '8;9':[],'8;10':[],'8;11':[],
+                                                                                            '9;10':[],'9;11':[],
+                                                                                                    '10;11':[]}
+    
+    coherencias_d=coherencias_u
+
+    #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
+    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
+          'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
+           0.5*(sz1+sz2),sx1,sx2]
+    
+    expectStartTime=time.process_time()
+    ops_expect_u=np.empty((len(ops),len(sol_u.states)))
+    for i in range(len(sol_u.states)): 
+        for j in range(len(ops)):
+            ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
+
+    ops_expect_d=np.empty((len(ops),len(sol_d.states)))
+    for i in range(len(sol_d.states)): 
+        for j in range(len(ops)):
+            ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
+    expectRunTime=time.process_time()-expectStartTime
+
+    # #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
+    # pasajeStartTime=time.process_time()
+    # estados=np.empty_like(sol.states)
+    # for j in range(len(sol.states)):
+    #     estados[j]=sol.states[j]
+
+
+    #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+    # coherenciasStartTime = time.process_time()
+
+    # for j in range(12): 
+    #     for l in range(j+1,12):
+    #         c_help=np.zeros(len(sol_u.states),dtype='complex')
+    #         for i in range(len(sol_u.states)):
+    #             c_help[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
+    #         coherencias_u[str(j)+';'+str(l)]=c_help
+    
+    # for j in range(12): 
+    #     for l in range(j+1,12):
+    #         c_help=np.zeros(len(sol_d.states),dtype='complex')
+    #         for i in range(len(sol_d.states)):
+    #             c_help[i]=sol_d.states[i][j][l]
+    #         coherencias_d[str(j)+';'+str(l)]=c_help
+    # coherenciasRunTime = time.process_time()-coherenciasStartTime
+    # print(f"coherenciasRunTime: {coherenciasRunTime}")
+ 
+    # pasajeRunTime=time.process_time() - pasajeStartTime
+    entropiaStartTime = time.process_time()
+    
+    SvN_u=entropy_vn(eigenvals_t_u)
+    SvN_d=entropy_vn(eigenvals_t_d)
+    Slin_u=entropy_linear(sol_u.states)
+    Slin_d=entropy_linear(sol_d.states)
+
+    atoms_states_u=np.empty_like(sol_u.states)
+    for j in range(len(sol_u.states)):
+        atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+
+    atoms_states_d=np.empty_like(sol_d.states)
+    for j in range(len(sol_d.states)):
+        atoms_states_d[j]=sol_d.states[j].ptrace([0,1])    
+    # data['Atom States']=atoms_states
+    SvN_at_u=entropy_vn_atom(atoms_states_u)
+    Slin_at_u=entropy_linear(atoms_states_u)
+    conc_at_u=concurrence(atoms_states_u)
+
+    SvN_at_d=entropy_vn_atom(atoms_states_d)
+    Slin_at_d=entropy_linear(atoms_states_d)
+    conc_at_d=concurrence(atoms_states_d)
+
+    entropiaRunTime=time.process_time() - entropiaStartTime
+
+    print("-----Tiempos de computo----")
+    print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+    #,coherencias_u,coherencias_d
+    return ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
 
