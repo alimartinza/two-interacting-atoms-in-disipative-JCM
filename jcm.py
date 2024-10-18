@@ -6,6 +6,7 @@ import os
 import tkinter as tk
 import pandas as pd
 
+from jcm_lib import plot_coherencias,entropy_vn,entropy_vn_atom,entropy_linear,concurrence,fases
 
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
@@ -60,246 +61,6 @@ w_0=1
 
 
 def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int,steps:int,disipation:bool=True,acoplamiento:str='lineal',saveData:bool=True,returnFG:bool=False):
-    #DEFINIMOS FUNCIONES PARA MEDIDAS QUE NOS GUSTARIA ANALIZAR
-
-    def entropy_vn_rho(rho):
-        """
-        Von-Neumann entropy of density matrix
-
-        Parameters
-        ----------
-        rho : qobj or list of qobjs
-            Density matrix.
-        base : {e,2}
-            Base of logarithm.
-        sparse : {False,True}
-            Use sparse eigensolver.
-
-        Returns
-        -------
-        entropy : list of floats
-            Von-Neumann entropy of `rho`.
-
-        Examples
-        --------
-        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
-        >>> entropy_vn(rho,2)
-        1.0
-
-        """
-
-        s=np.zeros(len(rho))
-        eigenvals=np.empty([len(rho),12])
-        eigenstatesvector=np.empty([len(rho),12,12,1],dtype="complex")
-        for i in range(len(rho)):
-
-            if rho[i].type == 'ket' or rho[i].type == 'bra':
-                rho[i] = ket2dm(rho[i])
-            rho[i]=rho[i].tidyup()
-            eigenvals[i],eigenvecs = rho[i].eigenstates()
-            nzvals = eigenvals[i][eigenvals[i] > 0]
-            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
-            for j,vec in enumerate(eigenvecs):
-                eigenstatesvector[i][j]=vec.full()
-
-        return eigenvals,eigenvecs,s
-    
-    def entropy_vn(evals):
-        """
-        Von-Neumann entropy of density matrix
-
-        Parameters
-        ----------
-        rho : qobj or list of qobjs
-            Density matrix.
-        base : {e,2}
-            Base of logarithm.
-        sparse : {False,True}
-            Use sparse eigensolver.
-
-        Returns
-        -------
-        entropy : list of floats
-            Von-Neumann entropy of `rho`.
-
-        Examples
-        --------
-        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
-        >>> entropy_vn(rho,2)
-        1.0
-
-        """
-        l=len(evals)
-        s=np.zeros(l)     
-        for i in range(l):
-            eigenvals= evals[i]
-            # print(eigenvals)
-            nzvals = eigenvals[eigenvals > 0]
-            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
-        return s
-
-    def entropy_vn_atom(rho):
-        """
-        Von-Neumann entropy of density matrix
-
-        Parameters
-        ----------
-        rho : qobj or list of qobjs
-            Density matrix.
-        base : {e,2}
-            Base of logarithm.
-        sparse : {False,True}
-            Use sparse eigensolver.
-
-        Returns
-        -------
-        entropy : list of floats
-            Von-Neumann entropy of `rho`.
-
-        Examples
-        --------
-        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
-        >>> entropy_vn(rho,2)
-        1.0
-
-        """
-
-        s=np.zeros(len(rho))
-        for i in range(len(rho)):
-
-            if rho[i].type == 'ket' or rho[i].type == 'bra':
-                rho[i] = ket2dm(rho[i])
-            rho[i]=rho[i].tidyup()
-            eigenvals= rho[i].eigenenergies()
-            nzvals = eigenvals[eigenvals > 0]
-            s[i] = float(np.real(-sum(nzvals * np.log(nzvals))))
-
-        return s
-
-    def entropy_linear(rho):
-        """
-        Linear entropy of a density matrix.
-
-        Parameters
-        ----------
-        rho : qobj or list of qobjs
-            sensity matrix or ket/bra vector.
-
-        Returns
-        -------
-        entropy : list of floats
-            Linear entropy of rho.
-
-        Examples
-        --------
-        >>> rho=0.5*fock_dm(2,0)+0.5*fock_dm(2,1)
-        >>> entropy_linear(rho)
-        0.5
-
-        """
-        s=np.zeros(len(rho))
-        for i in range(len(rho)):
-            if rho[i].type == 'ket' or rho[i].type == 'bra':
-                rho[i] = ket2dm(rho[i])
-            
-            s[i] = float(np.real(1.0 - (rho[i] ** 2).tr()))
-        return s
-
-    def concurrence(rho):
-        """
-        Calculate the concurrence entanglement measure for a two-qubit state.
-
-        Parameters
-        ----------
-        state : qobj or list of qobjs
-            Ket, bra, or density matrix for a two-qubit state.
-
-        Returns
-        -------
-        concur : float or list of floats
-            Concurrence
-
-        References
-        ----------
-
-        .. [1] http://en.wikipedia.org/wiki/Concurrence_(quantum_computing)
-
-        """
-        c=np.zeros(len(rho))
-        for i in range(len(rho)):
-            if rho[i].isket and rho[i].dims != [[2, 2], [1, 1]]:
-                raise Exception("Ket must be tensor product of two qubits.")
-
-            elif rho[i].isbra and rho[i].dims != [[1, 1], [2, 2]]:
-                raise Exception("Bra must be tensor product of two qubits.")
-
-            elif rho[i].isoper and rho[i].dims != [[2, 2], [2, 2]]:
-                raise Exception("Density matrix must be tensor product of two qubits.")
-
-            if rho[i].isket or rho[i].isbra:
-                rho[i] = ket2dm(rho[i])
-        
-
-            sysy = tensor(sigmay(), sigmay())
-
-            rho_tilde = (rho[i] * sysy) * (rho[i].conj() * sysy)
-
-            evals = rho_tilde.eigenenergies()
-
-            # abs to avoid problems with sqrt for very small negative numbers
-            evals = abs(np.sort(np.real(evals)))
-
-            lsum = np.sqrt(evals[3]) - np.sqrt(evals[2]) - np.sqrt(evals[1]) - np.sqrt(evals[0])
-            c[i]=max(0, lsum)
-        return c
-    
-    def fases(sol):
-        """params:
-        -sol: solucion numerica de la evolucion temporal
-        RETURNS
-        -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
-        -arg: no se
-        -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
-        
-        len_t=len(sol.states)
-        if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
-            rho0 = ket2dm(sol.states[0])
-        else:
-            rho0 = sol.states[0]
-        eval0,evec0=rho0.eigenstates()
-        eigenvals_t = np.array([eval0])
-        max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-        psi0 = evec0[max_eigenvalue_idx]
-        psi_old = psi0
-        Psi = []
-        norma = []
-        pan = 0
-        Pan = []
-        argumento = np.zeros(len_t)
-        signo = 0
-        for i in range(len_t):
-            if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
-                rho = ket2dm(sol.states[i])
-            else:
-                rho = sol.states[i]
-            
-            eigenval,eigenvec = rho.eigenstates()
-            eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
-
-            psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-    
-            # norma.append(psi.overlap(psi0))
-
-            pan += np.angle(psi.overlap(psi_old))
-            Pan.append(pan - np.angle(psi.overlap(psi0)))
-            psi_old = psi
-
-            # Almaceno el argumento para cada tiempo
-            argumento[i] = np.angle(psi0.dag() * psi)
-
-        eigenvals_t=np.delete(eigenvals_t,0,axis=0)
-        Pan = np.array(Pan)
-        return np.unwrap(Pan), argumento, np.array(eigenvals_t)
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
     
@@ -434,26 +195,10 @@ def evolucion(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:fl
     #     return t,data['t'],fg_pan,data['FG']
     
 
-disipation=False
-acoplamiento='lineal'
-x=0
-w_0=1
-g=0.001*w_0
-p=0.005*g
-k=0.1*g
-gamma=0.1*g
-J=0
-t_final=50000
-steps=4000
-
-# for x in [0,1/4*g,1/2*g,g,3/2*g,2*g]:
-#     for d in [0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]:
-
-#         evolucion(w_0,g,k,J,d,x,gamma,p,eg0,'eg0',t_final,steps,disipation=disipation,acoplamiento=acoplamiento,returnFG=True)
 
 iteration_number=0
-for disipation in [True,False]:
-    for acoplamiento in ['lineal','bs']:
+for disipation in [False]:#[True,False]:
+    for acoplamiento in ['lineal']:#,'bs']:
         yr, mes, dia, hr, minute = map(int, time.strftime("%Y %m %d %H %M").split())
         mesydiayhora=str(mes)+'_'+str(dia)+'_'+str(hr)
         script_path=os.path.dirname(__file__)
@@ -475,9 +220,9 @@ path=os.path.join(script_path, relative_path)
 
         J=0
         t_final=50000
-        steps=4000
-        psi0=[(ge0+eg0+gg1).unit(),(ee0+gg2).unit(),(ee0-gg2).unit(),eg0,(eg0+ge0)/np.sqrt(2)]
-        psi0_folder=['W','ee0+gg2','ee0-gg2','eg0','eg0 sim']
+        steps=3000
+        psi0=[(ge0+eg0+gg1).unit(),eg0,(ee0+gg2).unit(),(ee0-gg2).unit(),(eg0+ge0)/np.sqrt(2)]
+        psi0_folder=['W','eg0','ee0+gg2','ee0-gg2','eg0 sim']
 
         '''------GUARDAR DATAFRAME COMO CSV-------'''
         for psi0,psi0_folder in zip(psi0,psi0_folder):
@@ -485,19 +230,18 @@ path=os.path.join(script_path, relative_path)
             if not os.path.exists(folder_path):
                     os.makedirs(folder_path)
             os.chdir(folder_path)
-            g=[0.001*w_0]
+            g=[0.001*w_0]#,0.01*w_0]
             for g in g:
                 p=0.005*g
-                k=0.1*g
-                x=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
-                for x in x:
-                    d=[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+                k=[0,0.5*g,g,1.5*g,2*g]
+                x=0#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+                for k in k:
+                    d=[0]#,0.5*g,0.8*g,g,1.5*g,2*g]#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
                     for d in d:
-                        gamma=[0.1*g]
+                        gamma=[0.1*g]#,g,2*g]
                         for gamma in gamma:
                             
                             evolucion(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps,disipation=disipation,acoplamiento=acoplamiento)
                             print(f"ITERACION NUMERO {iteration_number}")
-                            print(f"Progreso GLOBAL aproximado {iteration_number*100/(2*2*7*20*20*3):.2f}%")
                             iteration_number+=1
 
