@@ -8,9 +8,8 @@ import matplotlib as mpl
 import matplotlib.colors as mcolors
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
-from matplotlib.animation import FuncAnimation
-
 from jcm_lib import simu_unit_y_disip,canberra
+
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
 sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
@@ -71,10 +70,10 @@ w_0=1
 J=0
 g=0.001*w_0
 p=0.005*g
-delta=np.linspace(0,2*g,21)
-x=g
+delta=np.linspace(0,2*g,3)
+x=0
 gamma=0.1*g
-kappa=np.linspace(0,2*g,21)
+kappa=np.linspace(0,2*g,3)
 k_ax, delta_ax = np.meshgrid(kappa,delta,sparse=True)
 zs=np.zeros((len(kappa),len(delta)))
 for j,d in enumerate(delta):

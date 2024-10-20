@@ -1943,16 +1943,49 @@ def anim_univsdis(title:str,data_uni:list,data_dis:list,param:list,param_name:st
     plt.show()
     return ani
 
-def canberra(data1,data2):
-    d=0
-    for i in range(len(data1)):
-        if data1[i]==0 and data2[i]==0:
-            None
-        else: 
-            d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
-    return d
+def canberra(data1,data2,temporal:bool=False):
+    """Calcula el canberra entre las datas 1 y 2. Si temporal es falso, entonces solo da como resultado un unico float, que es el canberra calculado en el total del tiempo. Si temporal es true, entonces devuelve una lista que tiene la misma longitud que data1, y va mostrando el canberra acumulado tiempo a tiempo"""
+    if len(data1) != len(data2):
+        print(f"ERROR: data1 y data2 deben tener el mismo tamaño pero tienen {len(data1)} y {len(data2)}")
+        exit()
+    elif temporal == False:
+        d=0
+        for i in range(len(data1)):
+            if data1[i]==0 and data2[i]==0:
+                None
+            else: 
+                d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
+        return d
+    elif temporal == True:
+        d=0
+        canb=[]
+        for i in range(len(data1)):
+            if data1[i]==0 and data2[i]==0:
+                d+=0
+            else: 
+                d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
+            canb.append(d)
+        return canb
+    else:
+        print("No se que paso. Comportamiento inesperado en el canberra")
+        exit()
 
-def canberra_mesh(ci:str):
+def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name):
+    """-zs shape tien que ser (x_ax,y_ax,steps)"""
+    zs_max,zs_min=max(zs.flatten()),min(zs.flatten())
+    k_ax, delta_ax = np.meshgrid(x_param_list,y_param_list,sparse=True)
+    fig=plt.figure(figsize=(16,9))
+    ax=fig.add_subplot()
+    fig.suptitle(f"$\psi_0$={psi0Name} chi={chi/g}g")
+    #plotear el pcolormesh()
+    c = ax.pcolor(k_ax/g, delta_ax/g, zs, cmap='plasma', vmin=zs_min, vmax=zs_max)
+    ax.set_xlabel("$k/g$")
+    ax.set_ylabel("$\Delta/g$")
+    fig.colorbar(c, ax=ax)
+    plt.show()
+
+
+def canberra_mesh_lectura(ci:str):
     gamma=0.1*g
     folders=["10_3_9 unitario lineal","10_2_22 disipativo lineal"]
     relative_path="datos"
@@ -1993,7 +2026,7 @@ def canberra_mesh(ci:str):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-def simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal'):
+def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal'):
     """Returns: 
         devuelve todos estas 14 listas que representan la evolucion de cada simulacion
         -ops_expect_u,ops_expect_d
@@ -2021,8 +2054,8 @@ def simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final:int=50000,steps:int=300
     '''---Simulacion numerica---'''
     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
-    sol_u=mesolve(H,psi0,t,c_ops=[],progress_bar=True)
-    sol_d=mesolve(H,psi0,t,c_ops=l_ops,progress_bar=True)
+    sol_u=mesolve(H,psi0,t,c_ops=[])
+    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
     fg_u,arg,eigenvals_t_u = fases(sol_u)
     fg_d,arg,eigenvals_t_d = fases(sol_d)
 
@@ -2047,17 +2080,17 @@ def simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final:int=50000,steps:int=300
     ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
            0.5*(sz1+sz2),sx1,sx2]
     
-    expectStartTime=time.process_time()
-    ops_expect_u=np.empty((len(ops),len(sol_u.states)))
-    for i in range(len(sol_u.states)): 
-        for j in range(len(ops)):
-            ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
+    # expectStartTime=time.process_time()
+    # ops_expect_u=np.empty((len(ops),len(sol_u.states)))
+    # for i in range(len(sol_u.states)): 
+    #     for j in range(len(ops)):
+    #         ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
 
-    ops_expect_d=np.empty((len(ops),len(sol_d.states)))
-    for i in range(len(sol_d.states)): 
-        for j in range(len(ops)):
-            ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
-    expectRunTime=time.process_time()-expectStartTime
+    # ops_expect_d=np.empty((len(ops),len(sol_d.states)))
+    # for i in range(len(sol_d.states)): 
+    #     for j in range(len(ops)):
+    #         ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
+    # expectRunTime=time.process_time()-expectStartTime
 
     # #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
     # pasajeStartTime=time.process_time()
@@ -2086,33 +2119,34 @@ def simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final:int=50000,steps:int=300
     # print(f"coherenciasRunTime: {coherenciasRunTime}")
  
     # pasajeRunTime=time.process_time() - pasajeStartTime
-    entropiaStartTime = time.process_time()
+    # entropiaStartTime = time.process_time()
     
-    SvN_u=entropy_vn(eigenvals_t_u)
-    SvN_d=entropy_vn(eigenvals_t_d)
-    Slin_u=entropy_linear(sol_u.states)
-    Slin_d=entropy_linear(sol_d.states)
+    # SvN_u=entropy_vn(eigenvals_t_u)
+    # SvN_d=entropy_vn(eigenvals_t_d)
+    # Slin_u=entropy_linear(sol_u.states)
+    # Slin_d=entropy_linear(sol_d.states)
 
-    atoms_states_u=np.empty_like(sol_u.states)
-    for j in range(len(sol_u.states)):
-        atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+    # atoms_states_u=np.empty_like(sol_u.states)
+    # for j in range(len(sol_u.states)):
+    #     atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
 
-    atoms_states_d=np.empty_like(sol_d.states)
-    for j in range(len(sol_d.states)):
-        atoms_states_d[j]=sol_d.states[j].ptrace([0,1])    
-    # data['Atom States']=atoms_states
-    SvN_at_u=entropy_vn_atom(atoms_states_u)
-    Slin_at_u=entropy_linear(atoms_states_u)
-    conc_at_u=concurrence(atoms_states_u)
+    # atoms_states_d=np.empty_like(sol_d.states)
+    # for j in range(len(sol_d.states)):
+    #     atoms_states_d[j]=sol_d.states[j].ptrace([0,1])    
+    # # data['Atom States']=atoms_states
+    # SvN_at_u=entropy_vn_atom(atoms_states_u)
+    # Slin_at_u=entropy_linear(atoms_states_u)
+    # conc_at_u=concurrence(atoms_states_u)
 
-    SvN_at_d=entropy_vn_atom(atoms_states_d)
-    Slin_at_d=entropy_linear(atoms_states_d)
-    conc_at_d=concurrence(atoms_states_d)
+    # SvN_at_d=entropy_vn_atom(atoms_states_d)
+    # Slin_at_d=entropy_linear(atoms_states_d)
+    # conc_at_d=concurrence(atoms_states_d)
 
-    entropiaRunTime=time.process_time() - entropiaStartTime
+    # entropiaRunTime=time.process_time() - entropiaStartTime
 
-    print("-----Tiempos de computo----")
-    print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+    # print("-----Tiempos de computo----")
+    # print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
     #,coherencias_u,coherencias_d
-    return ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
+    return fg_u,fg_d#ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
 
+  
