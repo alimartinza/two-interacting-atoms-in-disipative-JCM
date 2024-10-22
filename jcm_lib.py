@@ -2133,7 +2133,8 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
 
     # atoms_states_d=np.empty_like(sol_d.states)
     # for j in range(len(sol_d.states)):
-    #     atoms_states_d[j]=sol_d.states[j].ptrace([0,1])    
+    #     atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
+
     # # data['Atom States']=atoms_states
     # SvN_at_u=entropy_vn_atom(atoms_states_u)
     # Slin_at_u=entropy_linear(atoms_states_u)
@@ -2148,6 +2149,6 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
     # print("-----Tiempos de computo----")
     # print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
     #,coherencias_u,coherencias_d
-    return fg_u,fg_d#ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
+    return fg_u,fg_d#,conc_at_u,conc_at_d#ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
 
   
