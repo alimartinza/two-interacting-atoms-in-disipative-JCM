@@ -1948,7 +1948,8 @@ def canberra(data1,data2,temporal:bool=False):
     if len(data1) != len(data2):
         print(f"ERROR: data1 y data2 deben tener el mismo tamaño pero tienen {len(data1)} y {len(data2)}")
         exit()
-    elif temporal == False:
+
+    if temporal == False:
         d=0
         for i in range(len(data1)):
             if data1[i]==0 and data2[i]==0:
@@ -1965,7 +1966,7 @@ def canberra(data1,data2,temporal:bool=False):
             else: 
                 d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
             canb.append(d)
-        return canb
+        return np.array(canb)
     else:
         print("No se que paso. Comportamiento inesperado en el canberra")
         exit()
