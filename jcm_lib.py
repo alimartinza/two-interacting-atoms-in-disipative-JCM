@@ -113,7 +113,7 @@ def plot_coherencias(data,n:int,ax,xlabel='gt',ylabel='Abs(Coh)'):
     -n_ax: en que ax queres graficar todas las coherencias
     
     Pensado para usarlo semimanualmente, usar un plt.plots() e ir poniendo esta funcion en cada lugar donde queremos graficar las coherencias'''
-    cmap=mpl.colormaps["plasma"]
+    cmap=mpl.colormaps["inferno"]
     colors=cmap(np.linspace(0,1,12))
 
     i=0
@@ -989,227 +989,225 @@ def plot3D_delta(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot2D_delta(cis:list,delta:list,savePlots:bool=False,showPlots:bool=True):
+def plot2D_delta(ci:str,delta:list,savePlots:bool=False,showPlots:bool=True):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
-    f_names=["10_2_22 disipativo lineal","10_3_3 disipativo bs","10_3_9 unitario lineal","10_3_13 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
+    f_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # condiciones_iniciales=["w2"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
     #PARA CADA CONDICION INICIAL HACEMOS LOS GRAFICOS, HACEMOS ITERACIONES PARA CADA CARPETA ASI COMPARAMOS LOS MODELOS 
-    for ci in cis:
-        for folder_names in f_names:
+    for folder_names in f_names:
+        relative_path="datos"+"\\"+folder_names+"\\"+ci 
+        path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
+        if os.path.exists(path):
+            os.chdir(path)
+        else: 
+            print("Dir %s does not exist", path)
 
-            relative_path="datos"+"\\"+folder_names+"\\"+ci 
-            path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
-            if os.path.exists(path):
-                os.chdir(path)
-            else: 
-                print("Dir %s does not exist", path)
+        #POR AHORA LOS PARAMETROS VAN A SER MANUALES, Y DEBERIAN SER LOS MISMOS QUE USAMOS EN LA SIMULACION. YO POR AHORA LA SIMULACION LARGA
+        #LA HICE CON LOS PARAMETROS x=[0,1/4*g,1/2*g], d=[0,0.5*g,2*g], gamma=[0.1*g,2*g] ASI QUE CREO QUE ESOS VAN A QUEDAR ASI POR UN BUEN RATO
+        x=1/2*g#[0,1/4*g,1/2*g]    
+        len_d=len(delta)
+        gamma=0.1*g#[0.1*g,2*g] 
+        cmap1=mpl.colormaps["plasma"]
+        colors1=cmap1(np.linspace(0,1,len_d))
+        colors2=cmap1(np.linspace(0,1,2*len_d))
+        colors3=cmap1(np.linspace(0,1,3*len_d))
+        colors4=cmap1(np.linspace(0,1,4*len_d))
 
-            #POR AHORA LOS PARAMETROS VAN A SER MANUALES, Y DEBERIAN SER LOS MISMOS QUE USAMOS EN LA SIMULACION. YO POR AHORA LA SIMULACION LARGA
-            #LA HICE CON LOS PARAMETROS x=[0,1/4*g,1/2*g], d=[0,0.5*g,2*g], gamma=[0.1*g,2*g] ASI QUE CREO QUE ESOS VAN A QUEDAR ASI POR UN BUEN RATO
-            x=1/2*g#[0,1/4*g,1/2*g]    
-            len_d=len(delta)
-            gamma=0.1*g#[0.1*g,2*g] 
-            cmap1=mpl.colormaps["plasma"]
-            colors1=cmap1(np.linspace(0,1,len_d))
-            colors2=cmap1(np.linspace(0,1,2*len_d))
-            colors3=cmap1(np.linspace(0,1,3*len_d))
-            colors4=cmap1(np.linspace(0,1,4*len_d))
+        colors_eval=[mpl.colormaps["Purples"](np.linspace(0,1,12)),mpl.colormaps["Blues"](np.linspace(0,1,12)),mpl.colormaps["Greens"](np.linspace(0,1,12)),mpl.colormaps["Oranges"](np.linspace(0,1,12))]
 
-            colors_eval=[mpl.colormaps["Purples"](np.linspace(0,1,12)),mpl.colormaps["Blues"](np.linspace(0,1,12)),mpl.colormaps["Greens"](np.linspace(0,1,12)),mpl.colormaps["Oranges"](np.linspace(0,1,12))]
+        '''-------LAYOUT PARA LOS GRAFICOS------'''
+        #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+        #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+        '''N=0'''
+        fig0 = plt.figure(figsize=(16,9))
+        fig0.suptitle('N=0 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax0 = fig0.add_subplot()
+        ax0.set_xlabel('gt')
+        ax0.set_ylabel('Amp. Prob. ')
+        ax0.set_ylim(0,1)
+        '''N=1'''
+        fig1 = plt.figure(figsize=(16,9))
+        ax1 = fig1.add_subplot()
+        fig1.suptitle('N=1 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax1.set_xlabel('gt')
+        ax1.set_ylabel('Amp. Prob. ')
+        ax1.set_ylim(0,1)
 
-            '''-------LAYOUT PARA LOS GRAFICOS------'''
-            #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
-            #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
-            '''N=0'''
-            fig0 = plt.figure(figsize=(16,9))
-            fig0.suptitle('N=0 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax0 = fig0.add_subplot()
-            ax0.set_xlabel('gt')
-            ax0.set_ylabel('Amp. Prob. ')
-            ax0.set_ylim(0,1)
-            '''N=1'''
-            fig1 = plt.figure(figsize=(16,9))
-            ax1 = fig1.add_subplot()
-            fig1.suptitle('N=1 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax1.set_xlabel('gt')
-            ax1.set_ylabel('Amp. Prob. ')
-            ax1.set_ylim(0,1)
+        '''N=2'''
+        fig2 = plt.figure(figsize=(16,9))
+        ax2 = fig2.add_subplot()
+        fig2.suptitle('N=2 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax2.set_xlabel('gt')
+        ax2.set_ylabel('Amp. Prob. ')
+        # ax2.set_zlim(0,1)
 
-            '''N=2'''
-            fig2 = plt.figure(figsize=(16,9))
-            ax2 = fig2.add_subplot()
-            fig2.suptitle('N=2 '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax2.set_xlabel('gt')
-            ax2.set_ylabel('Amp. Prob. ')
-            # ax2.set_zlim(0,1)
+        '''PAULI'''
+        fig_pauli = plt.figure(figsize=(16,9))
+        ax_pauli = fig_pauli.add_subplot()
+        fig_pauli.suptitle('Pauli '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax_pauli.set_xlabel('gt')
+        ax_pauli.set_ylabel('V.M.')
+        ax_pauli.set_ylim(-1,1)
+        pauli_lines=[]
+        pauli_names=[]
 
-            '''PAULI'''
-            fig_pauli = plt.figure(figsize=(16,9))
-            ax_pauli = fig_pauli.add_subplot()
-            fig_pauli.suptitle('Pauli '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax_pauli.set_xlabel('gt')
-            ax_pauli.set_ylabel('V.M.')
-            ax_pauli.set_ylim(-1,1)
-            pauli_lines=[]
-            pauli_names=[]
+        '''ENTROPIA VON NEUMAN Y LINEAL'''
+        fig_S = plt.figure(figsize=(16,9))
+        ax_Slin = fig_S.add_subplot(121)
+        ax_Svn = fig_S.add_subplot(122)
+        fig_S.suptitle('Entropia A-A-F '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax_Svn.set_ylabel('S')
+        ax_Slin.set_ylabel('S')
+        ax_Slin.set_xlabel('gt')
+        ax_Svn.set_xlabel('gt')
+        ax_Svn.set_ylim(0,np.log(8))
+        ax_Slin.set_ylim(0,1)
 
-            '''ENTROPIA VON NEUMAN Y LINEAL'''
-            fig_S = plt.figure(figsize=(16,9))
-            ax_Slin = fig_S.add_subplot(121)
-            ax_Svn = fig_S.add_subplot(122)
-            fig_S.suptitle('Entropia A-A-F '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax_Svn.set_ylabel('S')
-            ax_Slin.set_ylabel('S')
-            ax_Slin.set_xlabel('gt')
-            ax_Svn.set_xlabel('gt')
-            ax_Svn.set_ylim(0,np.log(8))
-            ax_Slin.set_ylim(0,1)
+        '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+        fig_Sr = plt.figure(figsize=(16,9))
+        ax_Srlin = fig_Sr.add_subplot(131)
+        ax_Srvn = fig_Sr.add_subplot(132)
+        ax_Con = fig_Sr.add_subplot(133)
+        fig_Sr.suptitle('Entropia Reducida '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax_Srvn.set_ylabel('S')
+        ax_Srlin.set_ylabel('S')
+        ax_Con.set_ylabel('C')
+        ax_Con.set_xlabel('gt')
+        ax_Srlin.set_xlabel('gt')
+        ax_Srvn.set_xlabel('gt')
+        ax_Srvn.set_ylim(0,np.log(8))
+        ax_Srlin.set_ylim(0,1)
+        ax_Con.set_ylim(0,1)
 
-            '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
-            fig_Sr = plt.figure(figsize=(16,9))
-            ax_Srlin = fig_Sr.add_subplot(131)
-            ax_Srvn = fig_Sr.add_subplot(132)
-            ax_Con = fig_Sr.add_subplot(133)
-            fig_Sr.suptitle('Entropia Reducida '+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax_Srvn.set_ylabel('S')
-            ax_Srlin.set_ylabel('S')
-            ax_Con.set_ylabel('C')
-            ax_Con.set_xlabel('gt')
-            ax_Srlin.set_xlabel('gt')
-            ax_Srvn.set_xlabel('gt')
-            ax_Srvn.set_ylim(0,np.log(8))
-            ax_Srlin.set_ylim(0,1)
-            ax_Con.set_ylim(0,1)
-
-            '''----Autovalores----'''
-            fig_autoval=plt.figure()
-            ax_eval=fig_autoval.add_subplot()
-            ax_eval.set_xlabel('gt')
-            ax_eval.set_ylabel('Eval')
-            
-
-            fig_fg=plt.figure()
-            fig_fg.suptitle("Fase Geometrica "+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
-            ax_fg=fig_fg.add_subplot()
-            ax_fg.set_xlabel('gt')
-
-
-            #AHORA HACEMOS EL LOOP ENTRE LOS ARCHIVOS DE DIFERENTES PARAMETROS Y LOS PONEMOS EN SU CORRESPONDIENTE GRAFICO Y EJE
-            for i,d in enumerate(delta):
-                g_str=str(g).replace('.','_')
-                k_str=str(k).replace('.','_')
-                J_str=str(J).replace('.','_')
-                d_str=str(d).replace('.','_')
-                x_str=str(x).replace('.','_')
-                gamma_str=str(gamma).replace('.','_')
-                p_str=str(p).replace('.','_')
-                
-                param_name=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}'
-                csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
-                
-                data=pd.read_csv(csvname,header=0)
-
-                '''----DATOS DE LOS PLOTS----'''
-
-                '''--- N=0 ---'''
-                line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=colors1[i],label='gg0, d='+str(d))
-                # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
-                ax0.set_title(param_name)
-
-                plot_coherencias(data,9,ax0)#,0) #N=0
-
+        '''----Autovalores----'''
+        fig_autoval=plt.figure()
+        ax_eval=fig_autoval.add_subplot()
+        ax_eval.set_xlabel('gt')
+        ax_eval.set_ylabel('Eval')
         
-                '''--- N=1 ---'''
-                line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=colors3[i],label=',d='+str(d))
-                line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=colors3[i+len_d],label=',d='+str(d))
-                line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=colors3[i+2*len_d],label=',d='+str(d))
-                plot_coherencias(data,3,ax1) #N=1
-                plot_coherencias(data,6,ax1) #N=1
-                plot_coherencias(data,10,ax1) #N=1
-                ax1.set_title(param_name)
-                ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
-                
-                '''--- N=2 ---'''
 
-                line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=colors4[i],label=',d='+str(d))
-                line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=colors4[i+len_d],label=',d='+str(d))
-                line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=colors4[i+2*len_d],label=',d='+str(d))
-                line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=colors4[i+3*len_d],label=',d='+str(d))
-                plot_coherencias(data,0,ax2) #N=2
-                plot_coherencias(data,4,ax2) #N=2
-                plot_coherencias(data,7,ax2) #N=2 
-                plot_coherencias(data,11,ax2) #N=2
-                ax2.set_title(param_name)
-                ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
-                # '''--- N=3 ---'''
+        fig_fg=plt.figure()
+        fig_fg.suptitle("Fase Geometrica "+folder_names.split(" ")[-2]+" "+folder_names.split(" ")[-1])
+        ax_fg=fig_fg.add_subplot()
+        ax_fg.set_xlabel('gt')
 
-                # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
-                # ax=[ax]
-                # fig.suptitle('N=3')
-                # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
-                # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
-                # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
-                '''----EVALS----'''
-                for j in range(12): 
-                    ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=colors_eval[i][j],label=f"$\lambda_{j}$")
-                ax_eval.legend()
-                '''----FG-----'''
 
-                '''--- VM Pauli ---'''
-
-                line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=colors3[i],label=',d='+str(d))
-                line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=colors3[i+len_d],label=',d='+str(d))
-                line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=colors3[i+2*len_d],label=',d='+str(d))
-                ax_pauli.set_title(param_name)
-                pauli_lines.append([line_p0,line_p1,line_p2])
-                pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+', d='+str(d),'$<\\sigma_x^{(1)}>$'+', d='+str(d),'$<\\sigma_x^{(2)}>$'+', d='+str(d)])
+        #AHORA HACEMOS EL LOOP ENTRE LOS ARCHIVOS DE DIFERENTES PARAMETROS Y LOS PONEMOS EN SU CORRESPONDIENTE GRAFICO Y EJE
+        for i,d in enumerate(delta):
+            g_str=str(g).replace('.','_')
+            k_str=str(k).replace('.','_')
+            J_str=str(J).replace('.','_')
+            d_str=str(d).replace('.','_')
+            x_str=str(x).replace('.','_')
+            gamma_str=str(gamma).replace('.','_')
+            p_str=str(p).replace('.','_')
             
-                '''--- Entropias ---'''
-                #PLOT PARA LAS ENTROPIAS
-                
-                lineSvn,=ax_Svn.plot(g*data['t'],data['S von Neuman tot'],color=colors2[i],label='d='+str(d))
-                lineSlin,=ax_Slin.plot(g*data['t'],data['S lineal tot'],color=colors2[i+len_d],label='d='+str(d))
-                ax_Svn.set_title(param_name)
-                #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+            param_name=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}'
+            csvname=f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv'
+            
+            data=pd.read_csv(csvname,header=0)
 
-                '''---Trazamos sobre el campo---'''
-                #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
-                #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+            '''----DATOS DE LOS PLOTS----'''
 
-                lineSrvn,=ax_Srvn.plot(g*data['t'],data['S vN atom'],color=colors3[i],label='d='+str(d))
-                lineSrlin,=ax_Srlin.plot(g*data['t'],data['S lin atom'],color=colors3[i+len_d],label='d='+str(d))
-                lineCon,=ax_Con.plot(g*data['t'],data['Concu atom'],color=colors3[i+2*len_d],label='d='+str(d))
-                ax_Srvn.set_title(param_name)
-                # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+            '''--- N=0 ---'''
+            line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=colors1[i],label='gg0, d='+str(d))
+            # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+            ax0.set_title(param_name)
+
+            plot_coherencias(data,9,ax0)#,0) #N=0
+
+    
+            '''--- N=1 ---'''
+            line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=colors3[i],label=',d='+str(d))
+            line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=colors3[i+len_d],label=',d='+str(d))
+            line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=colors3[i+2*len_d],label=',d='+str(d))
+            plot_coherencias(data,3,ax1) #N=1
+            plot_coherencias(data,6,ax1) #N=1
+            plot_coherencias(data,10,ax1) #N=1
+            ax1.set_title(param_name)
+            ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+            
+            '''--- N=2 ---'''
+
+            line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=colors4[i],label=',d='+str(d))
+            line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=colors4[i+len_d],label=',d='+str(d))
+            line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=colors4[i+2*len_d],label=',d='+str(d))
+            line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=colors4[i+3*len_d],label=',d='+str(d))
+            plot_coherencias(data,0,ax2) #N=2
+            plot_coherencias(data,4,ax2) #N=2
+            plot_coherencias(data,7,ax2) #N=2 
+            plot_coherencias(data,11,ax2) #N=2
+            ax2.set_title(param_name)
+            ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+            # '''--- N=3 ---'''
+
+            # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+            # ax=[ax]
+            # fig.suptitle('N=3')
+            # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+            # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+            # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+            '''----EVALS----'''
+            for j in range(12): 
+                ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=colors_eval[i][j],label=f"$\lambda_{j}$")
+            ax_eval.legend()
+            '''----FG-----'''
+
+            '''--- VM Pauli ---'''
+
+            line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=colors3[i],label=',d='+str(d))
+            line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=colors3[i+len_d],label=',d='+str(d))
+            line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=colors3[i+2*len_d],label=',d='+str(d))
+            ax_pauli.set_title(param_name)
+            pauli_lines.append([line_p0,line_p1,line_p2])
+            pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+', d='+str(d),'$<\\sigma_x^{(1)}>$'+', d='+str(d),'$<\\sigma_x^{(2)}>$'+', d='+str(d)])
         
-        ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
-        ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+            '''--- Entropias ---'''
+            #PLOT PARA LAS ENTROPIAS
+            
+            lineSvn,=ax_Svn.plot(g*data['t'],data['S von Neuman tot'],color=colors2[i],label='d='+str(d))
+            lineSlin,=ax_Slin.plot(g*data['t'],data['S lineal tot'],color=colors2[i+len_d],label='d='+str(d))
+            ax_Svn.set_title(param_name)
+            #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
 
-        if savePlots==True:
-            script_path=os.path.dirname(__file__)            
-            relative_path="graficos resumen"+"\\"+ci+"\\"+"delta"
-            path=os.path.join(script_path, relative_path)
-            if os.path.exists(path):
-                os.chdir(path)
-            else: 
-                os.makedirs(path)
-                os.chdir(path)
+            '''---Trazamos sobre el campo---'''
+            #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+            #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
 
-            fig0.savefig(ci+' n=0 '+folder_names,dpi=100)
-            fig2.savefig(ci+' n=2 '+folder_names,dpi=100)
-            fig1.savefig(ci+' n=1 '+folder_names,dpi=100)
-            fig_pauli.savefig(ci+' pauli '+folder_names,dpi=100)
-            fig_S.savefig(ci+' entropia '+folder_names,dpi=100)
-            fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
-            fig_autoval.savefig()
-            fig_fg.savefig()
-            plt.close()
+            lineSrvn,=ax_Srvn.plot(g*data['t'],data['S vN atom'],color=colors3[i],label='d='+str(d))
+            lineSrlin,=ax_Srlin.plot(g*data['t'],data['S lin atom'],color=colors3[i+len_d],label='d='+str(d))
+            lineCon,=ax_Con.plot(g*data['t'],data['Concu atom'],color=colors3[i+2*len_d],label='d='+str(d))
+            ax_Srvn.set_title(param_name)
+            # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
 
-        elif showPlots==True:
-            plt.show()
-        else:
+    if savePlots==True:
+        script_path=os.path.dirname(__file__)            
+        relative_path="graficos resumen"+"\\"+ci+"\\"+"delta"
+        path=os.path.join(script_path, relative_path)
+        if os.path.exists(path):
+            os.chdir(path)
+        else: 
+            os.makedirs(path)
+            os.chdir(path)
+
+        fig0.savefig(ci+' n=0 '+folder_names,dpi=100)
+        fig2.savefig(ci+' n=2 '+folder_names,dpi=100)
+        fig1.savefig(ci+' n=1 '+folder_names,dpi=100)
+        fig_pauli.savefig(ci+' pauli '+folder_names,dpi=100)
+        fig_S.savefig(ci+' entropia '+folder_names,dpi=100)
+        fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
+        fig_autoval.savefig()
+        fig_fg.savefig()
+        plt.close()
+
+    elif showPlots==True:
+        plt.show()
+    else:
             print("Ni savePlots ni showPlots es True...")
 
 def plot_cis(cis:list,folder_name:str,x:float,d:float,gamma:float,savePlots:bool=False):
@@ -1985,7 +1983,6 @@ def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-
 def canberra_mesh_lectura(ci:str):
     gamma=0.1*g
     folders=["10_3_9 unitario lineal","10_2_22 disipativo lineal"]
@@ -2027,16 +2024,13 @@ def canberra_mesh_lectura(ci:str):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal'):
+def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
     """Returns: 
-        devuelve todos estas 14 listas que representan la evolucion de cada simulacion
-        -ops_expect_u,ops_expect_d
-        -fg_u,fg_d
-        -SvN_u,SvN_d
-        -Slin_u,Slin_d
-        -SvN_at_u,SvN_at_d
-        -Slin_at_u,Slin_at_d
-        -conc_at_u,conc_at_d"""
+    data_u: dataframe de pandas con los datos de la simulacion unitaria
+    data_d: dataframe de pandas con los datos de la simulacion disipativa
+    -Las keys de los dfs son:
+    ,t,pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),1/2 <sz1+sz2>,<sx1>,<sx2>,0;1,0;2,0;3,0;4,0;5,0;6,0;7,0;8,0;9,0;10,0;11,1;2,1;3,1;4,1;5,1;6,1;7,1;8,1;9,1;10,1;11,2;3,2;4,2;5,2;6,2;7,2;8,2;9,2;10,2;11,3;4,3;5,3;6,3;7,3;8,3;9,3;10,3;11,4;5,4;6,4;7,4;8,4;9,4;10,4;11,5;6,5;7,5;8,5;9,5;10,5;11,6;7,6;8,6;9,6;10,6;11,7;8,7;9,7;10,7;11,8;9,8;10,8;11,9;10,9;11,10;11,FG,S von Neuman tot,S lineal tot,S vN atom,S lin atom,Concu atom,Eigenvalue 0,Eigenvalue 1,Eigenvalue 2,Eigenvalue 3,Eigenvalue 4,Eigenvalue 5,Eigenvalue 6,Eigenvalue 7,Eigenvalue 8,Eigenvalue 9,Eigenvalue 10,Eigenvalue 11
+        """
     #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
     def f():
@@ -2060,95 +2054,1063 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
     fg_u,arg,eigenvals_t_u = fases(sol_u)
     fg_d,arg,eigenvals_t_d = fases(sol_d)
 
-    #Hacemos un array de las coherencias y las completamos con el for
-    coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
-                            '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
-                                    '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
-                                            '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
-                                                    '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
-                                                            '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
-                                                                    '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
-                                                                            '7;8':[],'7;9':[],'7;10':[],'7;11':[],
-                                                                                    '8;9':[],'8;10':[],'8;11':[],
-                                                                                            '9;10':[],'9;11':[],
-                                                                                                    '10;11':[]}
+
+    if return_all==False:
+        return fg_u,fg_d
+    else:
+        data_u=pd.DataFrame()
+        data_d=pd.DataFrame()
+        data_u['t']=t
+        data_d['t']=t
+        #Hacemos un array de las coherencias y las completamos con el for
+        coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                                '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                        '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                                '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                        '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                                '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                        '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                                '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                        '8;9':[],'8;10':[],'8;11':[],
+                                                                                                '9;10':[],'9;11':[],
+                                                                                                        '10;11':[]}
+        
+        coherencias_d=coherencias_u
+
+        #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
+        ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
+            'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+        ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
+            0.5*(sz1+sz2),sx1,sx2]
+        
+        expectStartTime=time.process_time()
+        ops_expect_u=np.empty((len(ops),len(sol_u.states)))
+        for i in range(len(sol_u.states)): 
+            for j in range(len(ops)):
+                ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
+
+        ops_expect_d=np.empty((len(ops),len(sol_d.states)))
+        for i in range(len(sol_d.states)): 
+            for j in range(len(ops)):
+                ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
+
+        for nombres,valores_de_expectacion_u in zip(ops_nomb,ops_expect_u):
+            data_u[nombres]=valores_de_expectacion_u
+        for key in coherencias.keys():
+            data_u[key]=np.zeros(len(sol_u.states))
+        for nombres,valores_de_expectacion_d in zip(ops_nomb,ops_expect_d):
+            data_d[nombres]=valores_de_expectacion_d
+        for key in coherencias.keys():
+            data_d[key]=np.zeros(len(sol_d.states))
+        #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+        coherenciasStartTime = time.process_time()
+
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help_u=np.zeros(len(sol_u.states),dtype='complex')
+                for i in range(len(sol_u.states)):
+                    c_help_u[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
+                data_u[str(j)+';'+str(l)]=c_help_u
+
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help_d=np.zeros(len(sol_d.states),dtype='complex')
+                for i in range(len(sol_d.states)):
+                    c_help_d[i]=sol_d.states[i][j][l]
+                data_d[str(j)+';'+str(l)]=c_help_d
+
+        coherenciasRunTime = time.process_time()-coherenciasStartTime
+        print(f"coherenciasRunTime: {coherenciasRunTime}")
+        data_u['FG']=fg_u
+        data_d['FG']=fg_d
+
+        expectRunTime=time.process_time()-expectStartTime
+
+        #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
+
+        entropiaStartTime = time.process_time()
+        
+        data_u['SvN']=entropy_vn(eigenvals_t_u)
+        data_d['SvN']=entropy_vn(eigenvals_t_d)
+        data_u['Slin_u']=entropy_linear(sol_u.states)
+        data_d['Slin_d']=entropy_linear(sol_d.states)
+
+        atoms_states_u=np.empty_like(sol_u.states)
+        for j in range(len(sol_u.states)):
+            atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+
+        atoms_states_d=np.empty_like(sol_d.states)
+        for j in range(len(sol_d.states)):
+            atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
+
+        # data['Atom States']=atoms_states
+        data_u['SvN_at_u']=entropy_vn_atom(atoms_states_u)
+        data_u['Slin_at_u']=entropy_linear(atoms_states_u)
+        data_u['conc_at_u']=concurrence(atoms_states_u)
+
+        data_d['SvN_at_d']=entropy_vn_atom(atoms_states_d)
+        data_d['Slin_at_d']=entropy_linear(atoms_states_d)
+        data_d['conc_at_d']=concurrence(atoms_states_d)
+
+        entropiaRunTime=time.process_time() - entropiaStartTime
+
+        print("-----Tiempos de computo----")
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+
+        return data_u,data_d
     
-    coherencias_d=coherencias_u
+def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
+    """Returns: 
+    data_u: dataframe de pandas con los datos de la simulacion unitaria
+    -Las keys de los dfs son:
+    ,t,pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),1/2 <sz1+sz2>,<sx1>,<sx2>,0;1,0;2,0;3,0;4,0;5,0;6,0;7,0;8,0;9,0;10,0;11,1;2,1;3,1;4,1;5,1;6,1;7,1;8,1;9,1;10,1;11,2;3,2;4,2;5,2;6,2;7,2;8,2;9,2;10,2;11,3;4,3;5,3;6,3;7,3;8,3;9,3;10,3;11,4;5,4;6,4;7,4;8,4;9,4;10,4;11,5;6,5;7,5;8,5;9,5;10,5;11,6;7,6;8,6;9,6;10,6;11,7;8,7;9,7;10,7;11,8;9,8;10,8;11,9;10,9;11,10;11,FG,S von Neuman tot,S lineal tot,S vN atom,S lin atom,Concu atom,Eigenvalue 0,Eigenvalue 1,Eigenvalue 2,Eigenvalue 3,Eigenvalue 4,Eigenvalue 5,Eigenvalue 6,Eigenvalue 7,Eigenvalue 8,Eigenvalue 9,Eigenvalue 10,Eigenvalue 11
+        """
+    #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
 
-    #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
-    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
-          'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
-    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
-           0.5*(sz1+sz2),sx1,sx2]
-    
-    # expectStartTime=time.process_time()
-    # ops_expect_u=np.empty((len(ops),len(sol_u.states)))
-    # for i in range(len(sol_u.states)): 
-    #     for j in range(len(ops)):
-    #         ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
-
-    # ops_expect_d=np.empty((len(ops),len(sol_d.states)))
-    # for i in range(len(sol_d.states)): 
-    #     for j in range(len(ops)):
-    #         ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
-    # expectRunTime=time.process_time()-expectStartTime
-
-    # #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
-    # pasajeStartTime=time.process_time()
-    # estados=np.empty_like(sol.states)
-    # for j in range(len(sol.states)):
-    #     estados[j]=sol.states[j]
-
-
-    #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
-    # coherenciasStartTime = time.process_time()
-
-    # for j in range(12): 
-    #     for l in range(j+1,12):
-    #         c_help=np.zeros(len(sol_u.states),dtype='complex')
-    #         for i in range(len(sol_u.states)):
-    #             c_help[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
-    #         coherencias_u[str(j)+';'+str(l)]=c_help
-    
-    # for j in range(12): 
-    #     for l in range(j+1,12):
-    #         c_help=np.zeros(len(sol_d.states),dtype='complex')
-    #         for i in range(len(sol_d.states)):
-    #             c_help[i]=sol_d.states[i][j][l]
-    #         coherencias_d[str(j)+';'+str(l)]=c_help
-    # coherenciasRunTime = time.process_time()-coherenciasStartTime
-    # print(f"coherenciasRunTime: {coherenciasRunTime}")
- 
-    # pasajeRunTime=time.process_time() - pasajeStartTime
-    # entropiaStartTime = time.process_time()
-    
-    # SvN_u=entropy_vn(eigenvals_t_u)
-    # SvN_d=entropy_vn(eigenvals_t_d)
-    # Slin_u=entropy_linear(sol_u.states)
-    # Slin_d=entropy_linear(sol_d.states)
-
-    # atoms_states_u=np.empty_like(sol_u.states)
-    # for j in range(len(sol_u.states)):
-    #     atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
-
-    # atoms_states_d=np.empty_like(sol_d.states)
-    # for j in range(len(sol_d.states)):
-    #     atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
-
-    # # data['Atom States']=atoms_states
-    # SvN_at_u=entropy_vn_atom(atoms_states_u)
-    # Slin_at_u=entropy_linear(atoms_states_u)
-    # conc_at_u=concurrence(atoms_states_u)
-
-    # SvN_at_d=entropy_vn_atom(atoms_states_d)
-    # Slin_at_d=entropy_linear(atoms_states_d)
-    # conc_at_d=concurrence(atoms_states_d)
-
-    # entropiaRunTime=time.process_time() - entropiaStartTime
-
-    # print("-----Tiempos de computo----")
-    # print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
-    #,coherencias_u,coherencias_d
-    return fg_u,fg_d#,conc_at_u,conc_at_d#ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
-
+    def f():
+        if acoplamiento=='lineal':
+            return 1
+        elif acoplamiento=='bs':
+            return sqrtN
   
+    def pr(estado):
+        return estado.unit()*estado.unit().dag()
+
+    '''---Hamiltoniano---'''
+
+    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+
+    '''---Simulacion numerica---'''
+
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    sol_u=mesolve(H,psi0,t,c_ops=[])
+    fg_u,arg,eigenvals_t_u = fases(sol_u)
+
+
+    if return_all==False:
+        return fg_u
+    else:
+        data_u=pd.DataFrame()
+        data_u['t']=t
+        #Hacemos un array de las coherencias y las completamos con el for
+        coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                                '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                        '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                                '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                        '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                                '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                        '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                                '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                        '8;9':[],'8;10':[],'8;11':[],
+                                                                                                '9;10':[],'9;11':[],
+                                                                                                        '10;11':[]}
+        
+        coherencias_d=coherencias_u
+
+        #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
+        ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
+            'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+        ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
+            0.5*(sz1+sz2),sx1,sx2]
+        
+        expectStartTime=time.process_time()
+        ops_expect_u=np.empty((len(ops),len(sol_u.states)))
+        for i in range(len(sol_u.states)): 
+            for j in range(len(ops)):
+                ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
+
+
+        for nombres,valores_de_expectacion_u in zip(ops_nomb,ops_expect_u):
+            data_u[nombres]=valores_de_expectacion_u
+        for key in coherencias.keys():
+            data_u[key]=np.zeros(len(sol_u.states))
+        #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+        coherenciasStartTime = time.process_time()
+
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help_u=np.zeros(len(sol_u.states),dtype='complex')
+                for i in range(len(sol_u.states)):
+                    c_help_u[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
+                data_u[str(j)+';'+str(l)]=c_help_u
+
+
+        coherenciasRunTime = time.process_time()-coherenciasStartTime
+        print(f"coherenciasRunTime: {coherenciasRunTime}")
+        data_u['FG']=fg_u
+
+        expectRunTime=time.process_time()-expectStartTime
+
+        #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
+
+        entropiaStartTime = time.process_time()
+        
+        data_u['SvN']=entropy_vn(eigenvals_t_u)
+        data_u['Slin']=entropy_linear(sol_u.states)
+
+        atoms_states_u=np.empty_like(sol_u.states)
+        for j in range(len(sol_u.states)):
+            atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+ 
+
+        # data['Atom States']=atoms_states
+        data_u['SvN_atom']=entropy_vn_atom(atoms_states_u)
+        data_u['Slin_atom']=entropy_linear(atoms_states_u)
+        data_u['Conc_atom']=concurrence(atoms_states_u)
+
+        entropiaRunTime=time.process_time() - entropiaStartTime
+
+        print("-----Tiempos de computo----")
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+
+        return data_u
+
+def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
+    """Returns: 
+    data_d: dataframe de pandas con los datos de la simulacion disipativa
+    -Las keys de los dfs son:
+    ,t,pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),1/2 <sz1+sz2>,<sx1>,<sx2>,0;1,0;2,0;3,0;4,0;5,0;6,0;7,0;8,0;9,0;10,0;11,1;2,1;3,1;4,1;5,1;6,1;7,1;8,1;9,1;10,1;11,2;3,2;4,2;5,2;6,2;7,2;8,2;9,2;10,2;11,3;4,3;5,3;6,3;7,3;8,3;9,3;10,3;11,4;5,4;6,4;7,4;8,4;9,4;10,4;11,5;6,5;7,5;8,5;9,5;10,5;11,6;7,6;8,6;9,6;10,6;11,7;8,7;9,7;10,7;11,8;9,8;10,8;11,9;10,9;11,10;11,FG,S von Neuman tot,S lineal tot,S vN atom,S lin atom,Concu atom,Eigenvalue 0,Eigenvalue 1,Eigenvalue 2,Eigenvalue 3,Eigenvalue 4,Eigenvalue 5,Eigenvalue 6,Eigenvalue 7,Eigenvalue 8,Eigenvalue 9,Eigenvalue 10,Eigenvalue 11
+        """
+    #DEFINIMOS CUAL MODELO VAMOS A USAR, Y LAS FUNCIONES QUE DEPENDEN DEL NUMERO DE OCUPACION DEL CAMPO FOTONICO
+
+    def f():
+        if acoplamiento=='lineal':
+            return 1
+        elif acoplamiento=='bs':
+            return sqrtN
+  
+    def pr(estado):
+        return estado.unit()*estado.unit().dag()
+
+    '''---Hamiltoniano---'''
+
+    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+
+    '''---Simulacion numerica---'''
+    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+
+    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+    fg_d,arg,eigenvals_t_d = fases(sol_d)
+
+
+    if return_all==False:
+        return fg_d
+    else:
+        data_d=pd.DataFrame()
+        data_d['t']=t
+        #Hacemos un array de las coherencias y las completamos con el for
+        coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                                '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                        '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                                '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                        '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                                '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                        '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                                '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                        '8;9':[],'8;10':[],'8;11':[],
+                                                                                                '9;10':[],'9;11':[],
+                                                                                                        '10;11':[]}
+        
+        coherencias_d=coherencias_u
+
+        #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
+        ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
+            'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+        ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
+            0.5*(sz1+sz2),sx1,sx2]
+        
+        expectStartTime=time.process_time()
+
+        ops_expect_d=np.empty((len(ops),len(sol_d.states)),dtype='complex')
+        for i in range(len(sol_d.states)): 
+            for j in range(len(ops)):
+                ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
+
+        for nombres,valores_de_expectacion_d in zip(ops_nomb,ops_expect_d):
+            data_d[nombres]=valores_de_expectacion_d
+        for key in coherencias.keys():
+            data_d[key]=np.zeros(len(sol_d.states))
+        #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+        coherenciasStartTime = time.process_time()
+
+        for j in range(12): 
+            for l in range(j+1,12):
+                c_help_d=np.zeros(len(sol_d.states),dtype='complex')
+                for i in range(len(sol_d.states)):
+                    c_help_d[i]=sol_d.states[i][j][l]
+                data_d[str(j)+';'+str(l)]=c_help_d
+
+        coherenciasRunTime = time.process_time()-coherenciasStartTime
+        print(f"coherenciasRunTime: {coherenciasRunTime}")
+        data_d['FG']=fg_d
+
+        expectRunTime=time.process_time()-expectStartTime
+
+        #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
+
+        entropiaStartTime = time.process_time()
+        
+        data_d['SvN']=entropy_vn(eigenvals_t_d)
+        data_d['Slin']=entropy_linear(sol_d.states)
+
+        atoms_states_d=np.empty_like(sol_d.states)
+        for j in range(len(sol_d.states)):
+            atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
+
+        # data['Atom States']=atoms_states
+
+        data_d['SvN_atom']=entropy_vn_atom(atoms_states_d)
+        data_d['Slin_atom']=entropy_linear(atoms_states_d)
+        data_d['Conc_atom']=concurrence(atoms_states_d)
+
+        entropiaRunTime=time.process_time() - entropiaStartTime
+
+        print("-----Tiempos de computo----")
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+
+        return data_d
+    
+def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 15
+    BIGGER_SIZE = 20
+
+    plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+
+
+    '''-------LAYOUT PARA LOS GRAFICOS------'''
+    #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+    #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+    '''N=0'''
+    fig0 = plt.figure(figsize=(16,9))
+    fig0.suptitle('N=0')
+    ax0 = fig0.add_subplot()
+    ax0.set_xlabel('gt')
+    ax0.set_ylabel('Amp. Prob. ')
+    ax0.set_ylim(0,1)
+    '''N=1'''
+    fig1 = plt.figure(figsize=(16,9))
+    ax1 = fig1.add_subplot()
+    fig1.suptitle('N=1')
+    ax1.set_xlabel('gt')
+    ax1.set_ylabel('Amp. Prob. ')
+    ax1.set_ylim(0,1)
+
+    '''N=2'''
+    fig2 = plt.figure(figsize=(16,9))
+    ax2 = fig2.add_subplot()
+    fig2.suptitle('N=2')
+    ax2.set_xlabel('gt')
+    ax2.set_ylabel('Amp. Prob. ')
+    ax2.set_ylim(0,1)
+
+    '''PAULI'''
+    fig_pauli = plt.figure(figsize=(16,9))
+    ax_pauli = fig_pauli.add_subplot()
+    fig_pauli.suptitle('Pauli ')
+    ax_pauli.set_xlabel('gt')
+    ax_pauli.set_ylabel('V.M.')
+    ax_pauli.set_ylim(-1,1)
+    pauli_lines=[]
+    pauli_names=[]
+
+    '''ENTROPIA VON NEUMAN Y LINEAL'''
+    fig_S = plt.figure(figsize=(16,9))
+    ax_Slin = fig_S.add_subplot(121)
+    ax_Svn = fig_S.add_subplot(122)
+    fig_S.suptitle('Entropia')
+    ax_Svn.set_ylabel('S')
+    ax_Svn.set_title('Von Neuman')
+    ax_Slin.set_ylabel('S')
+    ax_Slin.set_title('Lineal')
+    ax_Slin.set_xlabel('gt')
+    ax_Svn.set_xlabel('gt')
+    ax_Svn.set_ylim(0,np.log(8))
+    ax_Slin.set_ylim(0,1)
+
+    '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+    fig_Sr = plt.figure(figsize=(16,9))
+    ax_Srlin = fig_Sr.add_subplot(131)
+    ax_Srvn = fig_Sr.add_subplot(132)
+    ax_Con = fig_Sr.add_subplot(133)
+    fig_Sr.suptitle('Entropia Reducida')
+    ax_Srvn.set_ylabel('S')
+    ax_Srvn.set_title("Von Neuman")
+    ax_Srlin.set_ylabel('S')
+    ax_Srlin.set_title("Lineal")
+    ax_Con.set_ylabel('C')
+    ax_Con.set_title('Concurrencia')
+    ax_Con.set_xlabel('gt')
+    ax_Srlin.set_xlabel('gt')
+    ax_Srvn.set_xlabel('gt')
+    ax_Srvn.set_ylim(0,np.log(8))
+    ax_Srlin.set_ylim(0,1)
+    ax_Con.set_ylim(0,1)
+
+    # '''----Autovalores----'''
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # ax_eval.set_xlabel('gt')
+    # ax_eval.set_ylabel('Eval')
+
+
+    # fig_fg=plt.figure()
+    # fig_fg.suptitle("Fase Geometrica")
+    # ax_fg=fig_fg.add_subplot()
+    # ax_fg.set_xlabel('gt')
+
+    """---COLORES---"""
+    purples=mpl.colormaps['Purples'](np.linspace(0,1,len(delta)+2))
+    greens=mpl.colormaps['Greens'](np.linspace(0,1,len(delta)+2))
+    oranges=mpl.colormaps['Oranges'](np.linspace(0,1,len(delta)+2))
+    greys=mpl.colormaps['Greys'](np.linspace(0,1,len(delta)+2))
+    blues=mpl.colormaps['Blues'](np.linspace(0,1,len(delta)+2))
+    viridis12=mpl.colormaps['viridis'](np.linspace(0,1,12))
+    inferno=mpl.colormaps['inferno'](np.linspace(0,1,len(delta)+1))
+    '''----DATOS DE LOS PLOTS----'''
+    for i,d in enumerate(delta):
+        if disipation==True:
+            data=simu_disip(w0,g,k,J,d,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+        elif disipation==False:
+            data=simu_unit(w0,g,k,J,d,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+        d_g=d/g
+
+        '''--- N=0 ---'''
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $\Delta={d_g}g$')
+        # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+        # ax0.set_title(param_name)
+        plot_coherencias(data,9,ax0)#,0) #N=0
+
+        '''--- N=1 ---'''
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $\Delta={d_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $\Delta={d_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $\Delta={d_g}g$')
+        plot_coherencias(data,3,ax1) #N=1
+        plot_coherencias(data,6,ax1) #N=1
+        plot_coherencias(data,10,ax1) #N=1
+        # ax1.set_title(param_name)
+        # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+
+        '''--- N=2 ---'''
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, \Delta={d_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, \Delta={d_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, \Delta={d_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, \Delta={d_g}g$')
+        plot_coherencias(data,0,ax2) #N=2
+        plot_coherencias(data,4,ax2) #N=2
+        plot_coherencias(data,7,ax2) #N=2 
+        plot_coherencias(data,11,ax2) #N=2
+        # ax2.set_title(param_name)
+        # ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+        # '''--- N=3 ---'''
+
+        # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+        # ax=[ax]
+        # fig.suptitle('N=3')
+        # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+        # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+        # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+        # '''----EVALS----'''
+        # for j in range(12): 
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        # ax_eval.legend()
+
+
+        '''--- VM Pauli ---'''
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, \Delta={d_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, \Delta={d_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, \Delta={d_g}g$')
+        pauli_lines.append([line_p0,line_p1,line_p2])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\Delta={d_g}g$','$<\\sigma_x^{(1)}>$'+f', $\Delta={d_g}g$','$<\\sigma_x^{(2)}>$'+f', $\Delta={d_g}g$'])
+
+        '''--- Entropias ---'''
+        #PLOT PARA LAS ENTROPIAS
+
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        # ax_Svn.set_title(param_name)
+        #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+
+        '''---Trazamos sobre el campo---'''
+        #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+        #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        # ax_Srvn.set_title(param_name)
+        # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    ax0.legend()
+    ax1.legend()
+    ax2.legend()
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+    ax_Con.legend()
+    plt.show()
+
+def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 15
+    BIGGER_SIZE = 20
+
+    plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+
+
+    '''-------LAYOUT PARA LOS GRAFICOS------'''
+    #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+    #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+    '''N=0'''
+    fig0 = plt.figure(figsize=(16,9))
+    fig0.suptitle('N=0')
+    ax0 = fig0.add_subplot()
+    ax0.set_xlabel('gt')
+    ax0.set_ylabel('Amp. Prob. ')
+    ax0.set_ylim(0,1)
+    '''N=1'''
+    fig1 = plt.figure(figsize=(16,9))
+    ax1 = fig1.add_subplot()
+    fig1.suptitle('N=1')
+    ax1.set_xlabel('gt')
+    ax1.set_ylabel('Amp. Prob. ')
+    ax1.set_ylim(0,1)
+
+    '''N=2'''
+    fig2 = plt.figure(figsize=(16,9))
+    ax2 = fig2.add_subplot()
+    fig2.suptitle('N=2')
+    ax2.set_xlabel('gt')
+    ax2.set_ylabel('Amp. Prob. ')
+    ax2.set_ylim(0,1)
+
+    '''PAULI'''
+    fig_pauli = plt.figure(figsize=(16,9))
+    ax_pauli = fig_pauli.add_subplot()
+    fig_pauli.suptitle('Pauli ')
+    ax_pauli.set_xlabel('gt')
+    ax_pauli.set_ylabel('V.M.')
+    ax_pauli.set_ylim(-1,1)
+    pauli_lines=[]
+    pauli_names=[]
+
+    '''ENTROPIA VON NEUMAN Y LINEAL'''
+    fig_S = plt.figure(figsize=(16,9))
+    ax_Slin = fig_S.add_subplot(121)
+    ax_Svn = fig_S.add_subplot(122)
+    fig_S.suptitle('Entropia')
+    ax_Svn.set_ylabel('S')
+    ax_Svn.set_title('Von Neuman')
+    ax_Slin.set_ylabel('S')
+    ax_Slin.set_title('Lineal')
+    ax_Slin.set_xlabel('gt')
+    ax_Svn.set_xlabel('gt')
+    ax_Svn.set_ylim(0,np.log(8))
+    ax_Slin.set_ylim(0,1)
+
+    '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+    fig_Sr = plt.figure(figsize=(16,9))
+    ax_Srlin = fig_Sr.add_subplot(131)
+    ax_Srvn = fig_Sr.add_subplot(132)
+    ax_Con = fig_Sr.add_subplot(133)
+    fig_Sr.suptitle('Entropia Reducida')
+    ax_Srvn.set_ylabel('S')
+    ax_Srvn.set_title("Von Neuman")
+    ax_Srlin.set_ylabel('S')
+    ax_Srlin.set_title("Lineal")
+    ax_Con.set_ylabel('C')
+    ax_Con.set_title('Concurrencia')
+    ax_Con.set_xlabel('gt')
+    ax_Srlin.set_xlabel('gt')
+    ax_Srvn.set_xlabel('gt')
+    ax_Srvn.set_ylim(0,np.log(8))
+    ax_Srlin.set_ylim(0,1)
+    ax_Con.set_ylim(0,1)
+
+    # '''----Autovalores----'''
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # ax_eval.set_xlabel('gt')
+    # ax_eval.set_ylabel('Eval')
+
+
+    # fig_fg=plt.figure()
+    # fig_fg.suptitle("Fase Geometrica")
+    # ax_fg=fig_fg.add_subplot()
+    # ax_fg.set_xlabel('gt')
+
+    """---COLORES---"""
+    purples=mpl.colormaps['Purples'](np.linspace(0,1,len(kappa)+2))
+    greens=mpl.colormaps['Greens'](np.linspace(0,1,len(kappa)+2))
+    oranges=mpl.colormaps['Oranges'](np.linspace(0,1,len(kappa)+2))
+    greys=mpl.colormaps['Greys'](np.linspace(0,1,len(kappa)+2))
+    blues=mpl.colormaps['Blues'](np.linspace(0,1,len(kappa)+2))
+    viridis12=mpl.colormaps['viridis'](np.linspace(0,1,12))
+    inferno=mpl.colormaps['inferno'](np.linspace(0,1,len(kappa)+1))
+    '''----DATOS DE LOS PLOTS----'''
+    for i,k in enumerate(kappa):
+        if disipation==True:
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+        elif disipation==False:
+            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+        k_g=k/g
+
+        '''--- N=0 ---'''
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $k={k_g}g$')
+        # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+        # ax0.set_title(param_name)
+        plot_coherencias(data,9,ax0)#,0) #N=0
+
+        '''--- N=1 ---'''
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $k={k_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $k={k_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $k={k_g}g$')
+        plot_coherencias(data,3,ax1) #N=1
+        plot_coherencias(data,6,ax1) #N=1
+        plot_coherencias(data,10,ax1) #N=1
+        # ax1.set_title(param_name)
+        # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+
+        '''--- N=2 ---'''
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, k={k_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, k={k_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, k={k_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, k={k_g}g$')
+        plot_coherencias(data,0,ax2) #N=2
+        plot_coherencias(data,4,ax2) #N=2
+        plot_coherencias(data,7,ax2) #N=2 
+        plot_coherencias(data,11,ax2) #N=2
+        # ax2.set_title(param_name)
+        # ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+        # '''--- N=3 ---'''
+
+        # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+        # ax=[ax]
+        # fig.suptitle('N=3')
+        # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+        # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+        # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+        # '''----EVALS----'''
+        # for j in range(12): 
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        # ax_eval.legend()
+
+
+        '''--- VM Pauli ---'''
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, k={k_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, k={k_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, k={k_g}g$')
+        pauli_lines.append([line_p0,line_p1,line_p2])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $k={k_g}g$','$<\\sigma_x^{(1)}>$'+f', $k={k_g}g$','$<\\sigma_x^{(2)}>$'+f', $k={k_g}g$'])
+
+        '''--- Entropias ---'''
+        #PLOT PARA LAS ENTROPIAS
+
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$k={k_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$k={k_g}g$')
+        # ax_Svn.set_title(param_name)
+        #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+
+        '''---Trazamos sobre el campo---'''
+        #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+        #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$k={k_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$k={k_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$k={k_g}g$')
+        # ax_Srvn.set_title(param_name)
+        # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    ax0.legend()
+    ax1.legend()
+    ax2.legend()
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+    ax_Con.legend()
+    plt.show()
+
+def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 15
+    BIGGER_SIZE = 20
+
+    plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+
+
+    '''-------LAYOUT PARA LOS GRAFICOS------'''
+    #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+    #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+    '''N=0'''
+    fig0 = plt.figure(figsize=(16,9))
+    fig0.suptitle('N=0')
+    ax0 = fig0.add_subplot()
+    ax0.set_xlabel('gt')
+    ax0.set_ylabel('Amp. Prob. ')
+    ax0.set_ylim(0,1)
+    '''N=1'''
+    fig1 = plt.figure(figsize=(16,9))
+    ax1 = fig1.add_subplot()
+    fig1.suptitle('N=1')
+    ax1.set_xlabel('gt')
+    ax1.set_ylabel('Amp. Prob. ')
+    ax1.set_ylim(0,1)
+
+    '''N=2'''
+    fig2 = plt.figure(figsize=(16,9))
+    ax2 = fig2.add_subplot()
+    fig2.suptitle('N=2')
+    ax2.set_xlabel('gt')
+    ax2.set_ylabel('Amp. Prob. ')
+    ax2.set_ylim(0,1)
+
+    '''PAULI'''
+    fig_pauli = plt.figure(figsize=(16,9))
+    ax_pauli = fig_pauli.add_subplot()
+    fig_pauli.suptitle('Pauli ')
+    ax_pauli.set_xlabel('gt')
+    ax_pauli.set_ylabel('V.M.')
+    ax_pauli.set_ylim(-1,1)
+    pauli_lines=[]
+    pauli_names=[]
+
+    '''ENTROPIA VON NEUMAN Y LINEAL'''
+    fig_S = plt.figure(figsize=(16,9))
+    ax_Slin = fig_S.add_subplot(121)
+    ax_Svn = fig_S.add_subplot(122)
+    fig_S.suptitle('Entropia')
+    ax_Svn.set_ylabel('S')
+    ax_Svn.set_title('Von Neuman')
+    ax_Slin.set_ylabel('S')
+    ax_Slin.set_title('Lineal')
+    ax_Slin.set_xlabel('gt')
+    ax_Svn.set_xlabel('gt')
+    ax_Svn.set_ylim(0,np.log(8))
+    ax_Slin.set_ylim(0,1)
+
+    '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+    fig_Sr = plt.figure(figsize=(16,9))
+    ax_Srlin = fig_Sr.add_subplot(131)
+    ax_Srvn = fig_Sr.add_subplot(132)
+    ax_Con = fig_Sr.add_subplot(133)
+    fig_Sr.suptitle('Entropia Reducida')
+    ax_Srvn.set_ylabel('S')
+    ax_Srvn.set_title("Von Neuman")
+    ax_Srlin.set_ylabel('S')
+    ax_Srlin.set_title("Lineal")
+    ax_Con.set_ylabel('C')
+    ax_Con.set_title('Concurrencia')
+    ax_Con.set_xlabel('gt')
+    ax_Srlin.set_xlabel('gt')
+    ax_Srvn.set_xlabel('gt')
+    ax_Srvn.set_ylim(0,np.log(8))
+    ax_Srlin.set_ylim(0,1)
+    ax_Con.set_ylim(0,1)
+
+    # '''----Autovalores----'''
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # ax_eval.set_xlabel('gt')
+    # ax_eval.set_ylabel('Eval')
+
+
+    # fig_fg=plt.figure()
+    # fig_fg.suptitle("Fase Geometrica")
+    # ax_fg=fig_fg.add_subplot()
+    # ax_fg.set_xlabel('gt')
+
+    """---COLORES---"""
+    purples=mpl.colormaps['Purples'](np.linspace(0,1,len(chi)+2))
+    greens=mpl.colormaps['Greens'](np.linspace(0,1,len(chi)+2))
+    oranges=mpl.colormaps['Oranges'](np.linspace(0,1,len(chi)+2))
+    greys=mpl.colormaps['Greys'](np.linspace(0,1,len(chi)+2))
+    blues=mpl.colormaps['Blues'](np.linspace(0,1,len(chi)+2))
+    viridis12=mpl.colormaps['viridis'](np.linspace(0,1,12))
+    inferno=mpl.colormaps['inferno'](np.linspace(0,1,len(chi)+1))
+    '''----DATOS DE LOS PLOTS----'''
+    for i,x in enumerate(chi):
+        if disipation==True:
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+        elif disipation==False:
+            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+        x_g=x/g
+
+        '''--- N=0 ---'''
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $x={x_g}g$')
+        # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+        # ax0.set_title(param_name)
+        plot_coherencias(data,9,ax0)#,0) #N=0
+
+        '''--- N=1 ---'''
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $x={x_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $x={x_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $x={x_g}g$')
+        plot_coherencias(data,3,ax1) #N=1
+        plot_coherencias(data,6,ax1) #N=1
+        plot_coherencias(data,10,ax1) #N=1
+        # ax1.set_title(param_name)
+        # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+
+        '''--- N=2 ---'''
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, x={x_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, x={x_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, x={x_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, x={x_g}g$')
+        plot_coherencias(data,0,ax2) #N=2
+        plot_coherencias(data,4,ax2) #N=2
+        plot_coherencias(data,7,ax2) #N=2 
+        plot_coherencias(data,11,ax2) #N=2
+        # ax2.set_title(param_name)
+        # ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+        # '''--- N=3 ---'''
+
+        # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+        # ax=[ax]
+        # fig.suptitle('N=3')
+        # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+        # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+        # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+        # '''----EVALS----'''
+        # for j in range(12): 
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        # ax_eval.legend()
+
+
+        '''--- VM Pauli ---'''
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, x={x_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, x={x_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, x={x_g}g$')
+        pauli_lines.append([line_p0,line_p1,line_p2])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $x={x_g}g$','$<\\sigma_x^{(1)}>$'+f', $x={x_g}g$','$<\\sigma_x^{(2)}>$'+f', $x={x_g}g$'])
+
+        '''--- Entropias ---'''
+        #PLOT PARA LAS ENTROPIAS
+
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$x={x_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$x={x_g}g$')
+        # ax_Svn.set_title(param_name)
+        #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+
+        '''---Trazamos sobre el campo---'''
+        #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+        #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$x={x_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$x={x_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$x={x_g}g$')
+        # ax_Srvn.set_title(param_name)
+        # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    ax0.legend()
+    ax1.legend()
+    ax2.legend()
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+    ax_Con.legend()
+    plt.show()
+
+def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 15
+    BIGGER_SIZE = 20
+
+    plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+
+
+    '''-------LAYOUT PARA LOS GRAFICOS------'''
+    #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+    #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+    '''N=0'''
+    fig0 = plt.figure(figsize=(16,9))
+    fig0.suptitle('N=0')
+    ax0 = fig0.add_subplot()
+    ax0.set_xlabel('gt')
+    ax0.set_ylabel('Amp. Prob. ')
+    ax0.set_ylim(0,1)
+    '''N=1'''
+    fig1 = plt.figure(figsize=(16,9))
+    ax1 = fig1.add_subplot()
+    fig1.suptitle('N=1')
+    ax1.set_xlabel('gt')
+    ax1.set_ylabel('Amp. Prob. ')
+    ax1.set_ylim(0,1)
+
+    '''N=2'''
+    fig2 = plt.figure(figsize=(16,9))
+    ax2 = fig2.add_subplot()
+    fig2.suptitle('N=2')
+    ax2.set_xlabel('gt')
+    ax2.set_ylabel('Amp. Prob. ')
+    ax2.set_ylim(0,1)
+
+    '''PAULI'''
+    fig_pauli = plt.figure(figsize=(16,9))
+    ax_pauli = fig_pauli.add_subplot()
+    fig_pauli.suptitle('Pauli ')
+    ax_pauli.set_xlabel('gt')
+    ax_pauli.set_ylabel('V.M.')
+    ax_pauli.set_ylim(-1,1)
+    pauli_lines=[]
+    pauli_names=[]
+
+    '''ENTROPIA VON NEUMAN Y LINEAL'''
+    fig_S = plt.figure(figsize=(16,9))
+    ax_Slin = fig_S.add_subplot(121)
+    ax_Svn = fig_S.add_subplot(122)
+    fig_S.suptitle('Entropia')
+    ax_Svn.set_ylabel('S')
+    ax_Svn.set_title('Von Neuman')
+    ax_Slin.set_ylabel('S')
+    ax_Slin.set_title('Lineal')
+    ax_Slin.set_xlabel('gt')
+    ax_Svn.set_xlabel('gt')
+    ax_Svn.set_ylim(0,np.log(8))
+    ax_Slin.set_ylim(0,1)
+
+    '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+    fig_Sr = plt.figure(figsize=(16,9))
+    ax_Srlin = fig_Sr.add_subplot(131)
+    ax_Srvn = fig_Sr.add_subplot(132)
+    ax_Con = fig_Sr.add_subplot(133)
+    fig_Sr.suptitle('Entropia Reducida')
+    ax_Srvn.set_ylabel('S')
+    ax_Srvn.set_title("Von Neuman")
+    ax_Srlin.set_ylabel('S')
+    ax_Srlin.set_title("Lineal")
+    ax_Con.set_ylabel('C')
+    ax_Con.set_title('Concurrencia')
+    ax_Con.set_xlabel('gt')
+    ax_Srlin.set_xlabel('gt')
+    ax_Srvn.set_xlabel('gt')
+    ax_Srvn.set_ylim(0,np.log(8))
+    ax_Srlin.set_ylim(0,1)
+    ax_Con.set_ylim(0,1)
+
+    # '''----Autovalores----'''
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # ax_eval.set_xlabel('gt')
+    # ax_eval.set_ylabel('Eval')
+
+
+    # fig_fg=plt.figure()
+    # fig_fg.suptitle("Fase Geometrica")
+    # ax_fg=fig_fg.add_subplot()
+    # ax_fg.set_xlabel('gt')
+
+    """---COLORES---"""
+    purples=mpl.colormaps['Purples'](np.linspace(0,1,len(J)+2))
+    greens=mpl.colormaps['Greens'](np.linspace(0,1,len(J)+2))
+    oranges=mpl.colormaps['Oranges'](np.linspace(0,1,len(J)+2))
+    greys=mpl.colormaps['Greys'](np.linspace(0,1,len(J)+2))
+    blues=mpl.colormaps['Blues'](np.linspace(0,1,len(J)+2))
+    viridis12=mpl.colormaps['viridis'](np.linspace(0,1,12))
+    inferno=mpl.colormaps['inferno'](np.linspace(0,1,len(J)+1))
+    '''----DATOS DE LOS PLOTS----'''
+    for i,j in enumerate(J):
+        if disipation==True:
+            data=simu_disip(w0,g,k,j,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+        elif disipation==False:
+            data=simu_unit(w0,g,k,j,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+        j_g=j/g
+
+        '''--- N=0 ---'''
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $J={j_g}g$')
+        # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+        # ax0.set_title(param_name)
+        plot_coherencias(data,9,ax0)#,0) #N=0
+
+        '''--- N=1 ---'''
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $J={j_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $J={j_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $J={j_g}g$')
+        plot_coherencias(data,3,ax1) #N=1
+        plot_coherencias(data,6,ax1) #N=1
+        plot_coherencias(data,10,ax1) #N=1
+        # ax1.set_title(param_name)
+        # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+
+        '''--- N=2 ---'''
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, J={j_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, J={j_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, J={j_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, J={j_g}g$')
+        plot_coherencias(data,0,ax2) #N=2
+        plot_coherencias(data,4,ax2) #N=2
+        plot_coherencias(data,7,ax2) #N=2 
+        plot_coherencias(data,11,ax2) #N=2
+        # ax2.set_title(param_name)
+        # ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+        # '''--- N=3 ---'''
+
+        # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+        # ax=[ax]
+        # fig.suptitle('N=3')
+        # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+        # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+        # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+        # '''----EVALS----'''
+        # for j in range(12): 
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        # ax_eval.legend()
+
+
+        '''--- VM Pauli ---'''
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, J={j_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, J={j_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, J={j_g}g$')
+        pauli_lines.append([line_p0,line_p1,line_p2])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $J={j_g}g$','$<\\sigma_x^{(1)}>$'+f', $J={j_g}g$','$<\\sigma_x^{(2)}>$'+f', $J={j_g}g$'])
+
+        '''--- Entropias ---'''
+        #PLOT PARA LAS ENTROPIAS
+
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$J={j_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$J={j_g}g$')
+        # ax_Svn.set_title(param_name)
+        #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+
+        '''---Trazamos sobre el campo---'''
+        #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+        #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$J={j_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$J={j_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$J={j_g}g$')
+        # ax_Srvn.set_title(param_name)
+        # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    ax0.legend()
+    ax1.legend()
+    ax2.legend()
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+    ax_Con.legend()
+    plt.show()
