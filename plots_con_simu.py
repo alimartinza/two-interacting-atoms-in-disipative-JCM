@@ -97,7 +97,7 @@ conc_at_u=np.zeros((len(param),steps))
 conc_at_d=np.zeros((len(param),steps))
 for i,k in enumerate(param):
     #,coherencias_u[i],coherencias_d[i]
-    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
 
 fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
 fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))

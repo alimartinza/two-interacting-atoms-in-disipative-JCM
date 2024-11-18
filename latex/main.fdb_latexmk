@@ -1,17 +1,17 @@
 # Fdb version 4
-["bibtex main"] 1729618284.68477 "main.aux" "main.bbl" "main" 1729618287.64127 0
+["bibtex main"] 1731936852.09942 "main.aux" "main.bbl" "main" 1731936856.80677 0
   "./biblio.bib" 1727954348 470 2318e732db9f59ebf2e6819888c0c426 ""
   "c:/texlive/2024/texmf-dist/bibtex/bst/base/unsrt.bst" 1727709100 18030 1376b4b231b50c66211e47e42eda2875 ""
-  "main.aux" 1729618286 1788 05fc5f48c9f8a8d8fce989197567fba6 "pdflatex"
+  "main.aux" 1731936855 1788 05fc5f48c9f8a8d8fce989197567fba6 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1729618285.13514 "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/latex/main.tex" "main.pdf" "main" 1729618287.64187 0
+["pdflatex"] 1731936853.04003 "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/latex/main.tex" "main.pdf" "main" 1731936856.80736 0
   "DF-MSc-titlepage.sty" 1727954348 3697 3d1251ed86584953bd07b8abd6700b12 ""
   "agradecimientos.tex" 1727954348 1050 43bd8e7eb0d232767f43863bf3f3bf00 ""
   "ap_ecsmaestras.tex" 1727954348 290 cb7fdc02c94dc26ca5690045d511c238 ""
-  "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/latex/main.tex" 1729618278 1230 2127f838dd35c0d2a588d11b1baa9006 ""
+  "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/latex/main.tex" 1731936841 1230 2127f838dd35c0d2a588d11b1baa9006 ""
   "c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1727709994 2971 def0b6c1f0b107b3b936def894055589 ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1727712545 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx1095.tfm" 1727711432 3584 21b378cca2e40816b0e6d74a4dc98f04 ""
@@ -154,18 +154,18 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727725260 5523052 a6c4264ca43d05e5adfe84e964c2ac4c ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727725600 3325999 4a75e3a50b7d31100cf68dd077d529c8 ""
   "c:/texlive/2024/texmf.cnf" 1727725233 713 e69b156964470283e0530f5060668171 ""
-  "ch0_introduccion.tex" 1727954348 260 f7ee1a345c091d9df5e82bd0f1567545 ""
+  "ch0_introduccion.tex" 1731936840 260 f7ee1a345c091d9df5e82bd0f1567545 ""
   "dedicacion.tex" 1727954348 428 b904dafb514f077e0a2d1aed6f089ca1 ""
   "figuras/logouba.pdf" 1727954348 134806 01b363a338bdfb3e5baa1248b3cb8fc6 ""
   "licencia.png" 1727954348 7216 371d8f2ef65cd464c8695b8da4ea055a ""
   "licencia.tex" 1727954348 276 df87b5fe6eb7449c4e8491bbf78ccb7f ""
-  "main.aux" 1729618286 1788 05fc5f48c9f8a8d8fce989197567fba6 "pdflatex"
-  "main.bbl" 1729618285 49 0eba253fc001332e731e8aba3f23127b "bibtex main"
-  "main.lof" 1729618286 130 59e83fd64003b199bc5e296c9b3b2137 "pdflatex"
-  "main.tex" 1729618278 1230 2127f838dd35c0d2a588d11b1baa9006 ""
-  "main.toc" 1729618286 257 9a3a9ff831d0ee71498fa80e54cfae0f "pdflatex"
-  "paquetes-y-customizaciones" 1729618278 3307 50c41bc714e759551478c96e91b80da9 ""
-  "resumen.tex" 1729618278 1000 7ad0b43e336d20d782f88589d2841203 ""
+  "main.aux" 1731936855 1788 05fc5f48c9f8a8d8fce989197567fba6 "pdflatex"
+  "main.bbl" 1731936853 49 0eba253fc001332e731e8aba3f23127b "bibtex main"
+  "main.lof" 1731936855 130 59e83fd64003b199bc5e296c9b3b2137 "pdflatex"
+  "main.tex" 1731936841 1230 2127f838dd35c0d2a588d11b1baa9006 ""
+  "main.toc" 1731936855 257 9a3a9ff831d0ee71498fa80e54cfae0f "pdflatex"
+  "paquetes-y-customizaciones" 1731936841 3307 50c41bc714e759551478c96e91b80da9 ""
+  "resumen.tex" 1731936841 1000 7ad0b43e336d20d782f88589d2841203 ""
   "tabladecontenidos.tex" 1727954348 108 cb524b2d10bd518df2f456df2996eaac ""
   "zbibliografia.tex" 1727954348 9308 ac63ec67927a1251662ade04e2c1cfb1 ""
   (generated)
