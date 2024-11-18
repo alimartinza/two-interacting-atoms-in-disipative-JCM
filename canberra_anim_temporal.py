@@ -114,7 +114,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
             fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs1[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
-            print("Lap 1/4")
+            print("Lap 2/4")
             print(f"Aprox. Progress {iteracion*100/tot_iters}%")
 
     x=chi[2]
@@ -127,7 +127,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
             fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs2[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
-            print("Lap 1/4")
+            print("Lap 3/4")
             print(f"Aprox. Progress {iteracion*100/tot_iters}%")
 
     x=chi[3]
@@ -140,7 +140,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
             fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs3[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
-            print("Lap 1/4")
+            print("Lap 4/4")
             print(f"Aprox. Progress {iteracion*100/tot_iters}%")
 
 
@@ -149,13 +149,13 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     fig=plt.figure(figsize=(16,9))
     fig.suptitle(f"$\psi_0$={psi0Name}")
     ax0=fig.add_subplot(221)
-    ax0.set_title(f"$k={kappa[0]}$")
+    ax0.set_title(f"$\chi={chi[0]/g}g$")
     ax1=fig.add_subplot(222,sharey=ax0)
-    ax1.set_title(f"$k={kappa[1]}$")
+    ax1.set_title(f"$\chi={chi[1]/g}g$")
     ax2=fig.add_subplot(223,sharex=ax0)
-    ax2.set_title(f"$k={kappa[2]}$")
+    ax2.set_title(f"$\chi={chi[2]/g}g$")
     ax3=fig.add_subplot(224,sharey=ax2)
-    ax3.set_title(f"$k={kappa[3]}$")
+    ax3.set_title(f"$\chi={chi[3]/g}g$")
     z_max =  max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
     #plotear el pcolormesh()
 
@@ -252,13 +252,13 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     fig=plt.figure(figsize=(16,9))
     fig.suptitle(f"$\psi_0$={psi0Name}")
     ax0=fig.add_subplot(221)
-    ax0.set_title(f"$k={kappa[0]}$")
+    ax0.set_title(f"$k={kappa[0]/g}g$")
     ax1=fig.add_subplot(222,sharey=ax0)
-    ax1.set_title(f"$k={kappa[1]}$")
+    ax1.set_title(f"$k={kappa[1]/g}g$")
     ax2=fig.add_subplot(223,sharex=ax0)
-    ax2.set_title(f"$k={kappa[2]}$")
+    ax2.set_title(f"$k={kappa[2]/g}g$")
     ax3=fig.add_subplot(224,sharey=ax2)
-    ax3.set_title(f"$k={kappa[3]}$")
+    ax3.set_title(f"$k={kappa[3]/g}g$")
     z_max =  max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
     #plotear el pcolormesh()
 
@@ -284,6 +284,6 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k.gif", writer='pillow')
 
 
-for psi0,psi0Name in zip([(ee0+gg2).unit(),(gg1+eg0+ge0).unit(),(ee0-gg2).unit(),eg0,(eg0+ge0).unit()],['ee0+gg2','w','ee0-gg2','eg0','eg0+ge0']):
+for psi0,psi0Name in zip([gg1],['gg1']):
     canberra_anim_delta_vs_chi(psi0,psi0Name,steps,t_final,np.linspace(0,3*g,41),np.linspace(0,3*g,41),[0,0.1*g,g,2*g],300,8)
     canberra_anim_delta_vs_kappa(psi0,psi0Name,steps,t_final,np.linspace(0,3*g,41),np.linspace(0,3*g,41),[0,0.5*g,g,2*g],300,8)

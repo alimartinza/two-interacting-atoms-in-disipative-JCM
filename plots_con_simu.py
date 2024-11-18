@@ -76,7 +76,7 @@ p=0.005*g
 d=0
 x=0
 gamma=0.1*g
-kappa=np.linspace(0,4*g,41)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+kappa=np.linspace(0,4*g,31)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
 
 param=kappa
 ops_expect_u=np.zeros((len(param),14,steps))
