@@ -76,7 +76,7 @@ p=0.005*g
 d=0
 x=0
 gamma=0.1*g
-kappa=np.linspace(0,4*g,41)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+kappa=np.linspace(0,4*g,31)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
 
 param=kappa
 ops_expect_u=np.zeros((len(param),14,steps))
@@ -97,7 +97,7 @@ conc_at_u=np.zeros((len(param),steps))
 conc_at_d=np.zeros((len(param),steps))
 for i,k in enumerate(param):
     #,coherencias_u[i],coherencias_d[i]
-    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps,returns="all")
 
 fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
 fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))

@@ -2027,7 +2027,7 @@ def canberra_mesh_lectura(ci:str):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal'):
+def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',returns:str="fg"):
     """Returns: 
         devuelve todos estas 14 listas que representan la evolucion de cada simulacion
         -ops_expect_u,ops_expect_d
@@ -2059,96 +2059,99 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
     sol_d=mesolve(H,psi0,t,c_ops=l_ops)
     fg_u,arg,eigenvals_t_u = fases(sol_u)
     fg_d,arg,eigenvals_t_d = fases(sol_d)
+    if returns=="fg":
+        return fg_u,fg_d
+    elif returns=="all":
+        #Hacemos un array de las coherencias y las completamos con el for
+        coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
+                                '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
+                                        '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
+                                                '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
+                                                        '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
+                                                                '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
+                                                                        '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
+                                                                                '7;8':[],'7;9':[],'7;10':[],'7;11':[],
+                                                                                        '8;9':[],'8;10':[],'8;11':[],
+                                                                                                '9;10':[],'9;11':[],
+                                                                                                        '10;11':[]}
+        
+        coherencias_d=coherencias_u
 
-    #Hacemos un array de las coherencias y las completamos con el for
-    coherencias_u={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8':[],'0;9':[],'0;10':[],'0;11':[],
-                            '1;2':[],'1;3':[],'1;4':[],'1;5':[],'1;6':[],'1;7':[],'1;8':[],'1;9':[],'1;10':[],'1;11':[],
-                                    '2;3':[],'2;4':[],'2;5':[],'2;6':[],'2;7':[],'2;8':[],'2;9':[],'2;10':[],'2;11':[],
-                                            '3;4':[],'3;5':[],'3;6':[],'3;7':[],'3;8':[],'3;9':[],'3;10':[],'3;11':[],
-                                                    '4;5':[],'4;6':[],'4;7':[],'4;8':[],'4;9':[],'4;10':[],'4;11':[],
-                                                            '5;6':[],'5;7':[],'5;8':[],'5;9':[],'5;10':[],'5;11':[],
-                                                                    '6;7':[],'6;8':[],'6;9':[],'6;10':[],'6;11':[],
-                                                                            '7;8':[],'7;9':[],'7;10':[],'7;11':[],
-                                                                                    '8;9':[],'8;10':[],'8;11':[],
-                                                                                            '9;10':[],'9;11':[],
-                                                                                                    '10;11':[]}
-    
-    coherencias_d=coherencias_u
+        #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
+        ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
+            'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
+        ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
+            0.5*(sz1+sz2),sx1,sx2]
+        
+        expectStartTime=time.process_time()
+        ops_expect_u=np.empty((len(ops),len(sol_u.states)))
+        for i in range(len(sol_u.states)): 
+            for j in range(len(ops)):
+                ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
 
-    #DEFINIMOS LOS OPERADORES A LOS QUE QUEREMOS QUE EL SOLVER TOME VALOR MEDIO. LOS PROYECTORES NOS DAN LAS POBLACIONES
-    ops_nomb=['pr(gg0)','pr(gg1)','pr(eg0+ge0)','pr(eg0-ge0)','pr(gg2)','pr(eg1+ge1)','pr(eg1-ge1)','pr(ee0)','pr(eg2+ge2)','pr(eg2-ge2)',
-          'pr(ee1)','1/2 <sz1+sz2>','<sx1>','<sx2>'] #NOMBRES PARA EL LEGEND DEL PLOT
-    ops = [pr(gg0),pr(gg1),pr(eg0+ge0),pr(eg0-ge0),pr(gg2),pr(eg1+ge1),pr(eg1-ge1),pr(ee0),pr(eg2+ge2),pr(eg2-ge2),pr(ee1),
-           0.5*(sz1+sz2),sx1,sx2]
-    
-    # expectStartTime=time.process_time()
-    # ops_expect_u=np.empty((len(ops),len(sol_u.states)))
-    # for i in range(len(sol_u.states)): 
-    #     for j in range(len(ops)):
-    #         ops_expect_u[j][i]=expect(ops[j],sol_u.states[i])
+        ops_expect_d=np.empty((len(ops),len(sol_d.states)))
+        for i in range(len(sol_d.states)): 
+            for j in range(len(ops)):
+                ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
+        expectRunTime=time.process_time()-expectStartTime
 
-    # ops_expect_d=np.empty((len(ops),len(sol_d.states)))
-    # for i in range(len(sol_d.states)): 
-    #     for j in range(len(ops)):
-    #         ops_expect_d[j][i]=expect(ops[j],sol_d.states[i])
-    # expectRunTime=time.process_time()-expectStartTime
-
-    # #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
-    # pasajeStartTime=time.process_time()
-    # estados=np.empty_like(sol.states)
-    # for j in range(len(sol.states)):
-    #     estados[j]=sol.states[j]
+        #CALCULAMOS COSAS INTERESANTES PARA EL SISTEMA
+        # pasajeStartTime=time.process_time()
+        # estados=np.empty_like(sol.states)
+        # for j in range(len(sol.states)):
+        #     estados[j]=sol.states[j]
 
 
-    #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
-    # coherenciasStartTime = time.process_time()
+        #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
+        # coherenciasStartTime = time.process_time()
 
-    # for j in range(12): 
-    #     for l in range(j+1,12):
-    #         c_help=np.zeros(len(sol_u.states),dtype='complex')
-    #         for i in range(len(sol_u.states)):
-    #             c_help[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
-    #         coherencias_u[str(j)+';'+str(l)]=c_help
-    
-    # for j in range(12): 
-    #     for l in range(j+1,12):
-    #         c_help=np.zeros(len(sol_d.states),dtype='complex')
-    #         for i in range(len(sol_d.states)):
-    #             c_help[i]=sol_d.states[i][j][l]
-    #         coherencias_d[str(j)+';'+str(l)]=c_help
-    # coherenciasRunTime = time.process_time()-coherenciasStartTime
-    # print(f"coherenciasRunTime: {coherenciasRunTime}")
- 
-    # pasajeRunTime=time.process_time() - pasajeStartTime
-    # entropiaStartTime = time.process_time()
-    
-    # SvN_u=entropy_vn(eigenvals_t_u)
-    # SvN_d=entropy_vn(eigenvals_t_d)
-    # Slin_u=entropy_linear(sol_u.states)
-    # Slin_d=entropy_linear(sol_d.states)
+        # for j in range(12): 
+        #     for l in range(j+1,12):
+        #         c_help=np.zeros(len(sol_u.states),dtype='complex')
+        #         for i in range(len(sol_u.states)):
+        #             c_help[i]=(sol_u.states[i][j]*sol_u.states[i][l])[0]
+        #         coherencias_u[str(j)+';'+str(l)]=c_help
+        
+        # for j in range(12): 
+        #     for l in range(j+1,12):
+        #         c_help=np.zeros(len(sol_d.states),dtype='complex')
+        #         for i in range(len(sol_d.states)):
+        #             c_help[i]=sol_d.states[i][j][l]
+        #         coherencias_d[str(j)+';'+str(l)]=c_help
+        # coherenciasRunTime = time.process_time()-coherenciasStartTime
+        # print(f"coherenciasRunTime: {coherenciasRunTime}")
 
-    # atoms_states_u=np.empty_like(sol_u.states)
-    # for j in range(len(sol_u.states)):
-    #     atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+        # pasajeRunTime=time.process_time() - pasajeStartTime
+        entropiaStartTime = time.process_time()
+        
+        SvN_u=entropy_vn(eigenvals_t_u)
+        SvN_d=entropy_vn(eigenvals_t_d)
+        Slin_u=entropy_linear(sol_u.states)
+        Slin_d=entropy_linear(sol_d.states)
 
-    # atoms_states_d=np.empty_like(sol_d.states)
-    # for j in range(len(sol_d.states)):
-    #     atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
+        atoms_states_u=np.empty_like(sol_u.states)
+        for j in range(len(sol_u.states)):
+            atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
 
-    # # data['Atom States']=atoms_states
-    # SvN_at_u=entropy_vn_atom(atoms_states_u)
-    # Slin_at_u=entropy_linear(atoms_states_u)
-    # conc_at_u=concurrence(atoms_states_u)
+        atoms_states_d=np.empty_like(sol_d.states)
+        for j in range(len(sol_d.states)):
+            atoms_states_d[j]=sol_d.states[j].ptrace([0,1])  
 
-    # SvN_at_d=entropy_vn_atom(atoms_states_d)
-    # Slin_at_d=entropy_linear(atoms_states_d)
-    # conc_at_d=concurrence(atoms_states_d)
+        # data['Atom States']=atoms_states
+        SvN_at_u=entropy_vn_atom(atoms_states_u)
+        Slin_at_u=entropy_linear(atoms_states_u)
+        conc_at_u=concurrence(atoms_states_u)
 
-    # entropiaRunTime=time.process_time() - entropiaStartTime
+        SvN_at_d=entropy_vn_atom(atoms_states_d)
+        Slin_at_d=entropy_linear(atoms_states_d)
+        conc_at_d=concurrence(atoms_states_d)
 
-    # print("-----Tiempos de computo----")
-    # print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
-    #,coherencias_u,coherencias_d
-    return fg_u,fg_d#,conc_at_u,conc_at_d#ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
+        entropiaRunTime=time.process_time() - entropiaStartTime
+
+        print("-----Tiempos de computo----")
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+
+        #,coherencias_u,coherencias_d
+        return ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d
 
   
