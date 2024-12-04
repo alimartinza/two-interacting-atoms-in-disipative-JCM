@@ -96,10 +96,10 @@ len_axis=41
 
 kappa=np.linspace(0,2*g,len_axis)
 delta=np.linspace(-2*g,2*g,len_axis)
+save_frames=300
 
 
-
-def canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,chi):
+def canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,chi,save_frames):
 
     data=pd.DataFrame()
 
@@ -110,11 +110,11 @@ def canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,g
         for k in kappa:
             param_name=f'{d/g}g;{k/g}g'
             fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,chi,gamma,p,psi0,t_final,steps)
-            data[param_name]=canberra(fg_u,fg_d,temporal=True)
+            data[param_name]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, save_frames, dtype=int)]
             iteracion+=1
             print(f"Aprox. Progress {iteracion*100/tot_iters}%")
 
-    data.to_csv(f'canberra delta {delta[0]}-{delta[-1]} vs kappa {kappa[0]}-{kappa[-1]} {psi0Name}.csv')
+    data.to_csv(f'canberra delta {delta[0]}-{delta[-1]} vs kappa {kappa[0]}-{kappa[-1]} x={chi} {psi0Name}.csv')
 
 def load_csv_canberra(filepath:str,chi:float):
     """Load .csv de canberra"""
@@ -144,5 +144,5 @@ def load_csv_canberra(filepath:str,chi:float):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-for x in [0,0.1*g,g,2*g]:
-    canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,x)
+for x in [0.1*g,g,2*g]:
+    canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,x,300)

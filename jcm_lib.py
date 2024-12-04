@@ -2056,7 +2056,16 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
 
 
     if return_all==False:
-        return fg_u,fg_d
+        atoms_states_u=np.empty_like(sol_u.states)
+        for j in range(len(sol_u.states)):
+            atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+
+        atoms_states_d=np.empty_like(sol_d.states)
+        for j in range(len(sol_d.states)):
+            atoms_states_d[j]=sol_d.states[j].ptrace([0,1])
+        concu_d=concurrence(atoms_states_d)
+        concu_u=concurrence(atoms_states_u)
+        return fg_u,fg_d,concu_u,concu_d
     else:
         data_u=pd.DataFrame()
         data_d=pd.DataFrame()
@@ -2456,6 +2465,14 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax_Srlin.set_ylim(0,1)
     ax_Con.set_ylim(0,1)
 
+    '''---FG---'''
+    fig_fg = plt.figure(figsize=(16,9))
+    ax_fg = fig_fg.add_subplot()
+    fig_fg.suptitle('Fase Geometrica')
+    ax_fg.set_xlabel('gt')
+    ax_fg.set_ylabel('FG')
+
+
     # '''----Autovalores----'''
     # fig_autoval=plt.figure()
     # ax_eval=fig_autoval.add_subplot()
@@ -2549,6 +2566,9 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
         # ax_Srvn.set_title(param_name)
         # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+        '''----FG----'''
+        line_fg,=ax_fg.plot(g*data['t'],data['FG'],marker='o',color=inferno[i],label=f'$\Delta={d_g}g$')
+
     ax0.legend()
     ax1.legend()
     ax2.legend()
@@ -2857,15 +2877,15 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
         x_g=x/g
 
         '''--- N=0 ---'''
-        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $x={x_g}g$')
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'Pr(gg0), $x={x_g}g$')
         # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
         # ax0.set_title(param_name)
         plot_coherencias(data,9,ax0)#,0) #N=0
 
         '''--- N=1 ---'''
-        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $x={x_g}g$')
-        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $x={x_g}g$')
-        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $x={x_g}g$')
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'Pr(gg1), $x={x_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'Pr(eg0+), $x={x_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'Pr(eg0-), $x={x_g}g$')
         plot_coherencias(data,3,ax1) #N=1
         plot_coherencias(data,6,ax1) #N=1
         plot_coherencias(data,10,ax1) #N=1
@@ -2873,10 +2893,10 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
         # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
 
         '''--- N=2 ---'''
-        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, x={x_g}g$')
-        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, x={x_g}g$')
-        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, x={x_g}g$')
-        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, x={x_g}g$')
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$Pr(gg2), x={x_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$Pr(eg1+), x={x_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$Pr(eg1-), x={x_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$Pr(ee0), x={x_g}g$')
         plot_coherencias(data,0,ax2) #N=2
         plot_coherencias(data,4,ax2) #N=2
         plot_coherencias(data,7,ax2) #N=2 
@@ -3043,15 +3063,15 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
         j_g=j/g
 
         '''--- N=0 ---'''
-        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $J={j_g}g$')
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'Pr(gg0), $J={j_g}g$')
         # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
         # ax0.set_title(param_name)
         plot_coherencias(data,9,ax0)#,0) #N=0
 
         '''--- N=1 ---'''
-        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $J={j_g}g$')
-        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $J={j_g}g$')
-        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $J={j_g}g$')
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'P(gg1), $J={j_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'Pr(eg0+), $J={j_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'Pr(eg0-), $J={j_g}g$')
         plot_coherencias(data,3,ax1) #N=1
         plot_coherencias(data,6,ax1) #N=1
         plot_coherencias(data,10,ax1) #N=1
@@ -3059,10 +3079,10 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
         # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
 
         '''--- N=2 ---'''
-        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, J={j_g}g$')
-        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, J={j_g}g$')
-        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, J={j_g}g$')
-        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, J={j_g}g$')
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$Pr(gg2), J={j_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$Pr(eg1+), J={j_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$Pr(eg1-), J={j_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$Pr(ee0), J={j_g}g$')
         plot_coherencias(data,0,ax2) #N=2
         plot_coherencias(data,4,ax2) #N=2
         plot_coherencias(data,7,ax2) #N=2 
@@ -3114,3 +3134,4 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
     ax_Con.legend()
     plt.show()
+

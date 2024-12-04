@@ -49,12 +49,13 @@ g=0.001*w0
 k=0
 p=0.005*g
 gamma=0.1*g
-delta=[0,g,2*g]
-psi0=gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-# print(psi0)
-steps=6000
-t_final=50000
 
-jcm_lib.plot_kappa_simu(w0,0,0,g,[g],0,gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
+psi0=(ee0-gg2).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+# print(psi0)
+steps=2000
+t_final=100000
+
+# jcm_lib.plot_kappa_simu(w0,0,0,g,[g],0,gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
 # jcm_lib.plot_chi_simu(w0,0,[0],g,0,0,gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
-jcm_lib.plot_J_simu(w0,0,0,g,0,[g],gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
+# jcm_lib.plot_J_simu(w0,0,0,g,0,[g],gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
+jcm_lib.plot_delta_simu(w0,[g],0,g,0.1*g,0,gamma,p,psi0,False,steps=steps,t_final=t_final)

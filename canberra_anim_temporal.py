@@ -72,8 +72,8 @@ J=0
 g=0.001*w_0
 p=0.005*g
 gamma=0.1*g
-steps=3000
-t_final=50000
+steps=1500
+t_final=100000
 
 
 
@@ -98,7 +98,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     zs0=np.zeros((len(delta),len(kappa),frames))
     for i1,d in enumerate(delta):
         for i2,k in enumerate(kappa):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs0[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 1/4")
@@ -111,7 +111,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     zs1=np.zeros((len(delta),len(kappa),frames))
     for i1,d in enumerate(delta):
         for i2,k in enumerate(kappa):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs1[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 2/4")
@@ -124,7 +124,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     zs2=np.zeros((len(delta),len(kappa),frames))
     for i1,d in enumerate(delta):
         for i2,k in enumerate(kappa):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs2[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 3/4")
@@ -137,7 +137,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     zs3=np.zeros((len(delta),len(kappa),frames))
     for i1,d in enumerate(delta):
         for i2,k in enumerate(kappa):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs3[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 4/4")
@@ -178,7 +178,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     fig.colorbar(c0, ax=ax1)
     # simtime s=frames*interv ms=frames*interv/1000 s --> interv ms = simtime s/frames = simtime *1000 ms/frames
     anim = FuncAnimation(fig, update, frames=frames, interval=anim_time*1000/frames,blit=True)
-    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs kappa varios chi.gif", writer='pillow')
+    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs kappa varios chi 33x33.gif", writer='pillow')
 
 def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:list,chi:list,kappa:list,frames:int,anim_time:float):
     if len(kappa)!=4:
@@ -201,7 +201,7 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     zs0=np.zeros((len(delta),len(chi),frames))
     for i1,d in enumerate(delta):
         for i2,x in enumerate(chi):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs0[i1][i2]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 1/4")
@@ -214,7 +214,7 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     zs1=np.zeros((len(delta),len(chi),frames))
     for i3,d in enumerate(delta):
         for i4,x in enumerate(chi):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs1[i3][i4]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 2/4")
@@ -227,7 +227,7 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     zs2=np.zeros((len(delta),len(chi),frames))
     for i5,d in enumerate(delta):
         for i6,x in enumerate(chi):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs2[i5][i6]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 3/4")
@@ -240,7 +240,7 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     zs3=np.zeros((len(delta),len(chi),frames))
     for i7,d in enumerate(delta):
         for i8,x in enumerate(chi):
-            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+            fg_u,fg_d,concu_u,concu_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
             zs3[i7][i8]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, frames, dtype=int)]
             iteracion+=1
             print("Lap 4/4")
@@ -281,9 +281,10 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     fig.colorbar(c0, ax=ax1)
     # simtime s=frames*interv ms=frames*interv/1000 s --> interv ms = simtime s/frames = simtime *1000 ms/frames
     anim = FuncAnimation(fig, update, frames=frames, interval=anim_time*1000/frames,blit=True)
-    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k.gif", writer='pillow')
+    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k 33x33.gif", writer='pillow')
 
 
-for psi0,psi0Name in zip([gg1],['gg1']):
-    canberra_anim_delta_vs_chi(psi0,psi0Name,steps,t_final,np.linspace(0,3*g,41),np.linspace(0,3*g,41),[0,0.1*g,g,2*g],300,8)
-    canberra_anim_delta_vs_kappa(psi0,psi0Name,steps,t_final,np.linspace(0,3*g,41),np.linspace(0,3*g,41),[0,0.5*g,g,2*g],300,8)
+for psi0,psi0Name in zip([(ee0-gg2).unit(),(ee0+gg2).unit(),(eg0+ge0+gg1).unit()],['ee0-gg2','ee0+gg2','w']):
+    canberra_anim_delta_vs_chi(psi0,psi0Name,steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
+    canberra_anim_delta_vs_kappa(psi0,psi0Name,steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
+    
