@@ -67,19 +67,19 @@ script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENT
 
 psi0=(ee0+gg2).unit()
 psi0Name="ee0+gg2"
-steps=5000
-t_final=500000
+steps=10000
+t_final=400000
 w_0=1
 J=0
 g=0.001*w_0
 p=0.005*g
-d=0
-x=0
+d=[-2*g,-g,-0.5*g,0,0.5*g,g,2*g]
+x=0.5*g
 gt=np.linspace(0,t_final*g,steps)
 gamma=0.1*g
-kappa=np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+kappa=0#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
 
-param=kappa
+param=d
 colors=mpl.colormaps['inferno'](np.linspace(0,1,len(param)+1))
 lines_legend1=[]
 lines_legend2=[]
@@ -91,22 +91,22 @@ fg_u=np.zeros((len(param),steps))
 fg_d=np.zeros((len(param),steps))
 concu_u=np.zeros((len(param),steps))
 concu_d=np.zeros((len(param),steps))
-for i,k in enumerate(param):
+for i,d in enumerate(param):
     #,coherencias_u[i],coherencias_d[i]
-    fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+    fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
     
 fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
 fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
 
 '''--------PLOT-------'''
 fig = plt.figure(1,(16,9))
-fig.suptitle(f'$\Delta={d}$ $\chi = {x}$ $|\psi_0>$='+psi0Name)
+fig.suptitle(f'$k={kappa}$ $\chi = {x}$ $|\psi_0>$='+psi0Name)
 ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
 ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
 
-for i,k in enumerate(param):
+for i,d in enumerate(param):
     line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-    labels_legend.append(f'U k={k/g}g')
+    labels_legend.append(f'U $\Delta$={d/g}g')
     line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
     # labels_legend.append(f'D k={k/g}g')
     lines_legend1.append(line_fg_u)

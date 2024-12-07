@@ -72,7 +72,7 @@ J=0
 g=0.001*w_0
 p=0.005*g
 gamma=0.1*g
-steps=1500
+steps=2500
 t_final=100000
 
 
