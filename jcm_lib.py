@@ -2381,6 +2381,8 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
         return data_d
     
 def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de DELTAS (detunning cavidad-atomo).'''
+    
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -2567,7 +2569,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         # ax_Srvn.set_title(param_name)
         # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
         '''----FG----'''
-        line_fg,=ax_fg.plot(g*data['t'],data['FG'],marker='o',color=inferno[i],label=f'$\Delta={d_g}g$')
+        line_fg,=ax_fg.plot(g*data['t'],data['FG'],marker='.',color=inferno[i],label=f'$\Delta={d_g}g$')
 
     ax0.legend()
     ax1.legend()
@@ -2575,9 +2577,12 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
     ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
     ax_Con.legend()
+    ax_fg.legend()
     plt.show()
 
 def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de KAPPAS (interaccion DIPLOAR).'''
+    
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -2764,6 +2769,8 @@ def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,ga
     plt.show()
 
 def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de CHIS (no linealidades del medio).'''
+    
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -2950,6 +2957,8 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
     plt.show()
 
 def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de J (interaccion ISING).'''
+    
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -3135,3 +3144,227 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     ax_Con.legend()
     plt.show()
 
+def plots_uni_vs_dis_delta(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+    '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de DELTAS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+    gt=np.linspace(0,t_final*g,steps)
+
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(d)+1))
+    lines_legend1=[]
+    lines_legend2=[]
+    labels_legend=[]
+
+    # coherencias_u=np.zeros((len(param),66,steps))
+    # coherencias_d=np.zeros((len(param),66,steps))
+    fg_u=np.zeros((len(d),steps))
+    fg_d=np.zeros((len(d),steps))
+    concu_u=np.zeros((len(d),steps))
+    concu_d=np.zeros((len(d),steps))
+    for i,delta in enumerate(d):
+        #,coherencias_u[i],coherencias_d[i]
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,delta,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        
+    # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
+    # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
+
+    '''--------PLOT-------'''
+    fig = plt.figure(1,(16,9))
+    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+
+    for i,delta in enumerate(d):
+        line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
+        labels_legend.append(f'U $\Delta$={delta/g}g')
+        line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
+        # labels_legend.append(f'D k={k/g}g')
+        lines_legend1.append(line_fg_u)
+        # lines_legend1.append(line_fg_d)
+
+        line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
+        line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
+        lines_legend2.append(line_concu_u)
+        # lines_legend2.append(line_concu_d)
+
+    ax1.legend(lines_legend1,labels_legend)
+    ax2.legend(lines_legend2,labels_legend)
+    plt.show()
+
+def plots_uni_vs_dis_chi(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+    '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de CHIS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+
+    gt=np.linspace(0,t_final*g,steps)
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(x)+1))
+    lines_legend1=[]
+    lines_legend2=[]
+    labels_legend=[]
+
+    # coherencias_u=np.zeros((len(param),66,steps))
+    # coherencias_d=np.zeros((len(param),66,steps))
+    fg_u=np.zeros((len(x),steps))
+    fg_d=np.zeros((len(x),steps))
+    concu_u=np.zeros((len(x),steps))
+    concu_d=np.zeros((len(x),steps))
+    for i,chi in enumerate(x):
+        #,coherencias_u[i],coherencias_d[i]
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,chi,gamma,p,psi0,t_final=t_final,steps=steps)
+        
+    # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
+    # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
+
+    '''--------PLOT-------'''
+    fig = plt.figure(1,(16,9))
+    fig.suptitle(f'$k={kappa}$ $\Delta={d/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+
+    for i,chi in enumerate(x):
+        line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
+        labels_legend.append(f'U $\chi$={chi/g}g')
+        line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
+        # labels_legend.append(f'D k={k/g}g')
+        lines_legend1.append(line_fg_u)
+        # lines_legend1.append(line_fg_d)
+
+        line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
+        line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
+        lines_legend2.append(line_concu_u)
+        # lines_legend2.append(line_concu_d)
+
+    ax1.legend(lines_legend1,labels_legend)
+    ax2.legend(lines_legend2,labels_legend)
+    plt.show()
+
+def plots_uni_vs_dis_kappa(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+    '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de KAPPAS (INTERACCION DIPOLAR). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+
+    gt=np.linspace(0,t_final*g,steps)
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(kappa)+1))
+    lines_legend1=[]
+    lines_legend2=[]
+    labels_legend=[]
+
+    # coherencias_u=np.zeros((len(param),66,steps))
+    # coherencias_d=np.zeros((len(param),66,steps))
+    fg_u=np.zeros((len(kappa),steps))
+    fg_d=np.zeros((len(kappa),steps))
+    concu_u=np.zeros((len(kappa),steps))
+    concu_d=np.zeros((len(kappa),steps))
+    for i,k in enumerate(kappa):
+        #,coherencias_u[i],coherencias_d[i]
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        
+    # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
+    # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
+
+    '''--------PLOT-------'''
+    fig = plt.figure(1,(16,9))
+    fig.suptitle(f'$\Delta={d/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+
+    for i,k in enumerate(kappa):
+        line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
+        labels_legend.append(f'U $k$={k/g}g')
+        line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
+        # labels_legend.append(f'D k={k/g}g')
+        lines_legend1.append(line_fg_u)
+        # lines_legend1.append(line_fg_d)
+
+        line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
+        line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
+        lines_legend2.append(line_concu_u)
+        # lines_legend2.append(line_concu_d)
+
+    ax1.legend(lines_legend1,labels_legend)
+    ax2.legend(lines_legend2,labels_legend)
+    plt.show()
+
+def plots_uni_vs_dis_J(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+    '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de J (ISING). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+
+    gt=np.linspace(0,t_final*g,steps)
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(J)+1))
+    lines_legend1=[]
+    lines_legend2=[]
+    labels_legend=[]
+
+    # coherencias_u=np.zeros((len(param),66,steps))
+    # coherencias_d=np.zeros((len(param),66,steps))
+    fg_u=np.zeros((len(J),steps))
+    fg_d=np.zeros((len(J),steps))
+    concu_u=np.zeros((len(J),steps))
+    concu_d=np.zeros((len(J),steps))
+    for i,j in enumerate(J):
+        #,coherencias_u[i],coherencias_d[i]
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,j,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        
+    # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
+    # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
+
+    '''--------PLOT-------'''
+    fig = plt.figure(1,(16,9))
+    fig.suptitle(f'$k={kappa}$ $\chi = {x}$ $\Delta = {d}$ $|\psi_0>$='+psi0Name)
+    ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+
+    for i,j in enumerate(J):
+        line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
+        labels_legend.append(f'U $J$={j/g}g')
+        line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
+        # labels_legend.append(f'D k={k/g}g')
+        lines_legend1.append(line_fg_u)
+        # lines_legend1.append(line_fg_d)
+
+        line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
+        line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
+        lines_legend2.append(line_concu_u)
+        # lines_legend2.append(line_concu_d)
+
+    ax1.legend(lines_legend1,labels_legend)
+    ax2.legend(lines_legend2,labels_legend)
+    plt.show()
+
+def plots_uni_vs_dis_g(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+    '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de G (acoplamiento cavidad atomo). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+
+    gt=np.linspace(0,t_final*g,steps)
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(g)+1))
+    lines_legend1=[]
+    lines_legend2=[]
+    labels_legend=[]
+
+    # coherencias_u=np.zeros((len(param),66,steps))
+    # coherencias_d=np.zeros((len(param),66,steps))
+    fg_u=np.zeros((len(g),steps))
+    fg_d=np.zeros((len(g),steps))
+    concu_u=np.zeros((len(g),steps))
+    concu_d=np.zeros((len(g),steps))
+    for i,gg in enumerate(g):
+        #,coherencias_u[i],coherencias_d[i]
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,gg,kappa,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        
+    fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
+    fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
+
+    '''--------PLOT-------'''
+    fig = plt.figure(1,(16,9))
+    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ $J={J/g}g$ $\Delta = {d/g}g $|\psi_0>$='+psi0Name)
+    ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+
+    for i,gg in enumerate(g):
+        line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
+        labels_legend.append(f'U $g={gg}$')
+        line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
+        # labels_legend.append(f'D k={k/g}g')
+        lines_legend1.append(line_fg_u)
+        # lines_legend1.append(line_fg_d)
+
+        line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
+        line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
+        lines_legend2.append(line_concu_u)
+        # lines_legend2.append(line_concu_d)
+
+    ax1.legend(lines_legend1,labels_legend)
+    ax2.legend(lines_legend2,labels_legend)
+    plt.show()

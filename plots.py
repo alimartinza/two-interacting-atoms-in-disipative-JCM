@@ -58,4 +58,4 @@ t_final=40*steps
 # jcm_lib.plot_kappa_simu(w0,0,0,g,[g],0,gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
 # jcm_lib.plot_chi_simu(w0,0,[0],g,0,0,gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
 # jcm_lib.plot_J_simu(w0,0,0,g,0,[g],gamma,p,psi0,disipation=False,steps=steps,t_final=t_final)
-jcm_lib.plot_delta_simu(w0,[-2*g,-g,-0.5*g,0,0.5*g,g,2*g],0,g,0.1*g,0,gamma,p,psi0,False,steps=steps,t_final=t_final)
+jcm_lib.plot_delta_simu(w0,delta=[-0.1*g,0,0.1*g,g,3*g],chi=0,g=g,k=0,J=0,gamma=gamma,p=p,psi0=psi0,disipation=True,steps=steps,t_final=t_final)

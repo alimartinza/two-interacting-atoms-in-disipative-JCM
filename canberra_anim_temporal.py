@@ -284,7 +284,10 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k 33x33.gif", writer='pillow')
 
 
-for psi0,psi0Name in zip([(ee0-gg2).unit(),(ee0+gg2).unit(),(eg0+ge0+gg1).unit()],['ee0-gg2','ee0+gg2','w']):
-    canberra_anim_delta_vs_chi(psi0,psi0Name,steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
-    canberra_anim_delta_vs_kappa(psi0,psi0Name,steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
+for psi0,psi0Name in zip([(eg0).unit(),(gg1).unit(),(eg0+ge0).unit()],['eg0','gg1','eg0+ge0']):
+    canberra_anim_delta_vs_chi(psi0,psi0Name+'-2g+2g',steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
+    canberra_anim_delta_vs_chi(psi0,psi0Name+'0+3g',steps,t_final,np.linspace(0,3*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
+
+    canberra_anim_delta_vs_kappa(psi0,psi0Name+'-2g+2g',steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
+    canberra_anim_delta_vs_kappa(psi0,psi0Name+'0+3g',steps,t_final,np.linspace(0,3*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
     

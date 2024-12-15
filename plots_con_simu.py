@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 from matplotlib.animation import FuncAnimation
 
-from jcm_lib import simu_unit_y_disip,anim_univsdis
+from jcm_lib import plots_uni_vs_dis_chi,plots_uni_vs_dis_delta,plots_uni_vs_dis_g,plots_uni_vs_dis_J,plots_uni_vs_dis_kappa
 
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
@@ -48,80 +48,25 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
-# from mpl_toolkits.mplot3d import axes3d
-
-
-SMALL_SIZE = 12
-MEDIUM_SIZE = 15
-BIGGER_SIZE = 20
-
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
 psi0=(ee0+gg2).unit()
 psi0Name="ee0+gg2"
 steps=10000
-t_final=400000
+t_final=40*steps
 w_0=1
-J=0
 g=0.001*w_0
 p=0.005*g
-d=[-2*g,-g,-0.5*g,0,0.5*g,g,2*g]
-x=0.5*g
-gt=np.linspace(0,t_final*g,steps)
+d=0
+x=0
+J=0
 gamma=0.1*g
-kappa=0#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
-
-param=d
-colors=mpl.colormaps['inferno'](np.linspace(0,1,len(param)+1))
-lines_legend1=[]
-lines_legend2=[]
-labels_legend=[]
-
-# coherencias_u=np.zeros((len(param),66,steps))
-# coherencias_d=np.zeros((len(param),66,steps))
-fg_u=np.zeros((len(param),steps))
-fg_d=np.zeros((len(param),steps))
-concu_u=np.zeros((len(param),steps))
-concu_d=np.zeros((len(param),steps))
-for i,d in enumerate(param):
-    #,coherencias_u[i],coherencias_d[i]
-    fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
-    
-fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
-fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
-
-'''--------PLOT-------'''
-fig = plt.figure(1,(16,9))
-fig.suptitle(f'$k={kappa}$ $\chi = {x}$ $|\psi_0>$='+psi0Name)
-ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
-
-for i,d in enumerate(param):
-    line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-    labels_legend.append(f'U $\Delta$={d/g}g')
-    line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
-    # labels_legend.append(f'D k={k/g}g')
-    lines_legend1.append(line_fg_u)
-    # lines_legend1.append(line_fg_d)
-
-    line_concu_u,=ax2.plot(gt,concu_u[i],color=colors[i],linestyle='solid')
-    line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
-    lines_legend2.append(line_concu_u)
-    # lines_legend2.append(line_concu_d)
-
-ax1.legend(lines_legend1,labels_legend)
-ax2.legend(lines_legend2,labels_legend)
-plt.show()
+kappa=0.1*g#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
 
 
+plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=kappa, J=J, d=d, x=[0,0.1*g,g,3*g], gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=kappa, J=J, d=[-0.1*g,0,0.1*g,g,3*g], x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
 
 # '''------Animacion-----'''
 # anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
