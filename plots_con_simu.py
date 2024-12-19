@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 from matplotlib.animation import FuncAnimation
 
-from jcm_lib import plots_uni_vs_dis_chi,plots_uni_vs_dis_delta,plots_uni_vs_dis_g,plots_uni_vs_dis_J,plots_uni_vs_dis_kappa
+from jcm_lib import plots_uni_vs_dis_chi,plots_uni_vs_dis_delta,plots_uni_vs_dis_gamma,plots_uni_vs_dis_J,plots_uni_vs_dis_kappa
 
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
@@ -51,23 +51,24 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-psi0=(ee0+gg2).unit()
-psi0Name="ee0+gg2"
-steps=10000
-t_final=40*steps
+psi0=(ee0-gg2).unit()
+psi0Name="eg0"
+steps=50000
+t_final=50000
 w_0=1
 g=0.001*w_0
-p=0.005*g
 d=0
 x=0
 J=0
 gamma=0.1*g
-kappa=0.1*g#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+p=0#0.05*gamma
+kappa=0#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
 
-
-plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=kappa, J=J, d=d, x=[0,0.1*g,g,3*g], gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=kappa, J=J, d=[-0.1*g,0,0.1*g,g,3*g], x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-
+plots_uni_vs_dis_gamma(w_0=w_0, g=g, kappa=0.1*g, J=0, d=0, x=0, gamma=[0,0.1*g,0.5*g,g,2*g], p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+# plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=kappa, J=J, d=d, x=[0,0.1*g,g,3*g], gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+# plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=kappa, J=J, d=[-0.1*g,0,0.1*g,g,3*g], x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+# plots_uni_vs_dis_kappa(w_0=w_0, g=g, kappa=[0,0.1*g,g,2*g], J=0, d=-2*g, x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+# plots_uni_vs_dis_kappa(w_0=w_0, g=g, kappa=[0,0.1*g,g,2*g], J=0, d=0.1*g, x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
 # '''------Animacion-----'''
 # anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
 # anim_concu=anim_univsdis("Concu",concu_u,concu_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,0,1])

@@ -1,7 +1,7 @@
 """La idea de este script es hacer una animacion temporal del canberra. En el eje x e y ponemos
 parametros normales -por ejemplo- k y delta, y en la animacion mostramos como evoluciona 
 temporalmente el canberra. es decir, lo que tendriamos que hacer es calcular el canberra para
-diferentes tiempos e ir animando."""
+diferentes tiempos e ir animando. Ademas lo que hace es hacer 4 plots diferentes para un tercer parametro"""
 
 from qutip import *
 import numpy as np
@@ -13,7 +13,7 @@ import matplotlib as mpl
 import matplotlib.colors as mcolors
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
-from jcm_lib import simu_unit_y_disip,canberra
+from jcm_lib import simu_unit_y_disip,distancia_metrica
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
@@ -73,7 +73,7 @@ g=0.001*w_0
 p=0.005*g
 gamma=0.1*g
 steps=2500
-t_final=100000
+t_final=40*steps
 
 
 
@@ -156,7 +156,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     ax2.set_title(f"$\chi={chi[2]/g}g$")
     ax3=fig.add_subplot(224,sharey=ax2)
     ax3.set_title(f"$\chi={chi[3]/g}g$")
-    z_max =  max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
+    z_max =  2500 #max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
     #plotear el pcolormesh()
 
 
@@ -178,7 +178,7 @@ def canberra_anim_delta_vs_kappa(psi0,psi0Name:str,steps:int,t_final:int,delta:l
     fig.colorbar(c0, ax=ax1)
     # simtime s=frames*interv ms=frames*interv/1000 s --> interv ms = simtime s/frames = simtime *1000 ms/frames
     anim = FuncAnimation(fig, update, frames=frames, interval=anim_time*1000/frames,blit=True)
-    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs kappa varios chi 33x33.gif", writer='pillow')
+    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs kappa varios chi 9x9.gif", writer='pillow')
 
 def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:list,chi:list,kappa:list,frames:int,anim_time:float):
     if len(kappa)!=4:
@@ -259,7 +259,7 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     ax2.set_title(f"$k={kappa[2]/g}g$")
     ax3=fig.add_subplot(224,sharey=ax2)
     ax3.set_title(f"$k={kappa[3]/g}g$")
-    z_max =  max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
+    z_max = 2500 # max([zs0.flatten().max(),zs1.flatten().max(),zs2.flatten().max(),zs3.flatten().max()])
     #plotear el pcolormesh()
 
 
@@ -281,13 +281,13 @@ def canberra_anim_delta_vs_chi(psi0,psi0Name:str,steps:int,t_final:int,delta:lis
     fig.colorbar(c0, ax=ax1)
     # simtime s=frames*interv ms=frames*interv/1000 s --> interv ms = simtime s/frames = simtime *1000 ms/frames
     anim = FuncAnimation(fig, update, frames=frames, interval=anim_time*1000/frames,blit=True)
-    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k 33x33.gif", writer='pillow')
+    anim.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} canberra delta vs chi varios k 9x9.gif", writer='pillow')
 
 
-for psi0,psi0Name in zip([(eg0).unit(),(gg1).unit(),(eg0+ge0).unit()],['eg0','gg1','eg0+ge0']):
-    canberra_anim_delta_vs_chi(psi0,psi0Name+'-2g+2g',steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
-    canberra_anim_delta_vs_chi(psi0,psi0Name+'0+3g',steps,t_final,np.linspace(0,3*g,33),np.linspace(0,3*g,33),[0,0.1*g,g,2*g],300,15)
+for psi0,psi0Name in zip([eg0,(gg1).unit(),(eg0+ge0).unit()],['eg0','gg1','eg0+ge0']):
+    canberra_anim_delta_vs_chi(psi0,psi0Name+'; -2g+2g',steps,t_final,np.linspace(-2*g,2*g,9),np.linspace(0,3*g,9),[0,0.1*g,g,2*g],300,15)
+    canberra_anim_delta_vs_chi(psi0,psi0Name+'; 0+3g',steps,t_final,np.linspace(0,3*g,9),np.linspace(0,3*g,9),[0,0.1*g,g,2*g],300,15)
 
-    canberra_anim_delta_vs_kappa(psi0,psi0Name+'-2g+2g',steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
-    canberra_anim_delta_vs_kappa(psi0,psi0Name+'0+3g',steps,t_final,np.linspace(0,3*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
+    # canberra_anim_delta_vs_kappa(psi0,psi0Name+'; -2g+2g',steps,t_final,np.linspace(-2*g,2*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
+    # canberra_anim_delta_vs_kappa(psi0,psi0Name+'; 0+3g',steps,t_final,np.linspace(0,3*g,33),np.linspace(0,3*g,33),[0,0.5*g,g,2*g],300,15)
     

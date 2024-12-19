@@ -1941,33 +1941,59 @@ def anim_univsdis(title:str,data_uni:list,data_dis:list,param:list,param_name:st
     plt.show()
     return ani
 
-def canberra(data1,data2,temporal:bool=False):
-    """Calcula el canberra entre las datas 1 y 2. Si temporal es falso, entonces solo da como resultado un unico float, que es el canberra calculado en el total del tiempo. Si temporal es true, entonces devuelve una lista que tiene la misma longitud que data1, y va mostrando el canberra acumulado tiempo a tiempo"""
+def distancia_metrica(data1,data2,metrica:str="modulo",temporal:bool=False):
+    """Calcula el canberra entre las datas 1 y 2. 
+    ---Params:
+        -data 1 y data2 son los arrays entre los que calculamos la distancia
+        -metrica: "modulo" para hacer solo el modulo de la resta, "canberra" para hacer el modulo de la resta normalizada con la suma de los modulos
+        -Si temporal es falso, entonces solo da como resultado un unico float, que es el canberra calculado en el total del tiempo. Si temporal es true, entonces devuelve una lista que tiene la misma longitud que data1, y va mostrando el canberra acumulado tiempo a tiempo"""
     if len(data1) != len(data2):
         print(f"ERROR: data1 y data2 deben tener el mismo tamaño pero tienen {len(data1)} y {len(data2)}")
         exit()
-
-    if temporal == False:
-        d=0
-        for i in range(len(data1)):
-            if data1[i]==0 and data2[i]==0:
-                None
-            else: 
-                d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
-        return d
-    elif temporal == True:
-        d=0
-        canb=[]
-        for i in range(len(data1)):
-            if data1[i]==0 and data2[i]==0:
-                d+=0
-            else: 
-                d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
-            canb.append(d)
-        return np.array(canb)
-    else:
-        print("No se que paso. Comportamiento inesperado en el canberra")
-        exit()
+    elif metrica=="modulo":
+        if temporal == False:
+            d=0
+            for i in range(len(data1)):
+                if data1[i]==0 and data2[i]==0:
+                    None
+                else: 
+                    d+=np.abs(data1[i]-data2[i])
+            return d
+        elif temporal == True:
+            d=0
+            canb=[]
+            for i in range(len(data1)):
+                if data1[i]==0 and data2[i]==0:
+                    d+=0
+                else: 
+                    d+=np.abs(data1[i]-data2[i])
+                canb.append(d)
+            return np.array(canb)
+        else:
+            print("No se que paso. Comportamiento inesperado en el canberra")
+            exit()
+    elif metrica=="canberra":
+        if temporal == False:
+            d=0
+            for i in range(len(data1)):
+                if data1[i]==0 and data2[i]==0:
+                    None
+                else: 
+                    d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
+            return d
+        elif temporal == True:
+            d=0
+            canb=[]
+            for i in range(len(data1)):
+                if data1[i]==0 and data2[i]==0:
+                    d+=0
+                else: 
+                    d+=(np.abs(data1[i]-data2[i]))/(np.abs(data1[i])+np.abs(data2[i]))
+                canb.append(d)
+            return np.array(canb)
+        else:
+            print("No se que paso. Comportamiento inesperado en el canberra")
+            exit()
 
 def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name):
     """-zs shape tien que ser (x_ax,y_ax,steps)"""
@@ -2009,7 +2035,7 @@ def canberra_mesh_lectura(ci:str):
             #read data unitario y disipativo
             data_uni=pd.read_csv(folders[0]+"\\"+ci+"\\"+f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv',header=0)
             data_dis=pd.read_csv(folders[1]+"\\"+ci+"\\"+f'g={g_str} k={k_str} J={J_str} d={d_str} x={x_str} gamma={gamma_str} p={p_str}.csv',header=0)
-            z[-i-1][j]=canberra(data_uni['FG'],data_dis['FG'])
+            z[-i-1][j]=distancia_metrica(data_uni['FG'],data_dis['FG'],type="canberra")
             #z[-i-1][j]=caberra(data_uni,data_disip)
 
     #color entre z.min() y z.max()
@@ -3144,6 +3170,198 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     ax_Con.legend()
     plt.show()
 
+def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma_list:list,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+    '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de J (interaccion ISING).'''
+    
+    SMALL_SIZE = 12
+    MEDIUM_SIZE = 15
+    BIGGER_SIZE = 20
+
+    plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+    plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+    plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+    plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+    script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+
+
+    '''-------LAYOUT PARA LOS GRAFICOS------'''
+    #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
+    #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
+    '''N=0'''
+    fig0 = plt.figure(figsize=(16,9))
+    fig0.suptitle('N=0')
+    ax0 = fig0.add_subplot()
+    ax0.set_xlabel('gt')
+    ax0.set_ylabel('Amp. Prob. ')
+    ax0.set_ylim(0,1)
+    '''N=1'''
+    fig1 = plt.figure(figsize=(16,9))
+    ax1 = fig1.add_subplot()
+    fig1.suptitle('N=1')
+    ax1.set_xlabel('gt')
+    ax1.set_ylabel('Amp. Prob. ')
+    ax1.set_ylim(0,1)
+
+    '''N=2'''
+    fig2 = plt.figure(figsize=(16,9))
+    ax2 = fig2.add_subplot()
+    fig2.suptitle('N=2')
+    ax2.set_xlabel('gt')
+    ax2.set_ylabel('Amp. Prob. ')
+    ax2.set_ylim(0,1)
+
+    '''PAULI'''
+    fig_pauli = plt.figure(figsize=(16,9))
+    ax_pauli = fig_pauli.add_subplot()
+    fig_pauli.suptitle('Pauli ')
+    ax_pauli.set_xlabel('gt')
+    ax_pauli.set_ylabel('V.M.')
+    ax_pauli.set_ylim(-1,1)
+    pauli_lines=[]
+    pauli_names=[]
+
+    '''ENTROPIA VON NEUMAN Y LINEAL'''
+    fig_S = plt.figure(figsize=(16,9))
+    ax_Slin = fig_S.add_subplot(121)
+    ax_Svn = fig_S.add_subplot(122)
+    fig_S.suptitle('Entropia')
+    ax_Svn.set_ylabel('S')
+    ax_Svn.set_title('Von Neuman')
+    ax_Slin.set_ylabel('S')
+    ax_Slin.set_title('Lineal')
+    ax_Slin.set_xlabel('gt')
+    ax_Svn.set_xlabel('gt')
+    ax_Svn.set_ylim(0,np.log(8))
+    ax_Slin.set_ylim(0,1)
+
+    '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
+    fig_Sr = plt.figure(figsize=(16,9))
+    ax_Srlin = fig_Sr.add_subplot(131)
+    ax_Srvn = fig_Sr.add_subplot(132)
+    ax_Con = fig_Sr.add_subplot(133)
+    fig_Sr.suptitle('Entropia Reducida')
+    ax_Srvn.set_ylabel('S')
+    ax_Srvn.set_title("Von Neuman")
+    ax_Srlin.set_ylabel('S')
+    ax_Srlin.set_title("Lineal")
+    ax_Con.set_ylabel('C')
+    ax_Con.set_title('Concurrencia')
+    ax_Con.set_xlabel('gt')
+    ax_Srlin.set_xlabel('gt')
+    ax_Srvn.set_xlabel('gt')
+    ax_Srvn.set_ylim(0,np.log(8))
+    ax_Srlin.set_ylim(0,1)
+    ax_Con.set_ylim(0,1)
+
+    # '''----Autovalores----'''
+    # fig_autoval=plt.figure()
+    # ax_eval=fig_autoval.add_subplot()
+    # ax_eval.set_xlabel('gt')
+    # ax_eval.set_ylabel('Eval')
+
+
+    fig_fg=plt.figure()
+    fig_fg.suptitle("Fase Geometrica")
+    ax_fg=fig_fg.add_subplot()
+    ax_fg.set_xlabel('gt')
+
+    """---COLORES---"""
+    purples=mpl.colormaps['Purples'](np.linspace(0,1,len(gamma_list)+2))
+    greens=mpl.colormaps['Greens'](np.linspace(0,1,len(gamma_list)+2))
+    oranges=mpl.colormaps['Oranges'](np.linspace(0,1,len(gamma_list)+2))
+    greys=mpl.colormaps['Greys'](np.linspace(0,1,len(gamma_list)+2))
+    blues=mpl.colormaps['Blues'](np.linspace(0,1,len(gamma_list)+2))
+    viridis12=mpl.colormaps['viridis'](np.linspace(0,1,12))
+    inferno=mpl.colormaps['inferno'](np.linspace(0,1,len(gamma_list)+1))
+    '''----DATOS DE LOS PLOTS----'''
+    for i,gamma in enumerate(gamma_list):
+        if disipation==True:
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+        elif disipation==False:
+            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+        gamma_g=gamma/g
+
+        '''--- N=0 ---'''
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'Pr(gg0), $\gamma={gamma_g}g$')
+        # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
+        # ax0.set_title(param_name)
+        plot_coherencias(data,9,ax0)#,0) #N=0
+
+        '''--- N=1 ---'''
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'P(gg1), $\gamma={gamma_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'Pr(eg0+), $\gamma={gamma_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'Pr(eg0-), $\gamma={gamma_g}g$')
+        plot_coherencias(data,3,ax1) #N=1
+        plot_coherencias(data,6,ax1) #N=1
+        plot_coherencias(data,10,ax1) #N=1
+        # ax1.set_title(param_name)
+        # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
+
+        '''--- N=2 ---'''
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$Pr(gg2), \gamma={gamma_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$Pr(eg1+), \gamma={gamma_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$Pr(eg1-), \gamma={gamma_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$Pr(ee0), \gamma={gamma_g}g$')
+        plot_coherencias(data,0,ax2) #N=2
+        plot_coherencias(data,4,ax2) #N=2
+        plot_coherencias(data,7,ax2) #N=2 
+        plot_coherencias(data,11,ax2) #N=2
+        # ax2.set_title(param_name)
+        # ax2.legend([line21,line22,line23,line24],['gg2','eg1+','eg1-','ee0'])
+        # '''--- N=3 ---'''
+
+        # fig,ax=plt.subplots(1,1,figsize=(16, 9)) 
+        # ax=[ax]
+        # fig.suptitle('N=3')
+        # ax[0].plot(g*t,data['pr(eg2)'],label=data.keys()[8],color='black')
+        # ax[0].plot(g*t,data['pr(ge2)'],label=data.keys()[9],color='blue')
+        # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
+        # '''----EVALS----'''
+        # for j in range(12): 
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        # ax_eval.legend()
+
+
+        '''--- VM Pauli ---'''
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, \gamma={gamma_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, \gamma={gamma_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, \gamma={gamma_g}g$')
+        pauli_lines.append([line_p0,line_p1,line_p2])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(1)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(2)}>$'+f', $gamma={gamma_g}g$'])
+
+        '''-----FG----'''
+        lineFG,=ax_fg.plot(g*data['t'],data['FG'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+
+
+        '''--- Entropias ---'''
+        #PLOT PARA LAS ENTROPIAS
+
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        # ax_Svn.set_title(param_name)
+        #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
+
+        '''---Trazamos sobre el campo---'''
+        #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
+        #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
+
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        # ax_Srvn.set_title(param_name)
+        # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
+    ax0.legend()
+    ax1.legend()
+    ax2.legend()
+    ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
+    ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
+    ax_Con.legend()
+    plt.show()
+
 def plots_uni_vs_dis_delta(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de DELTAS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
     gt=np.linspace(0,t_final*g,steps)
@@ -3324,37 +3542,37 @@ def plots_uni_vs_dis_J(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
     ax2.legend(lines_legend2,labels_legend)
     plt.show()
 
-def plots_uni_vs_dis_g(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_gamma(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de G (acoplamiento cavidad atomo). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
 
     gt=np.linspace(0,t_final*g,steps)
-    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(g)+1))
+    colors=mpl.colormaps['inferno'](np.linspace(0,1,len(gamma)+1))
     lines_legend1=[]
     lines_legend2=[]
     labels_legend=[]
 
     # coherencias_u=np.zeros((len(param),66,steps))
     # coherencias_d=np.zeros((len(param),66,steps))
-    fg_u=np.zeros((len(g),steps))
-    fg_d=np.zeros((len(g),steps))
-    concu_u=np.zeros((len(g),steps))
-    concu_d=np.zeros((len(g),steps))
-    for i,gg in enumerate(g):
+    fg_u=np.zeros((len(gamma),steps))
+    fg_d=np.zeros((len(gamma),steps))
+    concu_u=np.zeros((len(gamma),steps))
+    concu_d=np.zeros((len(gamma),steps))
+    for i,gg in enumerate(gamma):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,gg,kappa,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gg,p,psi0,t_final=t_final,steps=steps)
         
     fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ $J={J/g}g$ $\Delta = {d/g}g $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ $J={J/g}g$ $\Delta = {d/g}g$ $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
 
-    for i,gg in enumerate(g):
+    for i,gg in enumerate(gamma):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-        labels_legend.append(f'U $g={gg}$')
+        labels_legend.append(f'U $\gamma={gg/g}g$')
         line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
         # labels_legend.append(f'D k={k/g}g')
         lines_legend1.append(line_fg_u)
