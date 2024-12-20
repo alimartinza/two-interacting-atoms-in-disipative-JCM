@@ -57,7 +57,9 @@ plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+plt.rc('figure', titlesize=BIGGER_SIZE,figsize=(16,9))  # fontsize of the figure title
+# plt.rc('figure')
+plt.rc('figure.subplot',left=0.064, right=0.95, top=0.94, bottom=0.064,hspace=0.02)
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
@@ -65,11 +67,11 @@ script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENT
 # condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
 
 #DEFINIMOS LOS PARAMETROS QUE NO VAMOS A QUERER MODIFICAR EN LOS GRAFICOS
-w0=1
-J=0
-g=0.001*w0
-k=0.1*g
-p=0.005*g
+# w0=1
+# J=0
+# g=0.001*w0
+# k=0.1*g
+# p=0.005*g
 # t_final=25000
 # steps=2000
 # t=np.linspace(0,t_final,steps)
@@ -88,7 +90,7 @@ coherencias={'0;1':[],'0;2':[],'0;3':[],'0;4':[],'0;5':[],'0;6':[],'0;7':[],'0;8
                                                                                             '9;10':[],'9;11':[],
                                                                                                     '10;11':[]}
 
-def plot_ReIm_coherencias(data,n:int,ax,xlabel=None,ylabel=None):
+def plot_ReIm_coherencias(data,n:int,ax,xlabel=None,ylabel=None,w_0=1,g=0.001):
     '''
     Parametros
     - n: numero del vector de la base del cual se quieren graficar las coherencias
@@ -106,7 +108,7 @@ def plot_ReIm_coherencias(data,n:int,ax,xlabel=None,ylabel=None):
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
 
-def plot_coherencias(data,n:int,ax,xlabel='gt',ylabel='Abs(Coh)'):
+def plot_coherencias(data,n:int,ax,xlabel='gt',ylabel='Abs(Coh)',w_0=1,g=0.001):
     '''
     Parametros
     - n: numero del vector de la base del cual se quieren graficar las coherencias
@@ -328,7 +330,8 @@ def fases(sol):
     Pan = np.array(Pan)
     return np.unwrap(Pan), argumento, np.array(eigenvals_t)
 
-def plot3D_gamma(condiciones_iniciales:list):
+def plot3D_gamma(condiciones_iniciales:list,k,J,x,d,gamma,p):
+    g=0.001
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # condiciones_iniciales=["eg0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
@@ -561,7 +564,8 @@ def plot3D_gamma(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot3D_x(condiciones_iniciales:list):
+def plot3D_x(condiciones_iniciales:list,k,J,x,d,gamma,p):
+    g=0.001
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # condiciones_iniciales=["ee0"]#,"gg1","eg0"] #CONDICIONES INICIALES QUE QUEREMOS GRAFICAR
@@ -774,7 +778,8 @@ def plot3D_x(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot3D_delta(condiciones_iniciales:list):
+def plot3D_delta(condiciones_iniciales:list,k,J,x,d,gamma,p):
+    g=0.001
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     folder_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
@@ -989,7 +994,7 @@ def plot3D_delta(condiciones_iniciales:list):
             fig_Sr.savefig(ci+' entropia reducida '+folder_names,dpi=100)
             plt.close()
 
-def plot2D_delta(ci:str,delta:list,savePlots:bool=False,showPlots:bool=True):
+def plot2D_delta(ci:str,delta:list,g,k,J,x,gamma,p,savePlots:bool=False,showPlots:bool=True):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
     f_names=["disipativo lineal","disipativo bs","unitario lineal","unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
     # folder_names=["9_7_9 disipativo lineal","9_7_9 disipativo bs","9_7_10 unitario lineal","9_7_11 unitario bs"] #PONEMOS LOS NOMBRES DE LAS CARPETAS QUE QUEREMOS VISITAR
@@ -1210,7 +1215,7 @@ def plot2D_delta(ci:str,delta:list,savePlots:bool=False,showPlots:bool=True):
     else:
             print("Ni savePlots ni showPlots es True...")
 
-def plot_cis(cis:list,folder_name:str,x:float,d:float,gamma:float,savePlots:bool=False):
+def plot_cis(cis:list,folder_name:str,x:float,d:float,gamma:float,g,k,J,p,savePlots:bool=False):
     """
     Params:
     -cis: lista de strings con nombres de condiciones iniciales
@@ -1424,8 +1429,7 @@ def plot_cis(cis:list,folder_name:str,x:float,d:float,gamma:float,savePlots:bool
     else:
         plt.show()
 
-def plot_fg_delta(ci:str,delta:list,x:float,folder_name:str="unitario lineal"):
-    gamma=0.1*g
+def plot_fg_delta(ci:str,delta:list,x:float,g,gamma,k,J,d,p,folder_name:str="unitario lineal"):
     script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU    
     cmap=mpl.colormaps["viridis"]
     colors=cmap(np.linspace(0,1,len(delta)))
@@ -1490,7 +1494,7 @@ def plot_fg_delta(ci:str,delta:list,x:float,folder_name:str="unitario lineal"):
 
     plt.show()
 
-def anim3x1_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float,saveword:str=" "):
+def anim3x1_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float,g:float,k:float,J:float,p:float,saveword:str=" "):
     mpl.use('TkAgg')
     relative_path="datos"+"\\"+folder_name+"\\"+ci 
     path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -1585,7 +1589,7 @@ def anim3x1_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float
 
     ani.save(script_path+"\\"+"gifs"+"\\"+"animation;"+saveword+";"+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
-def anim2x2_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float,saveword:str=" "):
+def anim2x2_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float,g:float,k:float,J:float,p:float,saveword:str=" "):
     mpl.use('TkAgg')
     relative_path="datos"+"\\"+folder_name+"\\"+ci 
     path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -1686,7 +1690,7 @@ def anim2x2_delta(ci:str,folder_name:str,key:list,delta:list,x:float,gamma:float
 
     ani.save(script_path+"\\"+"gifs"+"\\"+"animation;"+saveword+";"+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
-def anim3x1_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float,saveword:str=" "):
+def anim3x1_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float,g:float,k:float,J:float,p:float,saveword:str=" "):
     mpl.use('TkAgg')
     relative_path="datos"+"\\"+folder_name+"\\"+ci 
     path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -1781,7 +1785,7 @@ def anim3x1_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float
 
     ani.save(script_path+"\\"+"gifs"+"\\"+"animation chi;"+saveword+";"+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
-def anim2x2_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float,saveword:str=" "):
+def anim2x2_chi(ci:str,folder_name:str,key:list,chi:list,delta:float,gamma:float,g:float,k:float,J:float,p:float,saveword:str=" "):
     mpl.use('TkAgg')
     relative_path="datos"+"\\"+folder_name+"\\"+ci 
     path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -1995,7 +1999,7 @@ def distancia_metrica(data1,data2,metrica:str="modulo",temporal:bool=False):
             print("No se que paso. Comportamiento inesperado en el canberra")
             exit()
 
-def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name):
+def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name,g):
     """-zs shape tien que ser (x_ax,y_ax,steps)"""
     zs_max,zs_min=max(zs.flatten()),min(zs.flatten())
     k_ax, delta_ax = np.meshgrid(x_param_list,y_param_list,sparse=True)
@@ -2009,8 +2013,7 @@ def canberra_anim(x_param_list,y_param_list,zs,chi:float,psi0Name):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-def canberra_mesh_lectura(ci:str):
-    gamma=0.1*g
+def canberra_mesh_lectura(ci:str,g,k,J,gamma,p):
     folders=["10_3_9 unitario lineal","10_2_22 disipativo lineal"]
     relative_path="datos"
     path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -3170,9 +3173,9 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     ax_Con.legend()
     plt.show()
 
-def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma_list:list,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma_list:list,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de J (interaccion ISING).'''
-    
+    p=0.05*np.array(gamma)
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -3280,7 +3283,7 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
     '''----DATOS DE LOS PLOTS----'''
     for i,gamma in enumerate(gamma_list):
         if disipation==True:
-            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p[i],psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
             data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
         gamma_g=gamma/g
@@ -3360,10 +3363,12 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
     ax_pauli.legend()#[np.array(pauli_lines).flatten()],[np.array(pauli_names).flatten()])
     ax_Svn.legend()#[lineSvn,lineSlin],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d)])
     ax_Con.legend()
+    ax_fg.legend()
     plt.show()
 
-def plots_uni_vs_dis_delta(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,gamma:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de DELTAS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
+    p=0.05*gamma
     gt=np.linspace(0,t_final*g,steps)
 
     colors=mpl.colormaps['inferno'](np.linspace(0,1,len(d)+1))
@@ -3388,7 +3393,7 @@ def plots_uni_vs_dis_delta(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
     fig = plt.figure(1,(16,9))
     fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,delta in enumerate(d):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
@@ -3403,13 +3408,19 @@ def plots_uni_vs_dis_delta(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
         lines_legend2.append(line_concu_u)
         # lines_legend2.append(line_concu_d)
 
+    ax1.set_xlim(0,g*t_final)
+    ax2.set_xlabel('gt')
+    ax1.set_ylabel('FG')
+    ax2.set_ylabel('$C_{AB}$')
     ax1.legend(lines_legend1,labels_legend)
     ax2.legend(lines_legend2,labels_legend)
-    plt.show()
+    
 
-def plots_uni_vs_dis_chi(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+
+def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,gamma:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de CHIS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
-
+    
+    p=0.05*gamma
     gt=np.linspace(0,t_final*g,steps)
     colors=mpl.colormaps['inferno'](np.linspace(0,1,len(x)+1))
     lines_legend1=[]
@@ -3433,7 +3444,7 @@ def plots_uni_vs_dis_chi(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
     fig = plt.figure(1,(16,9))
     fig.suptitle(f'$k={kappa}$ $\Delta={d/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,chi in enumerate(x):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
@@ -3448,13 +3459,18 @@ def plots_uni_vs_dis_chi(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
         lines_legend2.append(line_concu_u)
         # lines_legend2.append(line_concu_d)
 
+    ax1.set_xlim(0,g*t_final)
+    ax2.set_xlabel('gt')
+    ax1.set_ylabel('FG')
+    ax2.set_ylabel('$C_{AB}$')
     ax1.legend(lines_legend1,labels_legend)
     ax2.legend(lines_legend2,labels_legend)
-    plt.show()
 
-def plots_uni_vs_dis_kappa(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+
+def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,gamma:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de KAPPAS (INTERACCION DIPOLAR). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
 
+    p=0.05*gamma
     gt=np.linspace(0,t_final*g,steps)
     colors=mpl.colormaps['inferno'](np.linspace(0,1,len(kappa)+1))
     lines_legend1=[]
@@ -3478,7 +3494,7 @@ def plots_uni_vs_dis_kappa(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
     fig = plt.figure(1,(16,9))
     fig.suptitle(f'$\Delta={d/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,k in enumerate(kappa):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
@@ -3493,13 +3509,18 @@ def plots_uni_vs_dis_kappa(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
         lines_legend2.append(line_concu_u)
         # lines_legend2.append(line_concu_d)
 
+    ax1.set_xlim(0,g*t_final)
+    ax2.set_xlabel('gt')
+    ax1.set_ylabel('FG')
+    ax2.set_ylabel('$C_{AB}$')
     ax1.legend(lines_legend1,labels_legend)
     ax2.legend(lines_legend2,labels_legend)
-    plt.show()
 
-def plots_uni_vs_dis_J(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+
+def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamma:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de J (ISING). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
 
+    p=0.05*gamma
     gt=np.linspace(0,t_final*g,steps)
     colors=mpl.colormaps['inferno'](np.linspace(0,1,len(J)+1))
     lines_legend1=[]
@@ -3523,7 +3544,7 @@ def plots_uni_vs_dis_J(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
     fig = plt.figure(1,(16,9))
     fig.suptitle(f'$k={kappa}$ $\chi = {x}$ $\Delta = {d}$ $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,j in enumerate(J):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
@@ -3537,14 +3558,18 @@ def plots_uni_vs_dis_J(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
         line_concu_d,=ax2.plot(gt,concu_d[i],color=colors[i],linestyle='dashed')
         lines_legend2.append(line_concu_u)
         # lines_legend2.append(line_concu_d)
-
+    ax1.set_xlim(0,g*t_final)
+    ax2.set_xlabel('gt')
+    ax1.set_ylabel('FG')
+    ax2.set_ylabel('$C_{AB}$')
     ax1.legend(lines_legend1,labels_legend)
     ax2.legend(lines_legend2,labels_legend)
-    plt.show()
+    return ax1
 
-def plots_uni_vs_dis_gamma(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps):
+
+def plots_uni_vs_dis_gamma(w_0:float,g:float,kappa:float,J:float,d:float,x:float,gamma:list,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de G (acoplamiento cavidad atomo). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
-
+    p=0.05*np.array(gamma)
     gt=np.linspace(0,t_final*g,steps)
     colors=mpl.colormaps['inferno'](np.linspace(0,1,len(gamma)+1))
     lines_legend1=[]
@@ -3559,7 +3584,7 @@ def plots_uni_vs_dis_gamma(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
     concu_d=np.zeros((len(gamma),steps))
     for i,gg in enumerate(gamma):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gg,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gg,p[i],psi0,t_final=t_final,steps=steps)
         
     fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
@@ -3568,7 +3593,7 @@ def plots_uni_vs_dis_gamma(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
     fig = plt.figure(1,(16,9))
     fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ $J={J/g}g$ $\Delta = {d/g}g$ $|\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
-    ax2 = fig.add_subplot(212)  #concu unitario en solido y disipativo en rayado
+    ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,gg in enumerate(gamma):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
@@ -3583,6 +3608,13 @@ def plots_uni_vs_dis_gamma(w_0,g,kappa,J,d,x,gamma,p,psi0,psi0Name,t_final,steps
         lines_legend2.append(line_concu_u)
         # lines_legend2.append(line_concu_d)
 
+    ax1.set_xlim(0,g*t_final)
+    ax2.set_xlabel('gt')
+    ax1.set_ylabel('FG')
+    ax2.set_ylabel('$C_{AB}$')
     ax1.legend(lines_legend1,labels_legend)
     ax2.legend(lines_legend2,labels_legend)
-    plt.show()
+
+
+
+

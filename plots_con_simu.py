@@ -51,20 +51,19 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-psi0=(ee0-gg2).unit()
-psi0Name="eg0"
-steps=50000
-t_final=50000
+psi0=(eg1+ge1+gg2+ee0).unit()
+psi0Name="gg2+eg1+ge1+ee0"
+steps=20000
+t_final=10*steps
 w_0=1
 g=0.001*w_0
-d=0
-x=0
-J=0
-gamma=0.1*g
-p=0#0.05*gamma
-kappa=0#np.linspace(0,2.5*g,5)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+for psi0,psi0Name in zip([gg1,eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),eg1,(eg1+ge1).unit(),(eg1-ge1).unit(),(eg0+ge0+gg1).unit(),(ee0-gg2).unit(),(ee0+gg2).unit(),(ee0+eg1+ge1+gg2).unit()],['gg1','eg0','eg0+ge0','eg0-ge0','eg1','eg1+ge1','eg1-ge1','w','ee0-gg2','ee0+gg2','ee0+eg1+ge1+gg2']):
+    ax1=plots_uni_vs_dis_J(w_0=w_0, g=g, kappa=0, J=[0,0.1*g,g,2*g], d=0, x=0, gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 x=0 k=0 gamma=0.1g barrido j\{psi0Name}.png')
+    ax1.set_xlim(0,50)
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 x=0 k=0 gamma=0.1g barrido j\{psi0Name} zoom.png')
+    plt.close()
 
-plots_uni_vs_dis_gamma(w_0=w_0, g=g, kappa=0.1*g, J=0, d=0, x=0, gamma=[0,0.1*g,0.5*g,g,2*g], p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
 # plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=kappa, J=J, d=d, x=[0,0.1*g,g,3*g], gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
 # plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=kappa, J=J, d=[-0.1*g,0,0.1*g,g,3*g], x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
 # plots_uni_vs_dis_kappa(w_0=w_0, g=g, kappa=[0,0.1*g,g,2*g], J=0, d=-2*g, x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
