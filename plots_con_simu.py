@@ -51,23 +51,30 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-psi0=(eg1+ge1+gg2+ee0).unit()
-psi0Name="gg2+eg1+ge1+ee0"
-steps=20000
-t_final=10*steps
+
+
 w_0=1
 g=0.001*w_0
-for psi0,psi0Name in zip([gg1,eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),eg1,(eg1+ge1).unit(),(eg1-ge1).unit(),(eg0+ge0+gg1).unit(),(ee0-gg2).unit(),(ee0+gg2).unit(),(ee0+eg1+ge1+gg2).unit()],['gg1','eg0','eg0+ge0','eg0-ge0','eg1','eg1+ge1','eg1-ge1','w','ee0-gg2','ee0+gg2','ee0+eg1+ge1+gg2']):
-    ax1=plots_uni_vs_dis_J(w_0=w_0, g=g, kappa=0, J=[0,0.1*g,g,2*g], d=0, x=0, gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 x=0 k=0 gamma=0.1g barrido j\{psi0Name}.png')
-    ax1.set_xlim(0,50)
-    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 x=0 k=0 gamma=0.1g barrido j\{psi0Name} zoom.png')
-    plt.close()
+# for psi0,psi0Name in zip([gg1,eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),eg1,(eg1+ge1).unit(),(eg1-ge1).unit(),(eg0+ge0+gg1).unit(),(ee0-gg2).unit(),(ee0+gg2).unit(),(ee0+eg1+ge1+gg2).unit()],['gg1','eg0','eg0+ge0','eg0-ge0','eg1','eg1+ge1','eg1-ge1','w','ee0-gg2','ee0+gg2','ee0+eg1+ge1+gg2']):
+#     steps=20000
+#     t_final=10*steps
+#     ax1=plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=0, J=0, d=0, x=[0,0.1*g,g,2*g], gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+#     plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 k=0 j=0 gamma=0.1g barrido chi\{psi0Name}.png')
+#     plt.close()
+#     steps=2000
+#     t_final=10*steps
+#     ax1=plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=0, J=0, d=0, x=[0,0.1*g,g,2*g], gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+#     plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 k=0 j=0 gamma=0.1g barrido chi\{psi0Name} zoom.png')
+#     plt.close()
 
-# plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=kappa, J=J, d=d, x=[0,0.1*g,g,3*g], gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-# plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=kappa, J=J, d=[-0.1*g,0,0.1*g,g,3*g], x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-# plots_uni_vs_dis_kappa(w_0=w_0, g=g, kappa=[0,0.1*g,g,2*g], J=0, d=-2*g, x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
-# plots_uni_vs_dis_kappa(w_0=w_0, g=g, kappa=[0,0.1*g,g,2*g], J=0, d=0.1*g, x=x, gamma=gamma, p=p, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+psi0=eg0
+psi0Name='u_2^(1)'
+steps=2000
+t_final=10*steps
+plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=0, J=0, d=[0,0.1*g,0.25*g,0.5*g], x=0, gamma=0.1*g, alpha=0,psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+plt.show()
+
+
 # '''------Animacion-----'''
 # anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
 # anim_concu=anim_univsdis("Concu",concu_u,concu_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,0,1])

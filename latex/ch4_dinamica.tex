@@ -1,0 +1,105 @@
+\chapter{Jaynes-Cummings de dos atomos, no lineal, medio Kerr}
+\label{ch:dinamica}
+
+%CAMBIAR ESTO PARA PERSONALIZARLO A MI GUSTO
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\nouppercase{\rightmark\hfill}}
+\fancyhead[RO]{\nouppercase{\leftmark\hfill}}
+\fancyfoot[LE,RO]{\hfill\thepage\hfill}
+
+En este capitulo se extiende el modelo de Jaynes-Cummings presentado en el capitulo \ref{ch:jcm}, agregandole nuevas cosas. Lo mas importante es que ahora vamos a tener dos atomos dentro de una misma cavidad. En la literatura en general, el JCM fue extendido para considerar dos cavidades donde cada una tiene su propio atomo, y usando una condicion inicial entrelazada se puede hacer interactuar ambas cavidades REFS. El camino que se tomó en este trabajo, es un tanto fuera de lo convensional ya que no hay muchos estudios sobre este sistema. El principal obstaculo que presenta este problema, es que el espacio de Hilbert crece mucho y se torna inmanejable analiticamente; como bien ya sabemos, el JCM tiene subespacios de 2 dimensiones que no se mezclan, y utilizando esta estrategia vamos a ver que en este caso tenemos subespacios de 4x4 que tampoco se mezclan en el caso unitario. Esto nos permite encontrar algunas expresiones analiticas, pero en general se utilizaran métodos númericos para analizar la dinamica. \newline
+Este capitulo entonces seguira un hilo conductor, partiendo desde el caso mas sencillo hasta llegar a analizar cuales son los efectos de los diferentes parametros en el problema. 
+	Primero vamos a considerar una cavidad perfecta, es decir sin disipaci\'on, agregandole el segundo atomo, vamos a intentar de entender cual es el efecto de este sobre el modelo de un solo atomo. Para esto haremos un analisis poblacional, y de observables como la entropia reducida, la concurrencia, las matrices de pauli. Una vez agregado el segundo \'atomo, vamos a prender las interacciones de a una y vamos a analizar cuales son sus efectos. Luego, vamos a comparar esto con el caso en donde la cavidad presenta perdidas. Principalmente, nos centraremos en un analisis del entrelazamiento, ya que esta es la cualidad mas interesante que tenemos en el ambito de la informaci\'on cu\'antica. 
+
+\section{JCM de dos atomos}
+En este trabajo, nos vamos a concentrar en una extension del modelo, donde vamos a ubicar dos atomos dentro de la cavidad. Estos atomos pueden interactuar entre si, y con la cavidad, y ademas agregaremos no-linealidades en el acoplamiento y en el medio.
+Vamos a usar un modelo de Jaynes-Cummings para describir la interacci\'on entre el campo electromagn\'etico y los \'atomos. Adem\'as supondremos que el acoplamiento depende de la cantidad de fotones y los \'atomos podr\'an interactuar entre si mediante un termino tipo Ising y otro tipo dipolo-dipolo. Recordemos que para estamos asumiendo que vale la aproximaci\'on de onda rotante ($\omega_0 \sim \omega$) y $g << \omega,\omega_0$.
+Entonces, el Hamiltoniano que describe este problema es el siguiente:
+
+\begin{equation}
+\begin{split}
+     \hat H & =\underbrace{\hbar \omega_0 h(\hat n) \hat n }_{\hat H_F}+\underbrace{\frac{\hbar \omega}{2}(\hat\sigma_Z^{(1)}+\hat\sigma_Z^{(2)})}_{\hat H_A}   \\ 
+     & + \underbrace{\hbar g(\hat\sigma_+^{(1)}\hat a f(\hat n)+\hat\sigma_-^{(1)}f(\hat n) \hat a^\dagger + \hat\sigma_+^{(2)}\hat a f(\hat n)+\hat\sigma_-^{(2)}f(\hat n) \hat a^\dagger)}_{H_{FA}} + \\ & \underbrace{2\hbar \kappa (\hat \sigma_-^{(1)}\hat \sigma_+^{(2)}+\hat \sigma_+^{(1)}\hat \sigma_-^{(2)}) + \hbar J \hat \sigma_Z^{(1)}\hat \sigma_Z^{(2)}}_{H_{AA}}
+\end{split}
+\end{equation}
+
+donde $\hat a$ es el operador de aniquilaci\'on del fot\'on, $\omega_0$ y $\omega$ son las frecuencias del fot\'on y del \'atomo respectivamente, $g$ es la constante de acoplamiento, las constantes $J$ y $\kappa$ son los par\'ametros de Ising y de dipolo-dipolo para las interacciones \'atomo-\'atomo, y los operadores $\sigma^{(i)}$ son las matrices de Pauli que act\'uan sobre el \'atomo i-esimo. Finalmente, las funciones $h(\hat n)$ y $f(\hat n)$ son las que van a dar cuenta de la no linealidad dependiente del numero de fotones de la cavidad $\hat n = \hat a^\dagger \hat a$. 
+
+Tomando un medio tipo Kerr la funci\'on $h(\hat n)=1+\frac{\chi}{\omega_0}\hat n$ \cite{}\textcolor{red}{(CITA)}, y la funci\'on $f(\hat n) =1$ si tomamos un acoplamiento lineal, y $f(\hat n) = \sqrt{\hat n}$ si consideramos un acoplamiento tipo Buck-Sukumar \cite{}\textcolor{red}{(CITA)}
+
+En este punto es normal hacer una transformaci\'on unitaria  $K = \exp\left\{-i \omega t (\hat a^\dagger a + \sigma_z/2)\right\}$ para dejar el Hamiltoniano en funci\'on del Detuning $\Delta (\sim 0)$. 
+
+\begin{equation}
+\begin{split}
+     \hat H_I & =\hbar \chi \hat n^2+\frac{\hbar \Delta}{2}(\hat\sigma_Z^{(1)}+\hat\sigma_Z^{(2)})   \\ 
+     & + \hbar g(\hat\sigma_+^{(1)}\hat a f(\hat n)+\hat\sigma_-^{(1)}f(\hat n) \hat a^\dagger + \hat\sigma_+^{(2)}\hat a f(\hat n)+\hat\sigma_-^{(2)}f(\hat n) \hat a^\dagger) \\ 
+ & + 2\hbar \kappa (\hat \sigma_-^{(1)}\hat \sigma_+^{(2)}+\hat \sigma_+^{(1)}\hat \sigma_-^{(2)}) + \hbar J \hat \sigma_Z^{(1)}\hat \sigma_Z^{(2)}
+\end{split}
+\end{equation}
+Este es el Hamiltoniano con el que vamos a trabajar, asi que a partir de ahora vamos a olvidarnos del subindice I. Obsérvese que el caso de $\chi=0$ es el caso de un medio lineal. 
+ACA PUEDO AGREGAR UN ESQUEMA DE COMO SERIA. En este esquema se ve como seria el experimento planteado. 
+
+Este Hamiltoniano se puede resolver analiticamente para el caso de una cavidad sin perdidas. En analogia con el caso de 1 atomo, vamos a elegir la base de N excitaciones, donde esperamos que estos subespacios queden invariantes, es decir, que el Hamiltoniano sea diagonal por bloques, pero como ahora tenemos 2 atomos, tenemos que elegir una base que respete simetrias, para N excitaciones los estados de la base son $\left\{\ket{ggn},\frac{1}{\sqrt{2}}(\ket{eg,n-1}+\ket{ge,n-1}),\ket{ee,n-2},,\frac{1}{\sqrt{2}}(\ket{eg,n-1}-\ket{ge,n-1})\right\}$. En esta base, el Hamiltoniano se diagonaliza por bloques y el bloque de N excitaciones queda
+El problema unitario se puede resolver analíticamente. Esto esta hecho en el paper de los autores \textit{O de los Santos-Sánchez
+, C González-Gutiérrez and J Récamier}, titulado \textit{Nonlinear Jaynes–Cummings model for two
+interacting two-level atoms} \cite{paper:santos}\textcolor{red}{(CITA)}. 
+\textcolor{red}{Ac\'a tengo que pasar las cuentas a latex, pero las hice en papel para ver si entend\'ia todo.}
+Para resolver el problema lo primero que hacemos es notar que el Hamiltoniano conserva el numero de exitaciones, es decir $[H,\hat N]=0$, y en esta situacion es sabido que el Hamiltoniano de JC es diagonal por bloques si elegimos convenientemente la base, esta es la que agrupa los estados con misma cantidad de excitaciones $\hat N = \hat n + \hat \sigma_+^{(1)}\hat \sigma_-^{(1)}+\hat \sigma_+^{(2)}\hat \sigma_-^{(2)}$: 
+\begin{equation}
+\begin{split}
+    & \left\{\ket{\Phi^{(n)}_1}=\ket{ggn},\ket{\Phi^{(n)}_2}=\frac{1}{\sqrt{2}}(\ket{egn-1}+\ket{gen-1}),\ket{\Phi^{(n)}_3}=\ket{een-2},\right. \\
+& \left. \ket{\Phi^{(n)}_4}=\frac{1}{\sqrt{2}}(\ket{egn-1}-\ket{gen-1})\right\} 
+\end{split}
+\end{equation}
+,donde se eligi\'o esta combinaci\'on particular porque el ultimo estado de la base, que es impar ante intercambio, queda desacoplado de los otros, simplificando el problema. Esto se ve al evaluar los elementos de matriz del Hamiltoniano $H_{i,j}=\bra{\Phi_i}\hat H \ket{\Phi_j}$, este queda en bloques, y el subespacio correspondiente a $n$ excitaciones $\hat H^{(n)}$ es una matriz de 4x4
+\begin{equation}
+    \hat H^{(n)} = 
+    \begin{pmatrix}
+    \hbar \chi n^2 - \hbar \Delta + \hbar J & \sqrt{2}\hbar g f(n)\sqrt{n} & 0 & 0 \\
+    \sqrt{2}\hbar g f(n)\sqrt{n} & \hbar \chi (n-1)^2  - \hbar J + 2\hbar k & \sqrt{2}\hbar g f(n-1)\sqrt{n-1} & 0 \\
+    0 & \sqrt{2}\hbar g f(n-1)\sqrt{n-1} & \hbar \chi (n-2)^2 + \hbar \Delta + \hbar J & 0 \\
+    0&0&0&\hbar \chi (n-1)^2 - \hbar \Delta - 2\hbar k
+    \end{pmatrix}
+\end{equation}
+Vemos claramente que el estados impar ante intercambio esta aislado, y entonces es autoestado del problema, y por lo tanto evoluciona solo y no se mezcla con los otros estados. Esto nos sirve porque ahora, para terminar de resolver el problema, tenemos que diagonalizar la matriz de 3x3. Cabe aclarar que esta matriz solo es valida para $n\geq 2$, ya que los subespacios con $N=0,1$ no tienen 4 estados. En estos casos la soluci\'on del problema de autovalores es mas sencilla aun, as\'i que solo dejaremos los resultados. A partir de ahora se usar\'a como convención $\hbar=1$.
+
+Para resolver el problema de autovalores de la matriz de 3x3 utilizamos la fórmula de Cardano para conseguir las ra\'ices triples que nos aparecen en el polinomio caracter\'istico, y entonces encontramos que los autovalores son
+\begin{equation}
+    E_j^{(n)}=-\frac{1}{3}\beta_n+2\sqrt{-Q_n}\cos{\left(\frac{\theta+2(j-1)\pi}{3}\right)}
+\end{equation}
+para $j=1,2,3$, y donde 
+\begin{equation}
+    \theta_n=\cos^{-1}\left(\frac{R_n}{\sqrt{-Q_n^3}}\right)
+\end{equation}
+\begin{align*}
+    Q_n & = \frac{3\gamma_n-\beta_n^2}{9} \\
+    R_n & = \frac{9\beta_n\gamma_n-27\eta_n-2\beta_n^3}{54} \\
+    \beta_n & = - \left( \chi(n^2+(n-1)^2+(n-2)^2)+J+2k\right) \\
+    \gamma_n & = (\chi(n-1)^2 - J + 2k)(x(n-2)^2+\chi n^2+2J) \\ 
+    & +(\chi (n-2)^2+\Delta+J)(x n^2-\Delta+J)-2g^2(n^{2a}+(n-1)^{2a}) \\ 
+    \eta_n &= -(\chi n^2-\Delta+J)(\chi(n-2)^2+\Delta+J)(\chi(n-1)^2-J+2k) \\
+    &+2g^2 \left[  \chi(n-2)^2n^{2a}+\chi n^2(n-1)^{2a}+\Delta\left(n^{2a}-(n-1)^{2a}\right) +J(n^{2a}-(n-1)^{2a})\right]
+\end{align*}
+donde $a=\frac{1}{2}$ se corresponde con acoplamiento lineal, es decir, $f(n)=1$, y $a=1$ a Buck-Sukumar $f(n)=\sqrt{n}$. Los autovalores ser\'an reales si $Q_n^3+R_n^2<0$.
+Con esto podemos escribir los autovectores:
+\begin{equation}
+    \begin{split}
+        \ket{u_j^{(n)}} &= \frac{1}{N_j^{(n)}} \bigg[ \left((E_j^{(n)} - H_{22}^{(n)})(E_j^{(n)}-H_{33}^{(n)}) - H_{23}^{(n)^2} \right) \ket{\Phi_1^{(n)}} \\ &+ H_{31}^{(n)}(E_j^{(n)}-H_{33}^{(n)})\ket{\Phi_2^{(n)}} + H_{23}^{(n)}H_{12}^{(n)}\ket{\Phi_3^{(n)}}\bigg]
+    \end{split}
+\end{equation}
+Obviamente no nos olvidemos del estado $\ket{\Phi_4^{(n)}}$, que tambi\'en es autoestado, con autovalor $E_4^{(n)}=\chi(n-1)^2-J-2k$.
+Para el subespacio de $N=0$ solo tenemos un vector $\ket{\Phi_1^{(0)}}=\ket{gg0}$ y su autovalor es $E_1^{(0)}=-\Delta+J$.
+Para $N=1$ tenemos 3 vectores en el subespacio, y las autoenergias son
+\begin{align}
+    E_{1,2}^{(1)} &=\frac{\chi -\Delta}{2} +k \pm \sqrt{2g^2+(k-J+\frac{\Delta -\chi}{2} )^2} \\
+    E_3^{(1)} & = -2k-J 
+\end{align}
+y sus autovectores
+\begin{align}
+    \ket{u_{1,2}^{(1)}}&=\frac{1}{N_{1,2}^{(1)}}\left(\dfrac{2J-4k+2\sqrt{2}gE_{1,2}^{(1)}}{2\sqrt{2}}\ket{gg1}+ \dfrac{\ket{eg0}+\ket{ge0}}{\sqrt{2}}\right) \\
+    \ket{u_3^{(1)}}&= \frac{1}{\sqrt{2}}(\ket{eg0}-\ket{ge0})
+\end{align}
+Con esto, podemos resolver analíticamente la evolución temporal de cualquier estado inicial.
+Para comenzar, vamos a intentar de recuperar el caso de un atomo, asimetrizando el acoplamiento uno de los dos atomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parametro adimensional $\alpha$ que solamente actua sobre el atomo 2, y sirve de apantallamiento.
+

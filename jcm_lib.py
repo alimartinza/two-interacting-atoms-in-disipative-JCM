@@ -2053,7 +2053,7 @@ def canberra_mesh_lectura(ci:str,g,k,J,gamma,p):
     fig.colorbar(c, ax=ax)
     plt.show()
 
-def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
+def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,alpha:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
     """Returns: 
     data_u: dataframe de pandas con los datos de la simulacion unitaria
     data_d: dataframe de pandas con los datos de la simulacion disipativa
@@ -2073,7 +2073,7 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
 
     '''---Hamiltoniano---'''
 
-    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    H=x*n2 + d/2*(sz1+alpha*sz2) + g*((sm1+alpha*sm2)*f()*a.dag()+(sp1+alpha*sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
     '''---Simulacion numerica---'''
     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
@@ -2197,7 +2197,7 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
 
         return data_u,data_d
     
-def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
+def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
     """Returns: 
     data_u: dataframe de pandas con los datos de la simulacion unitaria
     -Las keys de los dfs son:
@@ -2216,7 +2216,7 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,psi0,t_final:int
 
     '''---Hamiltoniano---'''
 
-    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    H=x*n2 + d/2*(sz1+alpha*sz2) + g*((sm1+alpha*sm2)*f()*a.dag()+(sp1+alpha*sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
     '''---Simulacion numerica---'''
 
@@ -2303,7 +2303,7 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,psi0,t_final:int
 
         return data_u
 
-def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
+def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:float,alpha:float,psi0,t_final:int=50000,steps:int=3000,acoplamiento:str='lineal',return_all:bool=False):
     """Returns: 
     data_d: dataframe de pandas con los datos de la simulacion disipativa
     -Las keys de los dfs son:
@@ -2322,7 +2322,7 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
 
     '''---Hamiltoniano---'''
 
-    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    H=x*n2 + d/2*(sz1+alpha*sz2) + g*((sm1+alpha*sm2)*f()*a.dag()+(sp1+alpha*sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
     '''---Simulacion numerica---'''
     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
@@ -2409,7 +2409,7 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
 
         return data_d
     
-def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:float,p:float,alpha:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de DELTAS (detunning cavidad-atomo).'''
     
     SMALL_SIZE = 12
@@ -2527,9 +2527,9 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     '''----DATOS DE LOS PLOTS----'''
     for i,d in enumerate(delta):
         if disipation==True:
-            data=simu_disip(w0,g,k,J,d,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,J,d,chi,gamma,p,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
-            data=simu_unit(w0,g,k,J,d,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_unit(w0,g,k,J,d,chi,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         d_g=d/g
 
         '''--- N=0 ---'''
@@ -2609,7 +2609,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax_fg.legend()
     plt.show()
 
-def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,gamma:float,p:float,alpha:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de KAPPAS (interaccion DIPLOAR).'''
     
     SMALL_SIZE = 12
@@ -2719,9 +2719,9 @@ def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,ga
     '''----DATOS DE LOS PLOTS----'''
     for i,k in enumerate(kappa):
         if disipation==True:
-            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
-            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_unit(w0,g,k,J,delta,chi,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         k_g=k/g
 
         '''--- N=0 ---'''
@@ -2797,7 +2797,7 @@ def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,ga
     ax_Con.legend()
     plt.show()
 
-def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:float,p:float,alpha:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de CHIS (no linealidades del medio).'''
     
     SMALL_SIZE = 12
@@ -2907,9 +2907,9 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
     '''----DATOS DE LOS PLOTS----'''
     for i,x in enumerate(chi):
         if disipation==True:
-            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
-            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_unit(w0,g,k,J,delta,chi,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         x_g=x/g
 
         '''--- N=0 ---'''
@@ -2985,7 +2985,7 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
     ax_Con.legend()
     plt.show()
 
-def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:float,p:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:float,p:float,alpha:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de J (interaccion ISING).'''
     
     SMALL_SIZE = 12
@@ -3095,9 +3095,9 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     '''----DATOS DE LOS PLOTS----'''
     for i,j in enumerate(J):
         if disipation==True:
-            data=simu_disip(w0,g,k,j,delta,chi,gamma,p,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,j,delta,chi,gamma,p,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
-            data=simu_unit(w0,g,k,j,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_unit(w0,g,k,j,delta,chi,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         j_g=j/g
 
         '''--- N=0 ---'''
@@ -3173,9 +3173,9 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
     ax_Con.legend()
     plt.show()
 
-def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma_list:list,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
+def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma_list:list,alpha:float,psi0,disipation:bool,steps:int=3000,t_final:int=50000):
     '''Plots con simulacion donde se grafica TODO en diferentes figures, para una lista de J (interaccion ISING).'''
-    p=0.05*np.array(gamma)
+    p=0.005*g
     SMALL_SIZE = 12
     MEDIUM_SIZE = 15
     BIGGER_SIZE = 20
@@ -3283,9 +3283,9 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
     '''----DATOS DE LOS PLOTS----'''
     for i,gamma in enumerate(gamma_list):
         if disipation==True:
-            data=simu_disip(w0,g,k,J,delta,chi,gamma,p[i],psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_disip(w0,g,k,J,delta,chi,gamma,p[i],alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         elif disipation==False:
-            data=simu_unit(w0,g,k,J,delta,chi,psi0,t_final=t_final,steps=steps,return_all=True)
+            data=simu_unit(w0,g,k,J,delta,chi,alpha,psi0,t_final=t_final,steps=steps,return_all=True)
         gamma_g=gamma/g
 
         '''--- N=0 ---'''
@@ -3337,7 +3337,7 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
         pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(1)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(2)}>$'+f', $gamma={gamma_g}g$'])
 
         '''-----FG----'''
-        lineFG,=ax_fg.plot(g*data['t'],data['FG'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineFG,=ax_fg.plot(g*data['t'],data['FG']/np.pi,color=inferno[i],label=f'$\gamma={gamma_g}g$')
 
 
         '''--- Entropias ---'''
@@ -3366,7 +3366,7 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
     ax_fg.legend()
     plt.show()
 
-def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,gamma:float,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,gamma:float,alpha:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de DELTAS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
     p=0.05*gamma
     gt=np.linspace(0,t_final*g,steps)
@@ -3384,7 +3384,7 @@ def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,
     concu_d=np.zeros((len(d),steps))
     for i,delta in enumerate(d):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,delta,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,delta,x,gamma,p,alpha,psi0,t_final=t_final,steps=steps)
         
     # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
@@ -3417,7 +3417,7 @@ def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,
     
 
 
-def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,gamma:float,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,gamma:float,alpha:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de CHIS. La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
     
     p=0.05*gamma
@@ -3435,7 +3435,7 @@ def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,ga
     concu_d=np.zeros((len(x),steps))
     for i,chi in enumerate(x):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,chi,gamma,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,chi,gamma,p,alpha,psi0,t_final=t_final,steps=steps)
         
     # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
@@ -3467,7 +3467,7 @@ def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,ga
     ax2.legend(lines_legend2,labels_legend)
 
 
-def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,gamma:float,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,gamma:float,alpha:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de KAPPAS (INTERACCION DIPOLAR). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
 
     p=0.05*gamma
@@ -3485,7 +3485,7 @@ def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,
     concu_d=np.zeros((len(kappa),steps))
     for i,k in enumerate(kappa):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,alpha,psi0,t_final=t_final,steps=steps)
         
     # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
@@ -3517,7 +3517,7 @@ def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,
     ax2.legend(lines_legend2,labels_legend)
 
 
-def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamma:float,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamma:float,alpha:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de J (ISING). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
 
     p=0.05*gamma
@@ -3535,7 +3535,7 @@ def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamm
     concu_d=np.zeros((len(J),steps))
     for i,j in enumerate(J):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,j,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,j,d,x,gamma,p,alpha,psi0,t_final=t_final,steps=steps)
         
     # fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     # fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
@@ -3567,7 +3567,7 @@ def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamm
     return ax1
 
 
-def plots_uni_vs_dis_gamma(w_0:float,g:float,kappa:float,J:float,d:float,x:float,gamma:list,psi0,psi0Name,t_final,steps):
+def plots_uni_vs_dis_gamma(w_0:float,g:float,kappa:float,J:float,d:float,x:float,gamma:list,alpha:float,psi0,psi0Name,t_final,steps):
     '''Plots con simulacion donde se grafican la FG y la concurrencia en un subplot, para una lista de G (acoplamiento cavidad atomo). La simulacion unitaria se grafica con lineas solidas y la disipativa se grafica con lineas rayadas.'''
     p=0.05*np.array(gamma)
     gt=np.linspace(0,t_final*g,steps)
@@ -3584,7 +3584,7 @@ def plots_uni_vs_dis_gamma(w_0:float,g:float,kappa:float,J:float,d:float,x:float
     concu_d=np.zeros((len(gamma),steps))
     for i,gg in enumerate(gamma):
         #,coherencias_u[i],coherencias_d[i]
-        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gg,p[i],psi0,t_final=t_final,steps=steps)
+        fg_u[i],fg_d[i],concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,kappa,J,d,x,gg,p[i],alpha,psi0,t_final=t_final,steps=steps)
         
     fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
     fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
