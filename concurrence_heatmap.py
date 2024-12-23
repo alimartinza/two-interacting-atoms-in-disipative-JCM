@@ -74,10 +74,10 @@ def concurrence_heatmap_delta(psi0,psi0Name):
     g=0.001*w_0
     J=0
     p=0.005*g
-    x=0.5*g
+    x=0
     gamma=0.1*g
     k=0
-    alpha=1
+    alpha=0
 
     gt=np.linspace(0,g*t_final,steps)
     delta=np.linspace(-3*g,3*g,129)
@@ -107,7 +107,7 @@ def concurrence_heatmap_delta(psi0,psi0Name):
     fig.colorbar(c0, ax=ax_u,label="Concurrence")
     fig.colorbar(c1, ax=ax_d,label="Concurrence")
 
-    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\x=0.5g k=0 j=0 gamma=0.1g barrido delta\{psi0Name} concu heatmap SDE.png')
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\alpha=0 x=0 k=0 j=0 gamma=0.1g barrido delta\{psi0Name} concu heatmap SDE.png')
     plt.close()
 
 def concurrence_heatmap_x(psi0,psi0Name):

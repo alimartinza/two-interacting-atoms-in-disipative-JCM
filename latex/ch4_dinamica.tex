@@ -62,11 +62,10 @@ Para resolver el problema lo primero que hacemos es notar que el Hamiltoniano co
     0&0&0&\hbar \chi (n-1)^2 - \hbar \Delta - 2\hbar k
     \end{pmatrix}
 \end{equation}
-Vemos claramente que el estados impar ante intercambio esta aislado, y entonces es autoestado del problema, y por lo tanto evoluciona solo y no se mezcla con los otros estados. Esto nos sirve porque ahora, para terminar de resolver el problema, tenemos que diagonalizar la matriz de 3x3. Cabe aclarar que esta matriz solo es valida para $n\geq 2$, ya que los subespacios con $N=0,1$ no tienen 4 estados. En estos casos la soluci\'on del problema de autovalores es mas sencilla aun, as\'i que solo dejaremos los resultados. A partir de ahora se usar\'a como convención $\hbar=1$.
-
+Vemos claramente que el estados impar ante intercambio esta aislado, y entonces es autoestado del problema, y por lo tanto evoluciona solo y no se mezcla con los otros estados. Esto nos sirve porque ahora, para terminar de resolver el problema, tenemos que diagonalizar la matriz de 3x3. Cabe aclarar que esta matriz solo es valida para $n\geq 2$, ya que los subespacios con $N=0,1$ no tienen 4 estados. En estos casos la soluci\'on del problema de autovalores es mas sencilla aun, as\'i que solo dejaremos los resultados. A partir de ahora se usar\'a como convención $\hbar=1$. \newline
 Para resolver el problema de autovalores de la matriz de 3x3 utilizamos la fórmula de Cardano para conseguir las ra\'ices triples que nos aparecen en el polinomio caracter\'istico, y entonces encontramos que los autovalores son
 \begin{equation}
-    E_j^{(n)}=-\frac{1}{3}\beta_n+2\sqrt{-Q_n}\cos{\left(\frac{\theta+2(j-1)\pi}{3}\right)}
+    E_j^{(n)}=-\frac{1}{3}\beta_n+2\sqrt{-Q_n}\cos{\left(\frac{\theta_n+2(j-1)\pi}{3}\right)}
 \end{equation}
 para $j=1,2,3$, y donde 
 \begin{equation}
@@ -97,9 +96,39 @@ Para $N=1$ tenemos 3 vectores en el subespacio, y las autoenergias son
 \end{align}
 y sus autovectores
 \begin{align}
-    \ket{u_{1,2}^{(1)}}&=\frac{1}{N_{1,2}^{(1)}}\left(\dfrac{2J-4k+2\sqrt{2}gE_{1,2}^{(1)}}{2\sqrt{2}}\ket{gg1}+ \dfrac{\ket{eg0}+\ket{ge0}}{\sqrt{2}}\right) \\
+    \ket{u_{1,2}^{(1)}}&=\frac{1}{N_{1,2}^{(1)}}(-\sqrt{2}g\ket{gg1}+ \left(\frac{\chi-\Delta}{2}+J-k \mp \sqrt{2g^2+(k-J+\frac{\Delta -\chi}{2} )^2} \right)\dfrac{\ket{eg0}+\ket{ge0}}{\sqrt{2}}\\
     \ket{u_3^{(1)}}&= \frac{1}{\sqrt{2}}(\ket{eg0}-\ket{ge0})
 \end{align}
 Con esto, podemos resolver analíticamente la evolución temporal de cualquier estado inicial.
-Para comenzar, vamos a intentar de recuperar el caso de un atomo, asimetrizando el acoplamiento uno de los dos atomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parametro adimensional $\alpha$ que solamente actua sobre el atomo 2, y sirve de apantallamiento.
+Para esto solo tenemos que desarrollar el estado inicial en terminos de los autovectores, y la evolucion temporal esta dada por
+\begin{equation}
+\ket{\psi(t)}=e^{-iHt}\ket{\psi(0)}=\sum_{j,n} c_j^{(n)}e^{-iE_j^{(n)}t}\ket{u_j^{(n)}}
+\end{equation}
+donde $c_j^{(n)}=\braket{u_j^{(n)}}{\psi(0)}$.
+La complejidad de estas expresiones hace complicado conseguir conclusiones interesantes,aun asi, algo que se puede notar, es la diferencia fundamental que se encuentra para las energias con un numero total de excitaciones $N=1$ y $N>1$. Si se observa el factor que esta antes de la raiz cuadrada,  se ve que para el caso en que $N \geq 2$ tenemos un $\frac{1}{3}\beta_n$ que solo depende de $\chi$, $J$, $k$ y $n$. Mientras tanto, en el caso de $N=1$, este factor depende del detunning $\Delta$. Esto es interesante, ya que uno podria pensar que la formula para $N$ excitaciones se puede generalizar para incluir $N=0,1$, pero la fundamental diferencia de tener mas o menos estados que interactuan entre si, da lugar a efectos fundamentalmente diferentes. Si uno mira en detalle las cuentas, se percata de que en el caso de $N=1$ este factor $\Delta$ aparece, ya que en la matriz Hamiltoniana el unico estado con $N=1$ que tiene un termino que incluye al detunning, es el estado $\ket{gg1}$, y los otros dos estados al ser un atomo excitado y otro no, el termino de detunning se cancela. Por lo tanto, este termino con $\Delta$ sobrevive, al contrario que en todos los demas subespacios, ya que tenemos por un lado el termino del $\ket{ggn}$ que nos aporta un $\Delta$, y el termino de $\ket{ee,n-2}$ que nos aporta otro $\Delta$ pero con el signo cambiado, y elimina la contribucion del primer estado a la energia. Esto es super interesante, ya que para $N=1$, si aumentamos el detunning, no solo se separan los niveles de energia, sino que tambien hay una asimetria por el termino independiente. Para analizar esto en detalle, en la figura \ref{fig:relacion energia detunning} se observan las energias de los diferentes niveles en funcion del detunning. 
+
+\begin{figure}
+    \centering
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
+        \caption{$k=J=0$}
+        \label{fig:relacion energia detunning 1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning2.pdf}
+        \caption{$J\neq 0$}
+        \label{fig:relacion energia detunning 2}
+    \end{subfigure}
+       \caption{Relacion entre energia y detunning para los diferentes niveles de energia del problema. Las lineas solidas muestran la energia de los estados del JC doble con N=0 (negro, solido), N=1 (verde oscuro y lima, solido) y N=2 (rojo, naranja, amarillo y gris; solido). Tambien se muestran los niveles de energia del JC de un atomo para N=1 (negro; rayado) y N=2 (rojo; rayado). Observese que las energias del JC de un atomo estan multiplicadas por 2.}
+       \label{fig:relacion energia detunning}
+\end{figure}
+En esta figura \ref{fig:relacion energia detunning 1} se observan las energias de los primeros niveles para el modelo de un atomo, mostrados con lineas rayadas, y de dos atomos, con lineas solidas; para esta figura se tomaron atomos que no interactuan ($k=J=0$) y una cavidad lineal ($\chi=0$). Se puede ver que, si bien el modelo de dos atomos tiene estructuras mas complicadas, son similares a las de 1 atomo. En primer lugar, los estados con N=2 (rojo y naranja; solido) tienen una forma igual a la de JC de 1 atomo, si bien esta un poco desfasada, es interesante ver como las lineas tienen una coincidencia muy grande, recordando que en el grafico las lineas rayadas estan multiplicadas por 2, esto nos da una interpretacion bastante buena, y es que la energia de dos atomos no interactuantes en una cavidad es igual (o muy parecida) a dos veces la energia de 1 atomo en una cavidad. \textcolor{red}{Esto tengo que chequear con cuentas} Creo que esto se debe al corrimiento Lamb, ya que ahora tenemos dos atomos que interactuan con el vacio, entonces el corrimiento es 1 unidad mas grande en los extremos, que es justamente lo que vemos en el grafico, cuando el detunning es muy negativo, la energ\'ia tiende a ser igual a la de un JC simple con 2 excitaciones, y cuando el detunning es muy positivo, entonces tiende a la de 1 excitaci\'on; esta asimetr\'ia para $\Delta>0$ y $\Delta<0$ se observar\'a en resultados posteriores. Por otro lado, se puede observar lo que se habia comentado anteriormente, que la energ\'ia de los estados con $N=1$ tienen un t\'ermino fuera de la raiz, que hace que sea mas asim\'etrico a\'un. Normalmente, en el JC de 1 atomo, ya que todos los niveles de energia tienen una forma funcional igual, este termino de afuera de la raiz se le puede agregar o quitar como un offset en la energia del estado fundamental, la diferencia con este caso es que, no todos los niveles de energia presentan esto, entonces si agregamos un offset, igualmente habria una diferencia. 
+
+Otra cosa interesante de notar es que si la cavidad es lineal, entonces los estados antisimetricos estan degenerados en energia.
+
+Una vez estudiados los niveles de energia y comparados con el caso de 1 atomo, vamos a proseguir con la dinamica del problema, que en el caso unitario puede resolverse analiticamente, pero a\'un asi, nos concentraremos en simulaciones numericas.
+Para comenzar, vamos a intentar de recuperar el caso de un atomo, asimetrizando el acoplamiento uno de los dos atomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parametro adimensional $\alpha$ que solamente actua sobre el atomo 2, y sirve de apantallamiento. 
 
