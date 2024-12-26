@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  23 DEC 2024 10:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  25 DEC 2024 23:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -630,126 +630,64 @@ l.1 \chapter
 
 ]
 Cap\'{\i }tulo 2.
-) (./ch3_jcm.tex
+
+LaTeX Warning: Reference `' on page 3 undefined on input line 15.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {Modelo de Jaynes-Cummings} [3]
+l.27 \end{equation}
+                    [3]
+Underfull \vbox (badness 2384) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 61.
+LaTeX Info: Redefining \% on input line 61.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {Modelo de Jaynes-Cummings} [4
+l.61 \]
+        [4]
 
-]
-Cap\'{\i }tulo 3.
-) (./ch4_dinamica.tex
+LaTeX Warning: Reference `' on page 5 undefined on input line 96.
+
+
+
+LaTeX Info: Redefining \. on input line 98.
+LaTeX Info: Redefining \% on input line 98.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.1 \chapter
-            {Jaynes-Cummings de dos atomos, no lineal, medio Kerr} [5]
+l.98 \begin{equation}
+                      \label{eq2:transporte paralelo} [5]
+
+LaTeX Warning: Reference `' on page 6 undefined on input line 122.
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.1 \chapter
-            {Jaynes-Cummings de dos atomos, no lineal, medio Kerr} [6
-
-]
-Cap\'{\i }tulo 4.
-
-
-[7]
-
-LaTeX Warning: Citation `' on page 8 undefined on input line 29.
-
-
-LaTeX Warning: Citation `' on page 8 undefined on input line 29.
-
-
-Overfull \hbox (6.67743pt too wide) in paragraph at lines 31--32
-[]\T1/cmr/m/n/10.95 En es-te pun-to es nor-mal ha-cer una trans-for-ma-ción uni-ta-ria $\OML/cmm/m/it/10.95 K \OT1/cmr/m/n/10.95 = [] []$
- []
-
-
-LaTeX Warning: Citation `paper:santos' on page 8 undefined on input line 46.
-
-
-Overfull \hbox (8.30423pt too wide) in paragraph at lines 43--49
-[]$\T1/cmr/m/n/10.95 . En es-ta ba-
- []
-
-
-
-LaTeX Info: Redefining \. on input line 49.
-LaTeX Info: Redefining \% on input line 49.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[8]
-Overfull \hbox (66.1784pt too wide) detected at line 64
-[][][][] \OT1/cmr/m/n/10.95 = []
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \. on input line 82.
-LaTeX Info: Redefining \% on input line 82.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[9]
-Overfull \hbox (6.15604pt too wide) detected at line 101
-[]
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \. on input line 109.
-LaTeX Info: Redefining \% on input line 109.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[10]
-<figuras/ch4/relacion_energia_detunning1.pdf, id=164, 578.16pt x 433.62pt>
-File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
-<use figuras/ch4/relacion_energia_detunning1.pdf>
-Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 114.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/relacion_energia_detunning2.pdf, id=165, 578.16pt x 433.62pt>
-File: figuras/ch4/relacion_energia_detunning2.pdf Graphic file (type pdf)
-<use figuras/ch4/relacion_energia_detunning2.pdf>
-Package pdftex.def Info: figuras/ch4/relacion_energia_detunning2.pdf  used on input line 121.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-
-Underfull \vbox (badness 1874) has occurred while \output is active []
+Underfull \vbox (badness 4454) has occurred while \output is active []
 
 
 
@@ -762,7 +700,89 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11 <./figuras/ch4/relacion_energia_detunning1.pdf> <./figuras/ch4/relacion_energia_detunning2.pdf>]) (./ch5_fgdoble.tex
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.129 \end{equation}
+                     [6]
+
+LaTeX Warning: Reference `' on page 7 undefined on input line 139.
+
+
+
+LaTeX Info: Redefining \. on input line 158.
+LaTeX Info: Redefining \% on input line 158.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[7]) (./ch3_jcm.tex
+
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[8]
+Cap\'{\i }tulo 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--20
+
+ []
+
+
+LaTeX Warning: Reference `' on page 9 undefined on input line 33.
+
+
+
+[9
+
+]
+
+LaTeX Warning: Reference `' on page 10 undefined on input line 41.
+
+<figuras/ch3/relacion energia detunning jcm simple.png, id=192, 516.7305pt x 389.5353pt>
+File: figuras/ch3/relacion energia detunning jcm simple.png Graphic file (type png)
+<use figuras/ch3/relacion energia detunning jcm simple.png>
+Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple.png  used on input line 68.
+(pdftex.def)             Requested size: 297.1593pt x 224.01671pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 73.
+LaTeX Info: Redefining \% on input line 73.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[10]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 93.
+LaTeX Info: Redefining \% on input line 93.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[11 <./figuras/ch3/relacion energia detunning jcm simple.png>]) (./ch4_dinamica.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -774,22 +794,142 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [12]
-Cap\'{\i }tulo 5.
-) (./ap_ecsmaestras.tex
+Cap\'{\i }tulo 4.
+
+Underfull \vbox (badness 4229) has occurred while \output is active []
+
+
 
 [13
 
 ]
 
-[14
+LaTeX Warning: Citation `' on page 14 undefined on input line 41.
+
+
+LaTeX Warning: Citation `' on page 14 undefined on input line 41.
+
+
+Overfull \hbox (6.67743pt too wide) in paragraph at lines 43--44
+[]\T1/cmr/m/n/10.95 En es-te pun-to es nor-mal ha-cer una trans-for-ma-ción uni-ta-ria $\OML/cmm/m/it/10.95 K \OT1/cmr/m/n/10.95 = [] []$
+ []
+
+
+
+LaTeX Info: Redefining \. on input line 55.
+LaTeX Info: Redefining \% on input line 55.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[14]
+
+LaTeX Warning: Citation `paper:santos' on page 15 undefined on input line 58.
+
+
+Overfull \hbox (8.30423pt too wide) in paragraph at lines 55--61
+[]$\T1/cmr/m/n/10.95 . En es-ta ba-
+ []
+
+
+Overfull \hbox (66.1784pt too wide) detected at line 76
+[][][][] \OT1/cmr/m/n/10.95 = []
+ []
+
+
+Underfull \vbox (badness 1122) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 85.
+LaTeX Info: Redefining \% on input line 85.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[15]
+Overfull \hbox (6.15604pt too wide) detected at line 113
+[]
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 118.
+LaTeX Info: Redefining \% on input line 118.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[16]
+<figuras/ch4/relacion_energia_detunning1.pdf, id=254, 578.16pt x 433.62pt>
+File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
+<use figuras/ch4/relacion_energia_detunning1.pdf>
+Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 126.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch4/relacion_energia_detunning2.pdf, id=255, 578.16pt x 433.62pt>
+File: figuras/ch4/relacion_energia_detunning2.pdf Graphic file (type pdf)
+<use figuras/ch4/relacion_energia_detunning2.pdf>
+Package pdftex.def Info: figuras/ch4/relacion_energia_detunning2.pdf  used on input line 133.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Info: Redefining \. on input line 141.
+LaTeX Info: Redefining \% on input line 141.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[17 <./figuras/ch4/relacion_energia_detunning1.pdf> <./figuras/ch4/relacion_energia_detunning2.pdf>]) (./ch5_fgdoble.tex
+
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[18]
+Cap\'{\i }tulo 5.
+) (./ch6_conclusiones.tex
+
+[19
+
+]
+
+[20
+
+]
+Cap\'{\i }tulo 6.
+) (./ap_ecsmaestras.tex
+
+[21]
+
+[22
 
 ]
 Ap\'{e}ndice A.
 ) (./zbibliografia.tex (./main.bbl
 
-[15]
+[23]
 
-[16
+[24
 
 ]
 
@@ -797,15 +937,15 @@ LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 ) Excluding 'comment' comment.) (./licencia.tex
 
-[17]
-<licencia.png, id=265, 30.1125pt x 10.5996pt>
+[25]
+<licencia.png, id=365, 30.1125pt x 10.5996pt>
 File: licencia.png Graphic file (type png)
 <use licencia.png>
 Package pdftex.def Info: licencia.png  used on input line 8.
 (pdftex.def)             Requested size: 84.90173pt x 29.88824pt.
 )
 
-[18 <./licencia.png>] (./main.aux
+[26 <./licencia.png>] (./main.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 LaTeX Info: Redefining \. on input line 13.
@@ -821,20 +961,23 @@ L3 programming layer <2024-09-10>
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 16273 strings out of 473578
- 257881 string characters out of 5732242
- 780430 words of memory out of 5000000
- 38805 multiletter control sequences out of 15000+600000
- 582043 words of font info for 97 fonts, out of 8000000 for 9000
+ 16367 strings out of 473578
+ 259628 string characters out of 5732242
+ 778430 words of memory out of 5000000
+ 38845 multiletter control sequences out of 15000+600000
+ 584349 words of font info for 100 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 94i,23n,96p,2120b,598s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
-Output written on main.pdf (32 pages, 484113 bytes).
+ 94i,23n,96p,2138b,598s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
+Output written on main.pdf (40 pages, 658367 bytes).
 PDF statistics:
- 396 PDF objects out of 1000 (max. 8388607)
- 264 compressed objects within 3 object streams
- 52 named destinations out of 1000 (max. 500000)
- 85 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 554 PDF objects out of 1000 (max. 8388607)
+ 399 compressed objects within 4 object streams
+ 100 named destinations out of 1000 (max. 500000)
+ 154 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -3,9 +3,19 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {chapter}{\numberline {1}Introducción}{1}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Fase Geometrica}{3}{chapter.2}%
-\contentsline {chapter}{\numberline {3}Modelo de Jaynes-Cummings}{5}{chapter.3}%
-\contentsline {section}{\numberline {3.1}JCM de un atomo}{5}{section.3.1}%
-\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos atomos, no lineal, medio Kerr}{7}{chapter.4}%
-\contentsline {section}{\numberline {4.1}JCM de dos atomos}{7}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{13}{chapter.5}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{15}{appendix.Alph1}%
+\contentsline {section}{\numberline {2.1}R\'egimen adiab\'atico y fase de Berry}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Fase de Aharonov-Anandan}{4}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Interpretación Geométrica y caso no-cíclico}{5}{subsection.2.2.1}%
+\contentsline {section}{\numberline {2.3}Enfoque Cinemático}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Ejemplo de aplicacion: Sistema de dos niveles en un campo magn\'etico}{8}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Fases geométricas en sistemas abiertos}{8}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Modelo de Jaynes-Cummings}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Modelo y aproximaciónes}{9}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Fase geométrica en el JCM}{12}{subsection.3.1.1}%
+\contentsline {subsubsection}{Fase de Berry}{12}{section*.4}%
+\contentsline {subsubsection}{aproximación cinemática}{12}{section*.5}%
+\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{13}{chapter.4}%
+\contentsline {section}{\numberline {4.1}JCM de dos átomos}{14}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{19}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{21}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{23}{appendix.Alph1}%

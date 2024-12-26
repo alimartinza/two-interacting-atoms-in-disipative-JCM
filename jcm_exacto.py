@@ -1,3 +1,4 @@
+#%%
 from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
@@ -53,7 +54,30 @@ gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
 #Definimos los parametros del problema
+#%%
+'''----ENERGIAS JCM SIMPLE----'''
+w_0=1
+g=0.001*w_0
+def E_jcm1(n_:int,delta:list):
+    return [0.5*np.sqrt(delta**2+4*g**2*n_),-0.5*np.sqrt(delta**2+4*g**2*n_)]
+delta=np.linspace(-15*g,15*g,100000)
+colors=['red','blue','green']
+labels=['$E^1_\pm$','$E^2_\pm$','$E^3_\pm$']
+fig=plt.figure(figsize=(8,6))
+ax=fig.add_subplot()
+ax.plot(delta/g,-delta*100/2,color='black',label='$E^0$')
+for numb in [1,2,3]:
+    ax.plot(delta/g,E_jcm1(numb,delta)[0]*100,color=colors[numb-1],label=labels[numb-1])
+    ax.plot(delta/g,E_jcm1(numb,delta)[1]*100,color=colors[numb-1])
+ax.grid()
+ax.legend()
+ax.set_xlabel('$\Delta/g$')
+ax.set_ylabel('Energia u.a.')
+plt.show()
 
+
+#%%
+'''----ENERGIAS JCM DOBLE----'''
 t_final=100000
 steps=100000
 w_0=1
