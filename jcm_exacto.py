@@ -36,6 +36,9 @@ sx2=tensor(qeye(2),sigmax(),qeye(3))
 e=basis(2,0)
 gr=basis(2,1)
 
+e0=tensor(e,basis(3,0))
+g1=tensor(gr,basis(3,1))
+
 ee0=tensor(e,e,basis(3,0)) #0
 ee1=tensor(e,e,basis(3,1)) #1
 ee2=tensor(e,e,basis(3,2)) #2
@@ -140,3 +143,4 @@ ax.legend(loc="upper right")
 ax.grid()
 plt.show()
 
+#%%

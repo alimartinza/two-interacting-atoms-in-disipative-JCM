@@ -103,13 +103,88 @@ que ahora depende explicitamente del parámetro externo de control $\Omega$. Los
 \end{equation}
 
 que es no trivial incluso para $n=0$, lo que nos dice que incluso el vacio electromagnetico introduce una corrección en la fase de Berry.
-\subsubsection{aproximación cinemática}
+\subsubsection{Aproximación Cinemática}
 Para comparar ambos metodos, ahora vamos a calcular la fase geométrica utilizando la aproximación cinemática aunque este abordaje es más general de lo necesario en este caso.
 Si se considera que el estado inicial es un atuoestado del Hamiltoniano, como los estados $\ket{\psi_\pm^n}$, entonces la fase geométrica en este caso se anula. Pero si se considera un estado inicial, por ejemplo $\ket{\psi(0)}=\ket{e,n}$, entonces el estado a tiempo $t$ resulta
-\begin{equation}
+\begin{equation}\label{eq3:fg berry jcm}
     \ket{\psi(t)}=(\cos^2\theta_ne^{-iE_+^nt}+\sin^2\theta_ne^{iE_+^nt})\ket{e,n}-i \sin\theta_n\sin(E_+^nt)\ket{g,n+1}
 \end{equation}
 La fase geometrica acumulada \ref{eq2:fg cinematica unitaria} es
-\begin{equation}
-    \phi_u[C]=-\pi(1-\cos\theta_n)\frac{t}{T} +\arg\left\{ 1+e^{2\pi i \frac{t}{T}\frac{\Omega_n-\Delta}{\Omega_n+\Delta}} \right\}
+\begin{equation}\label{eq3:fg unitaria jcm}
+    \phi_u[C]=-\pi(1-\cos\theta_n)\frac{t}{T} +\arg\left\{ 1+e^{2\pi i \frac{t}{T}}\frac{\Omega_n-\Delta}{\Omega_n+\Delta} \right\}
 \end{equation}
+con $T=\frac{2\pi}{\Omega_n}$ es un período correspondiente a la frecuencia de Rabi $\Omega_n$. Esta expresión y la antrior \ref{eq3:fg berry jcm}, deberian coincidir cuando $t=T$, que se corresponde con un ciclo cerrado. En este caso ($t=T$) se obtiene
+\begin{equation}
+    \phi_u=-\pi(1-\cos\theta_n)
+\end{equation}
+La diferencia de signos se puede explicar comparando las curvas descritas por la esfera de Bloch para cada evolución. 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/bloch berry.png}
+        \caption{Evolución adiabática} 
+        \label{fig3:bloch berry}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/bloch cinematica.png}
+        \caption{Enfoque cinemático}
+        \label{fig3:bloch cinematica}
+    \end{subfigure}
+    \caption{}
+    \label{fig3:esfera de bloch jcm}
+\end{figure}
+En el caso \ref{eq3:fg berry jcm}, correspondiente a la figura \ref{fig3:bloch berry}, los autoestados son los autoestados $R(\Omega)\ket{\psi_\pm^n}=e^{-i\Omega \hat n}\ket{\psi_\pm^n}$, entonces al variar $\Omega\in [0,2\pi]$ la trayectoria es simplemente un circulo en la esfera de Bloch. En cambio, en el segundo caso, si preparamos el sistema inicialmente en el estado $\ket{e,n}$ y lo dejamos evolucionar por la acción de H durante un tiempo, la trayectoria ahora no son circulos horizontales en la esfera, sino que parten del polo norte, que es el estado $\ket{e,n}$, y luego hace una trayectoria ovalada, para finalmente volver al punto inicial de partida a un tiempo $t=T$. La diferencia en el signo se explica a travez de la transformación que nos lleva de una curva a la otra. Para esto, necesitamos de una rotacion rigida, y una inversion de la parametrizacion, por su parte, esta ultima, introduce un signo negativo, cosa que se ve claramente en la ecuacion \ref{eq3:fg unitaria jcm} al cambiar $t\rightarrow -t$.
+
+\textcolor{red}{aca puedo intentar de agregar el caso con medio kerr. Creo que no es tan complicado y el problema de autocosas ya lo tengo medio resuelto en papel desde hace un tiempo, pero lo tengo que revisar a ver si esta bien y lo tengo que completar, pero puede estar bueno para entender que le hace a la FG desde el vamos.}
+
+\section{JCM disipativo}
+
+
+Habiendo desarrollado el análisis de la fase geométrica acumulada por el sistema átomo-cavidad en la situación ideal de completo aislamiento, se aborda ahora el estudio para el escenario más realista en el que el mismo sistema se encuentra en interacción con un entorno. El problema se trata para la implementación específica en estructuras semiconductoras, en las que un punto cuántico (al cual se sigue, sin embargo, refiriendo como átomo o sistema de dos niveles) se ubica en una nano o micro-cavidad.
+
+Siguiendo \cite{80}, en este capítulo se estudia en detalle la fase geométrica acumulada en un modelo de Jaynes-Cummings disipativo, como caso paradigmático dentro del campo de la electrodinámica en cavidades. Se considera que los principales mecanismos por los cuales el sistema “átomo + modo” interactúa con el entorno son el flujo de fotones a través de las paredes de la cavidad y el continuo e incoherente bombeo del sistema de dos niveles, lo que conforma un escenario frecuente en electrodinámica de cavidades semiconductoras \cite{81,82,83}. 
+
+Para poder modelar estos mecanismos, se emplea la ecuación maestra fenomenológica de Lindblad
+\begin{equation}\label{eq3:lindblad}
+\dot{\rho}(t) = -i [H, \rho(t)] + \frac{1}{2} \sum_\alpha \big( 2L_\alpha \rho(t) L_\alpha^{\dagger} - \{ L_\alpha^{\dagger}L_\alpha, \rho(t) \} \big),
+\end{equation}
+
+, despreciando otros procesos con menor influencia en la dinámica como el desfasaje puro o el bombeo de fotones del entorno en la cavidad, considerando además que el entorno se halla a temperatura cero. Los operadores de Lindblad
+
+\begin{equation}
+L_\gamma = \sqrt{\gamma} \ a
+\end{equation}
+\begin{equation}
+L_p = \sqrt{p} \ \sigma_+
+\end{equation}
+
+,representan la pérdida de fotones y el bombeo continuo e incoherente del átomo, respectivamente, con los parámetros $\gamma$ y $p$ denominados tasa de pérdida de fotones y amplitud del bombeo. 
+
+El bombeo sobre el átomo es siempre secundario frente a la pérdida de fotones, lo cual nos da las relaciones $\frac{p}{g},\frac{p}{\gamma} \ll 1$, y la relación entre $\gamma$ y $g$ da lugar a dos regimenes que se diferencian con claridad \cite{50}-\cite{54}. El regimen de acoplamiento fuerte (SC o Strong Coupling) es cuando la interacción átomo-cavidad es mas fuerte que la disipación del entorno, es decir $\gamma /g <1$. En el caso contrario $\gamma/g>1$ estamos en el régimen de acoplamiento débil (WC o Weak Coupling). Para no generar confusiones, hay que destacar que en general, cuando en la literatura se habla de acoplamientos fuertes y debiles, se refiere a la interacción entre las partes del mismo sistema, pero en este caso, se esta haciendo referencia a la interacción del sistema con el entorno EN COMPARACIÓN con la interacción interna del sistema.
+
+En esta ocación nos interesa resolver el problema restringiendonos al subespacio donde el átomo puede estar en cualquiera de sus dos estados, y nos restringimos al caso en donde la cavidad tiene 1 o 2 fotones, en consecuencia, se restringe el estudio a un subespacio truncado cuya base son los estados $\{ \ket{0}=\ket{g,0} ; \ket{1}=\ket{e,0} ; \ket{2}=\ket{-,1} \}$. Desarrollando explicitamente el sistema de ecuaciones dadas por la ecuación de Lindblad \ref{eq3:lindblad}, obtenemos que los elementos $\rho_{0i}$ quedan desacoplados de los demas:
+
+\begin{equation}
+    \begin{aligned}
+        \dot \rho_{01} & =-\frac{p}{2} \rho_{01}+i\Delta\rho_{01}+ig\rho_{02} \\
+        \dot \rho_{02} & =-\frac{p}{2} \rho_{02}-\gamma \rho_{02}+ig\rho_{01}
+    \end{aligned}
+\end{equation}
+,con lo cual, si inicialmente los elementos de matriz $\rho_{0i}(0)=0$, permanecerán así durante toda la evolución del sistema. Para hacer una analogía y realizar una comparación con el caso unitario, se estudia la condición inicial $\rho(0)=\ketbra{e,0}{e,0}$, que satisface esta condición, de manera que se espera que el estado $\rho(t)$ exciba una estructura diagonal por bloques. El primer bloque de 1x1 representando al estado $\ket{0}$, y luego un bloque de 2x2 que describe la dinámica entre los estados $\ket{1}$ y $\ket{2}$. Las ecuaciones son
+\begin{equation}
+\begin{aligned}
+\dot{\rho}_{00} &= -p \rho_{00} + \gamma \rho_{22}, \\
+\dot{\rho}_{11} &= -i g (\rho_{21} - \rho_{12}) + p \rho_{00}, \\
+\dot{\rho}_{22} &= -i g (\rho_{12} - \rho_{21}) - \gamma \rho_{22}, \\
+\dot{\rho}_{12} &= -i g (\rho_{22} - \rho_{11}) - i \Delta \rho_{12} - \frac{\gamma}{2} \rho_{12}.
+\end{aligned}
+\end{equation}
+
+que se resuelven numericamente para acceder al estado $\rho(t)$ a tiempo $t>0$. 
+
+\textbf{[Placeholder para Figura: Evolución dinámica de elementos de matriz]}
+
+El análisis de esta sección permite establecer la relación entre los efectos de disipación y la acumulación de la fase geométrica, así como determinar las condiciones bajo las cuales el sistema mantiene coherencia cuántica suficiente para aplicaciones experimentales.

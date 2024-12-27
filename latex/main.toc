@@ -13,9 +13,10 @@
 \contentsline {section}{\numberline {3.1}Modelo y aproximaciónes}{9}{section.3.1}%
 \contentsline {subsection}{\numberline {3.1.1}Fase geométrica en el JCM}{12}{subsection.3.1.1}%
 \contentsline {subsubsection}{Fase de Berry}{12}{section*.4}%
-\contentsline {subsubsection}{aproximación cinemática}{12}{section*.5}%
-\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{13}{chapter.4}%
-\contentsline {section}{\numberline {4.1}JCM de dos átomos}{14}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{19}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{21}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{23}{appendix.Alph1}%
+\contentsline {subsubsection}{Aproximación Cinemática}{12}{section*.5}%
+\contentsline {section}{\numberline {3.2}JCM disipativo}{13}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{15}{chapter.4}%
+\contentsline {section}{\numberline {4.1}JCM de dos átomos}{16}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{21}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{23}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{25}{appendix.Alph1}%
