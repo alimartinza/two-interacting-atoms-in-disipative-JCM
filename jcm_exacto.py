@@ -1,7 +1,7 @@
-#%%
 from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import colormaps
 import time
 import os
 import tkinter as tk
@@ -57,90 +57,89 @@ gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
 #Definimos los parametros del problema
-#%%
 '''----ENERGIAS JCM SIMPLE----'''
 w_0=1
 g=0.001*w_0
-def E_jcm1(n_:int,delta:list):
-    return [0.5*np.sqrt(delta**2+4*g**2*n_),-0.5*np.sqrt(delta**2+4*g**2*n_)]
-delta=np.linspace(-15*g,15*g,100000)
-colors=['red','blue','green']
+def E_jcm1(n_:int,delta:list,x:float):
+    return [0.5*np.sqrt((delta-x*(2*n_-1))**2+4*g**2*n_),-0.5*np.sqrt((delta-x*(2*n_-1))**2+4*g**2*n_)]
+delta=np.linspace(-7*g,7*g,100000)
+colors=colormaps['plasma'](np.linspace(0,1,10))
 labels=['$E^1_\pm$','$E^2_\pm$','$E^3_\pm$']
 fig=plt.figure(figsize=(8,6))
 ax=fig.add_subplot()
 ax.plot(delta/g,-delta*100/2,color='black',label='$E^0$')
-for numb in [1,2,3]:
-    ax.plot(delta/g,E_jcm1(numb,delta)[0]*100,color=colors[numb-1],label=labels[numb-1])
-    ax.plot(delta/g,E_jcm1(numb,delta)[1]*100,color=colors[numb-1])
+for i,x in enumerate(np.linspace(0,2*g,10)):
+    ax.plot(delta/g,E_jcm1(2,delta,x)[0]*100,color=colors[i])
+    ax.plot(delta/g,E_jcm1(2,delta,x)[1]*100,color=colors[i])
 ax.grid()
 ax.legend()
-ax.set_xlabel('$\Delta/g$')
-ax.set_ylabel('Energia u.a.')
+ax.set_xlim(delta[0]/g,delta[-1]/g)
+ax.set_xlabel('$\Delta/g$',size=15)
+ax.set_ylabel('Energia u.a.',size=15)
+ax.tick_params(labelsize=10)
 plt.show()
 
 
-#%%
-'''----ENERGIAS JCM DOBLE----'''
-t_final=100000
-steps=100000
-w_0=1
-g=0.001*w_0
-p=0.005*g
-k=0
-x=0
-J=0
+# '''----ENERGIAS JCM DOBLE----'''
+# t_final=100000
+# steps=100000
+# w_0=1
+# g=0.001*w_0
+# p=0.005*g
+# k=0
+# x=0
+# J=0
 
-gamma=0.1*g
-acoplamiento='lineal'
-if acoplamiento=='lineal':
-    a=1/2
-elif acoplamiento=='bs':
-    a=1
-else:
-    print(f"Acoplamietno tiene que ser lineal o bs pero es {acoplamiento}")
-    exit()
+# gamma=0.1*g
+# acoplamiento='lineal'
+# if acoplamiento=='lineal':
+#     a=1/2
+# elif acoplamiento=='bs':
+#     a=1
+# else:
+#     print(f"Acoplamietno tiene que ser lineal o bs pero es {acoplamiento}")
+#     exit()
 
-def beta_n(n_:int):
-    return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
-def gamma_n(n_:int,a:float=0.5):
-    return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
-def eta_n(n_:int,a:float=0.5):
-    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
-def Q_n(n_:int):
-    return gamma_n(n_)/3-beta_n(n_)*beta_n(n_)/9
-def R_n(n_):
-    return 1/54*(9*beta_n(n_)*gamma_n(n_)-27*eta_n(n_)-2*beta_n(n_)*beta_n(n_)*beta_n(n_))
-def theta_n(n_):
-    return np.arccos(R_n(n_)/np.sqrt(-Q_n(n_)**3))
+# def beta_n(n_:int):
+#     return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
+# def gamma_n(n_:int,a:float=0.5):
+#     return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
+# def eta_n(n_:int,a:float=0.5):
+#     return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
+# def Q_n(n_:int):
+#     return gamma_n(n_)/3-beta_n(n_)*beta_n(n_)/9
+# def R_n(n_):
+#     return 1/54*(9*beta_n(n_)*gamma_n(n_)-27*eta_n(n_)-2*beta_n(n_)*beta_n(n_)*beta_n(n_))
+# def theta_n(n_):
+#     return np.arccos(R_n(n_)/np.sqrt(-Q_n(n_)**3))
 
-d=np.linspace(-10*g,10*g,100000)
-# E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
-E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
-E_jcm=[[1/2*np.sqrt(4*g**2+d**2),-1/2*np.sqrt(4*g**2+d**2)],[1/2*np.sqrt(2*4*g**2+d**2),-1/2*np.sqrt(2*4*g**2+d**2)]]
+# d=np.linspace(-10*g,10*g,100000)
+# # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
+# E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
+# E_jcm=[[1/2*np.sqrt(4*g**2+d**2),-1/2*np.sqrt(4*g**2+d**2)],[1/2*np.sqrt(2*4*g**2+d**2),-1/2*np.sqrt(2*4*g**2+d**2)]]
 
-fig=plt.figure(figsize=(8,6))
-ax=fig.add_subplot()
-# ax.set_title("Relación de dispersión",size=20)
-ax.plot(d/g,E_jcm[0][0]*200,linestyle="dashed",color="black",label="$2E_{JC}^{(1)}$")
-ax.plot(d/g,E_jcm[0][1]*200,linestyle="dashed",color="black")
+# fig=plt.figure(figsize=(8,6))
+# ax=fig.add_subplot()
+# # ax.set_title("Relación de dispersión",size=20)
+# ax.plot(d/g,E_jcm[0][0]*200,linestyle="dashed",color="black",label="$2E_{JC}^{(1)}$")
+# ax.plot(d/g,E_jcm[0][1]*200,linestyle="dashed",color="black")
 
-ax.plot(d/g,E_jcm[1][0]*200,linestyle="dashed",color="red",label="$2E_{JC}^{(2)}$")
-ax.plot(d/g,E_jcm[1][1]*200,linestyle="dashed",color="red")
+# ax.plot(d/g,E_jcm[1][0]*200,linestyle="dashed",color="red",label="$2E_{JC}^{(2)}$")
+# ax.plot(d/g,E_jcm[1][1]*200,linestyle="dashed",color="red")
 
-ax.plot(d/g,E[0][0]*100,color="black",label='$E^{(0)}$')
-ax.plot(d/g,E[1][0]*100,color="green",label='$E_1^{(1)}$')
-ax.plot(d/g,E[1][1]*100,color="green",label='$E_2^{(1)}$')
-ax.plot(d/g,E[1][2]*100,color="lime",label='$E_3^{(1)}$')
+# ax.plot(d/g,E[0][0]*100,color="black",label='$E^{(0)}$')
+# ax.plot(d/g,E[1][0]*100,color="green",label='$E_1^{(1)}$')
+# ax.plot(d/g,E[1][1]*100,color="green",label='$E_2^{(1)}$')
+# ax.plot(d/g,E[1][2]*100,color="lime",label='$E_3^{(1)}$')
 
-ax.plot(d/g,E[2][0]*100,color="red",label='$E_1^{(2)}$')
-ax.plot(d/g,E[2][1]*100,color="orange",label='$E_2^{(2)}$')
-ax.plot(d/g,E[2][2]*100,color="yellow",label='$E_3^{(2)}$')
-ax.plot(d/g,E[2][3]*100,color="grey",label='$E_4^{(2)}$')
-ax.set_xlim(-10,10)
-ax.set_xlabel("$\Delta/g$")
-ax.set_ylabel("Energia")
-ax.legend(loc="upper right")
-ax.grid()
-plt.show()
+# ax.plot(d/g,E[2][0]*100,color="red",label='$E_1^{(2)}$')
+# ax.plot(d/g,E[2][1]*100,color="orange",label='$E_2^{(2)}$')
+# ax.plot(d/g,E[2][2]*100,color="yellow",label='$E_3^{(2)}$')
+# ax.plot(d/g,E[2][3]*100,color="grey",label='$E_4^{(2)}$')
+# ax.set_xlim(-10,10)
+# ax.set_xlabel("$\Delta/g$")
+# ax.set_ylabel("Energia")
+# ax.legend(loc="upper right")
+# ax.grid()
+# plt.show()
 
-#%%

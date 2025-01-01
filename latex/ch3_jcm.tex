@@ -22,13 +22,14 @@ al átomo. \newline
 Comencemos entonces por el paradigmatico modelo de 1 átomo. El modelo de Jaynes-Cummings consiste en describir la interacción entre la materia y la luz de manera cuantica, y el experimento mas sencillo consta de un átomo de dos niveles atrapada en una cavidad. La simpleza del modelo surge de las aproximaciónes e hipotesis que se hacen, en primer lugar, el campo electromagnetico dentro de la cavidad puede en principio tener infinitos modos, pero para simplificar se considera solo un modo. 
 Entonces tenemos un Hamiltoniano ($\hbar = 1$)
 
-\begin{align*}
-\hat H & = \hat H_A + \hat H_C + \hat H_{int}  \\
-\hat H_A &= \omega \frac{\sigma_z}{2} \\
-\hat H_C &= \epsilon \hat a^\dagger\hat a = \epsilon \hat n \\
-\hat H_{int} &= -i g (\hat\sigma_-+\hat \sigma_+)(\hat a - \hat a^\dagger)
-\end{align*}
-
+\begin{equation}\label{eq3:hamiltoniano inicial}
+\begin{aligned}
+    \hat H & = \hat H_A + \hat H_C + \hat H_{int}  \\
+    \hat H_A &= \omega \frac{\sigma_z}{2} \\
+    \hat H_C &= \epsilon \hat a^\dagger\hat a = \epsilon \hat n \\
+    \hat H_{int} &= -i g (\hat\sigma_-+\hat \sigma_+)(\hat a - \hat a^\dagger)
+\end{aligned}
+\end{equation}
 donde $\epsilon$ y $\omega$ son las freccuencias naturales de la cavidad y del átomo respctivamente. Los operadores $\hat a$ y $\hat a^\dagger$ son los operadores de aniquilaci\'on y creaci\'on fot\'onicos de la cavidad y $\hat n =a^\dagger a$ es el operador de n\'umero de la cavidad, y $\hat \sigma_z$ es el operador de pauli. Los estados del átomo de dos niveles los llamamos $\ket{g}$ y $\ket{e}$ al estado ground y excitado respectivamente, y con esta notación los operadores $\sigma_\pm = (\sigma_x\pm i\sigma_y)/2$ son los operadores de subida y bajada atomicos. 
 La interacci\'on es complicada, y para simplificar lo que se hace es usar la representaci\'on de interacci\'on, y uno encuentra que hay dos frecuencias, una que llamamos \textit{rotante} y es la diferencia entre las frecuencias caracteristicas $\epsilon-\omega$, y la otra frecuencia es la suma $\epsilon+\omega$. La aproximación de onda rotante vale cuando las frecuencias son similares $\epsilon\sim\omega$, y consta de despreciar la dinamica de los terminos contrarrotantes, ya que oscilan muy rapidamente en comparación con los terminos rotantes, y entonces podemos promediar los efectos de los terminos rapidos. Entonces al aplicar esta aproximación, justificada cuando $\epsilon\sim\omega$ y $g \ll \epsilon,\omega$ se obtiene el hamiltoniano de JC \ref{}\textcolor{red}{ludmi 49}
 \begin{equation}
@@ -62,7 +63,7 @@ Resolvemos el problema de autovalores y autovectores y obtenemos
         \ket{\psi^n_+} & = \sin \frac{\theta_n}{2}\ket{g,n}+\cos \frac{\theta_n}{2}\ket{e,n-1}        
     \end{aligned}
 \end{equation}
-con $E_{\pm}^n=\pm \frac{\Omega}{2}$ las autoenergias y $\Omega_n=\sqrt{\Delta^2+4g^2n}$ la frecuencia de Rabi del sistema, $\cos \theta_n=\frac{\Delta}{\Omega_n}$ modulando la superposici\'on de estados. 
+con $E_{\pm}^n=\pm \frac{\Omega_n}{2}$ las autoenergias y $\Omega_n=\sqrt{\Delta^2+4g^2n}$ la frecuencia de Rabi del sistema, $\cos \theta_n=\frac{\Delta}{\Omega_n}$ modulando la superposici\'on de estados. 
 \begin{figure}
     \centering
     \includegraphics[width=0.7\textwidth]{figuras/ch3/relacion energia detunning jcm simple.png}
@@ -140,6 +141,67 @@ En el caso \ref{eq3:fg berry jcm}, correspondiente a la figura \ref{fig3:bloch b
 
 \textcolor{red}{aca puedo intentar de agregar el caso con medio kerr. Creo que no es tan complicado y el problema de autocosas ya lo tengo medio resuelto en papel desde hace un tiempo, pero lo tengo que revisar a ver si esta bien y lo tengo que completar, pero puede estar bueno para entender que le hace a la FG desde el vamos.}
 
+\section{Medio Kerr}\label{sec3:medio kerr}
+Ahora que ya se trabajó el caso mas sencillo, se comienza a estudiar casos mas generales. La primera generalización que se hará es agregar un medio no lineal. Este medio se lo conoce como medio Kerr, y lo que hace es agregar un término en el Hamiltoniano de la cavidad, que pasa de ser \ref{eq3:hamiltoniano inicial} 
+\begin{equation}
+    H_C=\epsilon \hat n \rightarrow H_C^{\text{Kerr}}=\epsilon \hat n (1-\frac{\chi}{\epsilon})
+\end{equation}
+donde $\chi$ es el parámetro que caracteriza al medio de la cavidad Kerr. Si se realizan nuevamente los mismos pasos, se arriba a las mismas conclusiones sobre la forma del Hamiltoniano, y se tiene que 
+\begin{equation}
+    H=\frac{\Delta}{2}\hat \sigma_z+\chi \hat n^2+g(\hat a^\dagger \hat \sigma_-\hat a \hat \sigma_+)
+\end{equation}
+y en forma matricial, en el subespacio de n excitaciones $\{\ket{gn},\ket{e,n-1}\}$
+\begin{equation}
+    H^{(n)} = \begin{pmatrix}
+        -\frac{\Delta}{2}+\chi n^2 & g \sqrt{n} \\
+        g \sqrt{n} & \frac{\Delta}{2}+\chi (n-1)^2 
+    \end{pmatrix}
+\end{equation}
+Resolviendo, se obtiene que ahora los autovectores son
+\begin{equation}
+    \ket{\psi_\pm^n}=\frac{1}{N_\pm} \left( (-\frac{\Delta}{2}+\chi(n-1/2)\mp\frac{\Omega_{n,\chi}}{2}) \ket{gn} + g\sqrt{n} \ket{e,n-1}  \right)
+\end{equation}
+donde $\Omega_{n,\chi}=\sqrt{(\chi(n-1/2)-\Delta)^2+4g^2n}$, $N_\pm=\sqrt{(-\frac{\Delta}{2}+\chi(n-1/2)\mp\Omega_{n,\chi}/2)^2+g^2n}$, y las autoenergias son 
+\begin{equation}\label{eq3:autoenergia kerr}
+    E_\pm^n=\chi(n-\frac{1}{2})^2 +\frac{\chi}{4} \pm \frac{\Omega_{n,\chi}}{2}
+\end{equation}
+Se puede ver que el resultado con $\chi=0$ se reduce al caso visto anteriormente, que representa una cavidad con un medio lineal.
+
+Si uno quiere resolver la dinamica de este problema para un estado inicial cualquiera, lo que tenemos que hacer es desarrollar este estado inicial en funcion de los autoestados del problema, entonces tendriamos para un estado arbitrario con un numero total de excitaciones definido, que suponemos igual a 1 por simplificacion (la generalizacion es inmediata):
+\begin{equation}
+    \ket{\psi}(t)=U(t)(\braket{\psi_+^1}{\psi(0)}\ket{\psi_+^1}+\braket{\psi_-^1}{\psi(0)}\ket{\psi_-^1})=c_+e^{-iE_+t}\ket{\psi_+}+c_-e^{-iE_-t}\ket{\psi_-}
+\end{equation}
+Lo interesante de esto es que podemos sacar de factor comun alguna de las dos energias, y entonces lo importante para la evolucion temporal del sistema es la diferencia entre las energias, por lo tanto, la cantidad relevante sigue siendo $\Omega_{n,\chi}$, que es la frecuencia de Rabi para medios tipo Kerr. Por otro lado, el producto interno que da lugar a los coeficientes $c_\pm$ depende de $\chi$, por lo tanto las amplitudes de probabilidad de encontrar al estado temporalmente evolucionado en algun otro estado haciendo una medicion proyectiva, depende de $\chi$. Por lo tanto, se puede decir que el medio Kerr modifica las amplitudes de oscilacion de las poblaciones del estado.
+
+Entonces se analiza la relacion entre $\pm \Omega_{n,\chi}/2$ y el detunning, tienendo en cuenta que ahora el medio puede tener $\chi \neq 0$. 
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/relacion energia detunning jcm simple kerr.png}
+        \caption{N=1}
+        \label{fig3:relacion energia detunning kerr 1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[h]{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/relacion energia detunning jcm simple kerr 2.png}
+        \caption{N=3}
+        \label{fig3:relacion energia detunning kerr 2}
+    \end{subfigure}
+    \caption{Grafico de la frecuencia de Rabi $\Omega_{N,\chi}$ en funcion del detunning $\Delta$ para N=1 y N=3.}
+    \label{fig3:relacion energia detunning kerr}
+\end{figure}
+
+Se observa en la figura \ref{fig3:relacion energia detunning kerr} las diferencias entre autoenergias van cambiando para diferentes valores de $\chi$, donde en el panel \ref{fig3:relacion energia detunning kerr 1} se observa las energias para N=1 y en \ref{fig3:relacion energia detunning kerr 2} para N=3, en función del detunning, y en colores se ve de mas oscuro a mas claro, como el aumento de $\chi \in [0,2g]$ afecta a las curvas. Lo que se observa es que, al aumentar $\chi$, las curvas se desplazan hacia la derecha en una cantidad $\chi(n-1/2)$. 
+
+Este comportamiento se puede predecir mirando la forma de la autoenergia \ref{eq3:autoenergia kerr}, ya que lo que estamos haciendo es desplazando la raiz haciendo un cambio de variables $\Delta \rightarrow \Delta - \chi(n-1/2)$. Este desplazamiento depende del número de excitaciones N. 
+Dados dos valores diferentes de $\chi$ nos interesa saber si al aumentar $\Delta$, aumenta o disminuye las energias de los estados, para esto buscamos la interseccion entre dos curvas con diferentes $\chi$, que llamamos $\chi_1$ y $\chi_2$, con $\chi_1<\chi_2$. Haciendo el calculo obtenemos que la interseccion es para $\Delta=(2n-1)\frac{\chi_1+\chi_2}{2}$, es decir, si $\Delta<(2n-1)\frac{\chi_1+\chi_2}{2}$ entonces la frecuencia de $\chi_2$ es mayor que la de $\chi_1$ y por lo tanto oscila mas rapidamente, y viceversa si $\Delta>(2n-1)\frac{\chi_1+\chi_2}{2}$.
+
+Ahora, habiendo entendido esto, podemos ver que el efecto del medio es modificar la frecuencia y tambien la amplitud de la oscilacion, haciendo que la primera sea menor, y \textcolor{red}{para ver que pasa con las amplitudes tengo que hacer algunas cuentas}
+
+
 \section{JCM disipativo}
 
 
@@ -173,7 +235,9 @@ En esta ocación nos interesa resolver el problema restringiendonos al subespaci
         \dot \rho_{02} & =-\frac{p}{2} \rho_{02}-\gamma \rho_{02}+ig\rho_{01}
     \end{aligned}
 \end{equation}
+
 ,con lo cual, si inicialmente los elementos de matriz $\rho_{0i}(0)=0$, permanecerán así durante toda la evolución del sistema. Para hacer una analogía y realizar una comparación con el caso unitario, se estudia la condición inicial $\rho(0)=\ketbra{e,0}{e,0}$, que satisface esta condición, de manera que se espera que el estado $\rho(t)$ exciba una estructura diagonal por bloques. El primer bloque de 1x1 representando al estado $\ket{0}$, y luego un bloque de 2x2 que describe la dinámica entre los estados $\ket{1}$ y $\ket{2}$. Las ecuaciones son
+
 \begin{equation}
 \begin{aligned}
 \dot{\rho}_{00} &= -p \rho_{00} + \gamma \rho_{22}, \\
@@ -185,6 +249,56 @@ En esta ocación nos interesa resolver el problema restringiendonos al subespaci
 
 que se resuelven numericamente para acceder al estado $\rho(t)$ a tiempo $t>0$. 
 
-\textbf{[Placeholder para Figura: Evolución dinámica de elementos de matriz]}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figuras/ch3/poblaciones sc vs wc.png}
+    \caption{Solución númerica al sistema de ecuaciones dada por la ecuación de Lindblad para el estado inicial $\ket{e0}\bra{e0}$. Estos gráficos se realizaron con $\Delta=2g$; a la izquierda se observa el regimiento de Weak Coupling con $\gamma=0.1g$, donde el sistema átomo-cavidad esta debilmente acoplado con el entorno, y a la derecha el de Strong Coupling con $\gamma=2g$, donde las poblaciones y coherencias decaen sin oscilar. Las lineas solidas son las poblaciones de los estados, en azul para el estado $\ket{g0}$, en rojo para $\ket{e0}$ y en amarillo $\ket{g1}$, y la linea rayada representa la coherencia entre los estados con N=1 ($\ket{e0}$ y $\ket{g1}$). }
+    \label{fig3:poblaciones e0}
+\end{figure}
 
-El análisis de esta sección permite establecer la relación entre los efectos de disipación y la acumulación de la fase geométrica, así como determinar las condiciones bajo las cuales el sistema mantiene coherencia cuántica suficiente para aplicaciones experimentales.
+En el panel \ref{fig3:poblaciones e0}a, se muestra el regimen de SC, donde el acoplamiento entre el atomo y la cavidad es mayor al acomplamiento con el entorno, segun la relacion entre los parametros $\gamma/g=0.1$, y en el panel \ref{fig3:poblaciones e0}b, se muestra el caso del WK. La diferencia que es interesante para el problema, es que en el primer caso, tanto las poblaciones como las coherencias presentan oscilaciones coherentes antes de decaer por la influencia del entorno. En cambio, para el caso de WK, estas oscilaciones coherentes no estan presentes y el sistema llega a su estado asintotico en tiempos muy cortos. Las caracteristicas de la dinámica de cada regimen, influyen profundamente en el estudio de la fase geometrica, haciendo posible unicamente su utilizacion en el caso de Strong Coupling, donde la dinamica presenta oscilaciones coherentes durante varios ciclos, antes de decaer, haciendo del regimen de SC el unico escenario conveniente para su estudio. Antes de fundamentar esta afirmacion, se realiza un estudio poblacional en el caso de una cavidad con medio Kerr.
+
+Como se vio anteriormente, el efecto del medio Kerr sobre los autoestados y las autoenergias es, por un lado, desplazar los niveles de energia.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{figuras/ch3/poblaciones kerr.png}
+    \caption{Analisis poblacional para una cavidad con medio Kerr con $\chi=0.5g$.}
+    \label{fig3:poblaciones kerr}
+\end{figure}
+Si se comparan las figuras \ref{fig3:poblaciones e0} con \ref{fig3:poblaciones kerr}, entonces se pueden observar dos diferencias. La primera es lo mencionado anteriormente; en el mismo tiempo, es decir entre $0\leq t/T \leq 25$, en el caso de $\chi=0$ se observan 25 oscilaciones, pero en el caso de $\chi=0.5g$ solo se observan 23 oscilaciones. Esto se debe a la condicion que se encontro al final de la seccion \ref{sec3:medio kerr}, en este caso se cumple que $\Delta=2g>(2n-1)\frac{\chi_1+\chi_2}{2}=1\cdot\frac{0.5g}{2}$, entonces la diferencia de energias entre los autoestados disminuye al aumentar $\chi$, y por lo tanto las oscilaciones son mas lentas para el caso de $\chi=0.5g$ en comparacion con $\chi=0$.
+
+\subsection{Fase geometrica en presencia de disipación}
+Ahora se estudia la fase geometrica adquirida por el sistema, calculada siguiendo la definicion \ref{}, y como esta se ve modificada con respecto del valor unitario por efecto del contacto con el entorno. Como el estado inicial es puro, la definicion se reduce al caso particular descripto por la ecuacion \ref{eq2}.
+
+Los autovalores y autovectores del operador densidad pueden escribirse formalmente  diagonalizando el subespacio de 2x2 de la matriz densidad:
+\begin{equation}
+    \rho(t)=\begin{pmatrix}
+        \rho_{00} & 0 & 0 & 0 &\dots \\
+        0 & \rho_{11} & \rho_{12} & 0 & \dots \\
+        0 & \rho_{21} & \rho_{22} & 0 & \dots \\ 
+        \vdots & 0 & 0 & \ddots & \dots 
+    \end{pmatrix}
+\end{equation}
+donde estamos nuevamente asumiendo una estructura diagonal por bloques, que se da cuando el estado inicial tiene un numero definido de escitaciones, dando lugar a dos autovectores. El de interes para utilizar la definicion de la fase geometrica \ref{}, es el autoestado
+\begin{equation}
+    \ket{\psi_+}(t)=\frac{-(\rho_{22}-\epsilon_+)\ket{e,0}+\rho_{21}\ket{g,1}}{\left((\rho_{22}-\epsilon_+)^2+\rho_{21}\rho_{12} \right)^{1/2}}
+\end{equation}
+con $\epsilon_+=\frac{1}{2}(\rho_{11}+\rho_{22}+((\rho_{11}-\rho_{22})^2+4\rho_{12}\rho_{21})^{1/2})$ el autovalor asociado. Recurriendo a este resultado, podemos escirbir formalmente la fase geometrica en funcion de los elementos de matriz $\rho_{ij}(t)$:
+\begin{equation}
+    \phi_g(t)=\int_0^t dt' \frac{\Im \dot\rho_{21}\rho_{12}}{(\rho_{22}-\epsilon_+)^2+\rho_{12}\rho_{21}}
+\end{equation}
+
+En general, esta fase diferirá de aquella acumulada en una evolución unitaria de forma que puede
+escribirse, sin pérdida de generalidad, $\phi_g=\phi_u+\delta\phi$, con $\delta\phi$ la diferencia entre la fase unitaria y
+aquella modificada por la presencia del entorno. Caracterizar la corrección $\delta\phi$ permite relacionar este
+objeto, perteneciente a la geometría misma del espacio de Hilbert, con los efectos de disipación y
+decoherencia experimentados por el sistema, así como determinar bajo qué circunstancias $\delta\phi$ resulta
+despreciable y se puede considerar que la fase geométrica es robusta al efecto del entorno.
+
+\subsubsection{Dependencia con el régimen de acoplamiento}
+
+\subsubsection{Dependencia con el detunning}
+
+\subsubsection{Dependencia con el medio Kerr}
+
+\subsubsection{Robustez de la fase geométrica en el caso resonante}

@@ -14,9 +14,15 @@
 \contentsline {subsection}{\numberline {3.1.1}Fase geométrica en el JCM}{12}{subsection.3.1.1}%
 \contentsline {subsubsection}{Fase de Berry}{12}{section*.4}%
 \contentsline {subsubsection}{Aproximación Cinemática}{12}{section*.5}%
-\contentsline {section}{\numberline {3.2}JCM disipativo}{13}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{15}{chapter.4}%
-\contentsline {section}{\numberline {4.1}JCM de dos átomos}{16}{section.4.1}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{21}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{23}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{25}{appendix.Alph1}%
+\contentsline {section}{\numberline {3.2}Medio Kerr}{13}{section.3.2}%
+\contentsline {section}{\numberline {3.3}JCM disipativo}{15}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Fase geometrica en presencia de disipación}{18}{subsection.3.3.1}%
+\contentsline {subsubsection}{Dependencia con el régimen de acoplamiento}{19}{section*.10}%
+\contentsline {subsubsection}{Dependencia con el detunning}{19}{section*.11}%
+\contentsline {subsubsection}{Dependencia con el medio Kerr}{19}{section*.12}%
+\contentsline {subsubsection}{Robustez de la fase geométrica en el caso resonante}{19}{section*.13}%
+\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{21}{chapter.4}%
+\contentsline {section}{\numberline {4.1}JCM de dos átomos}{22}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{27}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{29}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{31}{appendix.Alph1}%
