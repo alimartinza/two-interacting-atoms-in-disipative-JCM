@@ -187,10 +187,10 @@ Entonces se analiza la relacion entre $\pm \Omega_{n,\chi}/2$ y el detunning, ti
     \begin{subfigure}[h]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/ch3/relacion energia detunning jcm simple kerr 2.png}
-        \caption{N=3}
+        \caption{N=2}
         \label{fig3:relacion energia detunning kerr 2}
     \end{subfigure}
-    \caption{Grafico de la frecuencia de Rabi $\Omega_{N,\chi}$ en funcion del detunning $\Delta$ para N=1 y N=3.}
+    \caption{Grafico de la frecuencia de Rabi $\Omega_{N,\chi}$ en funcion del detunning $\Delta$ para N=1 y N=2.}
     \label{fig3:relacion energia detunning kerr}
 \end{figure}
 
@@ -296,9 +296,68 @@ decoherencia experimentados por el sistema, así como determinar bajo qué circu
 despreciable y se puede considerar que la fase geométrica es robusta al efecto del entorno.
 
 \subsubsection{Dependencia con el régimen de acoplamiento}
+En la figura \ref{fig3:fg gamma} se muestra la fase geometrica acumulada en funcion del tiempo, para el estado inicial puro $\ket{e,0}$, comparando 4 casos para la relacion $\gamma|g$ pertenecientes al regimen de SC, ademas como referencia se muetra la fase geometrica unitaria.
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch3/fg gamma.png}
+      \end{minipage}\hfill
+      \begin{minipage}[c]{0.3\textwidth}
+        \caption{
+            Fase geometrica acumulada por un sistema con un detunning $\Delta=0.1g$, para diferentes valores caracteristicos del entorno. En todos los casos la tasa de bombeo es $p=0.005g$, y se muestran diferentes valores para $\gamma$, partiendo de $\gamma=0$ perteneciente a la linea azul oscuro que es el caso unitario, y para $\gamma=0.01g$,$\gamma=0.1g$,$\gamma=0.5g$ y $\gamma=g$, correspondientes a las lineas violeta, rosa, naranja y amarilla.
+        } \label{fig3:fg gamma}
+      \end{minipage}
+\end{figure}
+Al aumentar la interaccion con el entrono, aumenta la diferencia $\delta \phi$ entre la fase acumulada con aquella correspondiente al caso unitario. Sin embargo, si el valor aumenta demasiado, la perdida de coherencia detiene el movimiento del estado y consecuentemente la acumulacion de fase. Por esto es que el estudio sobre la fase geometrica debe ser en el regimen de SC, ya que si la relacion $\gamma|g\gg 1$, la fase dejara de acumularse luego de un periodo muy corto de tiempo.
+
 
 \subsubsection{Dependencia con el detunning}
+Ya que las amplitudes de los estados y las frecuencias de oscilacion dependen de los parametros del problema, entonces la curva que describe el estado en el espacio de rayos dependera tambien de estos, heredando asi la fase geometrica una dependencia con los parametros. Manteniendo las caracteristicas del entorno iguales, se estudia la dependencia de la fase geometrica con el detunning $\Delta$. En la figura \ref{fig3:fg detunning} se observa que conforme se aumenta el detunning atomo-cavidad, la fase acumulada es menor (en valor absoluto) y se suaviza.
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch3/fg detunning.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.3\textwidth}
+    \caption{
+         } \label{fig3:fg detunning}
+  \end{minipage}
+\end{figure}
+
+Como se discutio anteriormente, la fase geometrica en presencia del entorno se puede descomponer en la parte unitaria $\phi_u$ dada por la ecuacion \ref{ec2:}, más una corrección $\delta\phi$ que refleja la desviacion introducida por el entorno. La dependencia de la componente unitaria en $\Delta/g$ esta explicita en la ecuacion \ref{ec} ludmi eq 3.8, surge entonces la pregunta de la dependencia del termino $\delta\phi$ con respecto a los parametros del problema, o si toda la dependencia se encuentra contenida en la parte unitaria $\phi_u$. Para tratar con esta pregunta se anliza la corerccion $\delta\phi$ en un instante dado (que se elije y se mantiene fijo), observandola como funcion del valor de $\Delta/g$. El resultado se presenta en la figura \ref{fig3:deltaphi 0}, en el cual se contrasta ademas esta dependencia para tres entornos caracterizados por distintos valores de tasa de perdida de fotones $\gamma$.
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch3/robustez x=0.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.3\textwidth}
+    \caption{
+         } \label{fig3:robustez 0}
+  \end{minipage}
+\end{figure}
+Puede verse que la correccion en efecto depende del valor del detunning $\Delta/g$, y dos aspectos resaltan. En primer lugar es que la correccion se anula, en todos los casos considerados, cuando se satisface la condicion de resonancia $\Delta=0$. Este hecho resulta prometedor,  insinuando que en este caso la fase geométrica $\phi_g$ resultaría robusta a los efectos de un entorno en el régimen de SC. La otra característica de la corrección $\delta\phi$ que se revela en la figura \ref{fig3:robustez 0} es la no-monotonicidad de la corrección como función de $\Delta/g$, que exhibe un extremo para un valor $\Delta/g$ que depende débilmente tanto en las constantes $\gamma/g$ y $p/g$ que caracterizan el entorno como en el instante $t$ en el que se realiza la observación. De esta forma la figura \ref{fig3:robustez 0} despierta un interés es doble, ya que permite identificar: (i) las condiciones en las cuales el efecto del entorno sobre la fase geométrica es mayor, acercando la posibilidad de una detección experimental y, (ii) las condiciones que mitigan, permitiendo ignorarlo, este efecto o incluso que lo eliminan por completo.
 
 \subsubsection{Dependencia con el medio Kerr}
 
+Ahora se considera la dependencia con el medio Kerr. Al estudiar los efectos del detunning, se considero que la caivdad era lineal, es decir $\chi=0$. Es el objeto de estudio de esta seccion ver como se modifican la fase geometrica y los resultados obtenidos para el detunning al considerar un medio Kerr. En primer lugar, se muestra la dependencia de la fase geometrica acumulada para diferentes valores de $\chi/g$, considerando un entorno identico en todos los casos, y tambien considerando un valor fijo del detunning.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/fg kerr.png}
+        \caption{$\Delta=0$}
+        \label{fig3:fg kerr 1}
+    \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{figuras/ch3/fg kerr d=0.1g.png}
+        \caption{$\Delta=0.1g$}
+        \label{fig3:fg kerr 2}
+    \end{subfigure}
+    \caption{}
+\end{figure}
+En el panel \ref{fig3:fg kerr 1} se observa el efecto del medio sobre la fase geometrica acumulada, donde se observa que la linea azul oscuro, correspondiente al caso $\chi=0$ se corresponde con el caso robusto en donde tenemos una acumulacion por escalones. El hecho de que en este caso la fase acumulada sea positiva, se debe a que numericamente al realizar el calculo, hay problemas con el cero; para salvar este problema se le otorga un valor numerico muy pequeño y se ve como al tener un signo negativo en el parametro, entonces la fase acumulada es positiva, y viceversa. Entonces se observa como al aumentar el parametro $\chi$, similarmente al caso del detunning, la fase acumulada es menor y se suaviza. Este comportamiento es algo esperable, ya que en la ecuacion para la energia el detunning $\Delta$ y el medio $\chi$ estan casi en igualdad de condiciones, en el sentido que la dependencia funcional de la energia en estos parametros es igual.
+Si se observa el panel \ref{fig3:fg kerr 2}, donde se considero un valor de $\Delta=0.1g$, entonces se ve como ahora el caso de $\Delta=0$ (linea azul oscuro), ya no pertenece al caso robusto, sino que esta situacion se recupera cuando $\chi=0.1g=\Delta$ (linea morada). Al seguir aumentando $\chi$ el comportamiento es igual que en el detunning. 
+Este resultado insinua que para la fase geometrica el medio y el detunning tambien estan en igualdad de condiciones, y el efecto del medio no es mas que cambiar la frecuencia del problema. Dos preguntas son pertinentes para confirmar esta insinuacion. En primer lugar, hay que realizar el estudio de la dependencia de la diferencia de fases geometricas $\delta\phi$ al igual que en el caso del detunning. En segundo lugar, se repetira el estudio en funcion del detunning, pero para diferentes valores de $\chi$.
+
 \subsubsection{Robustez de la fase geométrica en el caso resonante}
+En esta seccion se discute la razon detras de la robustez en los casos estudiados anteriormente. 

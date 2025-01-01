@@ -6,11 +6,15 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {3.1}{\ignorespaces Relaci\'on energ\'ia detunning para el modelo de Jaynes-Cummings. La diferencia de energ\'ia entre los estados de un mismo nivel para $\Delta =0$ es $2g\sqrt {n}$.}}{11}{figure.caption.3}%
 \contentsline {figure}{\numberline {3.2}{\ignorespaces \relax }}{13}{figure.caption.6}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Grafico de la frecuencia de Rabi $\Omega _{N,\chi }$ en funcion del detunning $\Delta $ para N=1 y N=3.}}{15}{figure.caption.7}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Grafico de la frecuencia de Rabi $\Omega _{N,\chi }$ en funcion del detunning $\Delta $ para N=1 y N=2.}}{15}{figure.caption.7}%
 \contentsline {figure}{\numberline {3.4}{\ignorespaces Solución númerica al sistema de ecuaciones dada por la ecuación de Lindblad para el estado inicial $\ket {e0}\bra {e0}$. Estos gráficos se realizaron con $\Delta =2g$; a la izquierda se observa el regimiento de Weak Coupling con $\gamma =0.1g$, donde el sistema átomo-cavidad esta debilmente acoplado con el entorno, y a la derecha el de Strong Coupling con $\gamma =2g$, donde las poblaciones y coherencias decaen sin oscilar. Las lineas solidas son las poblaciones de los estados, en azul para el estado $\ket {g0}$, en rojo para $\ket {e0}$ y en amarillo $\ket {g1}$, y la linea rayada representa la coherencia entre los estados con N=1 ($\ket {e0}$ y $\ket {g1}$). }}{17}{figure.caption.8}%
 \contentsline {figure}{\numberline {3.5}{\ignorespaces Analisis poblacional para una cavidad con medio Kerr con $\chi =0.5g$.}}{18}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Fase geometrica acumulada por un sistema con un detunning $\Delta =0.1g$, para diferentes valores caracteristicos del entorno. En todos los casos la tasa de bombeo es $p=0.005g$, y se muestran diferentes valores para $\gamma $, partiendo de $\gamma =0$ perteneciente a la linea azul oscuro que es el caso unitario, y para $\gamma =0.01g$,$\gamma =0.1g$,$\gamma =0.5g$ y $\gamma =g$, correspondientes a las lineas violeta, rosa, naranja y amarilla. }}{19}{figure.caption.11}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces }}{20}{figure.caption.13}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces }}{20}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces }}{21}{figure.caption.16}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Relación entre energía y detunning para los diferentes niveles de energía del problema. Las lineas solidas muestran la energía de los estados del JC doble con N=0 (negro, solido), N=1 (verde oscuro y lima, solido) y N=2 (rojo, naranja, amarillo y gris; solido). Tambien se muestran los niveles de energía del JC de un átomo para N=1 (negro; rayado) y N=2 (rojo; rayado). Observese que las energias del JC de un átomo estan multiplicadas por 2.}}{25}{figure.caption.14}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Relación entre energía y detunning para los diferentes niveles de energía del problema. Las lineas solidas muestran la energía de los estados del JC doble con N=0 (negro, solido), N=1 (verde oscuro y lima, solido) y N=2 (rojo, naranja, amarillo y gris; solido). Tambien se muestran los niveles de energía del JC de un átomo para N=1 (negro; rayado) y N=2 (rojo; rayado). Observese que las energias del JC de un átomo estan multiplicadas por 2.}}{27}{figure.caption.18}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
