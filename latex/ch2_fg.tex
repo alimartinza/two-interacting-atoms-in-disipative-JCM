@@ -11,7 +11,7 @@
 Este cap\'itulo presenta el objeto de estudio del trabajo. La fase geometrica es un observable que promete en el ambito de la informaci\'on cu\'antica, ya que como se ver\'a m\'as adelante, recupera informaci\'on sobre la trayectoria del sistema en el espacio de Hilbert, y en algunos casos se observa que est\'a relacionado con el entrelazamiento. 
 El cap\'itulo esta estructurado de manera que en primer lugar se tratar\'a una descripción general de las fases geom\'etricas (FG) en el contexto de sistemas aislados, descritos consecuentemente mediante estados puros. Analizar este caso antes de centrar la antención en sistemas cuanticos abiertos permitira asilimar nociones y ganar intuición sobre las fases geométricas en el marco de una teoría formalmente más simple. A lo largo del capítulo se trabajaran expresiones validas bajo ciertas hipotesis, partiendo del caso menos general, y llegando al caso más general conocido hasta el momento, aunque la aplicación de las fases geometricas a sistemas abiertos no llego a un consenso unánime. Por lo tanto, al final del capitulo se presentará una propuesta particular, la cual se usará en los próximos capitulos.
 
-\section{R\'egimen adiab\'atico y fase de Berry}
+\section{R\'egimen adiab\'atico y fase de Berry} \label{sec2:adiabatico}
 La fase de berry \ref{} ludmi 1 es un fenomeno fundamental relacionado con el teorema adiab\'atico. Esta representa la fase acumulada pot el autoestado de un Hamiltoniano $H(t)$ que var\'ia lentamente en un ciclo, que esta relacionada con el circuito descrito por $H(t)$ en un dado espacio de par\'ametros. \newline
 Para ver esto, se considera un Hamiltoniano $H(R(t))$ que depende explcitamente del tiempo a travez de un parámetro $R=(R_1,R_2,\dots)$. Dado esta Hamiltoniano, formalmente se pueden encontrar los autoestados instantaneos del sistema $\ket{\psi_n(R(t))}$ que satisfacen
 \begin{equation}
@@ -49,7 +49,7 @@ Para circuitos cerrados en el espacio de parámetros, la fase geométrica se exp
 
 independiente de la velocidad con que se recorre el circuito. Sin embargo, la hipotesis de este resultado es que la veolcidad de la evoluci\'on sea suficientemente lenta para que se puedan despreciar las transiciones no adiab\'aticas a otros niveles de energ\'ia, por lo tanto este resultado no es totalmente independiente de la velocidad con la que se recorre el circuito en el espacio de parámetros.
 
-\section{Fase de Aharonov-Anandan}
+\section{Fase de Aharonov-Anandan}\label{sec2:fase AA}
 
 La formulación de Aharonov y Anandan permite definir una fase geométrica que es independiente de la evolución adiabática. Su propuesta se basa únicamente en la trayectoria del estado en el espacio proyectivo de rayos, sin referencia explícita al Hamiltoniano.
 
@@ -134,7 +134,7 @@ Este método se puede utilizar para generalizar al caso no unitario, en el senti
 Según el criterio de Pancharatnam los estados inicial y final tienen una diferencia de fase bien definida, dado por el argumento del número complejo que acompaña al estado $\ket{\psi_0}$.
 
 
-\section{Enfoque Cinemático}
+\section{Enfoque Cinemático}\label{sec2:cinematico}
 
 En la mayoría de las discusiones sobre la fase geométrica, el punto de partida es la ecuación de Schrödinger para algún sistema cuántico particular caracterizado por un dado Hamiltoniano. Sin embargo, la fase geométrica es consecuencia de la cinemática cuántica, esto es, independiente del detalle respecto del origen dinámico de la trayectoria descrita en el espacio de estados físicos. Mukunda y Simon \ref{} 5 y 67 ludmi resaltaron la independencia de la fase geométrica respecto del origen dinámico de la evolución proponiendo un enfoque cinemático en el cual la trayectoria descrita en el espacio de estados físicos es el concepto fundamental para la fase geométrica. En su desarrollo, se parte de la consideración de una curva uniparamétrica y suave \( C \subset N_0 \), conformada por una dada secuencia de estados \( \ket{\psi(t)} \):
 \begin{equation}
@@ -162,11 +162,18 @@ Tenemos permitido definir este funcional de la curva $C$ en el espacio de rayos,
 \newline
 \textcolor{red}{Hasta ahora solo tratamos con sistemas aislados. Antes de pasar a sistemas abiertos, vamos a analizar un ejemplo sencillo utilizando las diferentes definiciones, para ganar intuición y encontrar algunas explicaciones interesantes a comportamientos caracteristicos de este observable.}
 
-\section{Ejemplo de aplicacion: Sistema de dos niveles en un campo magn\'etico}
+\section{Ejemplo de aplicacion: Sistema de dos niveles en un campo magn\'etico}\label{sec2:ejemplos}
 
 \textcolor{red}{LO PONGO O NO LO PONGO?}
 
-\section{Fases geométricas en sistemas abiertos}
-hola
+\section{Fases geométricas en sistemas abiertos}\label{sec2:sistemas abiertos}
+
+\begin{equation}
+    \phi_g[C]=\arg \left( \sum_{k=1}^{N} \sqrt{\omega_k(0)\omega_k(t)} \braket{\psi_k(0)}{\psi_k(T)}e^{-\int_{0}^{T}dt\braket{\psi_k(t)}{\dot\psi_k(t)}} \right)
+\end{equation}\label{ec2:fg general}
+
+\begin{equation}
+    \phi_g[C]=\arg{\braket{\psi(0)}{\psi_+(T)}}-\Im \int_{0}^{T}dt \braket{\psi_+(t)}{\dot\psi_+(t)}
+\end{equation}\label{ec2:fg general puro}
 
 

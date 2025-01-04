@@ -80,66 +80,74 @@ ax.tick_params(labelsize=10)
 plt.show()
 
 
-# '''----ENERGIAS JCM DOBLE----'''
-# t_final=100000
-# steps=100000
-# w_0=1
-# g=0.001*w_0
-# p=0.005*g
-# k=0
-# x=0
-# J=0
+'''----ENERGIAS JCM DOBLE----'''
+t_final=100000
+steps=100000
+w_0=1
+g=0.001*w_0
+p=0.005*g
+k=0
+x=0
+J=0
 
-# gamma=0.1*g
-# acoplamiento='lineal'
-# if acoplamiento=='lineal':
-#     a=1/2
-# elif acoplamiento=='bs':
-#     a=1
-# else:
-#     print(f"Acoplamietno tiene que ser lineal o bs pero es {acoplamiento}")
-#     exit()
+gamma=0.1*g
+acoplamiento='lineal'
+if acoplamiento=='lineal':
+    a=1/2
+elif acoplamiento=='bs':
+    a=1
+else:
+    print(f"Acoplamietno tiene que ser lineal o bs pero es {acoplamiento}")
+    exit()
 
-# def beta_n(n_:int):
-#     return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
-# def gamma_n(n_:int,a:float=0.5):
-#     return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
-# def eta_n(n_:int,a:float=0.5):
-#     return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
-# def Q_n(n_:int):
-#     return gamma_n(n_)/3-beta_n(n_)*beta_n(n_)/9
-# def R_n(n_):
-#     return 1/54*(9*beta_n(n_)*gamma_n(n_)-27*eta_n(n_)-2*beta_n(n_)*beta_n(n_)*beta_n(n_))
-# def theta_n(n_):
-#     return np.arccos(R_n(n_)/np.sqrt(-Q_n(n_)**3))
+def beta_n(n_:int,k:float,J:float,x:float):
+    return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
 
-# d=np.linspace(-10*g,10*g,100000)
-# # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
-# E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
-# E_jcm=[[1/2*np.sqrt(4*g**2+d**2),-1/2*np.sqrt(4*g**2+d**2)],[1/2*np.sqrt(2*4*g**2+d**2),-1/2*np.sqrt(2*4*g**2+d**2)]]
+def gamma_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
+    return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
 
-# fig=plt.figure(figsize=(8,6))
-# ax=fig.add_subplot()
-# # ax.set_title("Relación de dispersión",size=20)
-# ax.plot(d/g,E_jcm[0][0]*200,linestyle="dashed",color="black",label="$2E_{JC}^{(1)}$")
-# ax.plot(d/g,E_jcm[0][1]*200,linestyle="dashed",color="black")
+def eta_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
+    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
 
-# ax.plot(d/g,E_jcm[1][0]*200,linestyle="dashed",color="red",label="$2E_{JC}^{(2)}$")
-# ax.plot(d/g,E_jcm[1][1]*200,linestyle="dashed",color="red")
+def Q_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return gamma_n(n_,d,g,k,J,x)/3-beta_n(n_,k,J,x)*beta_n(n_,k,J,x)/9
 
-# ax.plot(d/g,E[0][0]*100,color="black",label='$E^{(0)}$')
-# ax.plot(d/g,E[1][0]*100,color="green",label='$E_1^{(1)}$')
-# ax.plot(d/g,E[1][1]*100,color="green",label='$E_2^{(1)}$')
-# ax.plot(d/g,E[1][2]*100,color="lime",label='$E_3^{(1)}$')
+def R_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return 1/54*(9*beta_n(n_,k,J,x)*gamma_n(n_)-27*eta_n(n_,d,g,k,J,x)-2*beta_n(n_,k,J,x)*beta_n(n_,k,J,x)*beta_n(n_,k,J,x))
 
-# ax.plot(d/g,E[2][0]*100,color="red",label='$E_1^{(2)}$')
-# ax.plot(d/g,E[2][1]*100,color="orange",label='$E_2^{(2)}$')
-# ax.plot(d/g,E[2][2]*100,color="yellow",label='$E_3^{(2)}$')
-# ax.plot(d/g,E[2][3]*100,color="grey",label='$E_4^{(2)}$')
-# ax.set_xlim(-10,10)
-# ax.set_xlabel("$\Delta/g$")
-# ax.set_ylabel("Energia")
-# ax.legend(loc="upper right")
-# ax.grid()
-# plt.show()
+def theta_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return np.arccos(R_n(n_,d,g,k,J,x)/np.sqrt(-Q_n(n_,d,g,k,J,x)**3))
+
+def omega_general(n_:int,j:int,d:float,g:float,k:float,J:float,x:float):
+    return 2*np.sqrt(-Q_n(n_,d,g,k,J,x))*np.cos((theta_n(n_,d,g,k,J,x)+2(j-1)*np.pi)/3)
+
+d=np.linspace(-10*g,10*g,100000)
+# E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
+E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
+E_jcm=[[1/2*np.sqrt(4*g**2+(d-x)**2),-1/2*np.sqrt(4*g**2+(d-x)**2)],[1/2*np.sqrt(2*4*g**2+(d-3*x)**2),-1/2*np.sqrt(2*4*g**2+(d-3*x)**2)]]
+
+fig=plt.figure(figsize=(8,6))
+ax=fig.add_subplot()
+# ax.set_title("Relación de dispersión",size=20)
+ax.plot(d/g,E_jcm[0][0]*200,linestyle="dashed",color="black",label="$2E_{JC}^{(1)}$")
+ax.plot(d/g,E_jcm[0][1]*200,linestyle="dashed",color="black")
+
+ax.plot(d/g,E_jcm[1][0]*200,linestyle="dashed",color="red",label="$2E_{JC}^{(2)}$")
+ax.plot(d/g,E_jcm[1][1]*200,linestyle="dashed",color="red")
+
+ax.plot(d/g,E[0][0]*100,color="black",label='$E^{(0)}$')
+ax.plot(d/g,E[1][0]*100,color="green",label='$E_1^{(1)}$')
+ax.plot(d/g,E[1][1]*100,color="green",label='$E_2^{(1)}$')
+ax.plot(d/g,E[1][2]*100,color="lime",label='$E_3^{(1)}$')
+
+ax.plot(d/g,E[2][0]*100,color="red",label='$E_1^{(2)}$')
+ax.plot(d/g,E[2][1]*100,color="orange",label='$E_2^{(2)}$')
+ax.plot(d/g,E[2][2]*100,color="yellow",label='$E_3^{(2)}$')
+ax.plot(d/g,E[2][3]*100,color="grey",label='$E_4^{(2)}$')
+ax.set_xlim(-10,10)
+ax.set_xlabel("$\Delta/g$")
+ax.set_ylabel("Energia")
+ax.legend(loc="upper right")
+ax.grid()
+plt.show()
 
