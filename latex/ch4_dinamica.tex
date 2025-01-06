@@ -142,7 +142,42 @@ En esta figura \ref{fig:relación energia detunning 1} se observan las energias 
 Otra cosa interesante de notar es que si la cavidad es lineal, entonces los estados antisimetricos de diferentes excitaciones $\frac{1}{\sqrt{2}}(\ket{eg,n}-\ket{ge,n})$ y $\frac{1}{\sqrt{2}}(\ket{eg,n'}-\ket{ge,n'})$, estan degenerados en energía.
 
 Una vez estudiados los niveles de energía y comparados con el caso de 1 átomo, vamos a proseguir con la dinamica del problema, que en el caso unitario puede resolverse analiticamente, pero a\'un asi, nos concentraremos en simulaciones numericas.
-Para comenzar, vamos a intentar de recuperar el caso de un átomo, asimetrizando el acoplamiento uno de los dos átomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parámetro adimensional $\alpha$ que solamente actua sobre el átomo 2, y sirve de apantallamiento. 
+Para comenzar, vamos a intentar de recuperar el caso de un átomo, asimetrizando el acoplamiento uno de los dos átomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parámetro adimensional $\alpha$ que solamente actua sobre el átomo 2, y sirve de apantallamiento. Este parametro $\alpha$ acompañara a las constantes de acoplamiento, por ejemplo el acoplamiento entre el atomo y la cavidad $g\rightarrow g\alpha$, tal que si $\alpha \rightarrow 0$ entonces el atomo quedara desacoplado de la cavidad. 
 
 \subsection{Dinámica poblacional}
+
+Lo primero que se tiene que hacer es recuperar los resultados anteriores. Para aclarar, en la figura \ref{fig4:diagrama esquematico} se muesta un esquema de como es el problema que se esta trabajando, con los nombres que se le daran a las partes del sistema. Llamaremos atomo B al que esta apantallado mediante el parametro adimensional $\alpha$, el indice A se referira al otro atomo, y C a la cavidad. Entonces, para recuperar los resultados anteriores, se propone que $\alpha=0$ y la interaccion entre los atomos $k=J=0$. De esta manera, se elige en analogia con el caso de 1 atomo, como estado inicial cualquier estado donde el atomo A sea excitado, y la cavidad C no tenga ningun foton; por lo tanto se elige el estado inicial mas sencillo posible que cumple estas condiciones $\ket{\psi_0}=\ket{eg0}$.
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/diagrama esquematico.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.3\textwidth}
+    \caption{Esquema del problema de estudio. Se nombran a las partes para referenciarlas facilmente. Los atomos los llamamos A y B, donde el atomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos atomos son de dos niveles, y en principio son identicos e indistinguibles, pero se le agrega un apantallamiento artificial.
+         } \label{fig4:diagrama esquematico}
+  \end{minipage}
+\end{figure}
+Utilizando esta condicion inicial se realiza una simulacion numerica y se observan las poblaciones, y se espera recuperar la misma dinamica que en el caso de 1 atomo, ya que el atomo B no interactua con ninguna de las otras partes del sistema A y C. Para poder representar el estado del sistema sobre una esfera de Bloch, se realiza una traza parcial sobre el atomo B, y asi se obtiene la figura \ref{fig4:bloch delta}, donde se muestran 3 trayectorias correspondientes a diferentes valores del detunning, la linea azul es el caso resonante $\Delta=0$, y las trayectorias morada y naranja se corresponde con $\Delta=0.5g$ y $\Delta=2g$ respectivamente.
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.3\textwidth}
+    \caption{
+         } \label{fig4:bloch delta}
+  \end{minipage}
+\end{figure}
+Se observa como la dinamica entre estos dos estados es exactamente igual que la observada en la figura \ref{fig3:bloch cinematica}, ademas, como todos los puntos estan sobre la superficie de la esfera, los estados son puros, diciendonos que el estado global es separable, y entonces haber trazado sobre el atomo B no tuvo efecto sobre la dinamica entre el atomo A y la cavidad. Para corroborar esto se realiza un analisis poblacional mas general. \textcolor{red}{hacer grafico con las probabilidades y ver que la probabilidad de eg0 + gg1 =1}
+Lo siguiente que podemos analizar, que no se tenia la posibilidad cuando se tiene 1 atomo, es que se puede considerar una condicion inicial entrelazada. Si bien los atomos no interactuan, y el atomo B esta aislado del universo, se puede entrelazar los atomos y luego se apagan las interacciones del atomo B. Por ejemplo, si se considera el estado inicial entrelazado $\ket{\psi_0}=(\ket{eg0}+\ket{ge0})/\sqrt{2}$, se obtiene 
+\begin{figure}[H]
+    \begin{minipage}[c]{0.67\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.3\textwidth}
+    \caption{
+         } \label{fig4:bloch delta}
+  \end{minipage}
+\end{figure}
+Ahora, los estados no estan sobre la superficie, lo que se interpreta como que estamos en presencia de un estado mixto. Al trazar sobre el atomo B, efectivamente se considera como si este fuese parte de un entorno. Al olvidarse de la dinamica del segundo atomo, se puede interpretar como que este se lleva un 50\% de probabilidad de llevarse la excitacion, ya que no sabemos si inicialmente el atomo A o el atomo B es el que tiene la excitacion. Entonces efectivamente tenemos un 50\% de probabilidad de que el estado de la cavidad sea $\ket{g0}$, y no evoluciona, y un 50\% de probabilidad de que la excitacion este dentro de la cavidad, y por lo tanto vemos que la dinamica es la misma que en el caso anterior, pero con amplitudes menores. \textcolor{blue}{ACA IBA A DECIR ALGO, PERO ME PARECE QUE NO PUEDO PORQUE EL ESTADO ENTRELAZADO QUIZAS TIENE ALGUNAS COSAS RARAS. Uno puede adelantarse un poco, y deducir como se comporta la fase geometrica en estos dos casos. Por un lado, en el caso que el estado inicial no este entrelazado, la dinamica es exactamente igual que en el caso de 1 atomo, entonces la fase geometrica es la misma que \ref{eq3:eq3:fg unitaria jcm}, en cambio, cuando el estado inicial es el entrelazado, como la dinamica es igual que antes pero con un medio de la probabilidad, y luego el atomo B no evoluciona, entonces es autoestado y no acumula fase geometrica. Por lo tanto se puede concluir que en el caso entrelazado la FG va a ser la mitad que en el caso no entrelazado.}
+
+
 
