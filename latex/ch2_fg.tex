@@ -167,7 +167,27 @@ Tenemos permitido definir este funcional de la curva $C$ en el espacio de rayos,
 \textcolor{red}{LO PONGO O NO LO PONGO?}
 
 \section{Fases geométricas en sistemas abiertos}\label{sec2:sistemas abiertos}
+Las secciones anteriores tratan la fase geometrica en diferentes casos, ascendientes en generalidad ya que se logra relajar condiciones e hipotesis, y se llego a una expresion general que satisface propiedades importantes, como invarianza antre transformaciones de fase global $U(1)$ y a reparametrizaciones monotonas, tambien dependen unicamente de la trayectoria descirta por el estado fisico en ele spacio de rayos y no del Hamiltoniano que genera dicha trayectoria, y finalmente son interpretables en terminos puramente geometricos. 
 
+Sin embargo, estamos asumiendo que el estado es puro durante toda su evolucion, restriccion que es una idealizacion y experimentalmente es necesario tener en cuenta que todo sistema fisico esta en contacto con un entorno, y se requiere entonces una descripcion en terminos de estados mixtos y evoluciones no unitarias. La definicion de una fase geometrica que aplique en tal escenario es todavia un problema cuya solucion todavia no llego a un concenso unanime. Muchos esfuerzos notables [\cite{6},\cite{8}-\cite{10}] se concentraron en definir la fase geometrica acumulada por un estado mixto, incluso existen reportes experimentales de detecciones \cite{73}. Otra ruta explirada considera el efecto del entorno como correciones que permitan mantener las nociones de fase geometrica del caso unitartio. Trabajos de este tipo introcucen el efecto del entorno mediante un hamiltoniano no hermicito \cite{32,33}, y otros estudian modificaciones a la fase de Berry por ruido clasico en el campo magnetico \cite{38}, o por un entorno cuantico \cite{39,40}, tanto desde lo teorico como lo experimental \cite{74,75}.
+
+El marco en el cual una fase geometrica para sistemas cuanticos abiertos debe definirse es le siguiente: se suponeq ue el efecto del entorno en el sistema de interes es tal que, bajo aproximaciones adecuadas, el sistema puede tratarse \textit{efectovamente} como un sistema aislado que experimenta un tipo de evolucion lineal no unitaria:
+\begin{equation}
+    \Sigma:\rho(0)\rightarrow\Sigma_t[\rho(0)] \equiv \rho(t)
+\end{equation}
+que da cuenta tanto de la dinamica interna del sistema como de su interaccion con el entorno, y satisface una ecuacion maestra.Una consecuencia de este enfoque es que, en el caso general, un estado inicial puro evoluciona en un estado mixto $\rho(t)$. El operador densidad que representa el estado del sistema admite una dscomposiucion $\{ \ket{\psi_k(t)},\omega_k(t)\}$ en estados puros $\ket{\psi_k(t)}$ pesados con probabilidades $\omega_k(t)$, que permite expresarla como
+\begin{equation}
+    \rho(t)=\sum_k\omega_k(t)\ketbra{\psi_k(t)}{\psi_k(t)}
+\end{equation}
+. La asociacion $\rho(t)\rightarrow \{ \ket{\psi_k(t)},\omega_k(t)\}$ entre el operador densidad y el \textit{ensamble} de estados $\{\ket{\psi_k(t)}\}$ no es uno-a-uno, sino uno-a-muchos, lo que significa que en general existen diferentes ensambles, con diferentes estados y diferentes pesos, que sin embargo tienen la misma matriz densidad. Esto imposibilita la distincion entre estas situaciones solamente con la informacion que proporciona la matriz densidad.
+
+Una estrategia recurrente entre la literatura que aborda el problema de asociar una fase gemoetrica a un estado mixto $\rho(t)$ es descomponer formalnete la matriz densidad en una mezcla estadistica como la de la ecuacion enterior, y aplicar la fase unitaria \ref{eq2.34} sobre cada elemento de la mezcla para asociar una fase a $\rho(t)$. Esto fue propuesto, desde una descripcion en terminos de operadores de saltos en \cite{32,33} y posteriormente en \cite{34-37}. En una aproximacion diferente al problema, en Tong et al. \cite{31} se propone una definicion de fase geometrica que se vale de una purificacion del estado, pero resulta independiente de la eleccion que se utilize para purificar. La siguiente seccion desarrolla esta propuesta en particular.
+\subsection{Enfoque cinematico en sistemas abiuertos}
+La introduccion teorica concluye con esta seccion, siguiento la propuesta de Tong et al. \cite{31} para la fase geometrica en sistemas cuanticos abiertos. Para esto, se considera un sistema y el espacio de Hilbert $\mathcal{H}$ de dimension $N$ asociado al mismo. La evolucion del estado puede describirse como una curva $C \subset \mathcal{P}$
+\begin{equation}
+    C:t\in[0,T] \rightarrow \rho(t) = \sum_{k=1}^N\omega_k(t)\ketbra{\psi_k(t)}{\psi_k(t)}
+\end{equation}
+donde $\omega_k(t)\geq 0$ y $\ket{\psi_k(t)}$ son los autovalores y autoestados, respectivamente, de la matriz densidad $\rho(t)$ del sistema
 \begin{equation}
     \phi_g[C]=\arg \left( \sum_{k=1}^{N} \sqrt{\omega_k(0)\omega_k(t)} \braket{\psi_k(0)}{\psi_k(T)}e^{-\int_{0}^{T}dt\braket{\psi_k(t)}{\dot\psi_k(t)}} \right)
 \end{equation}\label{ec2:fg general}

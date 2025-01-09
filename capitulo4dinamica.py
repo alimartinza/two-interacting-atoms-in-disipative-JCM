@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import jcm_lib as jcm
 import matplotlib as mpl
 import os
-
+import time
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
@@ -92,32 +92,36 @@ def theta_n(n_:int,d:float,g:float,k:float,J:float,x:float):
 def omega_general(n_:int,j:int,d:float,g:float,k:float,J:float,x:float):
     return 2*np.sqrt(-2*Q_n(n_,d,g,k,J,x))*np.cos((theta_n(n_,d,g,k,J,x)+2*(j-1)*np.pi)/3)
 
+
 '''#################################################################################################################################################
 ---------------------------------------------------REPRODUCCION RESULTADOS 1 ATOMO: ALPHA=0 -------------------------------------------------------------------
 ####################################################################################################################################################'''
+process_ti=time.process_time()
 alpha=0
 
 w0=1
 g=0.001*w0
 
-p=0.005*g
-gamma=0.1*g
+p=0#.005*g
+gamma=0#.1*g
 
-x=0
-d=2*g
+x=0#.5*g
+d=0
 
-k=0 # .1*g
-J=0
+k=0.1*g
+J=0#.5*g
 
 
-psi0=(eg0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-psi0Name='eg0'
+psi0=(eg0+ge0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+psi0Name='eg0+ge0'
 # print(psi0)
-steps=40000
+steps=50000
 
-T=2*np.pi/omega_general(1,1,d,g,k,J,x) 
-
+T=2*np.pi/omega_general(1,1,d,g,k,J,x)
+# print(omega_general(1,2,d,g,k,J,x))
 t_final=5*T
+ciclos_bloch=2
+points=2000
 
 acoplamiento='lineal'
 def f():
@@ -140,18 +144,19 @@ t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION
 
 sol_d=mesolve(H,psi0,t,c_ops=l_ops)
 
-
-points=2000
 # colors=mpl.colormaps['inferno'](np.linspace(0,1,steps))
 def inferno(points:int):
     nrm = mpl.colors.Normalize(0, points)
     return mpl.cm.inferno(nrm(np.linspace(0,points,points)))
 colors=inferno(points)
-colors_pob=mpl.colormaps['plasma'](np.linspace(0,1,4))
-
+colors_pob=mpl.colormaps['turbo'](np.linspace(0,1,4))
+colors_coh=mpl.colormaps['turbo'](np.linspace(0,1,6))
 '''########---Estado total---###########'''
 
 fg_d,arg,eigenvals_t_d = jcm.fases(sol_d)
+
+process_t0=time.process_time()
+print(f'0. SIMU Y CALCULO FG     ; {process_t0-process_ti}s ; -- ')
 
 ops = [pr(ee0),pr(ee1),pr(ee2),pr(eg0),pr(eg1),pr(eg2),pr(ge0),pr(ge1),pr(ge2),pr(gg0),pr(gg1),pr(gg2)]
 ops_name=['ee0','ee1','ee2','eg0','eg1','eg2','ge0','ge1','ge2','gg0','gg1','gg2']
@@ -167,27 +172,35 @@ for ops_i,ops_name_i in zip(ops,ops_name):
 svn_tot=jcm.entropy_vn(eigenvals_t_d)
 slin_tot=jcm.entropy_linear(sol_d.states)
 
-fig_pob_ABC = plt.figure(figsize=(16,9))
+fig_pob_ABC = plt.figure(figsize=(8,6))
 ax_pob_ABC = fig_pob_ABC.add_subplot()
 ax_pob_ABC.set_title('ABC')
 ax_pob_ABC.set_xlabel('$t/T$')
 ax_pob_ABC.set_ylabel('Amp. Prob. ')
 ax_pob_ABC.set_ylim(0,1)
 ax_pob_ABC.set_xlim(0,t_final/T)
-for i,ops_name_i in enumerate(ops_name):
-    ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i],label=ops_name_i)
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][3]) for i in range(steps)],color='black')
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][6][6]) for i in range(steps)],color='red')
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][10][10]) for i in range(steps)],color='blue')
+# for i,ops_name_i in enumerate(ops_name):
+#     ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i])#,label=ops_name_i)
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][9]) for i in range(steps)],color='black',label=ops_name[9])
 
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][6]) for i in range(steps)],linestyle='dashed',color='maroon')
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]) for i in range(steps)],linestyle='dashed',color=(0,0,170/255,1))
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][6][10]) for i in range(steps)],linestyle='dashed',color='magenta')
+ax_pob_ABC.plot(t/T,[sol_d.states[i][3][3] for i in range(steps)],color=(0, 255/255, 0),label=ops_name[3])
+ax_pob_ABC.plot(t/T,[sol_d.states[i][6][6] for i in range(steps)],color=(255/255, 0, 0),label=ops_name[6])
+ax_pob_ABC.plot(t/T,[sol_d.states[i][10][10] for i in range(steps)],color=(0, 0, 255/255),label=ops_name[10])
+
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][9]) for i in range(steps)],linestyle='dashed',color=(28/255, 176/255, 28/255))
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][6][9]) for i in range(steps)],linestyle='dashed',color=(186/255, 23/255, 23/255))
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][10]) for i in range(steps)],linestyle='dashed',color=(0, 0, 170/255))
+
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][6]) for i in range(steps)],linestyle='dashed',color=(255/255, 209/255, 0))
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]) for i in range(steps)],linestyle='dashed',color=(0, 209/255, 210/255))
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][6][10]) for i in range(steps)],linestyle='dashed',color=(235/255, 18/255, 235/255))
 # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['eg0'])+np.array(ops_expect_d['ee0']),label='$e_A0_C$',color='red',marker=',',alpha=0.5)
 # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['gg1'])+np.array(ops_expect_d['ge1']),label='$g_A1_C$',color='blue',marker=',',alpha=0.5)
 
 ax_pob_ABC.legend()
 
+process_t1=time.process_time()
+print(f'1. PLOT ABC          ; {process_t1-process_ti}s ; +{process_t1-process_t0}s')
 
 '''#########---Atomo A-Cavidad----##########'''
 
@@ -242,31 +255,35 @@ ax_AC.set_xlabel('$t/T$',size=20)
 ax_AC.set_ylabel('Poblaciones',size=20)
 ax_AC.legend()
 
+process_t2=time.process_time()
+print(f'2. PLOT AC            ; {process_t2-process_ti}s ; +{process_t2-process_t1}s')
 
 
 ops_acavity=[sx,sy,sz,sx1_02,sy1_02,sz1_02]
 
 
-# expect_sx1_02_acavity=[expect(atom_acavity_states_d[i],sx1_02) for i in range(0,steps,int(steps/points))]
-# expect_sy1_02_acavity=[expect(atom_acavity_states_d[i],sy1_02) for i in range(0,steps,int(steps/points))]
-# expect_sz1_02_acavity=[expect(atom_acavity_states_d[i],sz1_02) for i in range(0,steps,int(steps/points))]
+expect_sx1_02_acavity=[expect(atom_acavity_states_d[i],sx1_02) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+expect_sy1_02_acavity=[expect(atom_acavity_states_d[i],sy1_02) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+expect_sz1_02_acavity=[expect(atom_acavity_states_d[i],sz1_02) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
 
 
-# esfera02=Bloch()
-# esfera02.make_sphere()
-# esfera02.clear()
-# esfera02.set_point_marker(['o'])
-# for i in range(points):
-#     esfera02.add_points([expect_sx1_02_acavity[i],expect_sy1_02_acavity[i],expect_sz1_02_acavity[i]],colors=colors[i],)#,'m',colors)
+esfera02=Bloch()
+esfera02.make_sphere()
+esfera02.clear()
+esfera02.set_point_marker(['o'])
+for i in range(points):
+    esfera02.add_points([expect_sx1_02_acavity[i],expect_sy1_02_acavity[i],expect_sz1_02_acavity[i]],colors=colors[i],)#,'m',colors)
     
 
-# # esfera02.point_color=list(colors)
+# esfera02.point_color=list(colors)
 
-# esfera02.render()
-# esfera02.save(f'./graficos/{psi0Name} bloch AC a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
+esfera02.render()
+esfera02.save(f'./graficos/{psi0Name} bloch AC a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
 
-# esfera02.show()
-# plt.show()
+process_t3=time.process_time()
+print(f'3. BLOCH AC           ; {process_t3-process_ti}s ; +{process_t3-process_t2}s')
+
+
 '''####---Atomo B---###'''
 
 atom_b_states_d=np.empty_like(sol_d.states)
@@ -294,24 +311,29 @@ ax_B.set_xlabel('$t/T$',size=20)
 ax_B.set_ylabel('Poblaciones',size=20)
 ax_B.legend()
 
+process_t4=time.process_time()
+print(f'4. PLOT B             ; {process_t4-process_ti}s ; +{process_t4-process_t3}s')
 
-# ops_b=[sigmax(),sigmay(),sigmaz()]
-# expect_sx_b=[expect(atom_b_states_d[i],sigmax()) for i in range(0,steps,int(steps/points))]
-# expect_sy_b=[expect(atom_b_states_d[i],sigmay()) for i in range(0,steps,int(steps/points))]
-# expect_sz_b=[expect(atom_b_states_d[i],sigmaz()) for i in range(0,steps,int(steps/points))]
+ops_b=[sigmax(),sigmay(),sigmaz()]
+expect_sx_b=[expect(atom_b_states_d[i],sigmax()) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+expect_sy_b=[expect(atom_b_states_d[i],sigmay()) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+expect_sz_b=[expect(atom_b_states_d[i],sigmaz()) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
 
-# # vec_b=[expect_sx_b,expect_sy_b,expect_sz_b]
-# esferaB=Bloch()
-# esferaB.set_label_convention('atomic')
-# esferaB.make_sphere()
-# esferaB.clear()
-# esferaB.set_point_marker(['o'])
-# for i in range(points):
-#     esferaB.add_points([expect_sx_b[i],expect_sy_b[i],expect_sz_b[i]],colors=colors[i],)#,'m',colors)
+# vec_b=[expect_sx_b,expect_sy_b,expect_sz_b]
+esferaB=Bloch()
+esferaB.set_label_convention('atomic')
+esferaB.make_sphere()
+esferaB.clear()
+esferaB.set_point_marker(['o'])
+for i in range(points):
+    esferaB.add_points([expect_sx_b[i],expect_sy_b[i],expect_sz_b[i]],colors=colors[i],)#,'m',colors)
     
 
-# esferaB.render()
-# esferaB.save(f'./graficos/{psi0Name} bloch B a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
+esferaB.render()
+esferaB.save(f'./graficos/{psi0Name} bloch B a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
+
+process_t5=time.process_time()
+print(f'5. BLOCH B            ; {process_t5-process_ti}s ; +{process_t5-process_t4}s')
 
 '''###---Atomo A-Atomo B---###'''
 
@@ -349,6 +371,9 @@ ax_AB.set_xlabel('$t/T$',size=20)
 ax_AB.set_ylabel('Poblaciones',size=20)
 ax_AB.legend()
 
+process_t6=time.process_time()
+print(f'6. PLOT AB            ; {process_t6-process_ti}s ; +{process_t6-process_t5}s')
+
 
 svn_ab=jcm.entropy_vn_atom(atoms_states_d)
 slin_ab=jcm.entropy_linear(atoms_states_d)
@@ -363,6 +388,9 @@ ax_concu.plot(t/T,concu_ab,color='black')
 ax_concu.set_ylim(0,1)
 ax_concu.set_xlim(0,t_final/T)
 
+process_t7=time.process_time()
+print(f'7. PLOT CONCU         ; {process_t7-process_ti}s ; +{process_t7-process_t6}s')
+
 '''##############---Cavidad---############'''
 
 cavity_states_d=np.empty_like(sol_d.states)
@@ -374,25 +402,25 @@ svn_c=jcm.entropy_vn_atom(cavity_states_d)
 slin_c=jcm.entropy_linear(cavity_states_d)
 
 
-fig_entropia=plt.figure()
-ax_slin=fig_entropia.add_subplot(121)
-ax_slin.set_title('$S_{lin}$')
-ax_slin.set_xlim(0,t_final/T)
+fig_entropia=plt.figure(figsize=(8,6))
+# ax_slin=fig_entropia.add_subplot(121)
+# ax_slin.set_title('$S_{lin}$')
+# ax_slin.set_xlim(0,t_final/T)
 
-ax_slin.plot(t/T,slin_tot,color='black',label='ABC',zorder=1,linewidth=2,marker='o',markevery=int(steps/10*T/t_final))
+# ax_slin.plot(t/T,slin_tot,color='black',label='ABC',zorder=1,linewidth=2,marker='o',markevery=int(steps/10*T/t_final))
 
-ax_slin.plot(t/T,slin_ab,color='red',label='AB')
-ax_slin.plot(t/T,slin_c,color='red',linestyle='dashed',label='C',lw=2)
+# ax_slin.plot(t/T,slin_ab,color='red',label='AB')
+# ax_slin.plot(t/T,slin_c,color='red',linestyle='dashed',label='C',lw=2)
 
-ax_slin.plot(t/T,slin_ac,color='blue',label='AC')
-ax_slin.plot(t/T,slin_b,color='blue',linestyle='dashed',label='B')
+# ax_slin.plot(t/T,slin_ac,color='blue',label='AC')
+# ax_slin.plot(t/T,slin_b,color='blue',linestyle='dashed',label='B')
 
-# ax_slin.plot(t/T,slin_tot-slin_ab-slin_b,color='green',marker='o',label='$S_T(AB)$')
-ax_slin.legend()
-ax_slin.hlines(0.5,0,t_final/T,colors='grey',linestyles='dashed')
+# # ax_slin.plot(t/T,slin_tot-slin_ab-slin_b,color='green',marker='o',label='$S_T(AB)$')
+# ax_slin.legend()
+# ax_slin.hlines(0.5,0,t_final/T,colors='grey',linestyles='dashed')
 
 
-ax_svn=fig_entropia.add_subplot(122)
+ax_svn=fig_entropia.add_subplot()
 ax_svn.set_title('$S_{vN}$')
 ax_svn.set_xlim(0,t_final/T)
 
@@ -409,13 +437,34 @@ ax_svn.hlines(np.log(2),0,t_final/T,colors='grey',linestyles='dashed')
 
 ax_svn.legend()
 
+process_t8=time.process_time()
+print(f'8. PLOT ENTROPIA      ; {process_t8-process_ti}s ; +{process_t8-process_t7}s')
+
 plt.show()
 
 '''#################################################################################################################################################
----------------------------------------------------INSERTAR NOMBRE DE SECCION ACA-------------------------------------------------------------------
+---------------------------------------------------COSAS PARA CUANDO AGREGO MAS EXCITACIONES-------------------------------------------------------------------
 ####################################################################################################################################################'''
 
+'''####---para ABC---####'''
+# for i,ops_name_i in enumerate(ops_name):
+#     ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i])#,label=ops_name_i)
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][0][0]) for i in range(steps)],color=colors_pob[0],label=ops_name[4])
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][4][4]) for i in range(steps)],color=colors_pob[1],label=ops_name[4])
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][7][7]) for i in range(steps)],color=colors_pob[2],label=ops_name[7])
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][11][11]) for i in range(steps)],color=colors_pob[3],label=ops_name[11])
 
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][0][4]) for i in range(steps)],linestyle='dashed',color='maroon')
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][0][7]) for i in range(steps)],linestyle='dashed',color='maroon')
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][0][11]) for i in range(steps)],linestyle='dashed',color='maroon')
+
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][4][7]) for i in range(steps)],linestyle='dashed',color='maroon')
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][4][11]) for i in range(steps)],linestyle='dashed',color=(0,0,170/255,1))
+# ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][7][11]) for i in range(steps)],linestyle='dashed',color='magenta')
+# # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['eg0'])+np.array(ops_expect_d['ee0']),label='$e_A0_C$',color='red',marker=',',alpha=0.5)
+# # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['gg1'])+np.array(ops_expect_d['ge1']),label='$g_A1_C$',color='blue',marker=',',alpha=0.5)
+
+# ax_pob_ABC.legend()
 
 
 
