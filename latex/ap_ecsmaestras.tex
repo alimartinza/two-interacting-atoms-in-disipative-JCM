@@ -8,4 +8,21 @@
 \fancyhead[RO]{\nouppercase{\leftmark\hfill}}
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
 
+En este apendice se desarrolla la derivacion de la ecuacion de Lindblad, que es la ecuacion maestra que determina la evolucion temporal de una matriz densidad $\rho$, que esta en contacto con un entorno del cual no se conoce la dinamica. La dinamica en conjunto esta regida por un Hamiltoniano que formalmente puede escribirse como
+\begin{equation}
+    H=H_S+H_B+H_{int}
+\end{equation}
+donde los subindices se refieren a diferentes partes del problema. En primer lugar S se refiere al sitema de estudio, del cual se quiere encontrar la evolucion temporal, y esta en contacto con un entorno B, entonces $H_B$ es el Hamiltoniano que rige la dinamica del entorno que en principio no conocemos. Finalmente, tenemos la interaccion entre las dos partes, dada por el hamiltoniano de interaccion $H_{int}$.
+El conjunto completo se puede pensar como un sistema cerrado, y por lo tanto su evolucion temporal esta formalmente dada por la ecuacion de Schr\"odinger, y su correspondiente operador de evolucion $U(t)$ es
+\begin{equation}
+    U(t)=\mathcal{T}\exp\left( -i\int_{0}^{t}dt'H(t') \right)
+\end{equation}
+donde $\mathcal{T}$ indica la prescripcion de ordenamiento temporal, y $U(0)=\mathbb{1}$. Si se representa el estado del sistema total con un operador densidad $\rho_{tot}=\ketbra{\psi(t)}{\psi(t)}$, entonces al aplicar la ecuacion de Schr\"odinger de ambos lados se obtiene que 
 
+\begin{equation}
+    \dot\rho_{tot}(t)=-\frac{i}{\hbar}[H(t),\rho_{tot}(t)]
+\end{equation}
+que es la ecuacion de Louiville-Von Neumann, que describe la trayectoria en el espacio de Hilbert del operador densidad del sistema total cerrado.
+
+
+Al no conocer, o no poder resolver esta ecuacion por la complejidad del entorno, por ejemplo por su gran cantidad de grados de libertad, 

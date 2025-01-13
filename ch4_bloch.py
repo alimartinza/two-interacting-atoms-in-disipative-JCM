@@ -105,8 +105,8 @@ k=0 # .1*g
 J=0
 
 
-psi0=(eg0+ge0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-psi0Name='eg0+ge0'
+psi0=(eg0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+psi0Name='eg0'
 # print(psi0)
 steps=20000
 esfera02=Bloch()
@@ -118,7 +118,7 @@ colors_pob=mpl.colormaps['plasma'](np.linspace(0,1,4))
 fig_pob_B=plt.figure(figsize=(8,6))
 ax_B=fig_pob_B.add_subplot()
 
-for l,d in enumerate([0,0.5*g,2*g]):
+for l,x in enumerate([0,0.5*g,2*g]):
     T=2*np.pi/omega_general(1,1,d,g,k,J,x) 
 
     t_final=1*T/np.sqrt(2)

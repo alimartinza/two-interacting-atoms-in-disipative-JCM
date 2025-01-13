@@ -9,23 +9,36 @@
 \contentsline {section}{\numberline {2.3}Enfoque Cinemático}{7}{section.2.3}%
 \contentsline {section}{\numberline {2.4}Ejemplo de aplicacion: Sistema de dos niveles en un campo magn\'etico}{8}{section.2.4}%
 \contentsline {section}{\numberline {2.5}Fases geométricas en sistemas abiertos}{8}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Enfoque cinematico en sistemas abiuertos}{9}{subsection.2.5.1}%
-\contentsline {chapter}{\numberline {3}Modelo de Jaynes-Cummings}{11}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Modelo y aproximaciónes}{11}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Fase geométrica en el JCM}{14}{subsection.3.1.1}%
-\contentsline {subsubsection}{Fase de Berry}{14}{section*.4}%
-\contentsline {subsubsection}{Aproximación Cinemática}{14}{section*.5}%
-\contentsline {section}{\numberline {3.2}Medio Kerr}{15}{section.3.2}%
-\contentsline {section}{\numberline {3.3}JCM disipativo}{17}{section.3.3}%
-\contentsline {subsection}{\numberline {3.3.1}Fase geométrica en presencia de disipación}{20}{subsection.3.3.1}%
-\contentsline {subsubsection}{Dependencia con el régimen de acoplamiento}{21}{section*.10}%
-\contentsline {subsubsection}{Dependencia con el detunning}{21}{section*.12}%
-\contentsline {subsubsection}{Dependencia con el medio Kerr}{23}{section*.15}%
-\contentsline {subsubsection}{Robustez de la fase geométrica en el caso resonante}{25}{section*.19}%
-\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{27}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Modelo de dos átomos y solucion unitaria}{28}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Dinamica con apantallamiento}{32}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Interaccion atomo-atomo}{38}{subsection.4.2.1}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{41}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{43}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{45}{appendix.Alph1}%
+\contentsline {subsection}{\numberline {2.5.1}Enfoque cinemático en sistemas abiertos}{9}{subsection.2.5.1}%
+\contentsline {chapter}{\numberline {3}Modelo de Jaynes-Cummings}{13}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Modelo y aproximaciónes}{13}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Fase geométrica en el JCM}{16}{subsection.3.1.1}%
+\contentsline {subsubsection}{Fase de Berry}{16}{section*.4}%
+\contentsline {subsubsection}{Aproximación Cinemática}{16}{section*.5}%
+\contentsline {section}{\numberline {3.2}Medio Kerr}{17}{section.3.2}%
+\contentsline {section}{\numberline {3.3}JCM disipativo}{19}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Solucion y regimen de acoplamiento}{20}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Fase geométrica en presencia de disipación}{22}{subsection.3.3.2}%
+\contentsline {subsubsection}{Dependencia con el régimen de acoplamiento}{23}{section*.10}%
+\contentsline {subsubsection}{Dependencia con el detunning}{23}{section*.12}%
+\contentsline {subsubsection}{Dependencia con el medio Kerr}{25}{section*.15}%
+\contentsline {subsubsection}{Robustez de la fase geométrica en el caso resonante}{28}{section*.19}%
+\contentsline {chapter}{\numberline {4}Jaynes-Cummings de dos átomos, no lineal, medio Kerr}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Modelo de dos átomos y solucion unitaria}{32}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Dinámica con apantallamiento}{36}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Interacción átomo-átomo}{42}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Medio Kerr}{44}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Batidos}{46}{subsection.4.2.3}%
+\contentsline {section}{\numberline {4.3}Dinamica sin apantallamiento}{46}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Dinamica con disipacion}{46}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}Dinamica de entrelazamiento}{47}{section.4.4}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{49}{chapter.5}%
+\contentsline {section}{\numberline {5.1}FG unitaria}{49}{section.5.1}%
+\contentsline {section}{\numberline {5.2}FG disipativa}{49}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dependencia con el regimen de acoplamiento}{49}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Dependencia con el detunning}{49}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Dependencia con el medio Kerr}{49}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Dependencia con la interaccion entre atomos}{49}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Robustez}{49}{subsection.5.2.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{51}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{53}{appendix.Alph1}%

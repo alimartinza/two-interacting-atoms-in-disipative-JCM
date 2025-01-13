@@ -63,40 +63,48 @@ Para resolver el problema lo primero que hacemos es notar que el Hamiltoniano co
     & \left\{\ket{\Phi^{(n)}_1}=\ket{ggn},\ket{\Phi^{(n)}_2}=\frac{1}{\sqrt{2}}(\ket{egn-1}+\ket{gen-1}),\ket{\Phi^{(n)}_3}=\ket{een-2},\right. \\
 & \left. \ket{\Phi^{(n)}_4}=\frac{1}{\sqrt{2}}(\ket{egn-1}-\ket{gen-1})\right\} 
 \end{split}
+\label{ec4:base}
 \end{equation}
 ,donde se eligi\'o esta combinaci\'on particular porque el ultimo estado de la base, que es impar ante intercambio, queda desacoplado de los otros, simplificando el problema. Esto se ve al evaluar los elementos de matriz del Hamiltoniano $H_{i,j}=\bra{\Phi_i}\hat H \ket{\Phi_j}$, este queda en bloques, y el subespacio correspondiente a $n$ excitaciones $\hat H^{(n)}$ es una matriz de 4x4
 \begin{equation}
-    \hat H^{(n)} = 
+    \frac{\hat H^{(n)}}{\hbar}=
     \begin{pmatrix}
-    \hbar \chi n^2 - \hbar \Delta + \hbar J & \sqrt{2}\hbar g f(n)\sqrt{n} & 0 & 0 \\
-    \sqrt{2}\hbar g f(n)\sqrt{n} & \hbar \chi (n-1)^2  - \hbar J + 2\hbar k & \sqrt{2}\hbar g f(n-1)\sqrt{n-1} & 0 \\
-    0 & \sqrt{2}\hbar g f(n-1)\sqrt{n-1} & \hbar \chi (n-2)^2 + \hbar \Delta + \hbar J & 0 \\
-    0&0&0&\hbar \chi (n-1)^2 - \hbar \Delta - 2\hbar k
+     \chi n^2 - \Delta +  J & \sqrt{2} g f(n)\sqrt{n} & 0 & 0 \\
+    \sqrt{2} g f(n)\sqrt{n} &  \chi (n-1)^2  -  J + 2 k & \sqrt{2} g f(n-1)\sqrt{n-1} & 0 \\
+    0 & \sqrt{2} g f(n-1)\sqrt{n-1} &  \chi (n-2)^2 +  \Delta +  J & 0 \\
+    0&0&0& \begin{aligned} 
+                 & \chi (n-1)^2  \\ 
+                 &-  \Delta - 2 k
+        \end{aligned}
     \end{pmatrix}
 \end{equation}
 Vemos claramente que el estados impar ante intercambio esta aislado, y entonces es autoestado del problema, y por lo tanto evoluciona solo y no se mezcla con los otros estados. Esto nos sirve porque ahora, para terminar de resolver el problema, tenemos que diagonalizar la matriz de 3x3. Cabe aclarar que esta matriz solo es valida para $n\geq 2$, ya que los subespacios con $N=0,1$ no tienen 4 estados. En estos casos la soluci\'on del problema de autovalores es mas sencilla aun, as\'i que solo dejaremos los resultados. A partir de ahora se usar\'a como convención $\hbar=1$. \newline
 Para resolver el problema de autovalores de la matriz de 3x3 utilizamos la fórmula de Cardano para conseguir las ra\'ices triples que nos aparecen en el polinomio caracter\'istico, y entonces encontramos que los autovalores son
 \begin{equation}
     E_j^{(n)}=-\frac{1}{3}\beta_n+2\sqrt{-Q_n}\cos{\left(\frac{\theta_n+2(j-1)\pi}{3}\right)}
+    \label{ec4:autoenergias}
 \end{equation}
 para $j=1,2,3$, y donde 
 \begin{equation}
     \theta_n=\cos^{-1}\left(\frac{R_n}{\sqrt{-Q_n^3}}\right)
 \end{equation}
-\begin{align*}
-    Q_n & = \frac{3\gamma_n-\beta_n^2}{9} \\
-    R_n & = \frac{9\beta_n\gamma_n-27\eta_n-2\beta_n^3}{54} \\
-    \beta_n & = - \left( \chi(n^2+(n-1)^2+(n-2)^2)+J+2k\right) \\
-    \gamma_n & = (\chi(n-1)^2 - J + 2k)(x(n-2)^2+\chi n^2+2J) \\ 
-    & +(\chi (n-2)^2+\Delta+J)(x n^2-\Delta+J)-2g^2(n^{2a}+(n-1)^{2a}) \\ 
-    \eta_n &= -(\chi n^2-\Delta+J)(\chi(n-2)^2+\Delta+J)(\chi(n-1)^2-J+2k) \\
-    &+2g^2 \left[  \chi(n-2)^2n^{2a}+\chi n^2(n-1)^{2a}+\Delta\left(n^{2a}-(n-1)^{2a}\right) +J(n^{2a}-(n-1)^{2a})\right]
-\end{align*}
+\begin{equation}
+    \begin{aligned}
+        Q_n & = \frac{3\gamma_n-\beta_n^2}{9} \\
+        R_n & = \frac{9\beta_n\gamma_n-27\eta_n-2\beta_n^3}{54} \\
+        \beta_n & = - \left( \chi(n^2+(n-1)^2+(n-2)^2)+J+2k\right) \\
+        \gamma_n & = (\chi(n-1)^2 - J + 2k)(x(n-2)^2+\chi n^2+2J) \\ 
+        & +(\chi (n-2)^2+\Delta+J)(x n^2-\Delta+J)-2g^2(n^{2a}+(n-1)^{2a}) \\ 
+        \eta_n &= -(\chi n^2-\Delta+J)(\chi(n-2)^2+\Delta+J)(\chi(n-1)^2-J+2k) \\
+        &+2g^2 \left[  \chi(n-2)^2n^{2a}+\chi n^2(n-1)^{2a}+\Delta\left(n^{2a}-(n-1)^{2a}\right) +J(n^{2a}-(n-1)^{2a})\right]
+    \end{aligned} 
+    \label{ec4:parametros solucion}
+\end{equation}
 donde $a=\frac{1}{2}$ se corresponde con acoplamiento lineal, es decir, $f(n)=1$, y $a=1$ a Buck-Sukumar $f(n)=\sqrt{n}$. Los autovalores ser\'an reales si $Q_n^3+R_n^2<0$.
 Con esto podemos escribir los autovectores:
 \begin{equation}
     \begin{split}
-        \ket{u_j^{(n)}} &= \frac{1}{N_j^{(n)}} \bigg[ \left((E_j^{(n)} - H_{22}^{(n)})(E_j^{(n)}-H_{33}^{(n)}) - H_{23}^{(n)^2} \right) \ket{\Phi_1^{(n)}} \\ &+ H_{31}^{(n)}(E_j^{(n)}-H_{33}^{(n)})\ket{\Phi_2^{(n)}} + H_{23}^{(n)}H_{12}^{(n)}\ket{\Phi_3^{(n)}}\bigg]
+        \ket{u_j^{(n)}} &= \frac{1}{N_j^{(n)}} \bigg[ \left((E_j^{(n)} - H_{22}^{(n)})(E_j^{(n)}-H_{33}^{(n)}) - H_{23}^{(n)^2} \right) \ket{\Phi_1^{(n)}} \\ &+ H_{21}^{(n)}(E_j^{(n)}-H_{33}^{(n)})\ket{\Phi_2^{(n)}} + H_{23}^{(n)}H_{12}^{(n)}\ket{\Phi_3^{(n)}}\bigg]
     \end{split}
 \end{equation}
 Obviamente no nos olvidemos del estado $\ket{\Phi_4^{(n)}}$, que tambi\'en es autoestado, con autovalor $E_4^{(n)}=\chi(n-1)^2-J-2k$.
@@ -141,22 +149,22 @@ En esta figura \ref{fig:relación energia detunning 1} se observan las energias 
 
 Otra cosa interesante de notar es que si la cavidad es lineal, entonces los estados antisimetricos de diferentes excitaciones $\frac{1}{\sqrt{2}}(\ket{eg,n}-\ket{ge,n})$ y $\frac{1}{\sqrt{2}}(\ket{eg,n'}-\ket{ge,n'})$, estan degenerados en energía.
 
-Una vez estudiados los niveles de energía y comparados con el caso de 1 átomo, vamos a proseguir con la dinamica del problema, que en el caso unitario puede resolverse analiticamente, pero a\'un asi, nos concentraremos en simulaciones numericas.
-Para comenzar, vamos a intentar de recuperar el caso de un átomo, asimetrizando el acoplamiento uno de los dos átomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parámetro adimensional $\alpha$ que solamente actua sobre el átomo 2, y sirve de apantallamiento. Este parametro $\alpha$ acompañara a las constantes de acoplamiento, por ejemplo el acoplamiento entre el atomo y la cavidad $g\rightarrow g\alpha$, tal que si $\alpha \rightarrow 0$ entonces el atomo quedara desacoplado de la cavidad. 
+Una vez estudiados los niveles de energía y comparados con el caso de 1 átomo, vamos a proseguir con la dinámica del problema, que en el caso unitario puede resolverse analíticamente, pero a\'un asi, nos concentraremos en simulaciones numéricas.
+Para comenzar, vamos a intentar de recuperar el caso de un átomo, asimetrizando el acoplamiento uno de los dos átomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parámetro adimensional $\alpha$ que solamente actúa sobre el átomo 2, y sirve de apantallamiento. Este parámetro $\alpha$ acompañara a las constantes de acoplamiento, por ejemplo el acoplamiento entre el átomo y la cavidad $g\rightarrow g\alpha$, tal que si $\alpha \rightarrow 0$ entonces el átomo quedara desacoplado de la cavidad. 
 
-\section{Dinamica con apantallamiento}
+\section{Dinámica con apantallamiento}
 
-Lo primero que se tiene que hacer es recuperar los resultados anteriores. Para aclarar, en la figura \ref{fig4:diagrama esquematico} se muesta un esquema de como es el problema que se esta trabajando, con los nombres que se le daran a las partes del sistema. Llamaremos atomo B al que esta apantallado mediante el parametro adimensional $\alpha$, el indice A se referira al otro atomo, y C a la cavidad. Entonces, para recuperar los resultados anteriores, se propone que $\alpha=0$ y la interaccion entre los atomos $k=J=0$. De esta manera, se elige en analogia con el caso de 1 atomo, como estado inicial cualquier estado donde el atomo A sea excitado, y la cavidad C no tenga ningun foton; por lo tanto se elige el estado inicial mas sencillo posible que cumple estas condiciones $\ket{\psi_0}=\ket{eg0}$.
+Lo primero que se tiene que hacer es recuperar los resultados anteriores. Para aclarar, en la figura \ref{fig4:diagrama esquematico} se muestra un esquema de como es el problema que se esta trabajando, con los nombres que se le darán a las partes del sistema. Llamaremos atomo B al que esta apantallado mediante el parámetro adimensional $\alpha$, el indice A se referirá al otro átomo, y C a la cavidad. Entonces, para recuperar los resultados anteriores, se propone que $\alpha=0$ y la interacción entre los átomos $k=J=0$. De esta manera, se elige en analogía con el caso de 1 átomo, como estado inicial cualquier estado donde el átomo A sea excitado, y la cavidad C no tenga ningún fotón; por lo tanto se elige el estado inicial mas sencillo posible que cumple estas condiciones $\ket{\psi_0}=\ket{eg0}$. Si bien este apantallamiento no tiene un significado fisico, y experimentalmente es imposible lograr estas condiciones, realizar este estudio sirve para entender cualitativamente los efectos de cada parametro del problema, y tambien entender que el entrelazamiento entre los dos atomos, lleva a efectos impredecibles. La complejizacion del problema de 1 atomo al de 2 atomos es muy grande, y por eso es necesario ir de a poco.
 \begin{figure}[H]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/diagrama esquematico.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{Esquema del problema de estudio. Se nombran a las partes para referenciarlas facilmente. Los atomos los llamamos A y B, donde el atomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos atomos son de dos niveles, y en principio son identicos e indistinguibles, pero se le agrega un apantallamiento artificial.
+    \caption{Esquema del problema de estudio. Se nombran a las partes para referenciarlas fácilmente. Los átomos los llamamos A y B, donde el átomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos átomos son de dos niveles, y en principio son idénticos e indistinguibles, pero se le agrega un apantallamiento artificial.
          } \label{fig4:diagrama esquematico}
   \end{minipage}
 \end{figure}
-Utilizando esta condicion inicial se realiza una simulacion numerica y se observan las poblaciones, y se espera recuperar la misma dinamica que en el caso de 1 atomo, ya que el atomo B no interactua con ninguna de las otras partes del sistema A y C. Para poder representar el estado del sistema sobre una esfera de Bloch, se realiza una traza parcial sobre el atomo B, y asi se obtiene la figura \ref{fig4:bloch delta}, donde se muestran 3 trayectorias correspondientes a diferentes valores del detunning, la linea azul es el caso resonante $\Delta=0$, y las trayectorias morada y naranja se corresponde con $\Delta=0.5g$ y $\Delta=2g$ respectivamente.
+Utilizando esta condición inicial se realiza una simulación numérica y se observan las poblaciones, y se espera recuperar la misma dinámica que en el caso de 1 átomo, ya que el átomo B no interactúa con ninguna de las otras partes del sistema A y C. Para poder representar el estado del sistema sobre una esfera de Bloch, se realiza una traza parcial sobre el átomo B, y así se obtiene la figura \ref{fig4:bloch delta}, donde se muestran 3 trayectorias correspondientes a diferentes valores del detunning, la linea azul es el caso resonante $\Delta=0$, y las trayectorias morada y naranja se corresponde con $\Delta=0.5g$ y $\Delta=2g$ respectivamente.
 \begin{figure}[H]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png}
@@ -166,8 +174,8 @@ Utilizando esta condicion inicial se realiza una simulacion numerica y se observ
          } \label{fig4:bloch delta}
   \end{minipage}
 \end{figure}
-Se observa como la dinamica entre estos dos estados es exactamente igual que la observada en la figura \ref{fig3:bloch cinematica}, ademas, como todos los puntos estan sobre la superficie de la esfera, los estados son puros, diciendonos que el estado global es separable, y entonces haber trazado sobre el atomo B no tuvo efecto sobre la dinamica entre el atomo A y la cavidad. Para corroborar esto se realiza un analisis poblacional mas general. \textcolor{red}{hacer grafico con las probabilidades y ver que la probabilidad de eg0 + gg1 =1}
-Lo siguiente que podemos analizar, que no se tenia la posibilidad cuando se tiene 1 atomo, es que se puede considerar una condicion inicial entrelazada. Si bien los atomos no interactuan, y el atomo B esta aislado del universo, se puede entrelazar los atomos y luego se apagan las interacciones del atomo B. Por ejemplo, si se considera el estado inicial entrelazado $\ket{\psi_0}=(\ket{eg0}+\ket{ge0})/\sqrt{2}$, se obtiene 
+Se observa como la dinámica entre estos dos estados es exactamente igual que la observada en la figura \ref{fig3:bloch cinematica}, ademas, como todos los puntos están sobre la superficie de la esfera, los estados son puros, diciéndonos que el estado global es separable, y entonces haber trazado sobre el átomo B no tuvo efecto sobre la dinámica entre el átomo A y la cavidad. Para corroborar esto se realiza un análisis poblacional mas general. \textcolor{red}{hacer gráfico con las probabilidades y ver que la probabilidad de eg0 + gg1 =1}
+Lo siguiente que podemos analizar, que no se tenia la posibilidad cuando se tiene 1 átomo, es que se puede considerar una condición inicial entrelazada. Si bien los átomos no interactúan, y el átomo B esta aislado del universo, se puede entrelazar los átomos y luego se apagan las interacciones del átomo B. Por ejemplo, si se considera el estado inicial entrelazado $\ket{\psi_0}=(\ket{eg0}+\ket{ge0})/\sqrt{2}$, se obtiene 
 \begin{figure}[H]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png}
@@ -177,11 +185,11 @@ Lo siguiente que podemos analizar, que no se tenia la posibilidad cuando se tien
          } \label{fig4:bloch delta}
   \end{minipage}
 \end{figure}
-Ahora, los estados no estan sobre la superficie, lo que se interpreta como que estamos en presencia de un estado mixto. Al trazar sobre el atomo B, efectivamente se considera como si este fuese parte de un entorno. Al olvidarse de la dinamica del segundo atomo, se puede interpretar como que este se lleva un 50\% de probabilidad de llevarse la excitacion, ya que no sabemos si inicialmente el atomo A o el atomo B es el que tiene la excitacion. Entonces efectivamente tenemos un 50\% de probabilidad de que el estado de la cavidad sea $\ket{g0}$, y no evoluciona, y un 50\% de probabilidad de que la excitacion este dentro de la cavidad, y por lo tanto vemos que la dinamica es la misma que en el caso anterior, pero con amplitudes menores. \textcolor{blue}{ACA IBA A DECIR ALGO, PERO ME PARECE QUE NO PUEDO PORQUE EL ESTADO ENTRELAZADO QUIZAS TIENE ALGUNAS COSAS RARAS. Uno puede adelantarse un poco, y deducir como se comporta la fase geometrica en estos dos casos. Por un lado, en el caso que el estado inicial no este entrelazado, la dinamica es exactamente igual que en el caso de 1 atomo, entonces la fase geometrica es la misma que \ref{eq3:eq3:fg unitaria jcm}, en cambio, cuando el estado inicial es el entrelazado, como la dinamica es igual que antes pero con un medio de la probabilidad, y luego el atomo B no evoluciona, entonces es autoestado y no acumula fase geometrica. Por lo tanto se puede concluir que en el caso entrelazado la FG va a ser la mitad que en el caso no entrelazado.}
+Ahora, los estados no están sobre la superficie, lo que se interpreta como que estamos en presencia de un estado mixto. Al trazar sobre el átomo B, efectivamente se considera como si este fuese parte de un entorno. Al olvidarse de la dinámica del segundo átomo, se puede interpretar como que este se lleva un 50\% de probabilidad de llevarse la excitación, ya que no sabemos si inicialmente el átomo A o el átomo B es el que tiene la excitación. Entonces efectivamente tenemos un 50\% de probabilidad de que el estado de la cavidad sea $\ket{g0}$, y no evoluciona, y un 50\% de probabilidad de que la excitación este dentro de la cavidad, y por lo tanto vemos que la dinámica es la misma que en el caso anterior, pero con amplitudes menores. \textcolor{blue}{ACA IBA A DECIR ALGO, PERO ME PARECE QUE NO PUEDO PORQUE EL ESTADO ENTRELAZADO QUIZAS TIENE ALGUNAS COSAS RARAS. Uno puede adelantarse un poco, y deducir como se comporta la fase geometrica en estos dos casos. Por un lado, en el caso que el estado inicial no este entrelazado, la dinámica es exactamente igual que en el caso de 1 atomo, entonces la fase geométrica es la misma que \ref{eq3:fg unitaria jcm}, en cambio, cuando el estado inicial es el entrelazado, como la dinámica es igual que antes pero con un medio de la probabilidad, y luego el átomo B no evoluciona, entonces es autoestado y no acumula fase geométrica. Por lo tanto se puede concluir que en el caso entrelazado la FG va a ser la mitad que en el caso no entrelazado.}
 
-Para analizar mas en detalle la dinamica, y para poder realizar comparaciones cuando se complejice el problema, se puede realizar un estudio poblacional, y tambien podemos mirar las entropias relativas y otros obsevables importantes.
-En primer lugar, el caso separable $\psi_0=\ket{eg0}$, es identico al caso de 1 atomo, ya que el atomo B no evoluciona por estar totalmente aislado del sistema. Lo unico que se puede resaltar es que, si se traza sobre la cavidad, que es algo que es util para observar el entrelazamiento entre los atomos, lo unico destacable es que el estado es mixto, ya que la evolucion temporal del sistema atomo A-atomo B consta del atomo B en el estado fundamental $\ket{g}$, y el atomo A oscila entre el estado excitado y fundamental. La amplitud de oscilacion y el grado de mixing entre los estados depende del detunning, siendo el caso $\Delta=0$ el de oscilaciones coherentes entre estados, y al aumentar $\Delta$ se este comportamiento.
-En segundo lugar, cuando el estado inicial de los atomos no es separable por estar entrelazados $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$, entonces la dinamica es un poco diferente. La figura \ref{fig4:fig4:dinamica eg0 sim resonante} muestra el caso de $\Delta=0$, donde se observan las evoluciones de las diferentes partes del sistema.
+Para analizar mas en detalle la dinámica, y para poder realizar comparaciones cuando se complejice el problema, se puede realizar un estudio poblacional, y también podemos mirar las entropias relativas y otros observables importantes.
+En primer lugar, el caso separable $\psi_0=\ket{eg0}$, es idéntico al caso de 1 átomo, ya que el átomo B no evoluciona por estar totalmente aislado del sistema. Lo único que se puede resaltar es que, si se traza sobre la cavidad, que es algo que es útil para observar el entrelazamiento entre los átomos, lo único destacable es que el estado es mixto, ya que la evolución temporal del sistema átomo A-átomo B consta del atomo B en el estado fundamental $\ket{g}$, y el átomo A oscila entre el estado excitado y fundamental. La amplitud de oscilación y el grado de mixing entre los estados depende del detunning, siendo el caso $\Delta=0$ el de oscilaciones coherentes entre estados, y al aumentar $\Delta$ se este comportamiento.
+En segundo lugar, cuando el estado inicial de los átomos no es separable por estar entrelazados $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$, entonces la dinámica es un poco diferente. La figura \ref{fig4:fig4:dinamica eg0 sim resonante} muestra el caso de $\Delta=0$, donde se observan las evoluciones de las diferentes partes del sistema.
 
 \begin{figure}[h]
     \centering
@@ -198,26 +206,26 @@ En segundo lugar, cuando el estado inicial de los atomos no es separable por est
         \caption{}
         \label{fig4:dinamica svn eg0 sim resonante}
     \end{subfigure}
-    \caption{Panel (a):Dinamica poblacional para el caso resonante $\Delta=0$ con el estado inicial entrelazado $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$. Panel (b):Entropia de von Neuman del sistema total (negro con puntos), y de diferentes subsistemas. En rojo se muestra la entropia del sistema habiendo trazado parcialmente sobre la cavidad, y en azul habiendo trazado parcialmente sobre el atomo B.}
+    \caption{\textcolor{red}{labels, ticks y legens chiquitos. unificar colores}Panel (a):Dinámica poblacional para el caso resonante $\Delta=0$ con el estado inicial entrelazado $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$. Panel (b):Entropía de von Neuman del sistema total (negro con puntos), y de diferentes subsistemas. En rojo se muestra la entropía del sistema habiendo trazado parcialmente sobre la cavidad, y en azul habiendo trazado parcialmente sobre el átomo B.}
     \label{fig4:dinamica eg0 sim resonante}
 \end{figure}
 
-En la figura \ref{fig4:dinamica pob eg0 sim resonante} se muestran las poblaciones y las coherencias correspondientes a la condicion inicial $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$ en el caso resonante, y en la figura \ref{fig4:dinamica svn eg0 sim resonante} se muestra la entropia de Von Neuman, en funcion del tiempo $t/T$ con $T=2 \pi \Omega(n,j)$  . La entropia de von Neuman es una cantidad que esta definida segun:
+En la figura \ref{fig4:dinamica pob eg0 sim resonante} se muestran las poblaciones y las coherencias correspondientes a la condición inicial $\ket{\psi_0}=(\ket{eg0} + \ket{ge0})/\sqrt{2}$ en el caso resonante, y en la figura \ref{fig4:dinamica svn eg0 sim resonante} se muestra la entropía de Von Neuman, en función del tiempo $t/T$ con $T=2 \pi \Omega(n,j)$  . La entropía de von Neuman es una cantidad que esta definida según:
 \begin{equation}\label{eq4:entropia von neuman}
     S=-\Tr(\rho \ln \rho)=-\sum_j \lambda_j \ln \lambda_j
 \end{equation}
-donde $\rho$ es la matriz densidad del sistema, y $\lambda_j$ son los autovalores de la matriz densidad. La entropia de Von Neuman sirve para determinar si un estado es puro o mixto, ya que $S(\rho)=0$ representa un estado puro, y $S(\rho)=\ln(N)$ representa un estado maximamente mixto, donde $N$ es la dimesion del espacio de Hilbert.
-Vemos como el estado $\ket{ge0}$ no evoluciona, ya que en este caso, el atomo B contiene la unica excitacion y esta aislado. Pero la otra parte, si que evoluciona. Vemos la presencia de las mismas oscilaciones coherentes entre los estados $\ket{eg0}$ y $\ket{gg1}$. La diferencia principal es que en esta caso, el estado de los subsistemas es mixto. Esto se observa claramente en el grafico de la entropia, pero tambien se puede deducir este comportamiento desde la figura \ref{fig4:dinamica pob eg0 sim resonante}, ya que a $t/T=0.5$, tenemos el estado $\ket{\psi(T/2)}=\ket{g}_A\otimes(\ket{e_B0_C}+\ket{g_B1_C})/\sqrt{2}$, que es separable solo en el atomo A, y los otros dos estan totalmente entrelazados, y por lo tanto al tomar traza parcial tal que el atomo B y la cavidad esten separadas, este estado es maximamente mixto. Vemos como el entrelazamiento entre la cavidad y el atomo B, que estan totalmente aislados, evoluciona indirectamente por medio del atomo A, y paradojicamente este queda desentrelazado del sistema para tiempos $t=(k-1/2)T\; ; \; k \in \mathbb{N}$. En este punto notamos algo muy importante, y es que la entropia de von Neuman solo sirve para estados puros. Cuando $t=0$, la entropia del subsistema AB es 0, porque es un estado puro, y esta maximamente entrelazado. Pero al evolucionar, el subsistema AB se hace mixto, y como se observa en la linea azul, la entropia del atomo B es siempre $\log 2$, que segun la interpretacion de la entropia de von Neuman es que esta siempre maximamente entrelazado. Este no es al caso, y la descripcion falla porque el estado AB no es puro.
+donde $\rho$ es la matriz densidad del sistema, y $\lambda_j$ son los autovalores de la matriz densidad. La entropía de Von Neuman sirve para determinar si un estado es puro o mixto, ya que $S(\rho)=0$ representa un estado puro, y $S(\rho)=\ln(N)$ representa un estado máximamente mixto, donde $N$ es la dimensión del espacio de Hilbert.
+Vemos como el estado $\ket{ge0}$ no evoluciona, ya que en este caso, el átomo B contiene la única excitación y esta aislado. Pero la otra parte, si que evoluciona. Vemos la presencia de las mismas oscilaciones coherentes entre los estados $\ket{eg0}$ y $\ket{gg1}$. La diferencia principal es que en esta caso, el estado de los subsistemas es mixto. Esto se observa claramente en el gráfico de la entropía, pero también se puede deducir este comportamiento desde la figura \ref{fig4:dinamica pob eg0 sim resonante}, ya que a $t/T=0.5$, tenemos el estado $\ket{\psi(T/2)}=\ket{g}_A\otimes(\ket{e_B0_C}+\ket{g_B1_C})/\sqrt{2}$, que es separable solo en el átomo A, y los otros dos están totalmente entrelazados, y por lo tanto al tomar traza parcial tal que el átomo B y la cavidad estén separadas, este estado es máximamente mixto. Vemos como el entrelazamiento entre la cavidad y el átomo B, que están totalmente aislados, evoluciona indirectamente por medio del átomo A, y paradójicamente este queda desentrelazado del sistema para tiempos $t=(k-1/2)T\; ; \; k \in \mathbb{N}$. En este punto notamos algo muy importante, y es que la entropía de von Neuman solo sirve para estados puros. Cuando $t=0$, la entropía del subsistema AB es 0, porque es un estado puro, y esta máximamente entrelazado. Pero al evolucionar, el subsistema AB se hace mixto, y como se observa en la linea azul, la entropía del átomo B es siempre $\log 2$, que según la interpretación de la entropía de von Neuman es que esta siempre máximamente entrelazado. Este no es al caso, y la descripción falla porque el estado AB no es puro.
 
-Entonces, ya que el entrelazamiento es un recurso muy importante y estudiado para las informacion cuantica, es necesario introducir una medida de entrelazamiento, para poder estudiarlo en este tipo de situaciones. Si bien la entropia de Von Neuman es util en el caso de estados puros, cuando tenemos estados mixtos como se vio recien, o en el caso de tener un sistema abierto, esta medida ya no sirve. Una de las medidas mas utilizadas y con mayor aplicacion es el \textit{Entanglement of Formation} ($E_F$) \cite{an intro to entanglement measures}, que conincide con la entropia de von Neuman para estados puros, y sirve para estados mixtos. El $E_F$ esta definido como
+Entonces, ya que el entrelazamiento es un recurso muy importante y estudiado para las información cuántica, es necesario introducir una medida de entrelazamiento, para poder estudiarlo en este tipo de situaciones. Si bien la entropía de Von Neuman es útil en el caso de estados puros, cuando tenemos estados mixtos como se vio recién, o en el caso de tener un sistema abierto, esta medida ya no sirve. Una de las medidas mas utilizadas y con mayor aplicación es el \textit{Entanglement of Formation} ($E_F$) \cite{an intro to entanglement measures}, que coincide con la entropía de von Neuman para estados puros, y sirve para estados mixtos. El $E_F$ esta definido como
 \begin{equation}
     E_F(\rho)=\text{inf}\left( \sum_i p_i E(\ketbra{\psi_i}{\psi_i}) : \rho = \sum_i p_i\ketbra{\psi_i}{\psi_i}\right)
 \end{equation}
-Esta medida representa el entrelazamiento promedio minimo entre todas las posibles descomposiciones puras de $\rho$, donde $E(\ketbra{\psi_i}{\psi_i})=S(\tr_B{\ketbra{\psi_i}{\psi_i}})$ es la entropia de von Neuman, que es la medida que se utiliza para estados puros. Esta definicion es general, pero en el caso presente, nos sirve una simplificacion de esta medida que se obtiene si se estudia el entrelazamiento entre dos qu-bits, como lo son los atomos A y B. Esta medida es la concurrencia, y esta definida como
+Esta medida representa el entrelazamiento promedio mínimo entre todas las posibles descomposiciones puras de $\rho$, donde $E(\ketbra{\psi_i}{\psi_i})=S(\tr_B{\ketbra{\psi_i}{\psi_i}})$ es la entropía de von Neuman, que es la medida que se utiliza para estados puros. Esta definición es general, pero en el caso presente, nos sirve una simplificación de esta medida que se obtiene si se estudia el entrelazamiento entre dos qu-bits, como lo son los átomos A y B. Esta medida es la concurrencia, y esta definida como
 \begin{equation}
     C(\rho)=\text{max}\{0,\lambda_1-\lambda_2-\lambda_3-\lambda_4\}
 \end{equation}
-donde los $\lambda_i$ son las raices de los autovalores, en orden decreciente, de la matriz $\rho\sigma_y\otimes\sigma_y\rho^*\sigma_y\otimes\sigma_y$, donde $\rho*$ es el conjugado (sin transponer) de $\rho$. La concurrencia y la entropia de formacion $E_F$ estan relacionadas, y la concurrencia obtiene su interpretacion a traves de esta. Un estado maximamente entrelazado tiene $C(\rho)=1$ y un estado separable $C(\rho)=0$. 
+donde los $\lambda_i$ son las raíces de los autovalores, en orden decreciente, de la matriz $\rho\sigma_y\otimes\sigma_y\rho^*\sigma_y\otimes\sigma_y$, donde $\rho*$ es el conjugado (sin transponer) de $\rho$. La concurrencia y la entropía de formación $E_F$ están relacionadas, y la concurrencia obtiene su interpretación a través de esta. Un estado máximamente entrelazado tiene $C(\rho)=1$ y un estado separable $C(\rho)=0$. 
 
 
 \begin{figure}[H]
@@ -225,34 +233,149 @@ donde los $\lambda_i$ son las raices de los autovalores, en orden decreciente, d
         \includegraphics[width=\textwidth]{figuras/ch4/d eg0+ concu d=0.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{
+    \caption{Concurrencia en el caso resonante para estado inicial $\ket{eg0}+\ket{ge0}$
          } \label{fig4:concu eg0 sim}
   \end{minipage}
 \end{figure}
-En la figura \ref{fig4:concu eg0 sim} se observa la concurrencia entre los atomos AB, para el caso estudiado anteriormente. Como era de esperar, a $t=0$ el estado es maximamente entrelazado, y luego el entrelazamiento se pierde a $t=T/2$, donde el atomo B esta entrelazada con la cavidad. 
+En la figura \ref{fig4:concu eg0 sim} se observa la concurrencia entre los átomos AB, para el caso estudiado anteriormente. Como era de esperar, a $t=0$ el estado es máximamente entrelazado, y luego el entrelazamiento se pierde a $t=T/2$, donde el átomo B esta entrelazada con la cavidad. 
 
-\subsection{Interaccion atomo-atomo}
+\subsection{Interacción átomo-átomo}
 
-El siguiente paso es analizar el rol de las interacciones entre los atomos, aun manteniento el apantallamiento $\alpha=0$. Para esto, se siguie utilizando las mismas condiciones iniciales y el atomo B seguira sin interactuar con la cavidad, pero se considera ahora que la interaccion entre atomos dadas por los parametros $k$ y $J$ ahora seran distintos de cero. Para comenzar, en la figura \ref{fig4:k eg0 abc} se observa la evolucion temporal para el estado inicial $\ket{\psi_0}=\ket{eg0}$, con $\Delta = 0$, $J=0$ pero $k=0.1g$. Recordemos que $k$ es la intensidad de la interaccion $\sigma^{(1)}_+\sigma^{(2)_-+\text{c.c.}}$ (ver \ref{eq4:H}).
+El siguiente paso es analizar el rol de las interacciones entre los átomos, aun manteniendo el apantallamiento $\alpha=0$. Para esto, se sigue utilizando las mismas condiciones iniciales y el átomo B seguirá sin interactuar con la cavidad, pero se considera ahora que la interacción entre átomos dadas por los parámetros $k$ y $J$ ahora serán distintos de cero. Para comenzar, en la figura \ref{fig4:k eg0 abc} se observa la evolución temporal para el estado inicial $\ket{\psi_0}=\ket{eg0}$, con $\Delta = 0$, $J=0$ pero $k=0.1g$. Recordemos que $k$ es la intensidad de la interacción $\sigma^{(1)}_+\sigma^{(2)}_-+\text{c.c.}$ (ver \ref{eq4:H}).
 
 \begin{figure}[h]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/k eg0 ABC.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{Dinamica poblacional para la condicion inicial $\ket{\psi_0}=\ket{eg0}$, para los parametros $\Delta=0$, $J=0$ y $k=0.1g$. Las lineas solidas se corresponden con las poblaciones de la matriz densidad total del sistema; en azul la probabilidad de encontrar al estado en el estado $\ket{gg1}$, en verde en $\ket{eg0}$, en rojo $\ket{ge0}$, y en negro $\ket{gg0}$. Las lineas rayadas son las coherencias entre estas poblacione, la violeta entre $\ket{gg1}$ y $\ket{ge0}$, la celeste entre $\ket{eg0}$ y $\ket{gg1}$ y la amarilla entre $\ket{eg0}$ y $\ket{gg1}$.
+    \caption{Dinámica poblacional para la condición inicial $\ket{\psi_0}=\ket{eg0}$, para los parámetros $\Delta=0$, $J=0$ y $k=0.1g$. Las lineas solidas se corresponden con las poblaciones de la matriz densidad total del sistema; en azul la probabilidad de encontrar al estado en el estado $\ket{gg1}$, en verde en $\ket{eg0}$, en rojo $\ket{ge0}$, y en negro $\ket{gg0}$. Las lineas rayadas son las coherencias entre estas poblaciones, la violeta entre $\ket{gg1}$ y $\ket{ge0}$, la celeste entre $\ket{eg0}$ y $\ket{gg1}$ y la amarilla entre $\ket{eg0}$ y $\ket{gg1}$.
          } \label{fig4:k eg0 abc}
   \end{minipage}
 \end{figure}
-Lo que sucede es que la excitacion esta inicialmente en el atomo A, y como siempre, se observan oscilaciones entre los estados $\ket{eg0}$ y $\ket{gg1}$, la diferencia es que al haber interacciones entre los atomos, ahora la excitacion inicial que esta en el atomo A, sufre dos procesos diferentes, primero la oscilacion, y ademas, la interaccion con el atomo B. Al tener la excitacion el atomo A, una parte de esta se va hacia la cavidad, y la otra hacia el atomo B, excitandolo parcialmente. La amplitud de la oscilacion depende de la intensidad de la interaccion $k$. Si nos concentramos en la curva roja, vemos que su pendiente crece mientras que la probabilidad de $\ket{eg0}$ es mayor a la de $\ket{gg1}$, luego la amplitud crece, pero de manera desacelerada, hasta que la probabilidad del estado $\ket{eg0}$ es nula. En ese momento, ya no hay excitacion que pasar del atomo A al B, y el proceso se revierte. Antes de analizar el entrelazamiento entre los atomos, se observa en la figura \ref{fig4:k eg0 sim abc} la dinamica para los mismos parametros, pero para la condicion inicial entrelazada $\ket{\psi_0}=(\ket{eg0}+\ket{ge0})/\sqrt{2}$:
+Lo que sucede es que la excitación esta inicialmente en el átomo A, y como siempre, se observan oscilaciones entre los estados $\ket{eg0}$ y $\ket{gg1}$, la diferencia es que al haber interacciones entre los átomos, ahora la excitación inicial que esta en el átomo A, sufre dos procesos diferentes, primero la oscilación, y ademas, la interacción con el átomo B. Al tener la excitación el átomo A, una parte de esta se va hacia la cavidad, y la otra hacia el átomo B, excitándolo parcialmente. La amplitud de la oscilación depende de la intensidad de la interacción $k$. Si nos concentramos en la curva roja, vemos que su pendiente crece mientras que la probabilidad de $\ket{eg0}$ es mayor a la de $\ket{gg1}$, luego la amplitud crece, pero de manera desacelerada, hasta que la probabilidad del estado $\ket{eg0}$ es nula. En ese momento, ya no hay excitación que pasar del átomo A al B, y el proceso se revierte. Antes de analizar el entrelazamiento entre los átomos, se observa en la figura \ref{fig4:k eg0 sim abc} la dinámica para los mismos parámetros, pero para la condición inicial entrelazada $\ket{\psi_0}=(\ket{eg0}+\ket{ge0})/\sqrt{2}$:
 \begin{figure}[h]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/k eg0+ ABC.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{Dinamica poblacional para la condicion inicial $\ket{\psi_0}=\ket{eg0}$, para los parametros $\Delta=0$, $J=0$ y $k=0.1g$. Las lineas solidas se corresponden con las poblaciones de la matriz densidad total del sistema; en azul la probabilidad de encontrar al estado en el estado $\ket{gg1}$, en verde en $\ket{eg0}$, en rojo $\ket{ge0}$, y en negro $\ket{gg0}$. Las lineas rayadas son las coherencias entre estas poblacione, la violeta entre $\ket{gg1}$ y $\ket{ge0}$, la celeste entre $\ket{eg0}$ y $\ket{gg1}$ y la amarilla entre $\ket{eg0}$ y $\ket{gg1}$.
+    \caption{Dinámica poblacional para la condición inicial $\ket{\psi_0}=\ket{eg0+ge0}$, para los parámetros $\Delta=0$, $J=0$ y $k=0.1g$. Las coherencias y poblaciones tienen los mismos colores que la figura anterior \ref{fig4:k eg0 abc}
          } \label{fig4:k eg0 sim abc}
   \end{minipage}
 \end{figure}
-La dinamica en este caso presenta oscilaciones en la poblacion de $\ket{ge0}$ con un periodo dos veces mas grande. Esto se debe a una \"pelea\" entre los estados $\ket{eg0}$ y $\ket{ge0}$, ya que tienen las excitaciones en diferentes atomos. Inicialmente, como los estados estan entrelazados, no esta bien definido en cual de los dos atomos esta la excitacion, entonces la interaccion $k$ se anula y vemos que tiene pendiente 0. Entonces la dinamica inicial es igual que para $k=0$ y comienza a oscilar. Apenas baja la curva verde, la probabilidad de encontrar la excitacion en el atomo B es mayor que la del atomo A, entonces lo que sucede es que el atomo B comienza a perder esta excitacion y se la da lentamente al atomo A, y por lo tanto la oscilacion del estado $\ket{eg0}$ no llega a tener amplitud nula en $t/T=0.5$. Luego, la evolucion sigue su curso oscilante, y al llegar a $t=T$, vemos que la probabilidad de encontrar la excitacion en el atomo A es mayor, y por lo tanto comienza a revertirse la situacion, hasta completar el ciclo para $t=2T$ aproximadamente. \textcolor{red}{no es exacto pq puse algo mal en el codigo, pero ahora esta corregido y da bien. tengo que cambiar estas imagenes.} 
+La dinámica en este caso presenta oscilaciones en la población de $\ket{ge0}$ con un periodo dos veces mas grande. Esto se debe a una \"pelea\" entre los estados $\ket{eg0}$ y $\ket{ge0}$, ya que tienen las excitaciones en diferentes átomos. Inicialmente, como los estados están entrelazados, no esta bien definido en cual de los dos átomos esta la excitación, entonces la interacción $k$ se anula y vemos que tiene pendiente 0. Entonces la dinámica inicial es igual que para $k=0$ y comienza a oscilar. Apenas baja la curva verde, la probabilidad de encontrar la excitación en el átomo B es mayor que la del átomo A, entonces lo que sucede es que el átomo B comienza a perder esta excitación y se la da lentamente al átomo A, y por lo tanto la oscilación del estado $\ket{eg0}$ no llega a tener amplitud nula en $t/T=0.5$. Luego, la evolución sigue su curso oscilante, y al llegar a $t=T$, vemos que la probabilidad de encontrar la excitación en el átomo A es mayor, y por lo tanto comienza a revertirse la situación, hasta completar el ciclo para $t=2T$. \textcolor{red}{no es exacto pq puse algo mal en el codigo, pero ahora esta corregido y da bien. tengo que cambiar estas imagenes.} 
 
+El entrelazamiento entre los atomos se analiza utilizando la concurrencia, como se muestra en la figura \ref{fig4:concu k}, donde \ref{fig4:concu k eg0} muestra la condicion inicial separable $\ket{eg0}$, y \ref{fig4:concu k eg0 sim} el entrelazamiento para la condicion inicial entrelazada $\ket{eg0+ge0}$. 
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/k eg0 concu.png}
+        \caption{$\ket{eg0}$}
+        \label{fig4:concu k eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/k eg0+ concu.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig4:concu k eg0 sim}
+    \end{subfigure}
+    \caption{\textcolor{red}{rehacer por labels chiquitos}Dinamica de entrelazamiento para $\Delta=0$, $J=0$ y $k=0.1g$}
+    \label{fig4:concu k}
+\end{figure}
+
+Ahora vamos a ver $k=0$ y $J\neq 0$. Vemos que la diferencia es que si bien la dinamica es similar, los atomos no se entrelazan.
+
+\subsection{Medio Kerr}
+
+Ahora nos concentramos en el efecto del medio Kerr. Para esto, apagamos las interacciones interatomicas $k=J=0$, y ahora se modifica el medio a traves del parametro $\chi$. 
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/x eg0 abc.png}
+        \caption{$\ket{eg0}$}
+        \label{fig4:pob x eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/x eg0+ abc.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig4:pob x eg0 sim}
+    \end{subfigure}
+    \caption{Dinamica de poblaciones para $x=g$}
+    \label{fig4:pob x}
+\end{figure}
+
+Al igual que en el caso de 1 atomo, se puede observar en las ecuaciones \ref{ec4:autoenergias} y \ref{ec4:parametros solucion}, la frecuencia depende del medio. En esta figura el tiempo esta normalizado con la frecuencia, entonces no se nota el cambio. Pero lo que es necesario analizar, es como las oscilaciones no son totalmente coherentes, en el sentido de que la probabilidad del estado $\ket{gg1}$ nunca alcanza la amplitud inicial de la oscilacion, como en el caso de $\chi=0$. Esto se debe a que el aumento de $\chi$ hace que las energias de ambos estados se separen, y por lo tanto hace que las transiciones entre los estados sea menos probable. Este comportamiento tambien se observa si el estado inicial se toma como $\ket{gg1}$. Es logico estudiar el entrelazamiento en este caso. En la figura \ref{fig4:concu x} se muestran las concurrencias para ambas condiciones iniciales. Es interesante comparar la figura \ref{fig4:concu x eg0 sim} con la figura en el caso de $\chi=0$ para esta misma condicion inicial, la figura \ref{fig4:concu eg0 sim}. En principio se puede pensar que el medio no lineal rompe con el entrelazamiento del sistema, pero como se ve al comparar estas figuras, la interpretacion correcta es que el medio no hace mas que alentizar el comportamiento preexistente de la cavidad, ya que en este caso, no destruye el entrelazamiento, sino que lo conserva por virtud de haber realentizado las amplitudes de oscilacion entre los dos estados dinamicos.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/x eg0 concu.png}
+        \caption{$\ket{eg0}$}
+        \label{fig4:concu x eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/x eg0+ concu.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig4:concu x eg0 sim}
+    \end{subfigure}
+    \caption{Dinamica de entrelazamiento para $x=g$}
+    \label{fig4:concu x}
+\end{figure}
+Tambien se puede intentar de recuperar el comportamiento visto en el modelo de 1 atomo, que el medio Kerr no es mas que un desplazamiento lateral en las frecuencias, ademas de modificar las amplitudes. Para esto se realiza otra evolucion para $\chi=\Delta=\frac{g}{2}$, y se compara con el caso en que $\chi=\Delta=0$
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/d=x=0 eg0 abc.png}
+        \caption{$\Delta=\chi=0$}
+        \label{fig4:comparacion kerr pob 1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/d=x=0.5 eg0 abc.png}
+        \caption{$\Delta=\chi=0.5g$}
+        \label{fig4:comparacion ker pob 2}
+    \end{subfigure}
+    \caption{Dinamica de entrelazamiento para $x=g$}
+    \label{fig4:comparacion d vs x}
+\end{figure}
+Vemos como se anula el efecto del medio, y la dinamica es la misma pero con un cambio en la frecuencia. Al igual que antes, aumenta la frecuencia
+
+\subsection{Batidos}
+
+Al complejizar el problema, comienzan a aparecer batidos, comportamiento que se atribuye a la modulacion de dos procesos simultaneos. Por ejemplo, si observamos la evolucion temporal con $\chi\neq0$ y $k\neq0$, entonces el primero disminuye la amplitud de oscilacion de, los estados con mayor cantidad de fotones en la cavidad, que dentro del subespacio $N$ la jerarquia del medio sera favorecer a los estados $\ket{eg,N-1}$ y $\ket{ge,N-1}$ por sobre el $\ket{ggN}$. Por el contrario, se observo que en esta situacion, el termino de interaccion entre los atomos disminuye la amplitud del estado $\ket{ggN}$ como se vio en la seccion anterior. Por lo tanto, si tenemos dos procesos que estan en juego y sus efectos son similares, entonces es esperable que se observen oscilaciones moduladas. No vale la pena mostrar la dinamica de las poblaciones, porque no se pueden sacar conclusiones muy importantes, pero si podemos observar la trayectoria en la esfera de bloch, para dar una idea de la complejidad de la evolucion.
+
+\section{Dinamica sin apantallamiento}
+
+SACAR EL APANTALLAMIENTO COMPLETAMENTE Y VER SI LOS EFECTOS CAMBIAN MUCHO.
+
+Al sacar el apantallamiento, es necesario utilizar la base mencionada anteriormente \ref{ec4:base}, ya que los atomos son indistinguibles y esta base es mas apropiada. Ademas, el Hamiltoniano desacopla los estados antisimetricos, facilitando la solucion. Por lo tanto, se procede a estudiar la dinamica sacando el apantallamiento. Lo que nos interesa estudiar es el entrelazamiento entre las diferentes partes del sistema, y su dependencia con los parametros. 
+
+\subsection{Dinamica con disipacion}
+
+Lo primero que hay que mirar es la dependencia de la dinamica con el regimen de acoplamiento, esperamos un comportamiento igual al del caso de un atomo \ref{sec3:regimen acoplamiento}. Recordemos que el regimen de acoplamiento fuerte (SC) es el caso en donde la interaccion entre cavidad y atomos es mayor a la interaccion entre sistema y entorno.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.7\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/sc vs wc eg0 k0.5.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig4:acoplamiento eg0 sim}
+    \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.7\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/sc vs wc gg1 k=0.5.png}
+        \caption{$\ket{gg1}$}
+        \label{fig4:acoplamiento gg1}
+    \end{subfigure}
+    \caption{Dependencia de las poblaciones con el regimen de acoplamiento, para $\Delta=J=\chi=0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}
+    \label{fig4:regimen acoplamiento}
+\end{figure}
+Como se esperaba, las coherencias y las poblaciones tienen el mismo comportamiento que en el caso de 1 atomo. Notablemente, se puede ver el efecto de la interaccion entre los atomos, que inicialmente como se vio anteriormente, se separan las energias y por lo tanto las oscilaciones no logran maxima amplitud, y en conjunto con la disipacion a tiempo largos, siempre se tiene una mayor probabilidad de encontrar al sistema en el estado $\ket{eg0+ge0}$ ya que tiene menor energia. Eventualmente alcanza su estado estacionario.
+
+Nuevamente, nos concentraremos en el regimen SC. En la siguiente seccion, ya no nos restringiremos a los estados con 0 y 1 excitacion como se hizo hasta ahora, si bien estos casos son imprecindibles para realizar el paralelismo con el caso de 1 atomo, la riqueza del problema se extiende si consideramos el espacio de 2 excitaciones, ya que en este caso tenemos 4 estados bajo un mismo subespacio que son dinamicamente relevantes aun en ausencia de disipacion. No se consideraran mas de 2 excitaciones, ya que el objetivo del trabajo es orientado hacia la informacion y el entrelazamiento, que es mejor estudiarlos con menor cantidad de excitaciones para poder sacar conclusiones contundentes.\textcolor{red}{esta ultima oracion es medio chamuyo, esta mas o menos bien?} 
+\section{Dinamica de entrelazamiento}
+Para estudiar la dinamica de entrelazamiento, nos centraremos en la concurrencia. 
+
+1. k=J=0 ; x=0
+2. k=J=0 ; x =/= 0
+3. 
+GRAFICOS DE ENTRELAZAMIENTO PARA DIFERENTES PARAMETROS. PLOTS CON COLORES DEL PAPER ESE. SDE. 

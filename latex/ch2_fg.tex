@@ -9,11 +9,11 @@
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
 
 Este cap\'itulo presenta el objeto de estudio del trabajo. La fase geometrica es un observable que promete en el ambito de la informaci\'on cu\'antica, ya que como se ver\'a m\'as adelante, recupera informaci\'on sobre la trayectoria del sistema en el espacio de Hilbert, y en algunos casos se observa que est\'a relacionado con el entrelazamiento. 
-El cap\'itulo esta estructurado de manera que en primer lugar se tratar\'a una descripción general de las fases geom\'etricas (FG) en el contexto de sistemas aislados, descritos consecuentemente mediante estados puros. Analizar este caso antes de centrar la antención en sistemas cuanticos abiertos permitira asilimar nociones y ganar intuición sobre las fases geométricas en el marco de una teoría formalmente más simple. A lo largo del capítulo se trabajaran expresiones validas bajo ciertas hipotesis, partiendo del caso menos general, y llegando al caso más general conocido hasta el momento, aunque la aplicación de las fases geometricas a sistemas abiertos no llego a un consenso unánime. Por lo tanto, al final del capitulo se presentará una propuesta particular, la cual se usará en los próximos capitulos.
+El cap\'itulo esta estructurado de manera que en primer lugar se tratar\'a una descripción general de las fases geom\'etricas (FG) en el contexto de sistemas aislados, descritos consecuentemente mediante estados puros. Analizar este caso antes de centrar la atención en sistemas cuánticos abiertos permitirá asimilar nociones y ganar intuición sobre las fases geométricas en el marco de una teoría formalmente más simple. A lo largo del capítulo se trabajaran expresiones validas bajo ciertas hipótesis, partiendo del caso menos general, y llegando al caso más general conocido hasta el momento, aunque la aplicación de las fases geométricas a sistemas abiertos no llego a un consenso unánime. Por lo tanto, al final del capitulo se presentará una propuesta particular, la cual se usará en los próximos capítulos.
 
 \section{R\'egimen adiab\'atico y fase de Berry} \label{sec2:adiabatico}
-La fase de berry \ref{} ludmi 1 es un fenomeno fundamental relacionado con el teorema adiab\'atico. Esta representa la fase acumulada pot el autoestado de un Hamiltoniano $H(t)$ que var\'ia lentamente en un ciclo, que esta relacionada con el circuito descrito por $H(t)$ en un dado espacio de par\'ametros. \newline
-Para ver esto, se considera un Hamiltoniano $H(R(t))$ que depende explcitamente del tiempo a travez de un parámetro $R=(R_1,R_2,\dots)$. Dado esta Hamiltoniano, formalmente se pueden encontrar los autoestados instantaneos del sistema $\ket{\psi_n(R(t))}$ que satisfacen
+La fase de berry \ref{} ludmi 1 es un fenómeno fundamental relacionado con el teorema adiab\'atico. Esta representa la fase acumulada pot el autoestado de un Hamiltoniano $H(t)$ que var\'ia lentamente en un ciclo, que esta relacionada con el circuito descrito por $H(t)$ en un dado espacio de par\'ametros. \newline
+Para ver esto, se considera un Hamiltoniano $H(R(t))$ que depende explícitamente del tiempo a través de un parámetro $R=(R_1,R_2,\dots)$. Dado esta Hamiltoniano, formalmente se pueden encontrar los autoestados instantáneos del sistema $\ket{\psi_n(R(t))}$ que satisfacen
 \begin{equation}
     H(R(t))\ket{\psi_n(R(t))}=E_n(R(t))\ket{\psi_n(R(t))}
 \end{equation}
@@ -21,7 +21,7 @@ Para ver esto, se considera un Hamiltoniano $H(R(t))$ que depende explcitamente 
 \begin{equation}
     i \hbar \ket{\dot \psi(t)}=H(R(t))\ket{\psi(t)}
 \end{equation}
-Desarrollando el estado en funci\'on de los autoestados instantaneos del Hamiltoniano, se puede resolver formalmente el problema
+Desarrollando el estado en funci\'on de los autoestados instantáneos del Hamiltoniano, se puede resolver formalmente el problema
 \begin{equation}
     \ket{\psi(t)} = \sum_n c_n(t)\ket{\psi_n(R(t))}
 \end{equation}
@@ -47,7 +47,7 @@ Para circuitos cerrados en el espacio de parámetros, la fase geométrica se exp
     \phi_n(C) = i \oint_C \langle \psi_n(R) | \nabla_R | \psi_n(R) \rangle \cdot dR,    
 \end{equation}
 
-independiente de la velocidad con que se recorre el circuito. Sin embargo, la hipotesis de este resultado es que la veolcidad de la evoluci\'on sea suficientemente lenta para que se puedan despreciar las transiciones no adiab\'aticas a otros niveles de energ\'ia, por lo tanto este resultado no es totalmente independiente de la velocidad con la que se recorre el circuito en el espacio de parámetros.
+independiente de la velocidad con que se recorre el circuito. Sin embargo, la hipótesis de este resultado es que la velocidad de la evoluci\'on sea suficientemente lenta para que se puedan despreciar las transiciones no adiab\'aticas a otros niveles de energ\'ia, por lo tanto este resultado no es totalmente independiente de la velocidad con la que se recorre el circuito en el espacio de parámetros.
 
 \section{Fase de Aharonov-Anandan}\label{sec2:fase AA}
 
@@ -103,7 +103,7 @@ Considérese una curva \( C: t \in [0, T] \to \ket{\psi(t)} \) sobre \( N_0 \), 
 \begin{equation}
 A = \frac{\text{Im} \bra{\psi(t)} \dot{\psi}(t) \rangle}{\bra{\psi(t)} \psi(t) \rangle},
 \end{equation}
-transforma, frente a transformaciónes \( U(1) \) de gauge \( \ket{\psi(t)} \to e^{i\alpha(t)} \ket{\psi(t)} \), según
+transforma, frente a transformaciones \( U(1) \) de gauge \( \ket{\psi(t)} \to e^{i\alpha(t)} \ket{\psi(t)} \), según
 \begin{equation} \label{eq2:transformación de gauge}
 A \to A + \dot{\alpha}(t).
 \end{equation}
@@ -119,15 +119,15 @@ Es decir, la integral sobre el camino total (cerrado), es la diferencia de fase 
 \begin{equation}
 g(C) = e^{i \oint_C A} = e^{i\phi_{\text{AA}}}.
 \end{equation}
-En el caso de una evolución no cíclica, el vector que describe el sistema no vuelve a su rayo de partida. Para este caso se establece una manera de comparar estados de diferentes fibras. Dicha comparación se hace a travez de la fase de \textit{Pancharatnam} \ref{}66 ludmi, definida para dos estados no-ortogonales cualesquiera como
+En el caso de una evolución no cíclica, el vector que describe el sistema no vuelve a su rayo de partida. Para este caso se establece una manera de comparar estados de diferentes fibras. Dicha comparación se hace a través de la fase de \textit{Pancharatnam} \ref{}66 ludmi, definida para dos estados no-ortogonales cualesquiera como
 \begin{equation}
     \phi_P = \arg \braket{\psi_1}{\psi_2}
 \end{equation}
-Para hacer la generalización al caso no-ciclico, tenemos que dar un concepto de distancia, y para esto tenemos que hablar de lineas geodesicas. No vamos a meternos en detalle en esto, pero lo importante es que la fase en el caso no ciclico consiste de la diferencia entre la fase dinámica y la dase de Pancharatnam
+Para hacer la generalización al caso no-cíclico, tenemos que dar un concepto de distancia, y para esto tenemos que hablar de lineas geodésicas. No vamos a meternos en detalle en esto, pero lo importante es que la fase en el caso no cíclico consiste de la diferencia entre la fase dinámica y la fase de Pancharatnam
 \begin{equation}
     \psi_{SB}=-\psi_P-\frac{1}{\hbar}\int_0^Tdt\bra{\psi(t)}H\ket{\psi(t)}
 \end{equation}
-Este método se puede utilizar para generalizar al caso no unitario, en el sentido de un estado puro que no conserva su norma. Este tipo de evolución puede suceder cuanto estamos teniendo en cuenta mediciones en el sistema, colapsos de la función de onda no conservan la norma segun la regla de colapso de la mecánica cuántica. En este caso, si consideramos el estado inicial $\ket{\psi_0}$ sobre el cual se realizan mediciones sucesivas, de forma tal que la N-esima proyección es otra vez al estado inicial, el estado funal del sistema esta dado por
+Este método se puede utilizar para generalizar al caso no unitario, en el sentido de un estado puro que no conserva su norma. Este tipo de evolución puede suceder cuanto estamos teniendo en cuenta mediciones en el sistema, colapsos de la función de onda no conservan la norma según la regla de colapso de la mecánica cuántica. En este caso, si consideramos el estado inicial $\ket{\psi_0}$ sobre el cual se realizan mediciones sucesivas, de forma tal que la N-esima proyección es otra vez al estado inicial, el estado final del sistema esta dado por
 \begin{equation}
     \ket{\psi_0}\braket{\psi_0}{\psi_{N-1}}\dots\braket{\psi_2}{\psi_1}\braket{\psi_1}{\psi_0}.
 \end{equation}
@@ -158,42 +158,69 @@ Lo que queremos conseguir es una funcional que sea invariante ante transformaci�
 \begin{equation} \label{eq2:fg cinematica unitaria}
     \psi_u[C] \def \arg \braket{\psi(0)}{\psi(T)} - \Im \int_0^T dt \braket{\psi(t)}{\dot \psi(t)}
 \end{equation}
-Tenemos permitido definir este funcional de la curva $C$ en el espacio de rayos, ya que es invariante ante reparametrizaciones. Algo importante de remarcar es que, si aplicamos una transformación unitaria arbitraria a nuestro estado, entonces al cambiar el Hamiltoniano tambien cambiará la curva que describe el estado inicial en el espacio de Hilbert, y por lo tanto se puede mostrar que la fase geometrica cambia. Por suerte, en el caso que la transformación no depende del tiempo, entonces se demuestra que la fase no cambia. 
+Tenemos permitido definir este funcional de la curva $C$ en el espacio de rayos, ya que es invariante ante reparametrizaciones. Algo importante de remarcar es que, si aplicamos una transformación unitaria arbitraria a nuestro estado, entonces al cambiar el Hamiltoniano también cambiará la curva que describe el estado inicial en el espacio de Hilbert, y por lo tanto se puede mostrar que la fase geométrica cambia. Por suerte, en el caso que la transformación no depende del tiempo, entonces se demuestra que la fase no cambia. 
 \newline
-\textcolor{red}{Hasta ahora solo tratamos con sistemas aislados. Antes de pasar a sistemas abiertos, vamos a analizar un ejemplo sencillo utilizando las diferentes definiciones, para ganar intuición y encontrar algunas explicaciones interesantes a comportamientos caracteristicos de este observable.}
+\textcolor{red}{Hasta ahora solo tratamos con sistemas aislados. Antes de pasar a sistemas abiertos, vamos a analizar un ejemplo sencillo utilizando las diferentes definiciones, para ganar intuición y encontrar algunas explicaciones interesantes a comportamientos característicos de este observable.}
 
 \section{Ejemplo de aplicacion: Sistema de dos niveles en un campo magn\'etico}\label{sec2:ejemplos}
 
 \textcolor{red}{LO PONGO O NO LO PONGO?}
 
 \section{Fases geométricas en sistemas abiertos}\label{sec2:sistemas abiertos}
-Las secciones anteriores tratan la fase geometrica en diferentes casos, ascendientes en generalidad ya que se logra relajar condiciones e hipotesis, y se llego a una expresion general que satisface propiedades importantes, como invarianza antre transformaciones de fase global $U(1)$ y a reparametrizaciones monotonas, tambien dependen unicamente de la trayectoria descirta por el estado fisico en ele spacio de rayos y no del Hamiltoniano que genera dicha trayectoria, y finalmente son interpretables en terminos puramente geometricos. 
+Las secciones anteriores tratan la fase geométrica en diferentes casos, ascendientes en generalidad ya que se logra relajar condiciones e hipótesis, y se llego a una expresión general que satisface propiedades importantes, como invarianza ante transformaciones de fase global $U(1)$ y a reparametrizaciones monótonas, también dependen unicamente de la trayectoria descrita por el estado físico en el espacio de rayos y no del Hamiltoniano que genera dicha trayectoria, y finalmente son interpretables en términos puramente geométricos. 
 
-Sin embargo, estamos asumiendo que el estado es puro durante toda su evolucion, restriccion que es una idealizacion y experimentalmente es necesario tener en cuenta que todo sistema fisico esta en contacto con un entorno, y se requiere entonces una descripcion en terminos de estados mixtos y evoluciones no unitarias. La definicion de una fase geometrica que aplique en tal escenario es todavia un problema cuya solucion todavia no llego a un concenso unanime. Muchos esfuerzos notables [\cite{6},\cite{8}-\cite{10}] se concentraron en definir la fase geometrica acumulada por un estado mixto, incluso existen reportes experimentales de detecciones \cite{73}. Otra ruta explirada considera el efecto del entorno como correciones que permitan mantener las nociones de fase geometrica del caso unitartio. Trabajos de este tipo introcucen el efecto del entorno mediante un hamiltoniano no hermicito \cite{32,33}, y otros estudian modificaciones a la fase de Berry por ruido clasico en el campo magnetico \cite{38}, o por un entorno cuantico \cite{39,40}, tanto desde lo teorico como lo experimental \cite{74,75}.
+Sin embargo, estamos asumiendo que el estado es puro durante toda su evolución, restricción que es una idealización y experimentalmente es necesario tener en cuenta que todo sistema físico esta en contacto con un entorno, y se requiere entonces una descripción en términos de estados mixtos y evoluciones no unitarias. La definición de una fase geométrica que aplique en tal escenario es todavía un problema cuya solución todavía no llego a un consenso unánime. Muchos esfuerzos notables [\cite{6},\cite{8}-\cite{10}] se concentraron en definir la fase geométrica acumulada por un estado mixto, incluso existen reportes experimentales de detecciones \cite{73}. Otra ruta explorada considera el efecto del entorno como correcciones que permitan mantener las nociones de fase geométrica del caso unitario. Trabajos de este tipo introducen el efecto del entorno mediante un hamiltoniano no hermitico \cite{32,33}, y otros estudian modificaciones a la fase de Berry por ruido clásico en el campo magnético \cite{38}, o por un entorno cuántico \cite{39,40}, tanto desde lo teórico como lo experimental \cite{74,75}.
 
-El marco en el cual una fase geometrica para sistemas cuanticos abiertos debe definirse es le siguiente: se suponeq ue el efecto del entorno en el sistema de interes es tal que, bajo aproximaciones adecuadas, el sistema puede tratarse \textit{efectovamente} como un sistema aislado que experimenta un tipo de evolucion lineal no unitaria:
+El marco en el cual una fase geométrica para sistemas cuánticos abiertos debe definirse es le siguiente: se supone que el efecto del entorno en el sistema de interés es tal que, bajo aproximaciones adecuadas, el sistema puede tratarse \textit{efectivamente} como un sistema aislado que experimenta un tipo de evolución lineal no unitaria:
 \begin{equation}
     \Sigma:\rho(0)\rightarrow\Sigma_t[\rho(0)] \equiv \rho(t)
 \end{equation}
-que da cuenta tanto de la dinamica interna del sistema como de su interaccion con el entorno, y satisface una ecuacion maestra.Una consecuencia de este enfoque es que, en el caso general, un estado inicial puro evoluciona en un estado mixto $\rho(t)$. El operador densidad que representa el estado del sistema admite una dscomposiucion $\{ \ket{\psi_k(t)},\omega_k(t)\}$ en estados puros $\ket{\psi_k(t)}$ pesados con probabilidades $\omega_k(t)$, que permite expresarla como
+que da cuenta tanto de la dinámica interna del sistema como de su interacción con el entorno, y satisface una ecuación maestra.Una consecuencia de este enfoque es que, en el caso general, un estado inicial puro evoluciona en un estado mixto $\rho(t)$. El operador densidad que representa el estado del sistema admite una descomposición $\{ \ket{\psi_k(t)},\omega_k(t)\}$ en estados puros $\ket{\psi_k(t)}$ pesados con probabilidades $\omega_k(t)$, que permite expresarla como
 \begin{equation}
     \rho(t)=\sum_k\omega_k(t)\ketbra{\psi_k(t)}{\psi_k(t)}
 \end{equation}
-. La asociacion $\rho(t)\rightarrow \{ \ket{\psi_k(t)},\omega_k(t)\}$ entre el operador densidad y el \textit{ensamble} de estados $\{\ket{\psi_k(t)}\}$ no es uno-a-uno, sino uno-a-muchos, lo que significa que en general existen diferentes ensambles, con diferentes estados y diferentes pesos, que sin embargo tienen la misma matriz densidad. Esto imposibilita la distincion entre estas situaciones solamente con la informacion que proporciona la matriz densidad.
+. La asociación $\rho(t)\rightarrow \{ \ket{\psi_k(t)},\omega_k(t)\}$ entre el operador densidad y el \textit{ensamble} de estados $\{\ket{\psi_k(t)}\}$ no es uno-a-uno, sino uno-a-muchos, lo que significa que en general existen diferentes ensambles, con diferentes estados y diferentes pesos, que sin embargo tienen la misma matriz densidad. Esto imposibilita la distinción entre estas situaciones solamente con la información que proporciona la matriz densidad.
 
-Una estrategia recurrente entre la literatura que aborda el problema de asociar una fase gemoetrica a un estado mixto $\rho(t)$ es descomponer formalnete la matriz densidad en una mezcla estadistica como la de la ecuacion enterior, y aplicar la fase unitaria \ref{eq2.34} sobre cada elemento de la mezcla para asociar una fase a $\rho(t)$. Esto fue propuesto, desde una descripcion en terminos de operadores de saltos en \cite{32,33} y posteriormente en \cite{34-37}. En una aproximacion diferente al problema, en Tong et al. \cite{31} se propone una definicion de fase geometrica que se vale de una purificacion del estado, pero resulta independiente de la eleccion que se utilize para purificar. La siguiente seccion desarrolla esta propuesta en particular.
-\subsection{Enfoque cinematico en sistemas abiuertos}
-La introduccion teorica concluye con esta seccion, siguiento la propuesta de Tong et al. \cite{31} para la fase geometrica en sistemas cuanticos abiertos. Para esto, se considera un sistema y el espacio de Hilbert $\mathcal{H}$ de dimension $N$ asociado al mismo. La evolucion del estado puede describirse como una curva $C \subset \mathcal{P}$
+Una estrategia recurrente entre la literatura que aborda el problema de asociar una fase geométrica a un estado mixto $\rho(t)$ es descomponer formalete la matriz densidad en una mezcla estadística como la de la ecuación anterior, y aplicar la fase unitaria \ref{eq2.34} sobre cada elemento de la mezcla para asociar una fase a $\rho(t)$. Esto fue propuesto, desde una descripción en términos de operadores de saltos en \cite{32,33} y posteriormente en \cite{34-37}. En una aproximación diferente al problema, en Tong et al. \cite{31} se propone una definición de fase geométrica que se vale de una purificación del estado, pero resulta independiente de la elección que se utilice para purificar. La siguiente sección desarrolla esta propuesta en particular.
+\subsection{Enfoque cinemático en sistemas abiertos}
+La introducción teórica concluye con esta sección, siguiendo la propuesta de Tong et al. \cite{31} para la fase geométrica en sistemas cuánticos abiertos. Para esto, se considera un sistema y el espacio de Hilbert $\mathcal{H}$ de dimensión $N$ asociado al mismo. La evolución del estado puede describirse como una curva $C \subset \mathcal{P}$
 \begin{equation}
     C:t\in[0,T] \rightarrow \rho(t) = \sum_{k=1}^N\omega_k(t)\ketbra{\psi_k(t)}{\psi_k(t)}
 \end{equation}
-donde $\omega_k(t)\geq 0$ y $\ket{\psi_k(t)}$ son los autovalores y autoestados, respectivamente, de la matriz densidad $\rho(t)$ del sistema
+donde $\omega_k(t)\geq 0$ y $\ket{\psi_k(t)}$ son los autovalores y autoestados, respectivamente, de la matriz densidad $\rho(t)$ del sistema. Por simplicidad se asume que las funciones $\omega_k(t)$ que no son nulas, son no degeneradas en el intervalo de estudio $[0,T]$, y se refiere al trabajo original \cite{31} para su generalización al caso degenerado.
+
+Para introducir una noción de fase geométrica bajo estas condiciones, se comienza por realizar una purificación del estado mixto, haciendo uso de un sistema auxiliar con un espacio de Hilbert de igual dimensión que el espacio original. El estado mixto se eleva entonces a un estado purificado de mayor dimensión
+\begin{equation}
+    \ket{\Psi(t)}=\sum_{k=1}^N\sqrt{\omega_k(t)}\ket{\psi(t)}\otimes\ket{a_k}
+\end{equation}
+donde $\ket{\Psi(t)}\in \mathcal{H}\otimes\mathcal{H}_{aux}$ es la purificación de $\rho(t)$, en el sentido de que la matriz densidad se recupera tomando traza parcial sobre el espacio auxiliar. 
+
+La fase de Pancharatnam entre las purificaciones inicial y final puede escribirse como
+\begin{equation} 
+    \phi_P=\arg \left( \sum_{k=1}^{N} \sqrt{\omega_k(0\omega_k(T))}\braket{\psi_k(0)}{\psi_k(T)} \right)
+\end{equation}
+Para extraer la fase asociada al sistema de interés, es necesario eliminar la dependencia en la purificación especifica utilizada. Para esto, sabiendo que para cada instante $t\in[0,T]$ las bases $\{\ket{\psi_k(t)}\}$ y $\{\ket{\psi_k(0)}\}$ son bases ortonormales del mismo espacio, existe entonces una transformación que lleva de un conjunto a otro $\ket{\psi_k(t)}=U(t)\ket{\psi_k(0)} \forall k$. El paso esencial para arribar a una fase puramente geométrica es el de notar que en realidad, existe una clase de equivalencia de mapas unitarios $\tilde U(t)$ que realizan todas la misma curva $C$. Específicamente, la expresión \ref{2.63} que defina le curva es manifiestamente invariante ante transformaciones de gauge $U(1)$, de forma que dos transformaciones unitarias $U(t)$ y $U'(t)$ que mapeen $\{\ket{\psi_k(0)}\}$ en $\{\ket{\psi_k(t)}\}$ o en $\{e^{i\alpha_k(t)}\ket{\psi_k(t)}\}$ resultan equivalentes. Los mapas $U(t)$ que en la clase de equivalencia tienen la forma 
+\begin{equation}
+    \tilde U(t) = U(t)\sum_{k=1}^{N}e^{i\alpha_k(t)}\ketbra{\psi_k(0)}{\psi_k(0)}
+\end{equation}
+. En particular, puede identificarse el mapa $U^\parallel(t)$ que satisface la condición de transporte paralelo para cada $\ket{\psi_k(t)}$, es decir
+\begin{equation}
+    U^\parallel(t)=U(t) | \bra{\psi_k(0)}U^\dagger(t)\dot U(t)\ket{\psi_k(0)}=0 \; \forall k
+\end{equation}
+y definir la fase geométrica como la diferencia de fase \ref{2.65} para este mapa particular. Sustituyendo en la ecuación \ref{2.66} que describe la relación de equivalencia entre operadores, se obtiene que 
+\begin{equation}
+    \alpha_k(t)=i\int_{0}^{t}dt'\bra{\psi_k(0)}U^\dagger(t')\dot U(t)\ket{\psi_k(0)}
+\end{equation}
+y en consecuencia, la fase geométrica resulta
+
 \begin{equation}
     \phi_g[C]=\arg \left( \sum_{k=1}^{N} \sqrt{\omega_k(0)\omega_k(t)} \braket{\psi_k(0)}{\psi_k(T)}e^{-\int_{0}^{T}dt\braket{\psi_k(t)}{\dot\psi_k(t)}} \right)
 \end{equation}\label{ec2:fg general}
+La definición propuesta satisface las condiciones que rigen sobre una noción geométrica razonable para un estado mixto, que son: (i) Efectivamente es una fase, dado que si definición a través de la funcion argumento impone una periodicidad bien definida, (ii) es manifiestamente invariante de gauge ya que toma el mismo valor para cualquier operador unitario $U(t)$ en la clase de equivalencia descrita por \ref{2.66}, y por lo tanto depende unicamente por el camino $C$ trazado por la matriz $\rho(t)$ del sistema y (iii) cuando la evolución es unitaria, se recuperan los resultados anteriores para estados iniciales puros, y \cite{9-10} para estados iniciales mixtos. Finalmente (iv) es accesible experimentalmente, por ejemplo usando interferometria.
 
+Sera de utilidad para su aplicación, el caso particular en que el sistema se encuentre inicialmente en un estado puro $\ket{\psi(0)}$. En tal situación, la descomposición de la matriz densidad del sistema en el instante inicial solo tendrá un autovalor distinto de cero: $\omega_+(0)=1$. En consecuencia, la sumatoria en la ecuación \ref{ec2:fg general} posee un unico termino no nulo, y la formula se reduce a 
 \begin{equation}
     \phi_g[C]=\arg{\braket{\psi(0)}{\psi_+(T)}}-\Im \int_{0}^{T}dt \braket{\psi_+(t)}{\dot\psi_+(t)}
 \end{equation}\label{ec2:fg general puro}
-
+Esta expresión admite la interpretación de fase geométrica acumulada por el autoestado $\ket{\psi_+(t)}$.
 
