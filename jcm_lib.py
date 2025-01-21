@@ -2228,7 +2228,12 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0
 
 
     if return_all==False:
-        return fg_u
+        atoms_states_u=np.empty_like(sol_u.states)
+        for j in range(len(sol_u.states)):
+            atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+        concu_u=concurrence(atoms_states_u)
+
+        return fg_u,concu_u
     else:
         data_u=pd.DataFrame()
         data_u['t']=t
@@ -2335,7 +2340,11 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
 
 
     if return_all==False:
-        return fg_d
+        atoms_states_d=np.empty_like(sol_d.states)
+        for j in range(len(sol_d.states)):
+            atoms_states_d[j]=sol_d.states[j].ptrace([0,1])
+        concu_d=concurrence(atoms_states_d)
+        return fg_d,concu_d
     else:
         data_d=pd.DataFrame()
         data_d['t']=t

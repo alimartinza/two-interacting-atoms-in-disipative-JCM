@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  13 JAN 2025 19:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.28)  20 JAN 2025 17:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -437,6 +437,18 @@ LaTeX Info: Redefining \% on input line 14.
 
 LaTeX Warning: Label `fig4:bloch delta' multiply defined.
 
+
+LaTeX Warning: Label `fig4:pob j eg0' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig4:pob j eg0' multiply defined.
+
+
+LaTeX Warning: Label `fig4:pob j eg0 sim' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig4:pob j eg0 sim' multiply defined.
+
 )
 \openout1 = `main.aux'.
 
@@ -591,15 +603,15 @@ Underfull \vbox (badness 5490) has occurred while \output is active []
 
 [3
 
-])
+]
+
+LaTeX Info: Redefining \. on input line 32.
+LaTeX Info: Redefining \% on input line 32.
+[4])
 \tf@lof=\write5
 \openout5 = `main.lof'.
 
  (./resumen.tex
-
-LaTeX Info: Redefining \. on input line 5.
-LaTeX Info: Redefining \% on input line 5.
-[4]
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 
@@ -877,7 +889,7 @@ LaTeX Warning: Reference `' on page 13 undefined on input line 34.
 
 LaTeX Warning: Reference `' on page 14 undefined on input line 42.
 
-<figuras/ch3/relacion energia detunning jcm simple.png, id=358, 516.7305pt x 389.5353pt>
+<figuras/ch3/relacion energia detunning jcm simple.png, id=364, 516.7305pt x 389.5353pt>
 File: figuras/ch3/relacion energia detunning jcm simple.png Graphic file (type png)
 <use figuras/ch3/relacion energia detunning jcm simple.png>
 Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple.png  used on input line 69.
@@ -911,12 +923,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [15 <./figuras/ch3/relacion energia detunning jcm simple.png>]
-<figuras/ch3/bloch berry.png, id=382, 375.0813pt x 375.0813pt>
+<figuras/ch3/bloch berry.png, id=388, 375.0813pt x 375.0813pt>
 File: figuras/ch3/bloch berry.png Graphic file (type png)
 <use figuras/ch3/bloch berry.png>
 Package pdftex.def Info: figuras/ch3/bloch berry.png  used on input line 126.
 (pdftex.def)             Requested size: 208.01476pt x 208.01233pt.
-<figuras/ch3/bloch cinematica.png, id=383, 375.0813pt x 375.0813pt>
+<figuras/ch3/bloch cinematica.png, id=389, 375.0813pt x 375.0813pt>
 File: figuras/ch3/bloch cinematica.png Graphic file (type png)
 <use figuras/ch3/bloch cinematica.png>
 Package pdftex.def Info: figuras/ch3/bloch cinematica.png  used on input line 133.
@@ -947,12 +959,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [17 <./figuras/ch3/bloch berry.png> <./figuras/ch3/bloch cinematica.png>]
-<figuras/ch3/relacion energia detunning jcm simple kerr.png, id=408, 578.16pt x 433.62pt>
+<figuras/ch3/relacion energia detunning jcm simple kerr.png, id=414, 578.16pt x 433.62pt>
 File: figuras/ch3/relacion energia detunning jcm simple kerr.png Graphic file (type png)
 <use figuras/ch3/relacion energia detunning jcm simple kerr.png>
 Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple kerr.png  used on input line 180.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch3/relacion energia detunning jcm simple kerr 2.png, id=409, 578.16pt x 433.62pt>
+<figuras/ch3/relacion energia detunning jcm simple kerr 2.png, id=415, 578.16pt x 433.62pt>
 File: figuras/ch3/relacion energia detunning jcm simple kerr 2.png Graphic file (type png)
 <use figuras/ch3/relacion energia detunning jcm simple kerr 2.png>
 Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple kerr 2.png  used on input line 187.
@@ -1014,12 +1026,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [20]
-<figuras/ch3/poblaciones sc vs wc.png, id=438, 1092.7224pt x 460.3599pt>
+<figuras/ch3/poblaciones sc vs wc.png, id=444, 1092.7224pt x 460.3599pt>
 File: figuras/ch3/poblaciones sc vs wc.png Graphic file (type png)
 <use figuras/ch3/poblaciones sc vs wc.png>
 Package pdftex.def Info: figuras/ch3/poblaciones sc vs wc.png  used on input line 252.
 (pdftex.def)             Requested size: 424.51515pt x 178.84421pt.
-<figuras/ch3/poblaciones kerr.png, id=441, 1092.7224pt x 460.3599pt>
+<figuras/ch3/poblaciones kerr.png, id=447, 1092.7224pt x 460.3599pt>
 File: figuras/ch3/poblaciones kerr.png Graphic file (type png)
 <use figuras/ch3/poblaciones kerr.png>
 Package pdftex.def Info: figuras/ch3/poblaciones kerr.png  used on input line 262.
@@ -1047,8 +1059,8 @@ LaTeX Warning: Reference `' on page 22 undefined on input line 280.
 
 
 
-LaTeX Info: Redefining \. on input line 287.
-LaTeX Info: Redefining \% on input line 287.
+LaTeX Info: Redefining \. on input line 285.
+LaTeX Info: Redefining \% on input line 285.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1057,12 +1069,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [22 <./figuras/ch3/poblaciones kerr.png>]
-<figuras/ch3/fg gamma.png, id=460, 587.5551pt x 437.9562pt>
+<figuras/ch3/fg gamma.png, id=466, 587.5551pt x 437.9562pt>
 File: figuras/ch3/fg gamma.png Graphic file (type png)
 <use figuras/ch3/fg gamma.png>
 Package pdftex.def Info: figuras/ch3/fg gamma.png  used on input line 300.
 (pdftex.def)             Requested size: 284.42436pt x 212.01422pt.
-<figuras/ch3/fg detunning.png, id=462, 591.1686pt x 437.9562pt>
+<figuras/ch3/fg detunning.png, id=468, 591.1686pt x 437.9562pt>
 File: figuras/ch3/fg detunning.png Graphic file (type png)
 <use figuras/ch3/fg detunning.png>
 Package pdftex.def Info: figuras/ch3/fg detunning.png  used on input line 315.
@@ -1088,7 +1100,7 @@ LaTeX Warning: Reference `ec' on page 24 undefined on input line 323.
 
 LaTeX Warning: Reference `fig3:deltaphi 0' on page 24 undefined on input line 323.
 
-<figuras/ch3/robustez.png, id=471, 505.89pt x 433.62pt>
+<figuras/ch3/robustez.png, id=477, 505.89pt x 433.62pt>
 File: figuras/ch3/robustez.png Graphic file (type png)
 <use figuras/ch3/robustez.png>
 Package pdftex.def Info: figuras/ch3/robustez.png  used on input line 326.
@@ -1108,12 +1120,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [24 <./figuras/ch3/fg detunning.png>]
-<figuras/ch3/fg kerr.png, id=479, 573.8238pt x 437.9562pt>
+<figuras/ch3/fg kerr.png, id=485, 573.8238pt x 437.9562pt>
 File: figuras/ch3/fg kerr.png Graphic file (type png)
 <use figuras/ch3/fg kerr.png>
 Package pdftex.def Info: figuras/ch3/fg kerr.png  used on input line 343.
 (pdftex.def)             Requested size: 208.01476pt x 158.76006pt.
-<figuras/ch3/fg kerr d=0.1g.png, id=480, 583.9416pt x 437.9562pt>
+<figuras/ch3/fg kerr d=0.1g.png, id=486, 583.9416pt x 437.9562pt>
 File: figuras/ch3/fg kerr d=0.1g.png Graphic file (type png)
 <use figuras/ch3/fg kerr d=0.1g.png>
 Package pdftex.def Info: figuras/ch3/fg kerr d=0.1g.png  used on input line 350.
@@ -1133,7 +1145,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [25 <./figuras/ch3/robustez.png>]
-<figuras/ch3/robustez kerr.png, id=489, 578.16pt x 433.62pt>
+<figuras/ch3/robustez kerr.png, id=495, 578.16pt x 433.62pt>
 File: figuras/ch3/robustez kerr.png Graphic file (type png)
 <use figuras/ch3/robustez kerr.png>
 Package pdftex.def Info: figuras/ch3/robustez kerr.png  used on input line 361.
@@ -1163,7 +1175,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [26 <./figuras/ch3/fg kerr.png> <./figuras/ch3/fg kerr d=0.1g.png>]
-<figuras/ch3/robustez x=g.png, id=498, 505.89pt x 433.62pt>
+<figuras/ch3/robustez x=g.png, id=504, 505.89pt x 433.62pt>
 File: figuras/ch3/robustez x=g.png Graphic file (type png)
 <use figuras/ch3/robustez x=g.png>
 Package pdftex.def Info: figuras/ch3/robustez x=g.png  used on input line 371.
@@ -1297,12 +1309,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [34]
-<figuras/ch4/relacion_energia_detunning1.pdf, id=555, 578.16pt x 433.62pt>
+<figuras/ch4/relacion_energia_detunning1.pdf, id=561, 578.16pt x 433.62pt>
 File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
 <use figuras/ch4/relacion_energia_detunning1.pdf>
 Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 134.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/relacion_energia_detunning2.pdf, id=556, 578.16pt x 433.62pt>
+<figuras/ch4/relacion_energia_detunning2.pdf, id=562, 578.16pt x 433.62pt>
 File: figuras/ch4/relacion_energia_detunning2.pdf Graphic file (type pdf)
 <use figuras/ch4/relacion_energia_detunning2.pdf>
 Package pdftex.def Info: figuras/ch4/relacion_energia_detunning2.pdf  used on input line 141.
@@ -1319,7 +1331,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [35 <./figuras/ch4/relacion_energia_detunning1.pdf> <./figuras/ch4/relacion_energia_detunning2.pdf>]
-<figuras/ch4/diagrama esquematico.png, id=630, 532.23843pt x 308.65312pt>
+<figuras/ch4/diagrama esquematico.png, id=636, 532.23843pt x 308.65312pt>
 File: figuras/ch4/diagrama esquematico.png Graphic file (type png)
 <use figuras/ch4/diagrama esquematico.png>
 Package pdftex.def Info: figuras/ch4/diagrama esquematico.png  used on input line 160.
@@ -1346,7 +1358,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [36]
-<figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png, id=636, 361.35pt x 361.35pt>
+<figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png, id=642, 361.35pt x 361.35pt>
 File: figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png Graphic file (type png)
 <use figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png>
 Package pdftex.def Info: figuras/ch4/bloch eg0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png  used on input line 170.
@@ -1366,7 +1378,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [37 <./figuras/ch4/diagrama esquematico.png>]
-<figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png, id=642, 361.35pt x 361.35pt>
+<figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png, id=648, 361.35pt x 361.35pt>
 File: figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png Graphic file (type png)
 <use figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png>
 Package pdftex.def Info: figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png  used on input line 181.
@@ -1401,12 +1413,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [39 <./figuras/ch4/bloch eg0+ge0 bloch AC a=0 d=2.0 x=0.0 k=0.0 J=0.0 gamma=0.0 p=0.0.png>]
-<figuras/ch4/d eg0+ din ABC d=0.png, id=655, 578.16pt x 433.62pt>
+<figuras/ch4/d eg0+ din ABC d=0.png, id=661, 578.16pt x 433.62pt>
 File: figuras/ch4/d eg0+ din ABC d=0.png Graphic file (type png)
 <use figuras/ch4/d eg0+ din ABC d=0.png>
 Package pdftex.def Info: figuras/ch4/d eg0+ din ABC d=0.png  used on input line 198.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/d eg0+ din svn d=0.png, id=656, 578.16pt x 433.62pt>
+<figuras/ch4/d eg0+ din svn d=0.png, id=662, 578.16pt x 433.62pt>
 File: figuras/ch4/d eg0+ din svn d=0.png Graphic file (type png)
 <use figuras/ch4/d eg0+ din svn d=0.png>
 Package pdftex.def Info: figuras/ch4/d eg0+ din svn d=0.png  used on input line 205.
@@ -1426,7 +1438,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 LaTeX Warning: Citation `an intro to entanglement measures' on page 41 undefined on input line 220.
 
-<figuras/ch4/d eg0+ concu d=0.png, id=667, 578.16pt x 433.62pt>
+<figuras/ch4/d eg0+ concu d=0.png, id=673, 578.16pt x 433.62pt>
 File: figuras/ch4/d eg0+ concu d=0.png Graphic file (type png)
 <use figuras/ch4/d eg0+ concu d=0.png>
 Package pdftex.def Info: figuras/ch4/d eg0+ concu d=0.png  used on input line 233.
@@ -1451,7 +1463,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [41]
-<figuras/ch4/k eg0 ABC.png, id=677, 578.16pt x 433.62pt>
+<figuras/ch4/k eg0 ABC.png, id=683, 578.16pt x 433.62pt>
 File: figuras/ch4/k eg0 ABC.png Graphic file (type png)
 <use figuras/ch4/k eg0 ABC.png>
 Package pdftex.def Info: figuras/ch4/k eg0 ABC.png  used on input line 248.
@@ -1460,7 +1472,7 @@ Package pdftex.def Info: figuras/ch4/k eg0 ABC.png  used on input line 248.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figuras/ch4/k eg0+ ABC.png, id=679, 578.16pt x 395.3169pt>
+<figuras/ch4/k eg0+ ABC.png, id=685, 578.16pt x 395.3169pt>
 File: figuras/ch4/k eg0+ ABC.png Graphic file (type png)
 <use figuras/ch4/k eg0+ ABC.png>
 Package pdftex.def Info: figuras/ch4/k eg0+ ABC.png  used on input line 258.
@@ -1480,12 +1492,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [42 <./figuras/ch4/d eg0+ concu d=0.png>]
-<figuras/ch4/k eg0 concu.png, id=690, 578.16pt x 433.62pt>
+<figuras/ch4/k eg0 concu.png, id=696, 578.16pt x 433.62pt>
 File: figuras/ch4/k eg0 concu.png Graphic file (type png)
 <use figuras/ch4/k eg0 concu.png>
 Package pdftex.def Info: figuras/ch4/k eg0 concu.png  used on input line 271.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/k eg0+ concu.png, id=691, 578.16pt x 433.62pt>
+<figuras/ch4/k eg0+ concu.png, id=697, 578.16pt x 433.62pt>
 File: figuras/ch4/k eg0+ concu.png Graphic file (type png)
 <use figuras/ch4/k eg0+ concu.png>
 Package pdftex.def Info: figuras/ch4/k eg0+ concu.png  used on input line 277.
@@ -1505,40 +1517,72 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [43 <./figuras/ch4/k eg0 ABC.png> <./figuras/ch4/k eg0+ ABC.png>]
-<figuras/ch4/x eg0 abc.png, id=698, 578.16pt x 433.62pt>
+<figuras/ch4/j eg0 abc.png, id=705, 578.16pt x 433.62pt>
+File: figuras/ch4/j eg0 abc.png Graphic file (type png)
+<use figuras/ch4/j eg0 abc.png>
+Package pdftex.def Info: figuras/ch4/j eg0 abc.png  used on input line 290.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch4/j eg0+ge0 abc.png, id=706, 578.16pt x 433.62pt>
+File: figuras/ch4/j eg0+ge0 abc.png Graphic file (type png)
+<use figuras/ch4/j eg0+ge0 abc.png>
+Package pdftex.def Info: figuras/ch4/j eg0+ge0 abc.png  used on input line 296.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch4/j eg0 concu.png, id=707, 578.16pt x 433.62pt>
+File: figuras/ch4/j eg0 concu.png Graphic file (type png)
+<use figuras/ch4/j eg0 concu.png>
+Package pdftex.def Info: figuras/ch4/j eg0 concu.png  used on input line 302.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch4/j eg0+ge0 concu.png, id=708, 578.16pt x 433.62pt>
+File: figuras/ch4/j eg0+ge0 concu.png Graphic file (type png)
+<use figuras/ch4/j eg0+ge0 concu.png>
+Package pdftex.def Info: figuras/ch4/j eg0+ge0 concu.png  used on input line 308.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Info: Redefining \. on input line 317.
+LaTeX Info: Redefining \% on input line 317.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[44 <./figuras/ch4/k eg0 concu.png> <./figuras/ch4/k eg0+ concu.png> <./figuras/ch4/j eg0 abc.png> <./figuras/ch4/j eg0+ge0 abc.png> <./figuras/ch4/j eg0 concu.png> <./figuras/ch4/j eg0+ge0 concu.png>]
+<figuras/ch4/x eg0 abc.png, id=722, 578.16pt x 433.62pt>
 File: figuras/ch4/x eg0 abc.png Graphic file (type png)
 <use figuras/ch4/x eg0 abc.png>
-Package pdftex.def Info: figuras/ch4/x eg0 abc.png  used on input line 293.
+Package pdftex.def Info: figuras/ch4/x eg0 abc.png  used on input line 323.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/x eg0+ abc.png, id=699, 578.16pt x 433.62pt>
+<figuras/ch4/x eg0+ abc.png, id=723, 578.16pt x 433.62pt>
 File: figuras/ch4/x eg0+ abc.png Graphic file (type png)
 <use figuras/ch4/x eg0+ abc.png>
-Package pdftex.def Info: figuras/ch4/x eg0+ abc.png  used on input line 299.
+Package pdftex.def Info: figuras/ch4/x eg0+ abc.png  used on input line 329.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/x eg0 concu.png, id=705, 578.16pt x 433.62pt>
+<figuras/ch4/x eg0 concu.png, id=730, 578.16pt x 433.62pt>
 File: figuras/ch4/x eg0 concu.png Graphic file (type png)
 <use figuras/ch4/x eg0 concu.png>
-Package pdftex.def Info: figuras/ch4/x eg0 concu.png  used on input line 311.
+Package pdftex.def Info: figuras/ch4/x eg0 concu.png  used on input line 341.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/x eg0+ concu.png, id=706, 578.16pt x 433.62pt>
+<figuras/ch4/x eg0+ concu.png, id=731, 578.16pt x 433.62pt>
 File: figuras/ch4/x eg0+ concu.png Graphic file (type png)
 <use figuras/ch4/x eg0+ concu.png>
-Package pdftex.def Info: figuras/ch4/x eg0+ concu.png  used on input line 317.
+Package pdftex.def Info: figuras/ch4/x eg0+ concu.png  used on input line 347.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/d=x=0 eg0 abc.png, id=707, 578.16pt x 433.62pt>
+<figuras/ch4/d=x=0 eg0 abc.png, id=732, 578.16pt x 433.62pt>
 File: figuras/ch4/d=x=0 eg0 abc.png Graphic file (type png)
 <use figuras/ch4/d=x=0 eg0 abc.png>
-Package pdftex.def Info: figuras/ch4/d=x=0 eg0 abc.png  used on input line 328.
+Package pdftex.def Info: figuras/ch4/d=x=0 eg0 abc.png  used on input line 358.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch4/d=x=0.5 eg0 abc.png, id=708, 578.16pt x 433.62pt>
+<figuras/ch4/d=x=0.5 eg0 abc.png, id=733, 578.16pt x 433.62pt>
 File: figuras/ch4/d=x=0.5 eg0 abc.png Graphic file (type png)
 <use figuras/ch4/d=x=0.5 eg0 abc.png>
-Package pdftex.def Info: figuras/ch4/d=x=0.5 eg0 abc.png  used on input line 334.
+Package pdftex.def Info: figuras/ch4/d=x=0.5 eg0 abc.png  used on input line 364.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
 
 
-LaTeX Info: Redefining \. on input line 342.
-LaTeX Info: Redefining \% on input line 342.
+LaTeX Info: Redefining \. on input line 372.
+LaTeX Info: Redefining \% on input line 372.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1546,13 +1590,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[44 <./figuras/ch4/k eg0 concu.png> <./figuras/ch4/k eg0+ concu.png> <./figuras/ch4/x eg0 abc.png> <./figuras/ch4/x eg0+ abc.png>]
-Underfull \vbox (badness 6284) has occurred while \output is active []
+[45 <./figuras/ch4/x eg0 abc.png> <./figuras/ch4/x eg0+ abc.png>]
 
-
-
-LaTeX Info: Redefining \. on input line 346.
-LaTeX Info: Redefining \% on input line 346.
+LaTeX Info: Redefining \. on input line 376.
+LaTeX Info: Redefining \% on input line 376.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1560,16 +1601,16 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[45 <./figuras/ch4/x eg0 concu.png> <./figuras/ch4/x eg0+ concu.png> <./figuras/ch4/d=x=0 eg0 abc.png> <./figuras/ch4/d=x=0.5 eg0 abc.png>]
-<figuras/ch4/sc vs wc eg0 k0.5.png, id=728, 1071.0414pt x 449.5194pt>
-File: figuras/ch4/sc vs wc eg0 k0.5.png Graphic file (type png)
-<use figuras/ch4/sc vs wc eg0 k0.5.png>
-Package pdftex.def Info: figuras/ch4/sc vs wc eg0 k0.5.png  used on input line 359.
+[46 <./figuras/ch4/x eg0 concu.png> <./figuras/ch4/x eg0+ concu.png> <./figuras/ch4/d=x=0 eg0 abc.png> <./figuras/ch4/d=x=0.5 eg0 abc.png>]
+<figuras/ch4/sc vs wc eg0 sim j0.5.png, id=752, 1071.0414pt x 449.5194pt>
+File: figuras/ch4/sc vs wc eg0 sim j0.5.png Graphic file (type png)
+<use figuras/ch4/sc vs wc eg0 sim j0.5.png>
+Package pdftex.def Info: figuras/ch4/sc vs wc eg0 sim j0.5.png  used on input line 387.
 (pdftex.def)             Requested size: 297.1593pt x 124.71909pt.
-<figuras/ch4/sc vs wc gg1 k=0.5.png, id=729, 1071.0414pt x 449.5194pt>
+<figuras/ch4/sc vs wc gg1 k=0.5.png, id=753, 1071.0414pt x 449.5194pt>
 File: figuras/ch4/sc vs wc gg1 k=0.5.png Graphic file (type png)
 <use figuras/ch4/sc vs wc gg1 k=0.5.png>
-Package pdftex.def Info: figuras/ch4/sc vs wc gg1 k=0.5.png  used on input line 365.
+Package pdftex.def Info: figuras/ch4/sc vs wc gg1 k=0.5.png  used on input line 393.
 (pdftex.def)             Requested size: 297.1593pt x 124.71909pt.
 
 
@@ -1577,8 +1618,8 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-LaTeX Info: Redefining \. on input line 375.
-LaTeX Info: Redefining \% on input line 375.
+LaTeX Info: Redefining \. on input line 404.
+LaTeX Info: Redefining \% on input line 404.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1586,7 +1627,31 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[46]) (./ch5_fgdoble.tex
+[47]
+File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
+<use figuras/ch4/relacion_energia_detunning1.pdf>
+Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 416.
+(pdftex.def)             Requested size: 127.35583pt x 95.5158pt.
+File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
+<use figuras/ch4/relacion_energia_detunning1.pdf>
+Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 422.
+(pdftex.def)             Requested size: 127.35583pt x 95.5158pt.
+File: figuras/ch4/relacion_energia_detunning1.pdf Graphic file (type pdf)
+<use figuras/ch4/relacion_energia_detunning1.pdf>
+Package pdftex.def Info: figuras/ch4/relacion_energia_detunning1.pdf  used on input line 428.
+(pdftex.def)             Requested size: 127.35583pt x 95.5158pt.
+
+
+LaTeX Info: Redefining \. on input line 445.
+LaTeX Info: Redefining \% on input line 445.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[48 <./figuras/ch4/sc vs wc eg0 sim j0.5.png> <./figuras/ch4/sc vs wc gg1 k=0.5.png>]) (./ch5_fgdoble.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1597,33 +1662,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[47 <./figuras/ch4/sc vs wc eg0 k0.5.png> <./figuras/ch4/sc vs wc gg1 k=0.5.png>]
-
-[48
-
-]
-Cap\'{\i }tulo 5.
-) (./ch6_conclusiones.tex
-
 [49]
 
 [50
 
 ]
-Cap\'{\i }tulo 6.
-) (./ap_ecsmaestras.tex
+Cap\'{\i }tulo 5.
+) (./ch6_conclusiones.tex
 
 [51]
 
 [52
 
 ]
-Ap\'{e}ndice A.
-) (./zbibliografia.tex (./main.bbl
+Cap\'{\i }tulo 6.
+) (./ap_ecsmaestras.tex
 
 [53]
 
 [54
+
+]
+Ap\'{e}ndice A.
+) (./zbibliografia.tex (./main.bbl
+
+[55]
+
+[56
 
 ]
 
@@ -1631,15 +1696,15 @@ LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 ) Excluding 'comment' comment.) (./licencia.tex
 
-[55]
-<licencia.png, id=778, 30.1125pt x 10.5996pt>
+[57]
+<licencia.png, id=810, 30.1125pt x 10.5996pt>
 File: licencia.png Graphic file (type png)
 <use licencia.png>
 Package pdftex.def Info: licencia.png  used on input line 8.
 (pdftex.def)             Requested size: 84.90173pt x 29.88824pt.
 )
 
-[56 <./licencia.png>] (./main.aux
+[58 <./licencia.png>] (./main.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 LaTeX Info: Redefining \. on input line 13.
@@ -1660,18 +1725,18 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 16805 strings out of 473578
- 272065 string characters out of 5732242
- 790488 words of memory out of 5000000
- 39172 multiletter control sequences out of 15000+600000
+ 16853 strings out of 473578
+ 273396 string characters out of 5732242
+ 791260 words of memory out of 5000000
+ 39214 multiletter control sequences out of 15000+600000
  585175 words of font info for 101 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,23n,96p,2156b,776s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
-Output written on main.pdf (72 pages, 3097563 bytes).
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
+Output written on main.pdf (74 pages, 3333185 bytes).
 PDF statistics:
- 1050 PDF objects out of 1200 (max. 8388607)
- 795 compressed objects within 8 object streams
- 210 named destinations out of 1000 (max. 500000)
- 461 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1092 PDF objects out of 1200 (max. 8388607)
+ 824 compressed objects within 9 object streams
+ 216 named destinations out of 1000 (max. 500000)
+ 489 words of extra memory for PDF output out of 10000 (max. 10000000)
 

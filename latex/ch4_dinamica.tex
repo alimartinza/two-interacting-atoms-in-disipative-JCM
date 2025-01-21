@@ -74,7 +74,7 @@ Para resolver el problema lo primero que hacemos es notar que el Hamiltoniano co
     0 & \sqrt{2} g f(n-1)\sqrt{n-1} &  \chi (n-2)^2 +  \Delta +  J & 0 \\
     0&0&0& \begin{aligned} 
                  & \chi (n-1)^2  \\ 
-                 &-  \Delta - 2 k
+                 &-  J - 2 k
         \end{aligned}
     \end{pmatrix}
 \end{equation}
@@ -282,8 +282,38 @@ El entrelazamiento entre los atomos se analiza utilizando la concurrencia, como 
     \label{fig4:concu k}
 \end{figure}
 
-Ahora vamos a ver $k=0$ y $J\neq 0$. Vemos que la diferencia es que si bien la dinamica es similar, los atomos no se entrelazan.
+Ahora vamos a ver $k=0$ y $J\neq 0$. En la figura \ref{fig4:j alpha0}, vemos que, si bien la dinamica es similar, los atomos no se entrelazan.
 
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/j eg0 abc.png}
+        \caption{$\ket{eg0}$ Poblaciones}
+        \label{fig4:pob j eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/j eg0+ge0 abc.png}
+        \caption{$\ket{eg0+ge0}$ Poblaciones}
+        \label{fig4:pob j eg0 sim}
+    \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/j eg0 concu.png}
+        \caption{$\ket{eg0}$ Concurrencia}
+        \label{fig4:pob j eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/j eg0+ge0 concu.png}
+        \caption{$\ket{eg0+ge0}$ Concurrencia}
+        \label{fig4:pob j eg0 sim}
+    \end{subfigure}
+    \caption{$\Delta=0$, $J=0.5g$ y $k=0$}
+    \label{fig4:j alpha0}
+\end{figure}
+Vemos que la diferencia prinipal entre la interaccion tipo Isign ($J\sigma_z^{(1)}\sigma_z^{(2)}$) y la dipolar ($k\sigma_+^{(1)}\sigma_-^{(2)}+\text{c.c.}$), es que el segundo parece entrelazar los atomos, ya que en el primer caso, el efecto es separar los niveles de energia, pero en el segundo no solo eso, sino que tambien pasa excitaciones de un atomo al otro. Si bien esto nos sirve para entender intuitivamente el efecto, el problema de este analisis es que estamos asumiendo cosas no fisicas mediante el apantallamiento y la asimetria que imponemos entre los dos atomos. Esto, lleva a estos analisis que en realidad no son correctos, ya que si miramos el Hamiltoniano del sistema sin apantallamiento \ref{eq4:H}, donde usamos la base con estados simetricos y antisimetricos \ref{ec4:base}, el efecto de ambos parametros deberia ser el mismo, ya que solo aparecen en la diagonal principal. Si bien la interaccion $J$ actua sobre todos los estados, y el $k$ solamente solo sobre los $\ket{egn\pm gen}$, su principal funcion es separar las energias de los estados de la base.
+Entonces sera necesario retomar este analisis sin apantallamiento y con la base \ref{ec4:base}.
 \subsection{Medio Kerr}
 
 Ahora nos concentramos en el efecto del medio Kerr. Para esto, apagamos las interacciones interatomicas $k=J=0$, y ahora se modifica el medio a traves del parametro $\chi$. 
@@ -304,7 +334,7 @@ Ahora nos concentramos en el efecto del medio Kerr. Para esto, apagamos las inte
     \label{fig4:pob x}
 \end{figure}
 
-Al igual que en el caso de 1 atomo, se puede observar en las ecuaciones \ref{ec4:autoenergias} y \ref{ec4:parametros solucion}, la frecuencia depende del medio. En esta figura el tiempo esta normalizado con la frecuencia, entonces no se nota el cambio. Pero lo que es necesario analizar, es como las oscilaciones no son totalmente coherentes, en el sentido de que la probabilidad del estado $\ket{gg1}$ nunca alcanza la amplitud inicial de la oscilacion, como en el caso de $\chi=0$. Esto se debe a que el aumento de $\chi$ hace que las energias de ambos estados se separen, y por lo tanto hace que las transiciones entre los estados sea menos probable. Este comportamiento tambien se observa si el estado inicial se toma como $\ket{gg1}$. Es logico estudiar el entrelazamiento en este caso. En la figura \ref{fig4:concu x} se muestran las concurrencias para ambas condiciones iniciales. Es interesante comparar la figura \ref{fig4:concu x eg0 sim} con la figura en el caso de $\chi=0$ para esta misma condicion inicial, la figura \ref{fig4:concu eg0 sim}. En principio se puede pensar que el medio no lineal rompe con el entrelazamiento del sistema, pero como se ve al comparar estas figuras, la interpretacion correcta es que el medio no hace mas que alentizar el comportamiento preexistente de la cavidad, ya que en este caso, no destruye el entrelazamiento, sino que lo conserva por virtud de haber realentizado las amplitudes de oscilacion entre los dos estados dinamicos.
+Al igual que en el caso de 1 atomo, se puede observar en las ecuaciones \ref{ec4:autoenergias} y \ref{ec4:parametros solucion}, la frecuencia depende del medio. En la figura \ref{fig4:pob x} el tiempo esta normalizado con la frecuencia, entonces no se nota el cambio. Pero lo que es necesario analizar, es como las oscilaciones no son totalmente coherentes, en el sentido de que la probabilidad del estado $\ket{gg1}$ nunca alcanza la amplitud inicial de la oscilacion, como en el caso de $\chi=0$. Esto se debe a que el aumento de $\chi$ hace que las energias de ambos estados se separen, y por lo tanto hace que las transiciones entre los estados sea menos probable. Este comportamiento tambien se observa si el estado inicial se toma como $\ket{gg1}$. Es logico estudiar el entrelazamiento en este caso. En la figura \ref{fig4:concu x} se muestran las concurrencias para ambas condiciones iniciales. Es interesante comparar la figura \ref{fig4:concu x eg0 sim} con la figura en el caso de $\chi=0$ para esta misma condicion inicial, la figura \ref{fig4:concu eg0 sim}. En principio se puede pensar que el medio no lineal rompe con el entrelazamiento del sistema, pero como se ve al comparar estas figuras, la interpretacion correcta es que el medio no hace mas que alentizar el comportamiento preexistente de la cavidad, ya que en este caso, no destruye el entrelazamiento, sino que lo conserva por virtud de haber realentizado las amplitudes de oscilacion entre los dos estados dinamicos.
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
@@ -346,8 +376,6 @@ Al complejizar el problema, comienzan a aparecer batidos, comportamiento que se 
 
 \section{Dinamica sin apantallamiento}
 
-SACAR EL APANTALLAMIENTO COMPLETAMENTE Y VER SI LOS EFECTOS CAMBIAN MUCHO.
-
 Al sacar el apantallamiento, es necesario utilizar la base mencionada anteriormente \ref{ec4:base}, ya que los atomos son indistinguibles y esta base es mas apropiada. Ademas, el Hamiltoniano desacopla los estados antisimetricos, facilitando la solucion. Por lo tanto, se procede a estudiar la dinamica sacando el apantallamiento. Lo que nos interesa estudiar es el entrelazamiento entre las diferentes partes del sistema, y su dependencia con los parametros. 
 
 \subsection{Dinamica con disipacion}
@@ -356,24 +384,65 @@ Lo primero que hay que mirar es la dependencia de la dinamica con el regimen de 
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.7\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/sc vs wc eg0 k0.5.png}
-        \caption{$\ket{eg0+ge0}$}
+        \includegraphics[width=\textwidth]{figuras/ch4/sc vs wc eg0 sim j0.5.png}
+        \caption{$\ket{eg0+ge0}$. $\Delta=\chi=k=0$, $J=0.5g$}
         \label{fig4:acoplamiento eg0 sim}
     \end{subfigure}
     \vfill
     \begin{subfigure}{0.7\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/sc vs wc gg1 k=0.5.png}
-        \caption{$\ket{gg1}$}
+        \caption{$\ket{gg1}$. $\Delta=\chi=J=0$, $k=0.5g$ }
         \label{fig4:acoplamiento gg1}
     \end{subfigure}
     \caption{Dependencia de las poblaciones con el regimen de acoplamiento, para $\Delta=J=\chi=0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}
     \label{fig4:regimen acoplamiento}
 \end{figure}
-Como se esperaba, las coherencias y las poblaciones tienen el mismo comportamiento que en el caso de 1 atomo. Notablemente, se puede ver el efecto de la interaccion entre los atomos, que inicialmente como se vio anteriormente, se separan las energias y por lo tanto las oscilaciones no logran maxima amplitud, y en conjunto con la disipacion a tiempo largos, siempre se tiene una mayor probabilidad de encontrar al sistema en el estado $\ket{eg0+ge0}$ ya que tiene menor energia. Eventualmente alcanza su estado estacionario.
+En  la figura \ref{fig4:regimen acoplamiento} se  muestran las coherencias y las poblaciones, como se esperaba, estas tienen el mismo comportamiento que en el caso de 1 atomo. Notablemente, se puede ver el efecto de la interaccion entre los atomos, como se separan las energias inicialmente las oscilaciones no logran la inversion total de poblacion, solo una inversion parcial, y a tiempo largos la disipacion hace que se tenga una mayor probabilidad de encontrar al sistema en el estado $\ket{eg0+ge0}$ ya que tiene menor energia. Eventualmente alcanza su estado estacionario. Lo que se recupera, ahora que ya no hay apantallamiento, es que ambos tipos de interaccion ($J$ y $k$) generan entrelazamiento. Como es de esperarse, en ambos casos la concurrencia es oscilatoria por la naturaleza oscilante del problema, pero ahora, como el estado al que oscila
 
-Nuevamente, nos concentraremos en el regimen SC. En la siguiente seccion, ya no nos restringiremos a los estados con 0 y 1 excitacion como se hizo hasta ahora, si bien estos casos son imprecindibles para realizar el paralelismo con el caso de 1 atomo, la riqueza del problema se extiende si consideramos el espacio de 2 excitaciones, ya que en este caso tenemos 4 estados bajo un mismo subespacio que son dinamicamente relevantes aun en ausencia de disipacion. No se consideraran mas de 2 excitaciones, ya que el objetivo del trabajo es orientado hacia la informacion y el entrelazamiento, que es mejor estudiarlos con menor cantidad de excitaciones para poder sacar conclusiones contundentes.\textcolor{red}{esta ultima oracion es medio chamuyo, esta mas o menos bien?} 
+Nuevamente, nos concentraremos en el regimen SC. Si bien hasta ahora nos concentramos en estados con 1 excitacion, y es interesante por sus implicancias y similitudes al oedelo de 1 atomo, considerar estados con mayor cantidad de excitaciones hace a la riqueza del problema. Si solo consideranos $N=1$, tenemos 3 estados en el subespacio, de los cuales uno es el estado antisimetrico $\ket{eg0-ge0}$, que esta desconectado de los otros estados, y por lo tanto efectivametne se tiene un modelo de Jaynes-Cummings normal. Si vamos a $N=2$, ahora tenemos 4 estados en el subespacio, y 3 son relevantes. Por lo tanto, ahora veremos cuales son los efectos de las interacciones y la dinamica para estados iniciales en el subespacio de $N=2$. Para mantener el paralelismo, comenzaremos con el estado $\ket{eg1+ge1}$, pero como se vera, las condiciones iniciales cambian totalmente la dinamica de entrelazamiento del sistema. La enorme cantidad de posibilidades para elegir condiciones iniciales, hace que estudiar todos sea imposible, asi que nos concentraremos en algunos.
+Al tener 3 estados dinamicamente relevantes, tenemos 3 autoestados con sus respectivas autoenergias, y por lo tanto tenemos 3 frecuencias que compiten entre si, y son las 3 frecuencias de Rabi del sistema:
+\begin{equation}
+    \begin{aligned}
+        \Omega^{(n)}_{12} &= E^{(n)}_2-E^{(n)}_1 \\
+        \Omega^{(n)}_{23} &=E^{(n)}_3-E^{(n)}_2 \\
+        \Omega^{(n)}_{31} &= E^{(n)}_1-E^{(n)}_3         
+    \end{aligned}
+    \label{ec4:frecuencias de rabi}
+\end{equation}
+Estas frecuencias se muestran en funcion del detunning $\Delta$ y para diferentes valores de $\chi$ en la figura \ref{fig4:frecuencias de rabi}.
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
+        \caption{$\Omega_{12}$}
+        \label{fig4:rabi 12}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
+        \caption{$\Omega_{23}$}
+        \label{fig4:rabi 23}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
+        \caption{$\Omega_{31}$}
+        \label{fig4:rabi 31}
+    \end{subfigure}
+    \caption{Frecuencias de Rabi en funcion del detunning $\Delta$ para diferentes valores de $\chi$, y $|k-J|=0.5g$. $\Omega^{(2)}_{ji}=E^{(2)}_{i}-E^{(2)}_{j}$}
+    \label{fig4:frecuencias de rabi}
+\end{figure}
+
 \section{Dinamica de entrelazamiento}
-Para estudiar la dinamica de entrelazamiento, nos centraremos en la concurrencia. 
+Para estudiar la dinamica de entrelazamiento entre los dos atomos, nos centraremos en la concurrencia ($0\leq C_{AB} \leq 1$).
+En primer lugar consideraremos una cavidad lineal, y finalmente veremos cual es el efecto del medio Kerr sobre el entrelazamiento.
+
+\subsection{Cavidad lineal}
+Lo primero que tenemos que analizar es los efectos de las interacciones entre los atomos, como ya vimos, 
+
+
+Nuevamente, vamos a definir dos regimenes, que llamaremos Strong Interacting (SI) y Weak Interacting (WI), refiriendonos a la interaccion entre los atomos con respecto a la cavidad. El SI sera cuando la interaccion entre los atomos es fuerte en comparacion con la cavidad, es decir $k,J>g$, y WI con $k,J<g$.  
+
 
 1. k=J=0 ; x=0
 2. k=J=0 ; x =/= 0

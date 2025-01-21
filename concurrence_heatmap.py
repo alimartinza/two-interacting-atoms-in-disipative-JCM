@@ -11,7 +11,7 @@ import matplotlib as mpl
 import matplotlib.colors as mcolors
 
 
-from jcm_lib import simu_unit_y_disip,anim_univsdis
+from jcm_lib import simu_unit_y_disip,simu_unit,simu_disip
 
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
@@ -52,108 +52,234 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 # from mpl_toolkits.mplot3d import axes3d
 
 
-SMALL_SIZE = 12
+SMALL_SIZE = 15
 MEDIUM_SIZE = 15
 BIGGER_SIZE = 20
 
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
 plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+plt.rc('figure.subplot',left=0.07)
+plt.rc('figure.subplot',bottom=0.102)
+plt.rc('figure.subplot',right=0.962)
+plt.rc('figure.subplot',top=0.95)
+plt.rc('figure.subplot',wspace=0.07)
+
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
+def beta_n(n_:int,k:float,J:float,x:float):
+    return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
 
-def concurrence_heatmap_delta(psi0,psi0Name):
-    steps=2000
-    t_final=10*steps
+def gamma_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
+    return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
+
+def eta_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
+    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
+
+def Q_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return gamma_n(n_,d,g,k,J,x)/3-beta_n(n_,k,J,x)*beta_n(n_,k,J,x)/9
+
+def R_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return 1/54*(9*beta_n(n_,k,J,x)*gamma_n(n_,d,g,k,J,x)-27*eta_n(n_,d,g,k,J,x)-2*beta_n(n_,k,J,x)*beta_n(n_,k,J,x)*beta_n(n_,k,J,x))
+
+def theta_n(n_:int,d:float,g:float,k:float,J:float,x:float):
+    return np.arccos(R_n(n_,d,g,k,J,x)/np.sqrt(-Q_n(n_,d,g,k,J,x)**3))
+
+def omega_general(n_:int,j:int,d:float,g:float,k:float,J:float,x:float):
+    return 2*np.sqrt(-2*Q_n(n_,d,g,k,J,x))*np.cos((theta_n(n_,d,g,k,J,x)+2*(j-1)*np.pi)/3)
+
+def energiasn1(j,g,d,x,k,J):
+    if j==1: return (x-d)/2+k+np.sqrt(2*g**2+(k-J+(d-x)/2)**2)
+    elif j==2: return (x-d)/2+k-np.sqrt(2*g**2+(k-J+(d-x)/2)**2)
+    elif j==3: return -2*k-J
+    else: 
+        print('valor inesperado de j')
+        exit()
+
+
+
+def concurrence_heatmap_delta(psi0,psi0Name,x,J,k):
     w_0=1
     g=0.001*w_0
-    J=0
+    
+    gamma_list=[0.01*g,0.1*g,0.25*g]
     p=0.005*g
-    x=0
-    gamma=0.1*g
-    k=0
-    alpha=0
-
-    gt=np.linspace(0,g*t_final,steps)
-    delta=np.linspace(-3*g,3*g,129)
-    delta_ticks=np.linspace(-3,3,129)
-
-    concu_u=np.zeros((len(delta),steps))
-    concu_d=np.zeros((len(delta),steps))
-
-    for i,d in enumerate(delta):
-        fg_u,fg_d,concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,alpha,psi0,t_final,steps)
-        
-    fig=plt.figure(figsize=(16,9))
-    fig.suptitle(f"Concurrence $\psi_0$={psi0Name}")
-    ax_u=fig.add_subplot(121)
-    ax_d=fig.add_subplot(122,sharey=ax_u)
-    ax_u.set_title('Unitario')
-    ax_d.set_title('Disipativo')
-    ax_u.set_xlabel('gt')
-    ax_d.set_xlabel('gt')
-    ax_u.set_ylabel('$\Delta/g$')
-    c0 = ax_u.pcolor(gt, delta_ticks, concu_u, shading='auto', cmap='jet',vmin=0)
-    contour_u = ax_u.contourf(gt, delta_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
-    ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
-    c1 = ax_d.pcolor(gt, delta_ticks, concu_d, shading='auto', cmap='jet',vmin=0)
-    contour_d = ax_d.contourf(gt, delta_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
-    ax_d.clabel(contour_d, fmt="%.1f",colors='red',fontsize=10)
-    fig.colorbar(c0, ax=ax_u,label="Concurrence")
-    fig.colorbar(c1, ax=ax_d,label="Concurrence")
-
-    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\alpha=0 x=0 k=0 j=0 gamma=0.1g barrido delta\{psi0Name} concu heatmap SDE.png')
-    plt.close()
-
-def concurrence_heatmap_x(psi0,psi0Name):
-    steps=2000
-    t_final=10*steps
-    w_0=1
-    J=0
-    g=0.001*w_0
-    p=0.005*g
+    
     d=0
-    gamma=0.1*g
-    k=0
 
-    gt=np.linspace(0,g*t_final,steps)
-    delta=np.linspace(-3*g,3*g,129)
-    delta_ticks=np.linspace(-3,3,129)
+    steps=2000
+    T=2*np.pi/omega_general(1,1,d,g,k,J,x)
+
+    # print(omega_general(1,2,d,g,k,J,x))
+    t_final=5*T
+    t=np.linspace(0,t_final,steps)
+    delta=np.linspace(-15*g,15*g,100)
+    delta_ticks=np.linspace(-15,15,100)
+
+    delta_fg_3T=np.zeros((len(gamma_list),len(delta)))
+    delta_fg_10T=np.zeros((len(gamma_list),len(delta)))
 
     concu_u=np.zeros((len(delta),steps))
-    concu_d=np.zeros((len(delta),steps))
+    concu_d=np.zeros((len(gamma_list),len(delta),steps))
 
     for i,d in enumerate(delta):
-        fg_u,fg_d,concu_u[i],concu_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
-        
-    fig=plt.figure(figsize=(16,9))
-    fig.suptitle(f"Concurrence $\psi_0$={psi0Name}")
+        fg_u,concu_u[i]=simu_unit(w_0,g,k,J,d,x,1,psi0,t_final,steps)
+        for j,gamma in enumerate(gamma_list):
+            fg_d,concu_d[j][i]=simu_disip(w_0,g,k,J,d,x,gamma,p,1,psi0,t_final,steps)
+            delta_fg_3T[j][i]=fg_d[int(len(delta)*3/t_final*T)]-fg_u[int(len(delta)*3/t_final*T)]
+            delta_fg_10T[j][i]=fg_d[-1]-fg_u[-1]
+
+
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez3t fg delta.txt',delta_fg_3T)
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez10t fg delta.txt',delta_fg_10T)
+
+    fig=plt.figure(figsize=(16,6))
+    # fig.suptitle(f"Concurrence $\psi_0$={psi0Name}")
     ax_u=fig.add_subplot(121)
     ax_d=fig.add_subplot(122,sharey=ax_u)
     ax_u.set_title('Unitario')
     ax_d.set_title('Disipativo')
-    ax_u.set_xlabel('gt')
-    ax_d.set_xlabel('gt')
+    ax_u.set_xlabel('$t/T$')
+    ax_d.set_xlabel('$t/T$')
     ax_u.set_ylabel('$\Delta/g$')
-    c0 = ax_u.pcolor(gt, delta_ticks, concu_u, shading='auto', cmap='jet',vmin=0)
-    contour_u = ax_u.contourf(gt, delta_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
+    c0 = ax_u.pcolor(t/T, delta_ticks, concu_u, shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_u = ax_u.contourf(t/T, delta_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
     ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
-    c1 = ax_d.pcolor(gt, delta_ticks, concu_d, shading='auto', cmap='jet',vmin=0)
-    contour_d = ax_d.contourf(gt, delta_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
+    c1 = ax_d.pcolor(t/T, delta_ticks, concu_d[1], shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_d = ax_d.contourf(t/T, delta_ticks, concu_d[1],levels=[0,0.01],colors='black',linewidths=1)
     ax_d.clabel(contour_d, fmt="%.1f",colors='red',fontsize=10)
-    fig.colorbar(c0, ax=ax_u,label="Concurrence")
-    fig.colorbar(c1, ax=ax_d,label="Concurrence")
+    fig.colorbar(c0, ax=ax_d,label="Concurrence",shrink=0.8)
+    # fig.colorbar(c1, ax=ax_d,label="Concurrence")
 
-    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\x=0 k=0 j=0 gamma=0.1g barrido delta\{psi0Name} concu heatmap SDE.png')
-    plt.close()
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g gamma=0.1g concu delta.png')
+    plt.close(fig)
+
+
+
+def concurrence_heatmap_chi(psi0,psi0Name,d,J,k):
+    w_0=1
+    g=0.001*w_0
+    
+    gamma_list=[0.01*g,0.1*g,0.25*g]
+    p=0.005*g
+    
+    x=0
+
+    steps=2000
+    T=2*np.pi/omega_general(1,1,d,g,k,J,x)
+
+    # print(omega_general(1,2,d,g,k,J,x))
+    t_final=5*T
+    t=np.linspace(0,t_final,steps)
+    chi=np.linspace(0,15*g,100)
+    chi_ticks=np.linspace(0,15,100)
+
+    delta_fg_3T=np.zeros((len(gamma_list),len(chi)))
+    delta_fg_10T=np.zeros((len(gamma_list),len(chi)))
+
+    concu_u=np.zeros((len(chi),steps))
+    concu_d=np.zeros((len(gamma_list),len(chi),steps))
+
+    for i,x in enumerate(chi):
+        fg_u,concu_u[i]=simu_unit(w_0,g,k,J,d,x,1,psi0,t_final,steps)
+        for j,gamma in enumerate(gamma_list):
+            fg_d,concu_d[j][i]=simu_disip(w_0,g,k,J,d,x,gamma,p,1,psi0,t_final,steps)
+            delta_fg_3T[j][i]=fg_d[int(len(chi)*3/t_final*T)]-fg_u[int(len(chi)*3/t_final*T)]
+            delta_fg_10T[j][i]=fg_d[-1]-fg_u[-1]
+
+
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g rebustez3t fg chi.txt',delta_fg_3T)
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g rebustez10t fg chi.txt',delta_fg_10T)
+
+    fig=plt.figure(figsize=(16,6))
+    # fig.suptitle(f"Concurrence $\psi_0$={psi0Name}")
+    ax_u=fig.add_subplot(121)
+    ax_d=fig.add_subplot(122,sharey=ax_u)
+    ax_u.set_title('Unitario')
+    ax_d.set_title('Disipativo')
+    ax_u.set_xlabel('$t/T$')
+    ax_d.set_xlabel('$t/T$')
+    ax_u.set_ylabel('$\chi/g$')
+    c0 = ax_u.pcolor(t/T, chi_ticks, concu_u, shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_u = ax_u.contourf(t/T, chi_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
+    ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
+    c1 = ax_d.pcolor(t/T, chi_ticks, concu_d[1], shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_d = ax_d.contourf(t/T, chi_ticks, concu_d[1],levels=[0,0.01],colors='black',linewidths=1)
+    ax_d.clabel(contour_d, fmt="%.1f",colors='red',fontsize=10)
+    fig.colorbar(c0, ax=ax_d,label="Concurrence",shrink=0.8)
+    # fig.colorbar(c1, ax=ax_d,label="Concurrence")
+
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g gamma=0.1g concu chi.png')
+    plt.close(fig)
+
+def concurrence_heatmap_k(psi0,psi0Name,d,x,J):
+    w_0=1
+    g=0.001*w_0
+    
+    gamma_list=[0.01*g,0.1*g,0.25*g]
+    p=0.005*g
+    
+    k=0
+
+    steps=2000
+    T=2*np.pi/omega_general(1,1,d,g,k,J,x)
+
+    # print(omega_general(1,2,d,g,k,J,x))
+    t_final=5*T
+    t=np.linspace(0,t_final,steps)
+    k_list=np.linspace(0,15*g,100)
+    k_ticks=np.linspace(0,15,100)
+
+    delta_fg_3T=np.zeros((len(gamma_list),len(k_list)))
+    delta_fg_10T=np.zeros((len(gamma_list),len(k_list)))
+
+    concu_u=np.zeros((len(k_list),steps))
+    concu_d=np.zeros((len(gamma_list),len(k_list),steps))
+
+    for i,k in enumerate(k_list):
+        fg_u,concu_u[i]=simu_unit(w_0,g,k,J,d,x,1,psi0,t_final,steps)
+        for j,gamma in enumerate(gamma_list):
+            fg_d,concu_d[j][i]=simu_disip(w_0,g,k,J,d,x,gamma,p,1,psi0,t_final,steps)
+            delta_fg_3T[j][i]=fg_d[int(len(k_list)*3/t_final*T)]-fg_u[int(len(k_list)*3/t_final*T)]
+            delta_fg_10T[j][i]=fg_d[-1]-fg_u[-1]
+
+
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g rebustez3t fg k.txt',delta_fg_3T)
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g rebustez10t fg k.txt',delta_fg_10T)
+
+    fig=plt.figure(figsize=(16,6))
+    # fig.suptitle(f"Concurrence $\psi_0$={psi0Name}")
+    ax_u=fig.add_subplot(121)
+    ax_d=fig.add_subplot(122,sharey=ax_u)
+    ax_u.set_title('Unitario')
+    ax_d.set_title('Disipativo')
+    ax_u.set_xlabel('$t/T$')
+    ax_d.set_xlabel('$t/T$')
+    ax_u.set_ylabel('$k/g$')
+    c0 = ax_u.pcolor(t/T, k_ticks, concu_u, shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_u = ax_u.contourf(t/T, k_ticks, concu_u,levels=[0,0.01],colors='black',linewidths=1)
+    ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
+    c1 = ax_d.pcolor(t/T, k_ticks, concu_d[1], shading='auto', cmap='jet',vmin=0,vmax=1)
+    contour_d = ax_d.contourf(t/T, k_ticks, concu_d[1],levels=[0,0.01],colors='black',linewidths=1)
+    ax_d.clabel(contour_d, fmt="%.1f",colors='red',fontsize=10)
+    fig.colorbar(c0, ax=ax_d,label="Concurrence",shrink=0.8)
+    # fig.colorbar(c1, ax=ax_d,label="Concurrence")
+
+    plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g gamma=0.1g concu k.png')
+    plt.close(fig)
+
+
 
 
 #concurrence_heatmap((eg1+ge1).unit(),'eg1+ge1')
-
-for psi0,psi0Name in zip([gg1,eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),eg1,(eg1+ge1).unit(),(eg1-ge1).unit(),(eg0+ge0+gg1).unit(),(ee0-gg2).unit(),(ee0+gg2).unit(),(ee0+eg1+ge1+gg2).unit()],['gg1','eg0','eg0+ge0','eg0-ge0','eg1','eg1+ge1','eg1-ge1','w','ee0-gg2','ee0+gg2','ee0+eg1+ge1+gg2']):
-    concurrence_heatmap_delta(psi0,psi0Name)
+g=0.001
+for params in [[0,g,0],[0,0,g],[g,g,0],[g,0,g],[0,g,g],[g,g,g]]:
+    for psi0,psi0Name in zip([(eg0+ge0+gg1).unit(),(eg1+ge1+gg2).unit(),(eg0+ge0).unit(),(eg1+ge1).unit(),ee0],['w','eg1+ge1+gg2','eg0+ge0','eg1+ge1','ee0']):
+        concurrence_heatmap_k(psi0,psi0Name,params[0],params[1],params[2])
+        concurrence_heatmap_chi(psi0,psi0Name,params[0],params[1],params[2])
+        concurrence_heatmap_delta(psi0,psi0Name,params[0],params[1],params[2])

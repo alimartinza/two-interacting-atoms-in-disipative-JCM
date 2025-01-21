@@ -25,10 +25,12 @@
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Dinámica poblacional para la condición inicial $\ket {\psi _0}=\ket {eg0}$, para los parámetros $\Delta =0$, $J=0$ y $k=0.1g$. Las lineas solidas se corresponden con las poblaciones de la matriz densidad total del sistema; en azul la probabilidad de encontrar al estado en el estado $\ket {gg1}$, en verde en $\ket {eg0}$, en rojo $\ket {ge0}$, y en negro $\ket {gg0}$. Las lineas rayadas son las coherencias entre estas poblaciones, la violeta entre $\ket {gg1}$ y $\ket {ge0}$, la celeste entre $\ket {eg0}$ y $\ket {gg1}$ y la amarilla entre $\ket {eg0}$ y $\ket {gg1}$. }}{43}{figure.caption.26}%
 \contentsline {figure}{\numberline {4.8}{\ignorespaces Dinámica poblacional para la condición inicial $\ket {\psi _0}=\ket {eg0+ge0}$, para los parámetros $\Delta =0$, $J=0$ y $k=0.1g$. Las coherencias y poblaciones tienen los mismos colores que la figura anterior \ref {fig4:k eg0 abc} }}{43}{figure.caption.27}%
 \contentsline {figure}{\numberline {4.9}{\ignorespaces \textcolor {red}{rehacer por labels chiquitos}Dinamica de entrelazamiento para $\Delta =0$, $J=0$ y $k=0.1g$}}{44}{figure.caption.28}%
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Dinamica de poblaciones para $x=g$}}{44}{figure.caption.29}%
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Dinamica de entrelazamiento para $x=g$}}{45}{figure.caption.30}%
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Dinamica de entrelazamiento para $x=g$}}{45}{figure.caption.31}%
-\contentsline {figure}{\numberline {4.13}{\ignorespaces Dependencia de las poblaciones con el regimen de acoplamiento, para $\Delta =J=\chi =0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}}{47}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces $\Delta =0$, $J=0.5g$ y $k=0$}}{44}{figure.caption.29}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Dinamica de poblaciones para $x=g$}}{45}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Dinamica de entrelazamiento para $x=g$}}{46}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Dinamica de entrelazamiento para $x=g$}}{46}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Dependencia de las poblaciones con el regimen de acoplamiento, para $\Delta =J=\chi =0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}}{48}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Frecuencias de Rabi en funcion del detunning $\Delta $ para diferentes valores de $\chi $, y $|k-J|=0.5g$. $\Omega ^{(2)}_{ji}=E^{(2)}_{i}-E^{(2)}_{j}$}}{49}{figure.caption.34}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
