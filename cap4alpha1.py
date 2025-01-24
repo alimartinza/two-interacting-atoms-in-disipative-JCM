@@ -111,21 +111,21 @@ alpha=1
 w0=1
 g=0.001*w0
 
-p=0.005*g
-gamma=0.1*g
+p=0#.005*g
+gamma=0#.1*g
 
 x=0*g
 d=0*g#.5*g
 
-k=0.5*g
+k=0*g
 J=0*g
 
 
-psi0=(eg1+ge1).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-psi0Name='eg1+ge1'
+psi0=(gg2).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+psi0Name='gg2'
 prefijo=f'j d={d/g} x={x/g} k={k/g} J={J/g}'
 
-steps=80000
+steps=30000
 
 # T=2*np.pi/energiasn1(1,g,d,x,k,J)
 # T=2*np.pi/(omega_general(1,1,d,g,k,J,x))
@@ -134,7 +134,7 @@ steps=80000
 T=2*np.pi/omega_general(1,1,d,g,k,J,x)
 
 # print(omega_general(1,2,d,g,k,J,x))
-t_final=20*T
+t_final=4*T
 # ciclos_bloch=5
 # points=2000
 
@@ -175,11 +175,11 @@ fg_d,arg,eigenvals_t_d = jcm.fases(sol_d)
 process_t0=time.process_time()
 print(f'0. SIMU Y CALCULO FG     ; {process_t0-process_ti}s ; -- ')
 
-ops = [pr(gg2),(eg1+ge1).unit()*gg2.dag(),pr(ge1+eg1),ee0*gg2.dag(),pr(ee0),(eg1-ge1).unit()*gg2.dag(),ee0*(eg1+ge1).unit().dag(),(eg1-ge1).unit()*(eg1+ge1).unit().dag(),(eg1-ge1).unit()*ee0.dag(),pr(eg1-ge1)]
-ops_name=['gg2','C(gg2;eg1+)','eg1+','C(ee0;gg2)','ee0','C(gg2;eg1-)','C(ee0;eg1+)','C(eg1+;eg1-)','C(ee0;eg1-)','eg1-']
-ops_expect_d={}
-for ops_i,ops_name_i in zip(ops,ops_name):
-    ops_expect_d[ops_name_i]=[expect(sol_d.states[i],ops_i) for i in range(steps)]
+# ops = [pr(gg2),(eg1+ge1).unit()*gg2.dag(),pr(ge1+eg1),ee0*gg2.dag(),pr(ee0),(eg1-ge1).unit()*gg2.dag(),ee0*(eg1+ge1).unit().dag(),(eg1-ge1).unit()*(eg1+ge1).unit().dag(),(eg1-ge1).unit()*ee0.dag(),pr(eg1-ge1)]
+# ops_name=['gg2','C(gg2;eg1+)','eg1+','C(ee0;gg2)','ee0','C(gg2;eg1-)','C(ee0;eg1+)','C(eg1+;eg1-)','C(ee0;eg1-)','eg1-']
+# ops_expect_d={}
+# for ops_i,ops_name_i in zip(ops,ops_name):
+#     ops_expect_d[ops_name_i]=[expect(sol_d.states[i],ops_i) for i in range(steps)]
 
 # print(sol_d.states[2])
 determinante_abc=[np.prod(eigenvals_t_d[i]) for i in range(steps)]
@@ -192,9 +192,12 @@ determinante_abc=[np.prod(eigenvals_t_d[i]) for i in range(steps)]
 svn_tot=jcm.entropy_vn(eigenvals_t_d)
 slin_tot=jcm.entropy_linear(sol_d.states)
 
+colors_pob2=inferno(10)
+
+
 fig_pob_ABC = plt.figure(figsize=(8,6))
 ax_pob_ABC = fig_pob_ABC.add_subplot()
-ax_pob_ABC.set_title('ABC')
+ax_pob_ABC.set_title('N=1')
 ax_pob_ABC.set_xlabel('$t/T$')
 ax_pob_ABC.set_ylabel('Amp. Prob. ')
 ax_pob_ABC.set_ylim(0,1)
@@ -203,23 +206,23 @@ ax_pob_ABC.set_xlim(0,t_final/T)
 # for i,ops_name_i in enumerate(ops_name):
 #     ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i])#,label=ops_name_i)
 
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][9]) for i in range(steps)],color='black',label='gg0') #gg0
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][9]) for i in range(steps)],color=colors_pob2[0],label='gg0') #gg0
 
-ax_pob_ABC.plot(t/T,[sol_d.states[i][3][3]/2+sol_d.states[i][6][6]/2+np.real(sol_d.states[i][3][6]) for i in range(steps)],color=(0, 255/255, 0),label='eg0+') #eg0+ge0
-ax_pob_ABC.plot(t/T,[sol_d.states[i][3][3]/2+sol_d.states[i][6][6]/2-np.real(sol_d.states[i][3][6]) for i in range(steps)],color=(255/255, 0, 0),label='eg0-') #eg0-ge0
-ax_pob_ABC.plot(t/T,[sol_d.states[i][10][10] for i in range(steps)],color=(0, 0, 255/255),label='gg1') #gg1
+ax_pob_ABC.plot(t/T,[sol_d.states[i][3][3]/2+sol_d.states[i][6][6]/2+np.real(sol_d.states[i][3][6]) for i in range(steps)],color=colors_pob2[1],label='eg0+') #eg0+ge0
+ax_pob_ABC.plot(t/T,[sol_d.states[i][3][3]/2+sol_d.states[i][6][6]/2-np.real(sol_d.states[i][3][6]) for i in range(steps)],color=colors_pob2[2],label='eg0-') #eg0-ge0
+ax_pob_ABC.plot(t/T,[sol_d.states[i][10][10] for i in range(steps)],color=colors_pob2[3],label='gg1') #gg1
 
 # ax_pob_ABC.hlines([rho_ss[9][9],rho_ss[3][3]/2+rho_ss[6][6]/2+np.real(rho_ss[3][6]),rho_ss[3][3]/2+rho_ss[6][6]/2-np.real(rho_ss[3][6]),rho_ss[10][10]],0,t_final/T,colors=['black',(0, 255/255, 0),(255/255, 0, 0),(0, 0, 255/255)],linestyles='dashed',alpha=0.5)
 
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][9]+sol_d.states[i][6][9])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=(28/255, 176/255, 28/255)) #Coherenencia gg0/eg0+ge0
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][9]-sol_d.states[i][6][9])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=(186/255, 23/255, 23/255)) #Coherenencia gg0/eg0-ge0
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][9]+sol_d.states[i][6][9])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=colors_pob2[4]) #Coherenencia gg0/eg0+ge0
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][9]-sol_d.states[i][6][9])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=colors_pob2[5]) #Coherenencia gg0/eg0-ge0
 
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][10]) for i in range(steps)],linestyle='dashed',color=(0, 0, 170/255))
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][9][10]) for i in range(steps)],linestyle='dashed',color=colors_pob2[6])
 
-ax_pob_ABC.plot(t/T,[0.5*(sol_d.states[i][3][3]-2*np.imag(sol_d.states[i][3][6])-sol_d.states[i][6][6]) for i in range(steps)],linestyle='dashed',color=(255/255, 209/255, 0)) #Coherencia eg0+/eg0-
+ax_pob_ABC.plot(t/T,[0.5*(sol_d.states[i][3][3]-2*np.imag(sol_d.states[i][3][6])-sol_d.states[i][6][6]) for i in range(steps)],linestyle='dashed',color=colors_pob2[7]) #Coherencia eg0+/eg0-
 
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]+sol_d.states[i][3][10])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=(0, 209/255, 210/255)) #Coherenencia gg1/eg0-ge0
-ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]-sol_d.states[i][3][10])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=(235/255, 18/255, 235/255)) #Coherenencia gg1/eg0-ge0
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]+sol_d.states[i][3][10])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=colors_pob2[8]) #Coherenencia gg1/eg0-ge0
+ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]-sol_d.states[i][3][10])/np.sqrt(2) for i in range(steps)],linestyle='dashed',color=colors_pob2[9]) #Coherenencia gg1/eg0-ge0
 
 # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['eg0'])+np.array(ops_expect_d['ee0']),label='$e_A0_C$',color='red',marker=',',alpha=0.5) 
 # ax_pob_ABC.plot(t/T,np.array(ops_expect_d['gg1'])+np.array(ops_expect_d['ge1']),label='$g_A1_C$',color='blue',marker=',',alpha=0.5)
@@ -227,29 +230,87 @@ ax_pob_ABC.plot(t/T,[np.abs(sol_d.states[i][3][10]-sol_d.states[i][3][10])/np.sq
 ax_pob_ABC.legend(loc='upper right')
 fig_pob_ABC.savefig(f'./graficos/{prefijo} {psi0Name} abc.png')
 
-fig_pob_2 = plt.figure(figsize=(8,6))
-ax_pob_2 = fig_pob_2.add_subplot()
-ax_pob_2.set_title('ABC')
-ax_pob_2.set_xlabel('$t/T$')
-ax_pob_2.set_ylabel('Amp. Prob. ')
-ax_pob_2.set_ylim(0,1)
-ax_pob_2.set_xlim(0,t_final/T)
+# fig_pob_2 = plt.figure(figsize=(8,6))
+# ax_pob_2 = fig_pob_2.add_subplot()
+# ax_pob_2.set_title('automatico')
+# ax_pob_2.set_xlabel('$t/T$')
+# ax_pob_2.set_ylabel('Amp. Prob. ')
+# ax_pob_2.set_ylim(0,1)
+# ax_pob_2.set_xlim(0,t_final/T)
 
-# for i,ops_name_i in enumerate(ops_name):
-#     ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i])#,label=ops_name_i)
+# # for i,ops_name_i in enumerate(ops_name):
+# #     ax_pob_ABC.plot(t/T,ops_expect_d[ops_name_i],color=inferno(12)[i])#,label=ops_name_i)
 
-# ax_pob_2.plot(t/T,[np.abs(sol_d.states[i][9][9]) for i in range(steps)],color='black',label='gg0') #gg0
+# # ax_pob_2.plot(t/T,[np.abs(sol_d.states[i][9][9]) for i in range(steps)],color='black',label='gg0') #gg0
+# ops_name=['gg2','C(gg2;eg1+)','eg1+','C(ee0;gg2)','ee0','C(gg2;eg1-)','C(ee0;eg1+)','C(eg1+;eg1-)','C(ee0;eg1-)','eg1-']
+
+# colors_pob2=inferno(10)
+# for l,key in enumerate(ops_expect_d.keys()):
+#     if l  in [0,2,4,9]:
+#         ax_pob_2.plot(t/T,ops_expect_d[key],color=colors_pob2[l],label=key)
+#     else: 
+#         ax_pob_2.plot(t/T,ops_expect_d[key],color=colors_pob2[l],label=key,linestyle='dashed')
+
+# ax_pob_2.legend(loc='upper right')
+# fig_pob_2.savefig(f'./graficos/{prefijo} {psi0Name} abc 2.png')
+
+marker_size=3
+marker='o'
+imag_threshold=0.03
+fig3=plt.figure(figsize=(8,6))
+ax3=fig3.add_subplot()
+
 ops_name=['gg2','C(gg2;eg1+)','eg1+','C(ee0;gg2)','ee0','C(gg2;eg1-)','C(ee0;eg1+)','C(eg1+;eg1-)','C(ee0;eg1-)','eg1-']
+ax3.set_title('no abs')
+ax3.plot(t/T,[sol_d.states[i][11][11] for i in range(steps)],color=colors_pob2[0],label='gg2') #gg2
 
-colors_pob2=inferno(10)
-for l,key in enumerate(ops_expect_d.keys()):
-    if l  in [0,2,4,9]:
-        ax_pob_2.plot(t/T,ops_expect_d[key],color=colors_pob2[l],label=key)
-    else: 
-        ax_pob_2.plot(t/T,ops_expect_d[key],color=colors_pob2[l],label=key,linestyle='dashed')
 
-ax_pob_2.legend(loc='upper right')
-fig_pob_2.savefig(f'./graficos/{prefijo} {psi0Name} abc 2.png')
+coh_gg2_eg1sim=np.array([(sol_d.states[i][11][4]+sol_d.states[i][11][7])/np.sqrt(2) for i in range(steps)])
+ax3.plot(t/T,np.real(coh_gg2_eg1sim),color=colors_pob2[1],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #
+ax3.plot(t/T,np.imag(coh_gg2_eg1sim),color=colors_pob2[1],linestyle='dashed',label='gg2;eg1+',marker='o',markevery=int(steps/50*T/t_final)) #
+# index_imag_gg2_eg1sim=[i for i in range(len(coh_gg2_eg1sim)) if np.abs(np.imag(coh_gg2_eg1sim[i]))>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_gg2_eg1sim],coh_gg2_eg1sim[index_imag_gg2_eg1sim],s=marker_size,marker=marker,color=colors_pob2[1])
+
+
+ax3.plot(t/T,[(sol_d.states[i][4][4]+sol_d.states[i][7][7]+sol_d.states[i][4][7]+sol_d.states[i][7][4])/2 for i in range(steps)],color=colors_pob2[2],label='eg1+') #
+
+
+coh_gg2_ee0=np.array([sol_d.states[i][11][0] for i in range(steps)])
+ax3.plot(t/T,np.real(coh_gg2_ee0),color=colors_pob2[3],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #gg2;ee0
+ax3.plot(t/T,np.imag(coh_gg2_ee0),color=colors_pob2[3],linestyle='dashed',label='gg2;ee0',marker='o',markevery=int(steps/50*T/t_final)) #gg2;ee0
+# index_imag_gg2_ee0=[i for i in range(len(coh_gg2_ee0)) if np.abs(np.imag(coh_gg2_ee0[i]))>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_gg2_ee0],coh_gg2_ee0[index_imag_gg2_ee0],s=marker_size,marker=marker,color=colors_pob2[3])
+
+
+ax3.plot(t/T,[sol_d.states[i][0][0] for i in range(steps)],color=colors_pob2[4],label='ee0',marker='o',markevery=int(steps/50*T/t_final)) #ee0
+
+
+coh_gg2_eg1asim=np.array([(sol_d.states[i][11][4]-sol_d.states[i][11][7])/np.sqrt(2) for i in range(steps)])
+ax3.plot(t/T,np.real(coh_gg2_eg1asim),color=colors_pob2[5],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #
+ax3.plot(t/T,np.imag(coh_gg2_eg1asim),color=colors_pob2[5],linestyle='dashed',label='gg2;eg1-',marker='o',markevery=int(steps/50*T/t_final)) #
+# index_imag_gg2_eg1asim=[i for i in range(len(coh_gg2_eg1asim)) if np.abs(np.imag(coh_gg2_eg1asim[i]))>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_gg2_eg1asim],coh_gg2_eg1asim[index_imag_gg2_eg1asim],s=marker_size,marker=marker,color=colors_pob2[5])
+
+coh_eg1sim_ee0=np.array([(sol_d.states[i][4][0]+sol_d.states[i][7][0])/np.sqrt(2) for i in range(steps)])
+ax3.plot(t/T,np.real(coh_eg1sim_ee0),color=colors_pob2[6],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #
+ax3.plot(t/T,np.imag(coh_eg1sim_ee0),color=colors_pob2[6],linestyle='dashed',label='eg1+;ee0',marker='o',markevery=int(steps/50*T/t_final)) #
+# index_imag_eg1sim_ee0=[i for i in range(len(coh_eg1sim_ee0)) if np.abs(np.imag(coh_eg1sim_ee0[i]))>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_eg1sim_ee0],coh_eg1sim_ee0[index_imag_eg1sim_ee0],s=marker_size,marker=marker,color=colors_pob2[6])
+
+coh_eg1sim_eg1asim=np.array([(sol_d.states[i][4][4]-sol_d.states[i][7][7]-sol_d.states[i][4][7]+sol_d.states[i][7][4])/2 for i in range(steps)])
+ax3.plot(t/T,np.real(coh_eg1sim_eg1asim),color=colors_pob2[7],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #
+ax3.plot(t/T,np.imag(coh_eg1sim_eg1asim),color=colors_pob2[7],linestyle='dashed',label='eg1+;eg1-',marker='o',markevery=int(steps/50*T/t_final)) #
+# index_imag_eg1sim_eg1asim=[i for i in range(len(coh_eg1sim_eg1asim)) if np.imag(coh_eg1sim_eg1asim[i])>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_eg1sim_eg1asim],coh_eg1sim_eg1asim[index_imag_eg1sim_eg1asim],s=marker_size,marker=marker,color=colors_pob2[7])
+
+coh_ee0_eg1asim=np.array([(sol_d.states[i][4][0]-sol_d.states[i][7][0])/np.sqrt(2) for i in range(steps)])
+ax3.plot(t/T,np.real(coh_ee0_eg1asim),color=colors_pob2[8],linestyle='dashed',marker='s',markevery=int(steps/50*T/t_final)) #
+ax3.plot(t/T,np.imag(coh_ee0_eg1asim),color=colors_pob2[8],linestyle='dashed',label='ee0;eg1-',marker='o',markevery=int(steps/50*T/t_final)) #
+# index_imag_ee0_eg1asim=[i for i in range(len(coh_ee0_eg1asim)) if np.imag(coh_ee0_eg1asim[i])>imag_threshold]
+# ax3.scatter(1/T*t[index_imag_ee0_eg1asim],coh_ee0_eg1asim[index_imag_ee0_eg1asim],s=marker_size,marker=marker,color=colors_pob2[8])
+
+ax3.plot(t/T,[(sol_d.states[i][4][4]+sol_d.states[i][7][7]-sol_d.states[i][4][7]-sol_d.states[i][7][4])/2 for i in range(steps)],color=colors_pob2[9],label='eg1-') #
+ax3.legend()
 
 
 '''#########---Atomo A-Cavidad----##########'''
@@ -486,8 +547,8 @@ ax_AB.set_title('AB')
 ax_AB.set_xlim(0,t_final/T)
 
 ax_AB.plot(t/T,[atoms_states_d[i][0][0] for i in range(steps)],label='ee',color=colors_pob[3])
-ax_AB.plot(t/T,[atoms_states_d[i][1][1] for i in range(steps)],label='eg',color=colors_pob[2])
-ax_AB.plot(t/T,[atoms_states_d[i][2][2] for i in range(steps)],label='ge',color=colors_pob[1])
+ax_AB.plot(t/T,[(atoms_states_d[i][1][1]+atoms_states_d[i][2][2]+atoms_states_d[i][1][2]+atoms_states_d[i][2][1])/2 for i in range(steps)],label='eg+ge',color=colors_pob[2])
+ax_AB.plot(t/T,[(atoms_states_d[i][1][1]+atoms_states_d[i][2][2]-atoms_states_d[i][1][2]-atoms_states_d[i][2][1])/2 for i in range(steps)],label='ge',color=colors_pob[1])
 ax_AB.plot(t/T,[atoms_states_d[i][3][3] for i in range(steps)],label='gg',color=colors_pob[0])
 
 
@@ -496,15 +557,18 @@ ax_AB.plot(t/T,[atoms_states_d[i][3][3] for i in range(steps)],label='gg',color=
 # ax_AB.plot(t/T,[np.abs(atoms_states_d[i][0][2]) for i in range(steps)],label='$C_{ee,ge}$',color='black',linestyle='dashed')
 # ax_AB.plot(t/T,[np.abs(atoms_states_d[i][0][3]) for i in range(steps)],label='$C_{ee,gg}$',color='black',linestyle='dashed')
 
-ax_AB.plot(t/T,[np.abs(atoms_states_d[i][1][2]) for i in range(steps)],label='$C_{eg,ge}$',color='black',linestyle='dashed')
-ax_AB.plot(t/T,[np.abs(atoms_states_d[i][1][3]) for i in range(steps)],label='$C_{eg,gg}$',color='red',linestyle='dashed')
+ax_AB.plot(t/T,[(atoms_states_d[i][1][1]-atoms_states_d[i][2][2]+atoms_states_d[i][1][2]-atoms_states_d[i][2][1])/2 for i in range(steps)],label='$C_{eg+,eg-}$',color=colors_pob[2],linestyle='dashed')
 
+ax_AB.plot(t/T,[(atoms_states_d[i][1][3]+atoms_states_d[i][2][3])/np.sqrt(2) for i in range(steps)],label='$C_{eg+,gg}$',color=colors_pob[0],linestyle='dashed')
 
+ax_AB.plot(t/T,[(atoms_states_d[i][1][3]-atoms_states_d[i][2][3])/np.sqrt(2) for i in range(steps)],label='$C_{eg-,gg}$',color=colors_pob[3],linestyle='dashed')
+
+ax_AB.plot(t/T,[atoms_states_d[i][0][3] for i in range(steps)],label='$C_{ee,gg}$',color=colors_pob[1],linestyle='dashed')
 # ax_AB.plot(t/T,[np.abs(atoms_states_d[i][2][3]) for i in range(steps)],label='$C_{ge,gg}$',color='black',linestyle='dashed')
 
 
 ax_AB.set_xlim(0,t_final/T)
-ax_AB.set_ylim(0,1)
+
 ax_AB.set_xlabel('$t/T$')
 ax_AB.set_ylabel('Poblaciones')
 ax_AB.legend()
@@ -537,32 +601,32 @@ for j in range(len(sol_d.states)):
 
 # determinante_c=[np.linalg.det(cavity_states_d[i]) for i in range(steps)]
 
-xvec = np.linspace(-5,5,200)
+# xvec = np.linspace(-5,5,200)
 
-W = [wigner(sol_d.states[int(steps*i/t_final*T)].ptrace([2]), xvec, xvec) for i in [0,1/3,2/3,1,4/3,5/3,2,7/3,8/3]]
+# W = [wigner(sol_d.states[int(steps*i/t_final*T)].ptrace([2]), xvec, xvec) for i in [0,1/3,2/3,1,4/3,5/3,2,7/3,8/3]]
 
 
 
-fig, axes = plt.subplots(3, 3, figsize=(8,6))
+# fig, axes = plt.subplots(3, 3, figsize=(8,6))
 
-cont0 = axes[0,0].contourf(xvec, xvec, W[0], 100)
-axes[0,0].set_title('t/T=0')
-cont1 = axes[0,1].contourf(xvec, xvec, W[1], 100)
-axes[0,1].set_title('t/T=1/3')
-cont2 = axes[0,2].contourf(xvec, xvec, W[2], 100)
-axes[0,2].set_title('t/T=2/3')
-cont3 = axes[1,0].contourf(xvec, xvec, W[3], 100)
-axes[1,0].set_title('t/T=1')
-cont4 = axes[1,1].contourf(xvec, xvec, W[4], 100)
-axes[1,1].set_title('t/T=4/3')
-cont5 = axes[1,2].contourf(xvec, xvec, W[5], 100)
-axes[1,2].set_title('t/T=5/3')
-cont6 = axes[2,0].contourf(xvec, xvec, W[6], 100)
-axes[2,0].set_title('t/T=2')
-cont7 = axes[2,1].contourf(xvec, xvec, W[7], 100)
-axes[2,1].set_title('t/T=7/3')
-cont8 = axes[2,2].contourf(xvec, xvec, W[8], 100)
-axes[2,2].set_title('t/T=8/3')
+# cont0 = axes[0,0].contourf(xvec, xvec, W[0], 100)
+# axes[0,0].set_title('t/T=0')
+# cont1 = axes[0,1].contourf(xvec, xvec, W[1], 100)
+# axes[0,1].set_title('t/T=1/3')
+# cont2 = axes[0,2].contourf(xvec, xvec, W[2], 100)
+# axes[0,2].set_title('t/T=2/3')
+# cont3 = axes[1,0].contourf(xvec, xvec, W[3], 100)
+# axes[1,0].set_title('t/T=1')
+# cont4 = axes[1,1].contourf(xvec, xvec, W[4], 100)
+# axes[1,1].set_title('t/T=4/3')
+# cont5 = axes[1,2].contourf(xvec, xvec, W[5], 100)
+# axes[1,2].set_title('t/T=5/3')
+# cont6 = axes[2,0].contourf(xvec, xvec, W[6], 100)
+# axes[2,0].set_title('t/T=2')
+# cont7 = axes[2,1].contourf(xvec, xvec, W[7], 100)
+# axes[2,1].set_title('t/T=7/3')
+# cont8 = axes[2,2].contourf(xvec, xvec, W[8], 100)
+# axes[2,2].set_title('t/T=8/3')
 
 
 

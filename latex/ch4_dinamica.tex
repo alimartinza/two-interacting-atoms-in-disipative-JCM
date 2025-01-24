@@ -409,42 +409,48 @@ Al tener 3 estados dinamicamente relevantes, tenemos 3 autoestados con sus respe
     \end{aligned}
     \label{ec4:frecuencias de rabi}
 \end{equation}
-Estas frecuencias se muestran en funcion del detunning $\Delta$ y para diferentes valores de $\chi$ en la figura \ref{fig4:frecuencias de rabi}.
+Estas frecuencias se muestran en funcion del detunning $\Delta$ y para diferentes valores de $\chi$ y de $k-J$ en la figura \ref{fig4:frecuencias de rabi}.
 \begin{figure}
     \centering
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
-        \caption{$\Omega_{12}$}
-        \label{fig4:rabi 12}
+    \begin{subfigure}{\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/frecuencias k=0.5g chilist.png}
+        \caption{Frecuencias de Rabi en funcion del detunning, para diferentes valores de $\chi/g\in[0,5]$ y $k-J=0.5g$. A la izquierda $\Omega_{12}$ y a la derecha $\Omega_{23}$ y $\Omega_{13}$}
+        \label{fig4:rabi chi}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
-        \caption{$\Omega_{23}$}
-        \label{fig4:rabi 23}
+    \vfill
+    \begin{subfigure}{\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/frecuencias x=0 klist.png}
+        \caption{Frecuencias de Rabi en funcion del detunning, para diferentes valores de $k-J\in[0,5g]$ y $\chi=0$. A la izquierda $\Omega_{12}$ y a la derecha $\Omega_{23}$ y $\Omega_{13}$. Solo se muestra una de las ramas.}
+        \label{fig4:rabi k}
     \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.3\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/relacion_energia_detunning1.pdf}
-        \caption{$\Omega_{31}$}
-        \label{fig4:rabi 31}
-    \end{subfigure}
-    \caption{Frecuencias de Rabi en funcion del detunning $\Delta$ para diferentes valores de $\chi$, y $|k-J|=0.5g$. $\Omega^{(2)}_{ji}=E^{(2)}_{i}-E^{(2)}_{j}$}
+    \caption{Frecuencias de Rabi en funcion del detunning $\Delta$ para diferentes valores de $\chi$, y $|k-J|$, donde las frecuencias de Rabi son $\Omega^{(2)}_{ij}=E^{(2)}_{j}-E^{(2)}_{i}$}
     \label{fig4:frecuencias de rabi}
 \end{figure}
+En esta solo se muestra una de las dos ramas (se puede tener $\pm \Omega_{ij}$) por simplicidad. Lo que podemos concluir de esto es que la frecuencia $\Omega^(2)_{12}$ se comporta de manera similar a la frecuencia de Rabi del JC de 1 atomo, que es tambien igual a la $\Omega^(1)$; en ambos casos la diferencia de energia presenta un maximo que se desplaza lateralmente al aumentar el parametro $\chi$, pero presenta una sutil diferencia ya que tambien el maximo aumenta en valor absoluto. Tambien se observa en la figura \ref{fig4:rabi k}, a la izquierda, como depende esta frecuencia al aumentar $k-J$, y vemos que el maximo ya no se desplaza lateralmente, sino que solo aumenta en valor absoluto. Por otro lado, en los paneles derechos, se puede analizar que sucede con las frecuencias al aumentar $\chi$ (fig. \ref{fig4:rabi chi}) y $k-J$ (fig. \ref{fig4:rabi k}). Es interesante ver como al aumentar $\chi$, se comienza a observar un maximo y minimo local para la frecuencia $\Omega^{(2)}_{23}$ (la superior). Similarmente, pero en la rama superior, se observa este mismo comportamiento al aumentar $k-J$.
 
+La dinamica para el caso de $N\geq2$ es muy complicada, ya que ahora se tienen 3 frecuencias diferentes, y predecir que sucede para cada combinacion de parametros y para cada condicion inicial se hace muy complicado, por lo tanto, el analisis para estos casos no puede ser muy profundo. Lo que se puede distinguir es que cuando $\chi,k-J>g$, se comienzan a observar estos minimos y maximos locales en las frecuencias, y se puede intentar de ver cual es el efecto que tiene esto en el entrelazamiento de los atomos, y tambien se puede observar si hay alguna relacion entre los parametros, por ejemplo como se encontro para el caso de 1 atomo (y para el subespacio de N=1) que hay una clara relacion entre el detunning $\Delta$ y el medio $\chi$.
 \section{Dinamica de entrelazamiento}
 Para estudiar la dinamica de entrelazamiento entre los dos atomos, nos centraremos en la concurrencia ($0\leq C_{AB} \leq 1$).
 En primer lugar consideraremos una cavidad lineal, y finalmente veremos cual es el efecto del medio Kerr sobre el entrelazamiento.
 
 \subsection{Cavidad lineal}
-Lo primero que tenemos que analizar es los efectos de las interacciones entre los atomos, como ya vimos, 
+Lo primero que tenemos que analizar es los efectos de las interacciones entre los atomos, como ya vimos,  vamos a definir dos regimenes, que llamaremos Strong Interacting (SI) y Weak Interacting (WI), refiriendonos a la interaccion entre los atomos con respecto a la cavidad. El SI sera cuando la interaccion entre los atomos es fuerte en comparacion con la cavidad, es decir $k-J>g$, y WI con $k,J<g$. Ya que no se definio un limite muy claro, trabajaremos con un valor representativo de cada regimen, $k-J=0.1g$ y $k-J=5g$ respectivamente. Para ilustrar la las diferencias entre condiciones iniciales, y para seguir con el paralelismo con el caso de 1 atomo, se consideraran unicamente las siguientes condiciones iniciales:
+\begin{itemize}
+    \item $\ket{eg0+ge0}$ para seguir el paralelismo con el JCM de 1 atomo \\
+    \item $\ket{eg1+ge1}$ para comparar con el anterior \\
+    \item $\ket{ee0+gg2}$ para ver otra condicion inicial con $N=2$ \\
+\end{itemize}
 
-
-Nuevamente, vamos a definir dos regimenes, que llamaremos Strong Interacting (SI) y Weak Interacting (WI), refiriendonos a la interaccion entre los atomos con respecto a la cavidad. El SI sera cuando la interaccion entre los atomos es fuerte en comparacion con la cavidad, es decir $k,J>g$, y WI con $k,J<g$.  
-
-
-1. k=J=0 ; x=0
-2. k=J=0 ; x =/= 0
-3. 
+eg0+ge0 en un mismo grafico
+1. k=J=x=0 
+2. k=0.1g, J=0, x=0
+3. k=5g, J=0, x=0
+eg1+ge1 en un mismo grafico
+1. k=J=x=0 
+2. k=0.1g, J=0, x=0
+3. k=5g, J=0, x=0
+ee0+gg2 en un mismo grafico
+1. k=J=x=0 
+2. k=0.1g, J=0, x=0
+3. k=5g, J=0, x=0
 GRAFICOS DE ENTRELAZAMIENTO PARA DIFERENTES PARAMETROS. PLOTS CON COLORES DEL PAPER ESE. SDE. 
