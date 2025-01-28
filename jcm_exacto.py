@@ -122,12 +122,12 @@ def rabi_freq(n_:int,j1:int,j2:int,d:float,g:float,k:float,J:float,x:float):
     return omega_general(n_,j2,d,g,k,J,x)-omega_general(n_,j1,d,g,k,J,x)
 
 def grafico2d_chilist(k,J):
-    d=np.linspace(-15*g,15*g,20000)
+    d=np.linspace(-15*g,15*g,2000)
     # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
     # E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
     # E_jcm=[[1/2*np.sqrt(4*g**2+(d-x)**2),-1/2*np.sqrt(4*g**2+(d-x)**2)],[1/2*np.sqrt(2*4*g**2+(d-3*x)**2),-1/2*np.sqrt(2*4*g**2+(d-3*x)**2)]]
 
-    chi_list=np.linspace(0,5*g,10)
+    chi_list=np.linspace(0,10*g,100)
     colors=colormaps['inferno'](np.linspace(0,1,len(chi_list)+2))
     labels=['$\Omega_{21}$','$\Omega_{32}$','$\Omega_{31}$']
     fig=plt.figure(figsize=(8,6))
@@ -190,7 +190,7 @@ def grafico2d_klist(J,x):
 
 def grafico3d_delta_x(k,J):
     d=np.linspace(-15*g,15*g,200)
-    chi_list=np.linspace(0,5*g,200)
+    chi_list=np.linspace(0,10*g,200)
     X,Y=np.meshgrid(d/g,chi_list/g)
     z1=np.zeros((len(chi_list),len(d)))
     z2=np.zeros((len(chi_list),len(d)))
@@ -210,13 +210,16 @@ def grafico3d_delta_x(k,J):
             z2[lx][ld]=100*rabi_freq(2,2,3,delta,g,k,J,x)
             z3[lx][ld]=100*rabi_freq(2,3,1,delta,g,k,J,x)
     cmap=colormaps['inferno']
-    surf1=ax1.plot_surface(X,Y,z1,cmap=cmap,lw=0,antialiased=False)
-    surf2=ax2.plot_surface(X,Y,z2,cmap=cmap,lw=0,antialiased=False)
-    surf3=ax3.plot_surface(X,Y,z3,cmap=cmap,lw=0,antialiased=False)
-    fig.colorbar(surf1,shrink=0.5)
-    fig2.colorbar(surf2,shrink=0.5)
-    fig3.colorbar(surf3,shrink=0.5)
-    ax1.view_init(30, -60)
+    # surf1=ax1.plot_surface(X,Y,z1,cmap=cmap,lw=0,antialiased=False)
+    # surf2=ax2.plot_surface(X,Y,z2,cmap=cmap,lw=0,antialiased=False)
+    # surf3=ax3.plot_surface(X,Y,z3,cmap=cmap,lw=0,antialiased=False)
+    # fig.colorbar(surf1,shrink=0.5)
+    # fig2.colorbar(surf2,shrink=0.5)
+    # fig3.colorbar(surf3,shrink=0.5)
+    # ax1.view_init(30, -60)
+    wire1=ax1.plot_wireframe(X,Y,z1,rstride=200,cstride=10)
+    wire2=ax2.plot_wireframe(X,Y,z2,rstride=200,cstride=10)
+    wire3=ax3.plot_wireframe(X,Y,z3,rstride=200,cstride=10)
     ax2.view_init(30, -60)
     ax3.view_init(30, -60)
     ax1.set_xlabel('$\Delta/g$')
@@ -305,7 +308,7 @@ def grafico3d_chi_k(d,J):
     ax3.set_ylabel('$k/g$')
     plt.show()
 
-grafico3d_chi_k(10*g,0)
+grafico3d_chi_k(5*g,0)
 
 # fig=plt.figure(figsize=(8,6))
 # ax=fig.add_subplot()

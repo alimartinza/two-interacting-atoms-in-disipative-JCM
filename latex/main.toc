@@ -29,17 +29,34 @@
 \contentsline {subsection}{\numberline {4.2.1}Interacción átomo-átomo}{42}{subsection.4.2.1}%
 \contentsline {subsection}{\numberline {4.2.2}Medio Kerr}{45}{subsection.4.2.2}%
 \contentsline {subsection}{\numberline {4.2.3}Batidos}{46}{subsection.4.2.3}%
-\contentsline {section}{\numberline {4.3}Dinamica sin apantallamiento}{47}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Dinamica con disipacion}{47}{subsection.4.3.1}%
-\contentsline {section}{\numberline {4.4}Dinamica de entrelazamiento}{48}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Cavidad lineal}{48}{subsection.4.4.1}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{51}{chapter.5}%
-\contentsline {section}{\numberline {5.1}FG unitaria}{51}{section.5.1}%
-\contentsline {section}{\numberline {5.2}FG disipativa}{51}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Dependencia con el regimen de acoplamiento}{51}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Dependencia con el detunning}{51}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Dependencia con el medio Kerr}{51}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Dependencia con la interaccion entre atomos}{51}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Robustez}{51}{subsection.5.2.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{53}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{55}{appendix.Alph1}%
+\contentsline {section}{\numberline {4.3}Dinámica sin apantallamiento}{47}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Dinámica con disipación}{47}{subsection.4.3.1}%
+\contentsline {section}{\numberline {4.4}Dinámica de entrelazamiento}{50}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Dependencia con el detunning}{50}{subsection.4.4.1}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{50}{section*.35}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{51}{section*.38}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{53}{section*.41}%
+\contentsline {subsection}{\numberline {4.4.2}Dependencia con el medio $\chi $}{53}{subsection.4.4.2}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{53}{section*.42}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{55}{section*.45}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{56}{section*.48}%
+\contentsline {subsection}{\numberline {4.4.3}Dependencia con la interaccion $k-J$}{56}{subsection.4.4.3}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{56}{section*.49}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{57}{section*.52}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{59}{section*.55}%
+\contentsline {subsection}{\numberline {4.4.4}Acoplamiento Buck-Sukumar}{59}{subsection.4.4.4}%
+\contentsline {subsubsection}{$\ket {eg0+ge0}$}{60}{section*.56}%
+\contentsline {subsubsection}{$\ket {eg1+ge1}$}{60}{section*.57}%
+\contentsline {subsubsection}{$\ket {3er0}$}{60}{section*.58}%
+\contentsline {subsection}{\numberline {4.4.5}Conclusiones del capitulo 4}{60}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}comentarios para borrar}{60}{subsection.4.4.6}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{63}{chapter.5}%
+\contentsline {section}{\numberline {5.1}FG unitaria}{63}{section.5.1}%
+\contentsline {section}{\numberline {5.2}FG disipativa}{63}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dependencia con el regimen de acoplamiento}{63}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Dependencia con el detunning}{63}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Dependencia con el medio Kerr}{63}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Dependencia con la interaccion entre atomos}{63}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Robustez}{63}{subsection.5.2.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{65}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{67}{appendix.Alph1}%

@@ -24,9 +24,9 @@
 \usepackage{color}
 \usepackage{ulem}
 \usepackage[margin=1in]{geometry}           % geometria de la pagina 
-\usepackage{physics}                        % brakets and such
+\usepackage{physics}    % brakets and such
 % CUSTOMIZACIONES PROPIAS
-\graphicspath{{./figuras/}}                 % define el directorio de figuras
+\graphicspath{{./figuras/}}  % define el directorio de figuras
 %\usepackage[Conny]{fncychap}                % para definir estilos de capitulos
 \renewcommand{\vec}[1]{\mathbf{#1}} 	    % vectores como bold
 \geometry{bindingoffset=1cm}                % espacio en el borde interno para el encuadernado
@@ -43,7 +43,7 @@
     urlcolor=cyan,
     citecolor=Green,
     hyperindex=true,
-    pdfauthor={Camila Cristiano},
+    pdfauthor={Ali Martin},
     pdftitle={Tesis de Licenciatura},
     }
 
