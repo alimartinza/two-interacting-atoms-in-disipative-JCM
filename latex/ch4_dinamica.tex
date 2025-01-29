@@ -460,9 +460,9 @@ Lo primero que tenemos que analizar es los efectos de las interacciones entre lo
     \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg0+ge0}$, en función del detunning, y para $\chi=k-J=0$.}
     \label{fig4:concu detunning 0}
 \end{figure}
-En la figura \ref{fig4:concu detunning 0} se observa la evolución de la concurrencia para la condición inicial $\ket{eg0+ge0}$, cuyo entrelazamiento entre los átomos es máximo. En el eje x es el tiempo, y en el eje y es el detunning $\Delta/g$. En el panel \ref{fig4:concu detunning 0 uni} se observa como oscila la concurrencia, llegando al cero periódicamente. Se ve como al aumentar el detunning, estas oscilaciones son cada vez de menor amplitud, y el entrelazamiento se mantiene. Ademas, la frecuencia de oscilación es cada vez mayor. Al tomar la dinámica disipativa, en el panel \ref{fig4:concu detunning 0 dis}, se observa como las oscilaciones siguen estando, pero ahora su máximo disminuye con el tiempo. Esto es de esperarse, ya que la cavidad deja escapar fotones y el estado del sistema se hace mixto. Un estado mixto ya no es entrelazado, porque no hay coherencias, entonces se observa el deterioro del entrelazamiento a medida que el tiempo avanza. Hay otros dos comportamientos notables. Por un lado, se observa como el máximo del entrelazamiento decae mas lentamente para valores mas altos del detunning, esto se debe a la naturaleza da la dinámica poblacional; al aumentar el detunning, como se vio anteriormente, uno de los efectos principales es que las oscilaciones entre los estados tienen poca amplitud, y en este caso, esto implica que si bien el estado $\ket{gg1}$ tienen amplitudes no nula, principalmente el estado del sistema esta concentrado en el estado inicial, que no sufre decoherencia por perdida de fotones, ya que no tiene fotones en la cavidad. Entonces, mientras mayor el detunning, menor la probabilidad de encontrar al sistema en el estado $\ket{gg1}$, y por lo tanto tiene pocas probabilidades de perder fotones. El otro efecto que es interesante y que aparece con frecuencia en este tipo de sistemas, es la muerte y reanimación súbita del entrelazamiento, que llamaremos SDE (Sudden Death Effect) y SBE (Sudden Birth Effect) por sus siglas en ingles. En el caso disipativo, hay marcadas zonas en negro, estas muestran como el entrelazamiento \textit{muere} durante un tiempo finito y reviven luego. Este efecto es sorprendente, ya que uno espera que las coherencias, responsables en gran medida del entrelazamiento entre átomos, decaigan asintóticamente. 
+En la figura \ref{fig4:concu detunning 0} se observa la evolución de la concurrencia para la condición inicial $\ket{eg0+ge0}$, cuyo entrelazamiento entre los átomos es máximo. El eje x es el tiempo, y el eje y es el detunning $\Delta/g$. En el panel \ref{fig4:concu detunning 0 uni} se observa el caso sin perdidas; lo primero que notamos es que la figura es simetrica sobre $\Delta=0$ (caso resonante), y en este caso las oscilaciones son de menor frecuencia pero de mayor amplitud. A medida que se aumenta el valor absoluto del detunning, entonces las oscilaciones son de mayor frecuencia y ademas de menor amplitud. Consecuentemente, al tomar la dinámica disipativa, en el panel \ref{fig4:concu detunning 0 dis}, se observa como las oscilaciones siguen estando, pero ahora su máximo disminuye con el tiempo. Esto es de esperarse, ya que la cavidad deja escapar fotones y el estado del sistema se hace mixto. Un estado mixto ya no es entrelazado, porque no hay coherencias, entonces se observa el deterioro del entrelazamiento a medida que el tiempo avanza. Hay otros dos comportamientos notables. Por un lado, se observa como el máximo del entrelazamiento decae mas lentamente para valores mas altos del detunning, esto se debe a la naturaleza da la dinámica poblacional; al aumentar el detunning, como se vio anteriormente, uno de los efectos principales es que las oscilaciones entre los estados tienen poca amplitud, y en este caso, esto implica que si bien el estado $\ket{gg1}$ tienen amplitudes no nula, principalmente la probabilidad esta concentrada en el estado inicial, que no sufre decoherencia por perdida de fotones, ya que no tiene fotones en la cavidad. Entonces, mientras mayor el detunning, menor la probabilidad de encontrar al sistema en el estado $\ket{gg1}$, y por lo tanto tiene pocas probabilidades de perder fotones. El otro efecto que es interesante y que aparece con frecuencia en este tipo de sistemas, es la muerte y reanimación súbita del entrelazamiento, que llamaremos SDE (Sudden Death Effect) y SBE (Sudden Birth Effect) por sus siglas en ingles. En el caso disipativo, hay marcadas zonas en negro, estas muestran como el entrelazamiento \textit{muere} durante un tiempo finito y revive luego. Este efecto es sorprendente, ya que uno espera que las coherencias, responsables en gran medida del entrelazamiento entre átomos, decaigan asintóticamente. Este efecto muestra que esto no es asi para algunos sitemas, y aun cuando las coherencias son distintas de cero, el entrelazamiento puede ser nulo durante un tiempo, y luego reaparecer subitamente. No se conoce bien la razon de este fenomeno, pero es observado en varios sistemas. 
 
-La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambia la forma de la figura \ref{fig4:concu detunning 0}. Es de esperar que no cambie, ya que el subespacio de $N=1$ se comporta de manera sencilla, y como se concluyo anteriormente, la dependencia en los parametros $\chi$ y $k-J$ parece ser unicamente un desplazamiento de las energias de los autoestados. En la figura \ref{fig4:concu detunning 1} se muestran nuevamente la dinamica de entrelazamiento en funcion del detunning, pero ahora cambiando alguno de los parametros:
+La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambia la forma de la figura \ref{fig4:concu detunning 0}. Es de esperar que no cambie, ya que el subespacio de $N=1$ se comporta de manera sencilla, y como se concluyo anteriormente, la dependencia en los parametros $\chi$ y $k-J$ parece ser unicamente un desplazamiento de las energias de los autoestados. En la figura \ref{fig4:concu detunning 0 params} se muestran nuevamente la dinamica de entrelazamiento en funcion del detunning, pero ahora cambiando alguno de los parametros:
 
 \begin{figure}[h]
     \centering
@@ -489,13 +489,15 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
         \caption{$k-J=2.5g$}
         \label{fig4:concu detunning k2}
     \end{subfigure}
-    \caption{}
+    \caption{Concurrencia en funcion del tiempo (eje x) y el detunning $\Delta$ (eje y) para diferentes parametros (los que no estan nombrados son cero).}
     \label{fig4:concu detunning 0 params}
 \end{figure}
+En el panel \ref{fig4:concu detunning x1} y \ref{fig4:concu detunning x2} se muestran dos casos en donde se puso de manifiesto la no linealidad del medio, cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectivamente, ambos casos en presencia del entorno. Comparando con la figura \ref{fig4:concu detunning 0 dis}, vemos que la forma no cambia, solamente cambia la frecuencia, y cambia el eje de simetria. Es una buena suposicion que este eje sera el caso resonante, que en analogia con la seccion \ref{sec3:medio kerr} \textcolor{red}{chequear seccion que sea la de fg en robustez}, puede ser una posible condicion de robustez para la fase geometrica, que analizaremos mas tarde. Vemos como al aumentar $\chi$, el eje de simetria tambien aumenta en esa misma cantidad. En los paneles \ref{fig4:concu detunning k1} y \ref{fig4:concu detunning k2} se muestra el cambio al considerar acomplamiento entre los atomos, dados por una intensidad de $k-J=0.5g$ y $k-J=2.5g$ respectivamente. Nuevamente hay un desplazamiento y un cambio en la frecuencia, que se comportan igual que en el caso anterior, pero ahora el desplazamiento del eje de simetria es el doble que la intensidad de la interaccion. Esto no es tan sorprendente si se observa la expresion de la energia \ref{ec4:autoenergias} \textcolor{red}{ec 4.9}, donde los parametros $\chi$ y $\Delta$ aparecen con un factor $1/2$, mientras que $k-J$ no. 
+
+Basicamente, el subespacio de $N=1$ se comporta igual que el Jaynes-Cummings de 1 atomo, pero donde tenemos un estado \textit{inerte}, el estado $\ket{eg0-ge0}$ que no interactua con los otros dos. Esto nos puede servir para, usando como condicion inicial el estado $\ket{\psi_0}=\cos\theta\ket{eg0}+\sin\theta\ket{ge0}$ que es combinacion lineal de los estados $\ket{eg0\pm ge0}$, donde el estado simetrico evoluciona como siempre, y el antisimetrico no evoluciona, teniendo asi una manera de mantener el entrelazamiento siempre por arriba de un cierto valor, que depende del valor de $\theta$, aun en presencia de decoherencia, ya que el estado $\ket{eg0-ge0}$ es un estado que no sufre perdidas.
 
 \subsubsection{\underline{Condicion inicial $\ket{eg1+ge1}$}}
-En la figura \ref{fig4:concu detunning 1} se observa la evolución de la concurrencia para la condición inicial $\ket{eg0+ge0}$, cuyo entrelazamiento entre los átomos es máximo. En el eje x es el tiempo, y en el eje y es el detunning $\Delta/g$. En el panel \ref{fig4:concu detunning 0 uni} se observa como oscila la concurrencia, llegando al cero periódicamente. Se ve como al aumentar el detunning, estas oscilaciones son cada vez de menor amplitud, y el entrelazamiento se mantiene. Ademas, la frecuencia de oscilación es cada vez mayor. Al tomar la dinámica disipativa, en el panel \ref{fig4:concu detunning 0 dis}, se observa como las oscilaciones siguen estando, pero ahora su máximo disminuye con el tiempo. Esto es de esperarse, ya que la cavidad deja escapar fotones y el estado del sistema se hace mixto. Un estado mixto ya no es entrelazado, porque no hay coherencias, entonces se observa el deterioro del entrelazamiento a medida que el tiempo avanza. Hay otros dos comportamientos notables. Por un lado, se observa como el máximo del entrelazamiento decae mas lentamente para valores mas altos del detunning, esto se debe a la naturaleza da la dinámica poblacional; al aumentar el detunning, como se vio anteriormente, uno de los efectos principales es que las oscilaciones entre los estados tienen poca amplitud, y en este caso, esto implica que si bien el estado $\ket{gg1}$ tienen amplitudes no nula, principalmente el estado del sistema esta concentrado en el estado inicial, que no sufre decoherencia por perdida de fotones, ya que no tiene fotones en la cavidad. Entonces, mientras mayor el detunning, menor la probabilidad de encontrar al sistema en el estado $\ket{gg1}$, y por lo tanto tiene pocas probabilidades de perder fotones. El otro efecto que es interesante y que aparece con frecuencia en este tipo de sistemas, es la muerte y reanimación súbita del entrelazamiento, que llamaremos SDE (Sudden Death Effect) y SBE (Sudden Birth Effect) por sus siglas en ingles. En el caso disipativo, hay marcadas zonas en negro, estas muestran como el entrelazamiento \textit{muere} durante un tiempo finito y reviven luego. Este efecto es sorprendente, ya que uno espera que las coherencias, responsables en gran medida del entrelazamiento entre átomos, decaigan asintóticamente. 
-
+Ahora se estudia la dinamica para el estado simetrico en el subespacio de $N=2$. Igual que en el caso anterior tenemos en la figura \ref{fig4:concu detunning 1} la evolucion unitaria a la izquierda, y la disipativa a la derecha. Vemos como en este subespacio hay mas estructura, y si bien sigue siendo simetrico con respecto al eje $\Delta=0$, ahora la forma es mas complicada, y ademas en el caso unitario tambien observamos regiones que presentan SDE, cosa que para $N=1$ no se observaba. Al igual que antes, al aumentar el detunning las oscilaciones son de mayor frecuencia y menor amplitud, conservando mejor el entrelazamiento. La razon es la misma: si bien ahora el estado $\ket{eg1+ge1}$ si puede perder fotones, al hacerlo cae al estado $\ket{eg0+ge0}$, que tiene el mismo entrelazamiento, y los otros dos estados del subespacio $\ket{gg2}$ decae al $\ket{gg1}$, y $\ket{ee0}$ no tiene fotones asi que no pierde excitaciones. Por lo tanto, en el caso de alta detunning, el comportamiento es similar al de anterior. Las oscilaciones no tienen mucha amplitud y por lo tanto la probabilidad esta concentrada casi toda en el estado $\ket{eg1+ge1}$, que al perder un foton decae al estado $\ket{eg0+ge0}$ cuyo entrelazamiento es el mismo.
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
@@ -513,7 +515,8 @@ En la figura \ref{fig4:concu detunning 1} se observa la evolución de la concurr
     \label{fig4:concu detunning 1}
 \end{figure}
 
-La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambia la forma de la figura \ref{fig4:concu detunning 0}. Es de esperar que no cambie, ya que el subespacio de $N=1$ se comporta de manera sencilla, y como se concluyo anteriormente, la dependencia en los parametros $\chi$ y $k-J$ parece ser unicamente un desplazamiento de las energias de los autoestados. En la figura \ref{fig4:concu detunning 1} se muestran nuevamente la dinamica de entrelazamiento en funcion del detunning, pero ahora cambiando alguno de los parametros:
+Lo interesante de este subespacio de mayor excitacion, es que como se observo anteriormente en las figuras \ref{fig4:frecuencias de rabi}, las energias presentan maximos y minimos locales, que esperamos que cambien drasticamente la estructura de las dependencias en los parametros al aumentar sus valores. En la figura \ref{fig4:concu fig4:concu detunning 1 params} se muestran diferentes casos; en la primera fila se muestran casos con medio Kerr cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectiamente. El primer caso, no se observa ningun cambio con repecto al caso $\chi=0$, el cambio es muy pequeño para ser notado, y la estructura queda igual. Pero al aumentar mucho la no linealidad del medio, se comienza a observar el desdoblamiento en las energias, y los maximos y minimos locales de energia comienzan a notarse. En la figura \ref{fig4:concu detunning 1 x2} se ve como hay dos zonas en donde las oscilaciones tienen gran amplitud y poca frecuencia, similar al caso \textit{resonante}. Esto se puede explicar con el desdoblamiento de energias, parece que hay dos minimos en las frecuencias de Rabi que participan en este proceso, que parecen estar en $\Delta_1=5g$ y $\Delta_2=15g$ aproximadamente. Haciendo una analogia con el caso de 1 atomo, donde veiamos que la condicion de robustez se daba para $\Delta=\chi(2n-1)$ (ver \ref{sec3:medio kerr}) y recordando que esta condicion sale de la diferencia entre las contribuciones diagonales del Hamiltoniano, entonces en este caso, podemos hacer lo mismo y obtener dos condiciones, la primera se obtiene con $\chi n^2-\chi(n-1)^2=\chi(2n-1)$ que es igual a la del caso anterior, y la segunda con $\chi(n-1)^2-\chi(n-2)^2=\chi(2n-3)$. Sustituyendo $n=2$, obtenemos que la condicion se da para $\Delta=\chi$ y $\Delta=3\chi$, que es justo donde se obtienen los minimos. Si bien el segundo minimo de $3\chi$ parece ser menos pronunciado, esta analogia funciona bien.
+Si hacemos esta resta pero ahora con $\chi=0$ y nos concentramos en $k-J$, vemos que la condicion se da cuando $\Delta=\pm 2(k-J)$, que es justo lo que observamos en la figura \ref{fig4:concu detunning 1 k2}. En general entonces, podemos decir que esta condicion de menor frecuencia y mayor amplitud de oscilacion se da cuando las energias de los estados estan cerca de la degeneracion, y como tenemos 3 estados que interactuan siempre por medio del estado del medio que es el $\ket{egn+gen}$, entonces puede haber una degeneracion entre el primero y segundo estado, o entre el segundo y tercero, que se dan en el caso general cuando
 
 \begin{figure}[h]
     \centering
@@ -570,14 +573,14 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
-        \caption{$\chi=0.1g$}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg0+ge0 d=1.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
+        \caption{$\Delta=1g$}
         \label{fig4:concu x d1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
-        \caption{$\chi=5g$}
+        \caption{$\Delta=5g$}
         \label{fig4:concu x d2}
     \end{subfigure}
     \vfill
@@ -619,30 +622,30 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=1.0g k=0.0g J=0.0g gamma=0.1g concu chi.png}
-        \caption{$\chi=0.1g$}
-        \label{fig4:concu x 1 k1}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=1.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
+        \caption{$\Delta=1g$}
+        \label{fig4:concu x 1 d1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=5.0g k=0.0g J=0.0g gamma=0.25g concu chi uni.png}
-        \caption{$\chi=5g$}
-        \label{fig4:concu x 1 k2}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=5.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
+        \caption{$\Delta=5g$}
+        \label{fig4:concu x 1 d2}
     \end{subfigure}
     \vfill
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=0.0g k=0.5g J=0.0g gamma=0.25g concu chi dis.png}
         \caption{$k-J=0.5g$}
-        \label{fig4:concu x 1 d1}
+        \label{fig4:concu x 1 k1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=0.0g k=2.5g J=0.0g gamma=0.25g concu chi dis.png}
         \caption{$k-J=2.5g$}
-        \label{fig4:concu x 1 d2}
+        \label{fig4:concu x 1 k2}
     \end{subfigure}
     \caption{}
-    \label{}
+    \label{fig4:concu x params 1}
 \end{figure}
 \subsubsection{\underline{Condicion inicial $\ket{3er0}$}}
 
@@ -652,13 +655,13 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.0g J=0.0g gamma=0.25g concu k uni.png}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k uni.png}
         \caption{Dinámica sin perdidas}
         \label{fig4:concu k 0 uni}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
         \caption{Dinámica con perdidas}
         \label{fig4:concu k 0 dis}
     \end{subfigure}
@@ -672,42 +675,42 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=5.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$\chi=0.1g$}
-        \label{fig4:concu k x1}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=5.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$\chi=5g$}
-        \label{fig4:concu k x2}
-    \end{subfigure}
-    \vfill
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.5g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$k-J=0.5g$}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=1.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\Delta=1g$}
         \label{fig4:concu k d1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=5.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$k-J=2.5g$}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=5.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\Delta=5g$}
         \label{fig4:concu k d2}
     \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.5g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\chi=0.5g$}
+        \label{fig4:concu k x1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=5.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\chi=5g$}
+        \label{fig4:concu k x2}
+    \end{subfigure}
     \caption{}
-    \label{}
+    \label{fig4:concu k params}
 \end{figure}
 \subsubsection{\underline{Condicion inicial $\ket{eg1+ge1}$}}
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.0g J=0.0g gamma=0.25g concu k uni.png}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k uni.png}
         \caption{Dinámica sin perdidas}
         \label{fig4:concu k 1 uni}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
         \caption{Dinámica con perdidas}
         \label{fig4:concu k 1 dis}
     \end{subfigure}
@@ -721,30 +724,30 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=5.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$\chi=0.1g$}
-        \label{fig4:concu k 1 x1}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=5.0g x=0.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$\chi=5g$}
-        \label{fig4:concu k 1 x2}
-    \end{subfigure}
-    \vfill
-    \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.5g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$k-J=0.5g$}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=1.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\Delta=1g$}
         \label{fig4:concu k 1 d1}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.49\textwidth}
-        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=5.0g J=0.0g gamma=0.25g concu k dis.png}
-        \caption{$k-J=2.5g$}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=5.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\Delta=5g$}
         \label{fig4:concu k 1 d2}
     \end{subfigure}
+    \vfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.5g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\chi=0.5g$}
+        \label{fig4:concu k 1 x1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=5.0g J=15.0g gamma=0.25g concu k dis.png}
+        \caption{$\chi=5g$}
+        \label{fig4:concu k 1 x2}
+    \end{subfigure}
     \caption{}
-    \label{fig4:concu k 1}
+    \label{fig4:concu k params 1}
 \end{figure}
 \subsubsection{\underline{Condicion inicial $\ket{3er0}$}}
 

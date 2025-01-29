@@ -34,17 +34,17 @@
 \contentsline {section}{\numberline {4.4}Dinámica de entrelazamiento}{50}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}Dependencia con el detunning}{50}{subsection.4.4.1}%
 \contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{50}{section*.35}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{51}{section*.38}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{53}{section*.41}%
-\contentsline {subsection}{\numberline {4.4.2}Dependencia con el medio $\chi $}{53}{subsection.4.4.2}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{53}{section*.42}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{53}{section*.38}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{54}{section*.41}%
+\contentsline {subsection}{\numberline {4.4.2}Dependencia con el medio $\chi $}{54}{subsection.4.4.2}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{54}{section*.42}%
 \contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{55}{section*.45}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{56}{section*.48}%
-\contentsline {subsection}{\numberline {4.4.3}Dependencia con la interaccion $k-J$}{56}{subsection.4.4.3}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{56}{section*.49}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{57}{section*.52}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{59}{section*.55}%
-\contentsline {subsection}{\numberline {4.4.4}Acoplamiento Buck-Sukumar}{59}{subsection.4.4.4}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{57}{section*.48}%
+\contentsline {subsection}{\numberline {4.4.3}Dependencia con la interaccion $k-J$}{57}{subsection.4.4.3}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{57}{section*.49}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{58}{section*.52}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{60}{section*.55}%
+\contentsline {subsection}{\numberline {4.4.4}Acoplamiento Buck-Sukumar}{60}{subsection.4.4.4}%
 \contentsline {subsubsection}{$\ket {eg0+ge0}$}{60}{section*.56}%
 \contentsline {subsubsection}{$\ket {eg1+ge1}$}{60}{section*.57}%
 \contentsline {subsubsection}{$\ket {3er0}$}{60}{section*.58}%

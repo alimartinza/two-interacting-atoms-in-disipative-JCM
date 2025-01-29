@@ -8,7 +8,8 @@
 \fancyhead[RO]{\nouppercase{\leftmark\hfill}}
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
 
-En este apendice se desarrolla la derivacion de la ecuacion de Lindblad, que es la ecuacion maestra que determina la evolucion temporal de una matriz densidad $\rho$, que esta en contacto con un entorno del cual no se conoce la dinamica. La dinamica en conjunto esta regida por un Hamiltoniano que formalmente puede escribirse como
+En este apendice se desarrolla la derivacion d
+e la ecuacion de Lindblad, que es la ecuacion maestra que determina la evolucion temporal de una matriz densidad $\rho$, que esta en contacto con un entorno del cual no se conoce la dinamica. La dinamica en conjunto esta regida por un Hamiltoniano que formalmente puede escribirse como
 \begin{equation}
     H=H_S+H_B+H_{int}
 \end{equation}
@@ -24,5 +25,73 @@ donde $\mathcal{T}$ indica la prescripcion de ordenamiento temporal, y $U(0)=\ma
 \end{equation}
 que es la ecuacion de Louiville-Von Neumann, que describe la trayectoria en el espacio de Hilbert del operador densidad del sistema total cerrado.
 
+Va a ser util trabajar en el \textit{picture} de interaccion, en donde reescribimos el Hamiltoniano separandolo en dos partes
+\begin{equation}
+    H(t)=H_0+\hat H_I(t)
+\end{equation}
+la manera de seprar el sistema va a variar de problema a problema, pero en general se tiene que $H_0$ es simplemente la energia de las dos partes del sistema si despreciamos la interaccion entre ellos, y que asumimos es intependiente del tiempo; y luego tenemos $\hat H_I(t)$ que es el Hamiltoniano que describe las interacciones entre los sistemas. Como siempre, notamos $U(t,t_0)$ al operador de evolucion temporal, y el valor de expectacion de un observable $A(t)$ en la representacion de Schroedinger
+\begin{equation}
+    \langle A(t) \rangle = \tr \{ A(t)U(t,t_0) \rho(t_0)U^\dagger(t,t_0) \}
+    \label{ecA1:valor de expectacion}
+\end{equation}
 
-Al no conocer, o no poder resolver esta ecuacion por la complejidad del entorno, por ejemplo por su gran cantidad de grados de libertad, 
+Ahora se introducen los operadores unitarios
+
+\begin{equation}
+    U_0(t,t_0)\equiv\exp [ -i H_0(t-t_0)]
+\end{equation}
+
+con $U_I(t,t_0)\equiv U_0^\dagger(t,t_0)U(t,t_0)$. Entonces el valor de expectacion \ref{eqA1:valor de expectacion} tambien puede escribirse como
+\begin{equation}
+    \begin{aligned}
+    \langle A(t) \rangle &= \tr \{ U_0^\dagger(t,t_0)A(t)U_0(t,t_0)U_I(t,t_0) \rho(t_0)U_I^\dagger(t,t_0) \} \\
+    & \equiv \tr \{A_I(t)\rho_I(t) \}
+    \end{aligned}
+    \label{ecA1:valor de expectacion interaccion}
+\end{equation}
+donde introducimos al poerador en el \textit{picture} de interaccion, y enontces la matriz densidad evoluciona en esta representacion segundo
+\begin{equation}
+    \rho_I(t)=U_I(t,t_0)\rho(t_0)U^\dagger_I(t,t_0)
+\end{equation}
+De esto lo que se debe recordar es que el Hamiltoniano en la repserentacion de interaccion, y la ecuacion de von Neumann se escriben como
+\begin{equation}
+    H_I(t)=U_0^\dagger(t,t_0)\hat H_I(t)U_0(t,t_0)
+\end{equation}
+Y
+\begin{equation}
+    \frac{d}{dt}\rho_I(t)=-i[H_I(t),\rho_I(t)]
+\end{equation}
+Si integramos esta ecuacion obtenemos la solucion formal
+\begin{equation}
+    \rho_I(t)=\rho_I(t_0)-i\int_{t_0}^{t}
+\end{equation}
+
+% Si ahora se considera que el sistema esta abierto, es decir, que el sistema de interes S esta en contacto con otro sistema cuentoco B que llamamos entorno, entonces el sistema total S+B se puede describir usando lo que escribimos anteriormente. Pero si nos concentramos en la dinamica de el subsistema S, entonces este va a cambiar por la influencia de B, y en general no va a seguir una dinamica Hamiltoniana.
+% Llamemos $\mathcal{H_S}$ el espacio de Hilbert del sistema, y $\mathcal{H_B}$ al del entorno. El espacio total del sistema S+B es el producto tensorial $\mathcal{H}=\mathcal{H_S}\otimes\mathcal{H_B}$, y el Hamiltoniano total se puede tomar de la forma
+% \begin{equation}
+%     H(t)=H_S\otimes I_B +I_S\otimes H_B + \hat H_I(t)
+% \end{equation}
+% Todos los observables que solo actuan sobre el subespacio S pueden escribirse como $A\otimes I_B$, y si el sistema total se puede describir segun el operador densidad $\rho$, etnonces los valores de expectacion de todos los observables que actuan sobre S estan determinados por
+% \begin{equation}
+%     \langle A \rangle = \tr_S\{A\rho_S\}
+% \end{equation}
+% donde 
+% \begin{equation}
+%     \rho_S=\tr_B \rho
+% \end{equation}
+% es la matriz densidad reducida del sistema abierto S, y la notacion $\tr_A$ denota la traza parcial sobre los grados de libertad del sistema A (A=S,B). 
+
+% La matriz densidad reducida $\rho_S(t)$ describe la dinamica del sistema S al eliminar, o en otras palabras, no tener en cuenta, los grados de libertad del entorno B. Ya que la matriz densidad total S+B evoluciona unitariamente, entonces
+% \begin{equation}
+%     \rho_S(t)=\tr_B\{U(t,t_0)\rho(t_0)U^\dagger(t,t_0)\}
+% \end{equation}
+% donde $U(t,t_0)$ sera el operador evolucion temporal del sistema total. De manera que la ecuacion de von Neumann para la ecolucion temporal de la matriz densidad reducida sera 
+ 
+% \begin{equation}
+%     \frac{d}{dt}\rho_S(t)=-i\tr_B [H(t),\rho(t)]
+% \end{equation}
+% Integrando esta ecuacion obtenemos
+% Para lo que incumbe en este trabajo, nos concentraremos en situaciones donde es valida la aproximacion de Markov. La caracteristica principal de los procesos de Markov se pueden resumir en que los tiempos de correlacion del entorno son muy cortos, y en palabras mas amigables, que el entorno tiene una memoria muy corta. Esto nos permite decir que la evolucion del sistema depende unicamente del estado actual de este, y no de su historia, ya que el entorno tiene una memoria muy corta y todo lo que el estado instantaneo del sistema no nos pueda decir, se pierde. 
+
+% Lo que tenemos que introducir 
+
