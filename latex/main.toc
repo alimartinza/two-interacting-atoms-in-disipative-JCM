@@ -35,28 +35,28 @@
 \contentsline {subsection}{\numberline {4.4.1}Dependencia con el detunning}{50}{subsection.4.4.1}%
 \contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{50}{section*.35}%
 \contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{53}{section*.38}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{54}{section*.41}%
-\contentsline {subsection}{\numberline {4.4.2}Dependencia con el medio $\chi $}{54}{subsection.4.4.2}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{54}{section*.42}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{55}{section*.45}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{57}{section*.48}%
-\contentsline {subsection}{\numberline {4.4.3}Dependencia con la interaccion $k-J$}{57}{subsection.4.4.3}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{57}{section*.49}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{58}{section*.52}%
-\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{60}{section*.55}%
-\contentsline {subsection}{\numberline {4.4.4}Acoplamiento Buck-Sukumar}{60}{subsection.4.4.4}%
-\contentsline {subsubsection}{$\ket {eg0+ge0}$}{60}{section*.56}%
-\contentsline {subsubsection}{$\ket {eg1+ge1}$}{60}{section*.57}%
-\contentsline {subsubsection}{$\ket {3er0}$}{60}{section*.58}%
-\contentsline {subsection}{\numberline {4.4.5}Conclusiones del capitulo 4}{60}{subsection.4.4.5}%
-\contentsline {subsection}{\numberline {4.4.6}comentarios para borrar}{60}{subsection.4.4.6}%
-\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{63}{chapter.5}%
-\contentsline {section}{\numberline {5.1}FG unitaria}{63}{section.5.1}%
-\contentsline {section}{\numberline {5.2}FG disipativa}{63}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Dependencia con el regimen de acoplamiento}{63}{subsection.5.2.1}%
-\contentsline {subsection}{\numberline {5.2.2}Dependencia con el detunning}{63}{subsection.5.2.2}%
-\contentsline {subsection}{\numberline {5.2.3}Dependencia con el medio Kerr}{63}{subsection.5.2.3}%
-\contentsline {subsection}{\numberline {5.2.4}Dependencia con la interaccion entre atomos}{63}{subsection.5.2.4}%
-\contentsline {subsection}{\numberline {5.2.5}Robustez}{63}{subsection.5.2.5}%
-\contentsline {chapter}{\numberline {6}Conclusiones}{65}{chapter.6}%
-\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{67}{appendix.Alph1}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{55}{section*.41}%
+\contentsline {subsection}{\numberline {4.4.2}Dependencia con el medio $\chi $}{55}{subsection.4.4.2}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{55}{section*.42}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{56}{section*.45}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{56}{section*.48}%
+\contentsline {subsection}{\numberline {4.4.3}Dependencia con la interaccion $k-J$}{56}{subsection.4.4.3}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg0+ge0}$}}{56}{section*.49}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {eg1+ge1}$}}{56}{section*.52}%
+\contentsline {subsubsection}{\underline {Condicion inicial $\ket {3er0}$}}{56}{section*.55}%
+\contentsline {subsection}{\numberline {4.4.4}Acoplamiento Buck-Sukumar}{56}{subsection.4.4.4}%
+\contentsline {subsubsection}{$\ket {eg0+ge0}$}{57}{section*.56}%
+\contentsline {subsubsection}{$\ket {eg1+ge1}$}{57}{section*.57}%
+\contentsline {subsubsection}{$\ket {3er0}$}{57}{section*.58}%
+\contentsline {subsection}{\numberline {4.4.5}Conclusiones del capitulo 4}{57}{subsection.4.4.5}%
+\contentsline {subsection}{\numberline {4.4.6}comentarios para borrar}{57}{subsection.4.4.6}%
+\contentsline {chapter}{\numberline {5}Fase geometrica en JCM generalizado}{61}{chapter.5}%
+\contentsline {section}{\numberline {5.1}FG unitaria}{61}{section.5.1}%
+\contentsline {section}{\numberline {5.2}FG disipativa}{61}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Dependencia con el regimen de acoplamiento}{61}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Dependencia con el detunning}{61}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Dependencia con el medio Kerr}{61}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Dependencia con la interaccion entre atomos}{61}{subsection.5.2.4}%
+\contentsline {subsection}{\numberline {5.2.5}Robustez}{61}{subsection.5.2.5}%
+\contentsline {chapter}{\numberline {6}Conclusiones}{63}{chapter.6}%
+\contentsline {chapter}{\numberline {A}Derivacion de las ecuaciones maestras}{65}{appendix.Alph1}%

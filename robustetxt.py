@@ -100,19 +100,13 @@ gamma_list=[0.01*g,0.1*g,0.25*g]
 p=0.005*g
 
 d=0
-x=0
+x=0*g
 
 J=0
-k=0.5*g
+k=0
 
-steps=2000
-T=2*np.pi/omega_general(1,1,d,g,k,J,x)
 
-# print(omega_general(1,2,d,g,k,J,x))
-t_final=5*T
-t=np.linspace(0,t_final,steps)
-delta=np.linspace(-15*g,15*g,100)
-delta_ticks=np.linspace(-15,15,100)
+delta_ticks=np.linspace(-15,15,150)
 
 colors=mpl.colormaps['plasma'](np.linspace(0,1,3+1))
 
@@ -124,15 +118,12 @@ ax_rob3t.set_xlabel('$\Delta/g$')
 ax_rob3t.set_ylabel('$\delta \phi/\pi$')
 ax_rob3t.ticklabel_format(style='sci',scilimits=(-2,2),useMathText=True)
 
-# fig_rob10t=plt.figure(figsize=(8,6))
-# ax_rob10t=fig_rob10t.add_subplot()
-# ax_rob10t.set_xlim(delta_ticks[0],delta_ticks[-1])
-# ax_rob10t.hlines(0,delta_ticks[0],delta_ticks[-1],colors='grey',linestyles='dashed',alpha=0.5)
+
 
 #'eg0-ge0+gg1','w(2)','eg0+ge0','eg0'
-psi0Name='eg0+ge0'
+psi0Name='eg1+ge1'
 
-delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez3t fg delta.txt')
+delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez3t fg delta.txt')
 # delta_fg_10T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez10t fg delta.txt')
 
 for i in range(len(delta_fg_3T)):

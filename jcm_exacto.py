@@ -155,6 +155,40 @@ def grafico2d_chilist(k,J):
     ax2.set_ylabel('Energia u.a.')
     plt.show()
 
+def grafico2dchi_dlist(k,J):
+    d_list=np.linspace(-10*g,10*g,21)
+    # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
+    # E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
+    # E_jcm=[[1/2*np.sqrt(4*g**2+(d-x)**2),-1/2*np.sqrt(4*g**2+(d-x)**2)],[1/2*np.sqrt(2*4*g**2+(d-3*x)**2),-1/2*np.sqrt(2*4*g**2+(d-3*x)**2)]]
+
+    chi_list=np.linspace(0,10*g,20000)
+    colors=colormaps['inferno'](np.linspace(0,1,len(d_list)+2))
+    labels=['$\Omega_{21}$','$\Omega_{32}$','$\Omega_{31}$']
+    fig=plt.figure(figsize=(8,6))
+    ax1=fig.add_subplot()
+    fig2=plt.figure(figsize=(8,6))
+    ax2=fig2.add_subplot()
+    # ax3=fig.add_subplot(133)
+    ax=[ax1,ax2]
+    # for m,j in enumerate([[1,2],[2,3],[1,3]]):
+    for l,d in enumerate(d_list):
+        y12=[100*rabi_freq(2,1,2,d,g,k,J,x) for x in chi_list]
+        y23=[100*rabi_freq(2,2,3,d,g,k,J,x) for x in chi_list]
+        y31=[100*rabi_freq(2,1,3,d,g,k,J,x) for x in chi_list]
+        ax[0].plot(chi_list/g,y12,color=colors[l])
+        ax[1].plot(chi_list/g,y23,color=colors[l])
+        ax[1].plot(chi_list/g,y31,color=colors[l])
+    ax[0].set_xlabel('$\chi/g$')
+    ax[1].set_xlabel('$\chi/g$')
+    ax[0].set_xlim(1/g*chi_list[0],1/g*chi_list[-1])
+    ax[1].set_xlim(1/g*chi_list[0],1/g*chi_list[-1])
+    ax1.grid()
+    ax2.grid()
+    # ax3.grid()
+    ax1.set_ylabel('Energia u.a.')
+    ax2.set_ylabel('Energia u.a.')
+    plt.show()
+
 '''----frecuencias para diferentes k----'''
 def grafico2d_klist(J,x):
     d=np.linspace(-15*g,15*g,20000)
@@ -308,30 +342,5 @@ def grafico3d_chi_k(d,J):
     ax3.set_ylabel('$k/g$')
     plt.show()
 
-grafico3d_chi_k(5*g,0)
 
-# fig=plt.figure(figsize=(8,6))
-# ax=fig.add_subplot()
-# # ax.set_title("Relación de dispersión",size=20)
-# ax.plot(d/g,E_jcm[0][0]*200,linestyle="dashed",color="black",label="$2E_{JC}^{(1)}$")
-# ax.plot(d/g,E_jcm[0][1]*200,linestyle="dashed",color="black")
-
-# ax.plot(d/g,E_jcm[1][0]*200,linestyle="dashed",color="red",label="$2E_{JC}^{(2)}$")
-# ax.plot(d/g,E_jcm[1][1]*200,linestyle="dashed",color="red")
-
-# ax.plot(d/g,E[0][0]*100,color="black",label='$E^{(0)}$')
-# ax.plot(d/g,E[1][0]*100,color="green",label='$E_1^{(1)}$')
-# ax.plot(d/g,E[1][1]*100,color="green",label='$E_2^{(1)}$')
-# ax.plot(d/g,E[1][2]*100,color="lime",label='$E_3^{(1)}$')
-
-# ax.plot(d/g,E[2][0]*100,color="red",label='$E_1^{(2)}$')
-# ax.plot(d/g,E[2][1]*100,color="orange",label='$E_2^{(2)}$')
-# ax.plot(d/g,E[2][2]*100,color="yellow",label='$E_3^{(2)}$')
-# ax.plot(d/g,E[2][3]*100,color="grey",label='$E_4^{(2)}$')
-# ax.set_xlim(-10,10)
-# ax.set_xlabel("$\Delta/g$")
-# ax.set_ylabel("Energia")
-# ax.legend(loc="upper right")
-# ax.grid()
-# plt.show()
-
+grafico2dchi_dlist(0,0)
