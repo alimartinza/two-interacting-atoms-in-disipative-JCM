@@ -17,32 +17,41 @@
 \contentsline {figure}{\numberline {3.11}{\ignorespaces Diferencia de fase geométrica acumulada en función del detunning átomo-cavidad $\Delta $, para $\chi =g$ y para 3 medios distintos, cuyas tasas de perdida de fotones son $\gamma /g=0.01g,0.1g,0.25g$, asignadas a los colores violeta oscuro, morado y amarillo respectivamente. Se observa como la condición de robustez se alcanza para $\Delta /g=\chi /g=1$. }}{28}{figure.caption.18}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Relación entre energía y detunning para los diferentes niveles de energía del problema. Las lineas solidas muestran la energía de los estados del JC doble con N=0 (negro, solido), N=1 (verde oscuro y lima, solido) y N=2 (rojo, naranja, amarillo y gris; solido). Cambien se muestran los niveles de energía del JC de un átomo para N=1 (negro; rayado) y N=2 (rojo; rayado). Obsérvese que las energías del JC de un átomo están multiplicadas por 2.}}{35}{figure.caption.20}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema del problema de estudio. Se nombran a las partes para referenciarlas fácilmente. Los átomos los llamamos A y B, donde el átomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos átomos son de dos niveles, y en principio son idénticos e indistinguibles, pero se le agrega un apantallamiento artificial. }}{37}{figure.caption.21}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Esquema del problema de estudio. Se nombran a las partes para referenciarlas fácilmente. Los átomos los llamamos A y B, donde el átomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos átomos son de dos niveles, y en principio son idénticos e indistinguibles, pero se le agrega un apantallamiento artificial.}}{37}{figure.caption.21}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces }}{38}{figure.caption.22}%
 \contentsline {figure}{\numberline {4.4}{\ignorespaces }}{39}{figure.caption.23}%
 \contentsline {figure}{\numberline {4.5}{\ignorespaces \textcolor {red}{labels, ticks y legens chiquitos. unificar colores}Panel (a):Dinámica poblacional para el caso resonante $\Delta =0$ con el estado inicial entrelazado $\ket {\psi _0}=(\ket {eg0} + \ket {ge0})/\sqrt {2}$. Panel (b):Entropía de von Neuman del sistema total (negro con puntos), y de diferentes subsistemas. En rojo se muestra la entropía del sistema habiendo trazado parcialmente sobre la cavidad, y en azul habiendo trazado parcialmente sobre el átomo B.}}{40}{figure.caption.24}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Concurrencia en el caso resonante para estado inicial $\ket {eg0}+\ket {ge0}$ }}{42}{figure.caption.25}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Concurrencia en el caso resonante para estado inicial $\ket {eg0}+\ket {ge0}$}}{42}{figure.caption.25}%
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Dinámica poblacional para la condición inicial $\ket {\psi _0}=\ket {eg0}$, para los parámetros $\Delta =0$, $J=0$ y $k=0.1g$. Las lineas solidas se corresponden con las poblaciones de la matriz densidad total del sistema; en azul la probabilidad de encontrar al estado en el estado $\ket {gg1}$, en verde en $\ket {eg0}$, en rojo $\ket {ge0}$, y en negro $\ket {gg0}$. Las lineas rayadas son las coherencias entre estas poblaciones, la violeta entre $\ket {gg1}$ y $\ket {ge0}$, la celeste entre $\ket {eg0}$ y $\ket {gg1}$ y la amarilla entre $\ket {eg0}$ y $\ket {gg1}$. }}{43}{figure.caption.26}%
 \contentsline {figure}{\numberline {4.8}{\ignorespaces Dinámica poblacional para la condición inicial $\ket {\psi _0}=\ket {eg0+ge0}$, para los parámetros $\Delta =0$, $J=0$ y $k=0.1g$. Las coherencias y poblaciones tienen los mismos colores que la figura anterior \ref {fig4:k eg0 abc} }}{43}{figure.caption.27}%
-\contentsline {figure}{\numberline {4.9}{\ignorespaces \textcolor {red}{rehacer por labels chiquitos}Dinámica de entrelazamiento para $\Delta =0$, $J=0$ y $k=0.1g$}}{44}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Dinámica de entrelazamiento para $\Delta =0$, $J=0$ y $k=0.1g$}}{44}{figure.caption.28}%
 \contentsline {figure}{\numberline {4.10}{\ignorespaces $\Delta =0$, $J=0.5g$ y $k=0$}}{44}{figure.caption.29}%
 \contentsline {figure}{\numberline {4.11}{\ignorespaces Dinámica de poblaciones para $x=g$}}{45}{figure.caption.30}%
 \contentsline {figure}{\numberline {4.12}{\ignorespaces Dinámica de entrelazamiento para $x=g$}}{46}{figure.caption.31}%
 \contentsline {figure}{\numberline {4.13}{\ignorespaces Dinámica de entrelazamiento para $x=g$}}{46}{figure.caption.32}%
-\contentsline {figure}{\numberline {4.14}{\ignorespaces Dependencia de las poblaciones con el régimen de acoplamiento, para $\Delta =J=\chi =0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}}{48}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Dependencia de las poblaciones con el régimen de acoplamiento, para $\Delta =J=\chi =0$ y $k=0.5g$, y para dos condiciones iniciales diferentes.}}{47}{figure.caption.33}%
 \contentsline {figure}{\numberline {4.15}{\ignorespaces Frecuencias de Rabi en función del detunning $\Delta $ para diferentes valores de $\chi $, y $|k-J|$, donde las frecuencias de Rabi son $\Omega ^{(2)}_{ij}=E^{(2)}_{j}-E^{(2)}_{i}$}}{49}{figure.caption.34}%
 \contentsline {figure}{\numberline {4.16}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{51}{figure.caption.36}%
 \contentsline {figure}{\numberline {4.17}{\ignorespaces Concurrencia en funcion del tiempo (eje x) y el detunning $\Delta $ (eje y) para diferentes parametros (los que no estan nombrados son cero).}}{52}{figure.caption.37}%
 \contentsline {figure}{\numberline {4.18}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{53}{figure.caption.39}%
 \contentsline {figure}{\numberline {4.19}{\ignorespaces \relax }}{54}{figure.caption.40}%
-\contentsline {figure}{\numberline {4.20}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{55}{figure.caption.43}%
-\contentsline {figure}{\numberline {4.21}{\ignorespaces \relax }}{56}{figure.caption.44}%
-\contentsline {figure}{\numberline {4.22}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{57}{figure.caption.46}%
-\contentsline {figure}{\numberline {4.23}{\ignorespaces \relax }}{58}{figure.caption.47}%
-\contentsline {figure}{\numberline {4.24}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{58}{figure.caption.50}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{56}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.21}{\ignorespaces Entrelazamiento $\ket {eg0+ge0}$}}{56}{figure.caption.44}%
+\contentsline {figure}{\numberline {4.22}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg1+ge1}$, en función del medio Kerr, y para $\Delta =k-J=0$.}}{57}{figure.caption.46}%
+\contentsline {figure}{\numberline {4.23}{\ignorespaces Dinamica de entrelazamiento para $\ket {eg1+ge1}$ en funcion del medio Kerr, para diferentes valores de $\Delta $ y $k-J$.}}{58}{figure.caption.47}%
+\contentsline {figure}{\numberline {4.24}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{59}{figure.caption.50}%
 \contentsline {figure}{\numberline {4.25}{\ignorespaces \relax }}{59}{figure.caption.51}%
-\contentsline {figure}{\numberline {4.26}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{59}{figure.caption.53}%
-\contentsline {figure}{\numberline {4.27}{\ignorespaces \relax }}{60}{figure.caption.54}%
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Dinámica de entrelazamiento para el estado inicial $\ket {eg0+ge0}$, en función del detunning, y para $\chi =k-J=0$.}}{60}{figure.caption.53}%
+\contentsline {figure}{\numberline {4.27}{\ignorespaces \relax }}{61}{figure.caption.54}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Dependencia con el acoplamiento con el entorno}}{64}{figure.caption.56}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Dependencia con el detunning}}{65}{figure.caption.57}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Robustez en funcion de $\Delta $ para la condicion inicial $\ket {eg0+ge0}$}}{66}{figure.caption.58}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Robustez en funcion de $\Delta $ para la condicion inicial $\ket {eg0+ge0}$}}{66}{figure.caption.59}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Dependencia con el medio Kerr}}{67}{figure.caption.60}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Dependencia con el medio Kerr con $\Delta =0.5g$}}{67}{figure.caption.61}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Robustez en funcion de $\chi $ para la condicion inicial $\ket {eg0+ge0}$}}{68}{figure.caption.62}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Robustez en funcion de $\chi $ para la condicion inicial $\ket {eg1+ge1}$}}{68}{figure.caption.63}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Dependencia con la interaccion entre los atomos}}{69}{figure.caption.64}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

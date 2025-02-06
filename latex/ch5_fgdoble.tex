@@ -1,5 +1,5 @@
 \chapter{Fase geometrica en JCM generalizado}
-\label{ch:fgdoble}
+\label{ch5:fgdoble}
 
 %CAMBIAR ESTO PARA PERSONALIZARLO A MI GUSTO
 \pagestyle{fancy}
@@ -12,8 +12,196 @@
 MOSTRAR EXPRESION ANALITICA PERO QUE NO SIRVE DE NADA PORQUE DEPENDE DEL ARGUMENTO
 \section{FG disipativa}
 VER SI PUEDO PONER LAS ECUACIONES DIFERENCIALES DE LOS ELEMENTOS DE MATRIZ, Y PONER LA SOLUCION FORMAL DE AUTOVECTORES Y AUTOVALORES DE 3X3, PARA SACAR UNA EXPRESION FORMAL DE LA FG EN TERMINOS DE LOS ELEMENTOS DE matriz
+Al igual que en la seccion \ref{sec3:jcm disipativo}, se estudia la dependencia de la fase geometrica en los distintos parametros del problema. Se estudian los efectos en cada caso, y se buscan condiciones de robustez. Nuevamente, se estudiaran las condiciones iniciales $\ket{eg0+ge0}$, $\ket{eg1+ge1}$ y $\ket{3ero}$, con el objetivo de recuperar comportamientos similares al JCM de 1 atomo para el primer caso, y comparar estos con la segunda condicion inicial. \textcolor{red}{$\ket{3ero}$ ???}.
 \subsection{Dependencia con el regimen de acoplamiento}
+En la figura \ref{fig5:dependencia acoplamiento} se observa la fase geometrica acumulada para diferentes valores del acoplamiento con el entorno $\gamma=0, 0.01g,0.1g,0.5g,g$, donde cada valor se corresponde con una curva mostrada, en orden ascendente en los colores, es decir, $\gamma=0$ se corresponde con el azul oscuro, y $\gamma=g$ se corresponde con el color mas claro, el naranja. Vemos como el comportamiento para el primer caso (\ref{fig5:dependencia acoplamiento eg0}) es identico al caso del JCM de 1 atomo, donde aumentar la disipacion hace que los escalones se suavizen, y dejen de acumular fase mas rapidamente. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig5:dependencia acoplamiento eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png}
+        \caption{$\ket{eg1+ge1}$}
+        \label{fig5:dependencia acoplamiento eg1}
+    \end{subfigure}
+    \caption{Dependencia con el acoplamiento con el entorno}
+    \label{fig5:dependencia acoplamiento}
+\end{figure}
+En el caso de la condicion inicial correspondiente a el subespacio de $N=2$, se observa un nuevo comportamiento, y es un \textit{rebote}. Al aumentar lo suficiente el acoplamiento con el entorno, la acumulacion de fase geometrica hace un salto en la direccion contraria a la que lleva normalmente, y luego se queda en un mismo valor. Recordemos que como se vio anteriormente, los saltos que hacen aparecer los escalones, se podian interpretar en el caso de 1 atomo utilizando la esfera de Bloch; estos saltos ocurren cuando la trayectoria llega al otro lado de la esfera de Bloch, y al llegar al lado opuesto (digamos $\phi=\pi$), justo al superar este punto, el camino mas corto para cerrar el ciclo segun la regla de la geodesica es recorrer la esfera por el otro lado, dando asi un salto de $\pi$ en el caso resonante. Esta interpretacion en el caso de un espacio de Hilbert mas extenso no es tan directa, pero se puede pensar en analogia en una esfera de mayor dimension, en donde entonces, el rebote seria una situacion similar a la descrita anteriormente, pero en otro hiperplano de la hiperesfera donde ocurre la trayectoria del estado. Mas alla de esto, el comportamiento es el esperado, e incluso vemos que ambos casos acumulan una fase geometrica muy similar en terminos de su valor absoluto. No parece haber diferencias significativas en la influencia que tiene el entorno sobre estos dos estados.
 \subsection{Dependencia con el detunning}
+delta list=(0.00001*g,0.1*g,0.500001*g,1.00001*g,1.500001*g,2.5*g,5*g)
+
+Para estudiar el efecto del detunning sobre la fase geometrica, se dejan fijos los otros parametros del problema y se varia la diferencia entre las frecuencias de los atomos y la cavidad. Como el regimen de acoplamiento fuerte es el que nos interesa, se elije un acoplamiento con el entorno $\gamma=0.1g$ y $p=0.005g$, y en un principio los demas parametros en cero $\chi=k-J=0$. En la figura \ref{fig5:dependencia detunning} se muestran la fase acumulada para diferentes valores del detunning $\Delta$ para las dos condiciones iniciales elegidas. En \ref{fig5:dependencia detunning eg0} se observa el mismo comportamiento que en el caso de 1 atomo, el detunning hace que las escalones sean mas suaves y el salto menor, haciendo que en conjunto el sistema acumule poca fase geometrica. Si asociamos la fase geometrica al camino que recorre el estado en el espacio de parametros, es evidente que a mayor detunning, la fase acumulada sera menor, ya que como se menciono en reiteradas ocaciones, al aumentar el detunning las oscilaciones entre los estados son muy pequeñas, y por lo tanto la probabilidad esta concentrada en la condicion inicial. Consecuentemente, en el espacio de parametros, la curva se mantiene cerca del origen y por lo tanto la fase acumulada es menor. En el caso de la condicion inicial en el subespacio de $N=2$, vemos que si el detunning es muy bajo, entonces el efecto es similar al anterior y la fase acumulada tiene una forma similar y tambien un valor similar. Pero cuando aproximadamente en el rango de  $1g \leq \Delta \leq 5g$, vemos que hay una gran diferencia. La fase acumulada es mas erratica y presenta saltos y \textit{rebotes}, y pero al ir aumentando el detunning, estos parecen disminuir y converger al comportamiento esperado para un detunning muy grande: que la fase acumulada sea poca.
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg0+/detunning todo 0.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig5:dependencia detunning eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg1+/detunning todo 0.png}
+        \caption{$\ket{eg1+ge1}$}
+        \label{fig5:dependencia detunning eg1}
+    \end{subfigure}
+    \caption{Dependencia con el detunning}
+    \label{fig5:dependencia detunning}
+\end{figure}
+Esto se debe a que entre estos valores del detunning, las poblaciones comienzan a presentar batidos. Las probabilidades de los estados $\ket{ee0}$ y $\ket{gg2}$ comienzan a aumentar y son comparables a la probabilidad del estado inicial. Esto hace que en el espacio de estados, las curvas sean complicadas y tengan trayectorias largas, haciendo que en algunos casos el salto sea positivo, y en otros negativo. Para valores de detunning bajos, el sistema principalmente se centra en el estado $\ket{eg1+ge1}$, y para detunnings altos tambien. Es en este rango intermedio, donde las amplitudes de los 3 estados sin similares y oscilan de manera erratica, presentando batidos, y por eso es en este rango que la fase geometrica acumulada es impredecible. 
+No se encontro una manera esquematica y clara de representar esto en el espacio de parametros para poder entender intuitivamente el comportamiento, ya que la esfera de Bloch no es una herramienta que se pueda utilizar en esta situacion. 
+Para seguir el estudio, se presenta la diferencia entre la fase geometrica unitaria y la disipativa en funcion del detunning, para esto se realizan simulaciones para diferentes valores de $\Delta$ y se compara el valor de la fase geometrica luego de un tiempo fijo $t=3T$ para dos casos, el primero presentando perdidas y el segundo sin perdidas. Luego se realiza la resta de ambas cantidades y se obtiene el grafico \ref{fig5:robustez detunning eg0}.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png}
+        \caption{$\chi=0$}
+        \label{fig5:robustez detunning 1 eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png}
+        \caption{$\chi=5g$}
+        \label{fig5:robustez detunning 2 eg0}
+    \end{subfigure}
+    \vfill
+
+    \caption{Robustez en funcion de $\Delta$ para la condicion inicial $\ket{eg0+ge0}$}
+    \label{fig5:robustez detunning eg0}
+\end{figure}
+
+En este se muestran 3 curvas diferentes correspondientes a 3 valores diferentes del acoplamiento con el entorno, respectivamente caracterizados por $\gamma=0.01g,0.1g$ y $0.25g$, y la condicion inicial $\ket{eg0+ge0}$. En primer lugar, se ve que las 3 curvas pasan por el origen, lo que nos dice que la diferencia entre la fase geometrica en ambos casos es 0, que es lo que llamamos condicion de robustez, ya que el entorno no tiene efecto sobre la fase geometrica y esta se mantiene robusta ante los efectos del entorno. En el panel \ref{fig5:robustez detunning 1 eg0}, correspondiente a $\chi=k-J=0$, la condicion de robustez se da para $\Delta=0$, como era de esperarse ya que esta es la misma que para el caso de 1 atomo. De la misma manera, al observar el caso de $\chi=5g$ en la figura \ref{fig5:robustez detunning 2 eg0}, vemos que esta condicion se da para $\Delta=\chi=5g$, que tambien es lo que esperamos. No hay mayores sorpresas. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png}
+        \caption{$\chi=0$}
+        \label{fig5:robustez detunning 1 eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png}
+        \caption{$\chi=5g$}
+        \label{fig5:robustez detunning 2 eg0}
+    \end{subfigure}
+    \vfill
+
+    \caption{Robustez en funcion de $\Delta$ para la condicion inicial $\ket{eg0+ge0}$}
+    \label{fig5:robustez detunning eg0}
+\end{figure}
+
 \subsection{Dependencia con el medio Kerr}
+chi list=(0.0001*g,0.1*g,0.5*g,g,2*g,5*g)
+
+La dependencia en el medio Kerr es interesante, ya que en el caso de 1 atomo se observo que el efecto del medio sobre la fase es analoga al detunning, y en el caso de dos atomos, se observa en la figura \ref{fig5:dependencia kerr eg0} la condicion inicial $\ket{eg0+ge0}$ que esto sigue siendo cierto para el subespacio de $N=1$. Pero en el caso de la figura \ref{fig5:dependencia kerr eg1} se muestra que el efecto sobre la condicion inicial $\ket{eg1+ge1}$, en comparacion con \ref{fig5:dependencia detunning eg1}, muestra diferencias en el regimen intermedio que se habia definido aproximadamente para valores entre $1g \leq \chi \leq 5g$. Si bien la forma no es igual, es notable que el rango que se definio como \textit{intermedio} es el mismo. Entonces, podemos decir que si bien para $N=2$ el medio Kerr no es simplemente un corrimiento en el detunning, el comportamiento es similar. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg0+/kerr todo 0.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig5:dependencia kerr eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg1+/kerr todo 0.png}
+        \caption{$\ket{eg1+ge1}$}
+        \label{fig5:dependencia kerr eg1}
+    \end{subfigure}
+    \caption{Dependencia con el medio Kerr}
+    \label{fig5:dependencia kerr}
+\end{figure}
+
+La pregunta que surge de todas formas es, que sucede si realizamos un corrimiento en el detunning. En el caso de 1 atomo se habia observado como la condicion de robustez se cumplia cuando $\Delta=\chi(2n-1)$, y la dependencia de la fase geometrica parecia no cambiar, solo presentaba un corrimiento. En este caso sera igual?
+En la figura \ref{fig5:dependencia kerr 2 eg0} se observa como en el primer caso, aumentar el detunning hace que las primeras curvas, que representan valores de $\chi=0$ y $\chi=0.1g$ (en azul oscruo y violeta oscuro respectivamente), acumulan fase negativa y los saltos son suaves. Ahora, la curva de $\chi=\Delta=0.5g$ es igual a la de $\chi=\Delta=0$, y a partir de esta, el comportamiento es el mismo que antes. Pero para el caso de $N=2$, vemos como esto no es asi. Primero, los casos de $\chi=0,0.5g$ ahora tienen saltos mas abruptos, y hay un rebote. Por otro lado, el caso robusto ya no se observa para $\chi=0.5g$, y en el rango intermedio, las oscilaciones de la fase parecen tener mas de una componente de frecuencia. Esto se observa claramente en la curva roja, donde se ve como hay dos saltos diferentes; uno es mas pronunciado seguido de otro mas pequeño. Esto nos indica que las condiciones \textcolor{red}{4.18/4.19} que se encontraron haciendo analogias con el caso de 1 atomo, no representan exactamente el caso de robustez.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg0+/ker d=0.5g.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig5:dependencia kerr 2 eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg1+/kerr d=0.5g.png}
+        \caption{$\ket{eg1+ge1}$}
+        \label{fig5:dependencia kerr 2 eg1}
+    \end{subfigure}
+    \caption{Dependencia con el medio Kerr con $\Delta=0.5g$}
+    \label{fig5:dependencia kerr 2}
+\end{figure}
+
+Para confirmar esto, se realiza un grafico de diferencias entre la fase geometrica unitaria y la disipativa en funcion del parametro del medio. En la figura \ref{fig5:robustez kerr eg0} se muesra la diferencia $\delta\phi=\phi_d-\phi_u$ para la condicion inicial $\ket{eg0+ge0}$. Se ve como la condicion de robustez en este caso es igual que para el modelo de 1 atomo, donde la condicion se da para $\Delta=\chi$. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png}
+        \caption{$\Delta=0$}
+        \label{fig5:robustez kerr 1 eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png}
+        \caption{$\Delta=5g$}
+        \label{fig5:robustez kerr 2 eg0}
+    \end{subfigure}
+    \caption{Robustez en funcion de $\chi$ para la condicion inicial $\ket{eg0+ge0}$}
+    \label{fig5:robustez kerr eg0}
+\end{figure}
+
+A diferencia del caso de $N=1$, si observamos la diferencia para el estado inicial $\ket{eg1+ge1}$ representada en la figura \ref{fig5:robustez kerr eg1}, entonces se ve como ahora no se cumple la analogia, y ademas hay minimos y maximos locales que antes no habia. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png}
+        \caption{$\Delta=0$}
+        \label{fig5:robustez kerr 1 eg1}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png}
+        \caption{$\Delta=5g$}
+        \label{fig5:robustez kerr 2 eg1}
+    \end{subfigure}
+    \caption{Robustez en funcion de $\chi$ para la condicion inicial $\ket{eg1+ge1}$}
+    \label{fig5:robustez kerr eg1}
+\end{figure}
+
+Lo primero que hay que aclarar, es que hay sitios en donde no hay puntos. En estos casos lo que sucede es que el medio, como es de comun conocimiento, introduce un corrimiento en las frecuencias, consecuentemente, hay un pequeño cambio entre la fase unitaria y la geometrica. En principio, esto no es un problema, ya que lo unico que hace es retrasar un poco el escalon. Pero en combinacion con la dinamica complicada del sistema, lo que ocurre en casos muy puntuales, es que la fase unitaria y la disipativa hacen un escalon en direcciones contrarias y esto hace que la diferencia entre ambas haga un salto discontinuo (o muy abrupto). En la figura \ref{fig5:robustez kerr 1 eg1} cerca de los valores $\chi/g=\pm 1$ se observan la falta de puntos, estos estan mas arriba por el salto que se menciono. Es tambien interesante, que no es solo para un caso aislado, sino que es en un rango de valores donde se observa este comporamiento, que luego se normaliza. 
+En la figura \ref{fig5:robustez kerr 2 eg1} se muestra el caso en donde se aumento el detunning hasta $\Delta=5g$. Se observan maximos y minimos locales en valores que no se pudieron predecir. Las dos cosas interesantes que se observaron son que tambien se encontraron regiones en donde se encuentran saltos en la diferencia por la misma razon que en el caso anterior, y por otro lado, y mas interesante aun, es que ahora la condicion de robustez parece estar cercana a $\chi=2.5g$; si se acerca y se observa con detalle, se encuentra que en realidad el cero se encuentra en $\chi\sim 2.45g$ y varia suavemente con cada valor de $\gamma$. Esto es muy interesante, ya que el efecto que tiene el entorno tambien se refleja en esta condicion.
+
 \subsection{Dependencia con la interaccion entre atomos}
+k list=(0,0.1*g,0.5*g,g,2.5*g,5*g)
+
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg0+/interaccion todo 0.png}
+        \caption{$\ket{eg0+ge0}$}
+        \label{fig5:dependencia interaccion eg0}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.49\textwidth}
+        \includegraphics[width=\textwidth]{figuras/ch5/dependencia/eg1+/interaccion todo 0.png}
+        \caption{$\ket{eg1+ge1}$}
+        \label{fig5:dependencia interaccion eg1}
+    \end{subfigure}
+    \caption{Dependencia con la interaccion entre los atomos}
+    \label{fig5:dependencia interaccion}
+\end{figure}
 \subsection{Robustez}
+Finalmente, por completitud, se explorara mas en detalle las condiciones de robustez en funcion del detunning. Esto es importante ya que este es en general el parametro de control al que se tiene acceso en los experimentos, en general, cambiando la frecuencia de la cavidad.
+
+
+

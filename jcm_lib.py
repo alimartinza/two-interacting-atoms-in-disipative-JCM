@@ -1887,6 +1887,7 @@ def cementerio():
         ani.save(script_path+"\\"+"gifs"+"\\"+"animation chi ; "+saveword+";"+ci+" "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1]+".gif", writer='pillow')
 
     def anim_univsdis(title:str,data_uni:list,data_dis:list,param:list,param_name:str,t_final:int,steps:int,psi0Name:str,ax_lims:list):
+        g=0.001
         t=np.linspace(0,t_final,steps)
         mpl.use('TkAgg')
         # Create the figure and axes
@@ -2223,7 +2224,7 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0
 
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
     sol_u=mesolve(H,psi0,t,c_ops=[])
-    fg_u,arg,eigenvals_t_u = fases(sol_u)
+    # fg_u,arg,eigenvals_t_u = fases(sol_u)
 
 
     if return_all==False:
@@ -2232,8 +2233,11 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0
             atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
         concu_u=concurrence(atoms_states_u)
 
-        return fg_u,concu_u
+        # return fg_u,concu_u
+        return concu_u
     else:
+        fg_u,arg,eigenvals_t_u = fases(sol_u)
+
         data_u=pd.DataFrame()
         data_u['t']=t
         #Hacemos un array de las coherencias y las completamos con el for
@@ -2335,7 +2339,7 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
     sol_d=mesolve(H,psi0,t,c_ops=l_ops)
-    fg_d,arg,eigenvals_t_d = fases(sol_d)
+    # fg_d,arg,eigenvals_t_d = fases(sol_d)
 
 
     if return_all==False:
@@ -2343,8 +2347,11 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
         for j in range(len(sol_d.states)):
             atoms_states_d[j]=sol_d.states[j].ptrace([0,1])
         concu_d=concurrence(atoms_states_d)
-        return fg_d,concu_d
+        # return fg_d,concu_d
+        return concu_d
     else:
+        fg_d,arg,eigenvals_t_d = fases(sol_d)
+
         data_d=pd.DataFrame()
         data_d['t']=t
         #Hacemos un array de las coherencias y las completamos con el for

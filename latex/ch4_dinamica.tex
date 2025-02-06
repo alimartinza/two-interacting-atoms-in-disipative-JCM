@@ -110,9 +110,9 @@ Con esto podemos escribir los autovectores:
 Obviamente no nos olvidemos del estado $\ket{\Phi_4^{(n)}}$, que tambi\'en es autoestado, con autovalor $E_4^{(n)}=\chi(n-1)^2-J-2k$.
 Para el subespacio de $N=0$ solo tenemos un vector $\ket{\Phi_1^{(0)}}=\ket{gg0}$ y su autovalor es $E_1^{(0)}=-\Delta+J$.
 Para $N=1$ tenemos 3 vectores en el subespacio, y las autoenergías son
-\begin{align}
-    E_{1,2}^{(1)} &=\frac{\chi -\Delta}{2} +k \pm \sqrt{2g^2+(k-J+\frac{\Delta -\chi}{2} )^2} \\
-    E_3^{(1)} & = -2k-J 
+\begin{align}\label{ec4:energias n1}
+    E_{1,2}^{(1)} &=\frac{\chi -\Delta}{2} +k \pm \sqrt{2g^2+(k-J+\frac{\Delta -\chi}{2} )^2}\\
+    E_3^{(1)} & = -2k-J      
 \end{align}
 y sus autovectores
 \begin{align}
@@ -153,15 +153,15 @@ Una vez estudiados los niveles de energía y comparados con el caso de 1 átomo,
 Para comenzar, vamos a intentar de recuperar el caso de un átomo, asimetrizando el acoplamiento uno de los dos átomos que tenemos en la cavidad, y haciendo tender este a cero, es decir, vamos a trabajar con $k=J=0$ y vamos a agregar un parámetro adimensional $\alpha$ que solamente actúa sobre el átomo 2, y sirve de apantallamiento. Este parámetro $\alpha$ acompañara a las constantes de acoplamiento, por ejemplo el acoplamiento entre el átomo y la cavidad $g\rightarrow g\alpha$, tal que si $\alpha \rightarrow 0$ entonces el átomo quedara desacoplado de la cavidad. 
 
 \section{Dinámica con apantallamiento}
-
+\label{sec4:dinamica apantallamiento}
 Lo primero que se tiene que hacer es recuperar los resultados anteriores. Para aclarar, en la figura \ref{fig4:diagrama esquematico} se muestra un esquema de como es el problema que se esta trabajando, con los nombres que se le darán a las partes del sistema. Llamaremos átomo B al que esta apantallado mediante el parámetro adimensional $\alpha$, el indice A se referirá al otro átomo, y C a la cavidad. Entonces, para recuperar los resultados anteriores, se propone que $\alpha=0$ y la interacción entre los átomos $k=J=0$. De esta manera, se elige en analogía con el caso de 1 átomo, como estado inicial cualquier estado donde el átomo A sea excitado, y la cavidad C no tenga ningún fotón; por lo tanto se elige el estado inicial mas sencillo posible que cumple estas condiciones $\ket{\psi_0}=\ket{eg0}$. Si bien este apantallamiento no tiene un significado físico, y experimentalmente es imposible lograr estas condiciones, realizar este estudio sirve para entender cualitativamente los efectos de cada parámetro del problema, y también entender que el entrelazamiento entre los dos átomos, lleva a efectos impredecibles. La complejización del problema de 1 átomo al de 2 átomos es muy grande, y por eso es necesario ir de a poco.
 \begin{figure}[H]
     \begin{minipage}[c]{0.67\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/diagrama esquematico.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{Esquema del problema de estudio. Se nombran a las partes para referenciarlas fácilmente. Los átomos los llamamos A y B, donde el átomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos átomos son de dos niveles, y en principio son idénticos e indistinguibles, pero se le agrega un apantallamiento artificial.
-         } \label{fig4:diagrama esquematico}
+    \caption{Esquema del problema de estudio. Se nombran a las partes para referenciarlas fácilmente. Los átomos los llamamos A y B, donde el átomo B es el que sufre el apantallamiento que utilizaremos para recuperar los resultados anteriores. La cavidad la llamaremos C, esta puede contener una cantidad arbitraria de excitaciones, pero nos concentraremos principalmente en 0,1 y 2 excitaciones. Ambos átomos son de dos niveles, y en principio son idénticos e indistinguibles, pero se le agrega un apantallamiento artificial.}
+    \label{fig4:diagrama esquematico}
   \end{minipage}
 \end{figure}
 Utilizando esta condición inicial se realiza una simulación numérica y se observan las poblaciones, y se espera recuperar la misma dinámica que en el caso de 1 átomo, ya que el átomo B no interactúa con ninguna de las otras partes del sistema A y C. Para poder representar el estado del sistema sobre una esfera de Bloch, se realiza una traza parcial sobre el átomo B, y así se obtiene la figura \ref{fig4:bloch delta}, donde se muestran 3 trayectorias correspondientes a diferentes valores del detunning, la linea azul es el caso resonante $\Delta=0$, y las trayectorias morada y naranja se corresponde con $\Delta=0.5g$ y $\Delta=2g$ respectivamente.
@@ -234,8 +234,8 @@ donde los $\lambda_i$ son las raíces de los autovalores, en orden decreciente, 
         \includegraphics[width=\textwidth]{figuras/ch4/d eg0+ concu d=0.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.3\textwidth}
-    \caption{Concurrencia en el caso resonante para estado inicial $\ket{eg0}+\ket{ge0}$
-         } \label{fig4:concu eg0 sim}
+    \caption{Concurrencia en el caso resonante para estado inicial $\ket{eg0}+\ket{ge0}$} 
+    \label{fig4:concu eg0 sim}
   \end{minipage}
 \end{figure}
 En la figura \ref{fig4:concu eg0 sim} se observa la concurrencia entre los átomos AB, para el caso estudiado anteriormente. Como era de esperar, a $t=0$ el estado es máximamente entrelazado, y luego el entrelazamiento se pierde a $t=T/2$, donde el átomo B esta entrelazada con la cavidad. 
@@ -263,7 +263,7 @@ Lo que sucede es que la excitación esta inicialmente en el átomo A, y como sie
          } \label{fig4:k eg0 sim abc}
   \end{minipage}
 \end{figure}
-La dinámica en este caso presenta oscilaciones en la población de $\ket{ge0}$ con un periodo dos veces mas grande. Esto se debe a una \"pelea\" entre los estados $\ket{eg0}$ y $\ket{ge0}$, ya que tienen las excitaciones en diferentes átomos. Inicialmente, como los estados están entrelazados, no esta bien definido en cual de los dos átomos esta la excitación, entonces la interacción $k$ se anula y vemos que tiene pendiente 0. Entonces la dinámica inicial es igual que para $k=0$ y comienza a oscilar. Apenas baja la curva verde, la probabilidad de encontrar la excitación en el átomo B es mayor que la del átomo A, entonces lo que sucede es que el átomo B comienza a perder esta excitación y se la da lentamente al átomo A, y por lo tanto la oscilación del estado $\ket{eg0}$ no llega a tener amplitud nula en $t/T=0.5$. Luego, la evolución sigue su curso oscilante, y al llegar a $t=T$, vemos que la probabilidad de encontrar la excitación en el átomo A es mayor, y por lo tanto comienza a revertirse la situación, hasta completar el ciclo para $t=2T$. \textcolor{red}{no es exacto pq puse algo mal en el codigo, pero ahora esta corregido y da bien. tengo que cambiar estas imagenes.} 
+La dinámica en este caso presenta oscilaciones en la población de $\ket{ge0}$ con un periodo dos veces mas grande. Esto se debe a una \"pelea\" entre los estados $\ket{eg0}$ y $\ket{ge0}$, ya que tienen las excitaciones en diferentes átomos. Inicialmente, como los estados están entrelazados, no esta bien definido en cual de los dos átomos esta la excitación, entonces la interacción $k$ se anula y vemos que tiene pendiente 0. Entonces la dinámica inicial es igual que para $k=0$ y comienza a oscilar. Apenas baja la curva verde, la probabilidad de encontrar la excitación en el átomo B es mayor que la del átomo A, entonces lo que sucede es que el átomo B comienza a perder esta excitación y se la da lentamente al átomo A, y por lo tanto la oscilación del estado $\ket{eg0}$ no llega a tener amplitud nula en $t/T=0.5$. Luego, la evolución sigue su curso oscilante, y al llegar a $t=T$, vemos que la probabilidad de encontrar la excitación en el átomo A es mayor, y por lo tanto comienza a revertirse la situación, hasta completar el ciclo para $t=2T$. 
 
 El entrelazamiento entre los átomos se analiza utilizando la concurrencia, como se muestra en la figura \ref{fig4:concu k}, donde \ref{fig4:concu k eg0} muestra la condición inicial separable $\ket{eg0}$, y \ref{fig4:concu k eg0 sim} el entrelazamiento para la condición inicial entrelazada $\ket{eg0+ge0}$. 
 \begin{figure}[h]
@@ -279,7 +279,7 @@ El entrelazamiento entre los átomos se analiza utilizando la concurrencia, como
         \caption{$\ket{eg0+ge0}$}
         \label{fig4:concu k eg0 sim}
     \end{subfigure}
-    \caption{\textcolor{red}{rehacer por labels chiquitos}Dinámica de entrelazamiento para $\Delta=0$, $J=0$ y $k=0.1g$}
+    \caption{Dinámica de entrelazamiento para $\Delta=0$, $J=0$ y $k=0.1g$}
     \label{fig4:concu k}
 \end{figure}
 
@@ -316,7 +316,7 @@ Ahora vamos a ver $k=0$ y $J\neq 0$. En la figura \ref{fig4:j alpha0}, vemos que
 Vemos que la diferencia principal entre la interacción tipo Isign ($J\sigma_z^{(1)}\sigma_z^{(2)}$) y la dipolar ($k\sigma_+^{(1)}\sigma_-^{(2)}+\text{c.c.}$), es que el segundo parece entrelazar los átomos, ya que en el primer caso, el efecto es separar los niveles de energía, pero en el segundo no solo eso, sino que también pasa excitaciones de un atomo al otro. Si bien esto nos sirve para entender intuitivamente el efecto, el problema de este análisis es que estamos asumiendo cosas no físicas mediante el apantallamiento y la asimetría que imponemos entre los dos átomos. Esto, lleva a estos análisis que en realidad no son correctos, ya que si miramos el Hamiltoniano del sistema sin apantallamiento \ref{eq4:H}, donde usamos la base con estados simétricos y antisimetricos \ref{ec4:base}, el efecto de ambos parámetros debería ser el mismo, ya que solo aparecen en la diagonal principal. Si bien la interacción $J$ actúa sobre todos los estados, y el $k$ solamente solo sobre los $\ket{egn\pm gen}$, su principal función es separar las energías de los estados de la base.
 Entonces sera necesario retomar este análisis sin apantallamiento y con la base \ref{ec4:base}.
 \subsection{Medio Kerr}
-
+\label{sec4:medio kerr}
 Ahora nos concentramos en el efecto del medio Kerr. Para esto, apagamos las interacciones interatómicas $k=J=0$, y ahora se modifica el medio a través del parámetro $\chi$. 
 \begin{figure}[h]
     \centering
@@ -376,11 +376,11 @@ Vemos como se anula el efecto del medio, y la dinámica es la misma pero con un 
 Al complejizar el problema, comienzan a aparecer batidos, comportamiento que se atribuye a la modulación de dos procesos simultáneos. Por ejemplo, si observamos la evolución temporal con $\chi\neq0$ y $k\neq0$, entonces el primero disminuye la amplitud de oscilación de, los estados con mayor cantidad de fotones en la cavidad, que dentro del subespacio $N$ la jerarquía del medio sera favorecer a los estados $\ket{eg,N-1}$ y $\ket{ge,N-1}$ por sobre el $\ket{ggN}$. Por el contrario, se observo que en esta situación, el termino de interacción entre los átomos disminuye la amplitud del estado $\ket{ggN}$ como se vio en la sección anterior. Por lo tanto, si tenemos dos procesos que están en juego y sus efectos son similares, entonces es esperable que se observen oscilaciones moduladas. No vale la pena mostrar la dinámica de las poblaciones, porque no se pueden sacar conclusiones muy importantes, pero si podemos observar la trayectoria en la esfera de bloch, para dar una idea de la complejidad de la evolución.
 
 \section{Dinámica sin apantallamiento}
+\label{sec4:dinamica sin apantallamiento}
 
 Al sacar el apantallamiento, es necesario utilizar la base mencionada anteriormente \ref{ec4:base}, ya que los átomos son indistinguibles y esta base es mas apropiada. Ademas, el Hamiltoniano desacopla los estados antisimetricos, facilitando la solución. Por lo tanto, se procede a estudiar la dinámica sacando el apantallamiento. Lo que nos interesa estudiar es el entrelazamiento entre las diferentes partes del sistema, y su dependencia con los parámetros. 
 
 \subsection{Dinámica con disipación}
-
 Lo primero que hay que mirar es la dependencia de la dinámica con el régimen de acoplamiento, esperamos un comportamiento igual al del caso de un átomo \ref{sec3:regimen acoplamiento}. Recordemos que el régimen de acoplamiento fuerte (SC) es el caso en donde la interacción entre cavidad y átomos es mayor a la interacción entre sistema y entorno.
 \begin{figure}[h]
     \centering
@@ -427,6 +427,47 @@ Estas frecuencias se muestran en función del detunning $\Delta$ y para diferent
     \caption{Frecuencias de Rabi en función del detunning $\Delta$ para diferentes valores de $\chi$, y $|k-J|$, donde las frecuencias de Rabi son $\Omega^{(2)}_{ij}=E^{(2)}_{j}-E^{(2)}_{i}$}
     \label{fig4:frecuencias de rabi}
 \end{figure}
+
+% \begin{figure}
+%     \centering
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega12 k=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega23 k=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega31 k=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \vfill
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega12 x=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega23 x=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}{0.3\textwidth}
+%         \includegraphics[width=\textwidth]{figuras/ch4/omega31 x=0.png}
+%         \caption{}
+%         \label{fig4:rabi chi}
+%     \end{subfigure}
+%     \caption{Frecuencias de Rabi en función del detunning, para diferentes valores de $\chi/g\in[0,5]$ y $k-J=0.5g$. A la izquierda $\Omega_{12}$ y a la derecha $\Omega_{23}$ y $\Omega_{13}$}
+%     \label{}
+% \end{figure}
 En esta solo se muestra una de las dos ramas (se puede tener $\pm \Omega_{ij}$) por simplicidad. Lo que podemos concluir de esto es que la frecuencia $\Omega^(2)_{12}$ se comporta de manera similar a la frecuencia de Rabi del JC de 1 átomo, que es también igual a la $\Omega^(1)$; en ambos casos la diferencia de energía presenta un máximo que se desplaza lateralmente al aumentar el parámetro $\chi$, pero presenta una sutil diferencia ya que también el máximo aumenta en valor absoluto. También se observa en la figura \ref{fig4:rabi k}, a la izquierda, como depende esta frecuencia al aumentar $k-J$, y vemos que el máximo ya no se desplaza lateralmente, sino que solo aumenta en valor absoluto. Por otro lado, en los paneles derechos, se puede analizar que sucede con las frecuencias al aumentar $\chi$ (fig. \ref{fig4:rabi chi}) y $k-J$ (fig. \ref{fig4:rabi k}). Es interesante ver como al aumentar $\chi$, se comienza a observar un máximo y mínimo local para la frecuencia $\Omega^{(2)}_{23}$ (la superior). Similarmente, pero en la rama superior, se observa este mismo comportamiento al aumentar $k-J$.
 
 La dinámica para el caso de $N\geq2$ es muy complicada, ya que ahora se tienen 3 frecuencias diferentes, y predecir que sucede para cada combinación de parámetros y para cada condición inicial se hace muy complicado, por lo tanto, el análisis para estos casos no puede ser muy profundo. Lo que se puede distinguir es que cuando $\chi,k-J>g$, se comienzan a observar estos mínimos y máximos locales en las frecuencias, y se puede intentar de ver cual es el efecto que tiene esto en el entrelazamiento de los átomos, y también se puede observar si hay alguna relación entre los parámetros, por ejemplo como se encontró para el caso de 1 átomo (y para el subespacio de N=1) que hay una clara relación entre el detunning $\Delta$ y el medio $\chi$.
@@ -440,8 +481,10 @@ Lo primero que tenemos que analizar es los efectos de las interacciones entre lo
 \begin{itemize}
     \item $\ket{eg0+ge0}$ para seguir el paralelismo con el JCM de 1 átomo 
     \item $\ket{eg1+ge1}$ para comparar con el anterior y explorar el subespacio N=2
-    \item $\ket{ee0+gg2}$ para ver otra condición inicial con $N=2$ 
+    \item $\ket{ee0+gg2}$ para ver otra condición inicial con $N=2$ en donde los atomos NO estan entrelazados
 \end{itemize}
+
+Para poder comparar el efecto de las dependencias entre si, todos los graficos mostrados en el resto del capitulo estaran caracterizados por un acoplamiento con el entorno de $\gamma=0.25g$, y todos los tiempos estaran normalizados segun un periodo que llamaremos $T_0=2\pi/\Omega_0 \, | \Omega_0=\Omega^{(1)}(\Delta=0,\chi=0,k-J=0)$.
 \subsection{Dependencia con el detunning}
 \subsubsection{\underline{Condicion inicial $\ket{eg0+ge0}$}}
 \begin{figure}[h]
@@ -460,9 +503,9 @@ Lo primero que tenemos que analizar es los efectos de las interacciones entre lo
     \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg0+ge0}$, en función del detunning, y para $\chi=k-J=0$.}
     \label{fig4:concu detunning 0}
 \end{figure}
-En la figura \ref{fig4:concu detunning 0} se observa la evolución de la concurrencia para la condición inicial $\ket{eg0+ge0}$, cuyo entrelazamiento entre los átomos es máximo. El eje x es el tiempo, y el eje y es el detunning $\Delta/g$. En el panel \ref{fig4:concu detunning 0 uni} se observa el caso sin perdidas; lo primero que notamos es que la figura es simetrica sobre $\Delta=0$ (caso resonante), y en este caso las oscilaciones son de menor frecuencia pero de mayor amplitud. A medida que se aumenta el valor absoluto del detunning, entonces las oscilaciones son de mayor frecuencia y ademas de menor amplitud. Consecuentemente, al tomar la dinámica disipativa, en el panel \ref{fig4:concu detunning 0 dis}, se observa como las oscilaciones siguen estando, pero ahora su máximo disminuye con el tiempo. Esto es de esperarse, ya que la cavidad deja escapar fotones y el estado del sistema se hace mixto. Un estado mixto ya no es entrelazado, porque no hay coherencias, entonces se observa el deterioro del entrelazamiento a medida que el tiempo avanza. Hay otros dos comportamientos notables. Por un lado, se observa como el máximo del entrelazamiento decae mas lentamente para valores mas altos del detunning, esto se debe a la naturaleza da la dinámica poblacional; al aumentar el detunning, como se vio anteriormente, uno de los efectos principales es que las oscilaciones entre los estados tienen poca amplitud, y en este caso, esto implica que si bien el estado $\ket{gg1}$ tienen amplitudes no nula, principalmente la probabilidad esta concentrada en el estado inicial, que no sufre decoherencia por perdida de fotones, ya que no tiene fotones en la cavidad. Entonces, mientras mayor el detunning, menor la probabilidad de encontrar al sistema en el estado $\ket{gg1}$, y por lo tanto tiene pocas probabilidades de perder fotones. El otro efecto que es interesante y que aparece con frecuencia en este tipo de sistemas, es la muerte y reanimación súbita del entrelazamiento, que llamaremos SDE (Sudden Death Effect) y SBE (Sudden Birth Effect) por sus siglas en ingles. En el caso disipativo, hay marcadas zonas en negro, estas muestran como el entrelazamiento \textit{muere} durante un tiempo finito y revive luego. Este efecto es sorprendente, ya que uno espera que las coherencias, responsables en gran medida del entrelazamiento entre átomos, decaigan asintóticamente. Este efecto muestra que esto no es asi para algunos sitemas, y aun cuando las coherencias son distintas de cero, el entrelazamiento puede ser nulo durante un tiempo, y luego reaparecer subitamente. No se conoce bien la razon de este fenomeno, pero es observado en varios sistemas. 
+En la figura \ref{fig4:concu detunning 0} se observa la evolución de la concurrencia para la condición inicial $\ket{eg0+ge0}$, cuyo entrelazamiento entre los átomos es máximo. El eje x es el tiempo, y el eje y es el detunning $\Delta/g$. En el panel \ref{fig4:concu detunning 0 uni} se observa el caso sin perdidas; lo primero que notamos es que la figura es simetrica sobre $\Delta=0$ (caso resonante), y en este caso las oscilaciones son de menor frecuencia pero de mayor amplitud. A medida que se aumenta el valor absoluto del detunning, entonces las oscilaciones son de mayor frecuencia y ademas de menor amplitud. Consecuentemente, al tomar la dinámica disipativa, en el panel \ref{fig4:concu detunning 0 dis}, se observa como las oscilaciones siguen estando, pero ahora su máximo disminuye con el tiempo. Esto es de esperarse, ya que la cavidad deja escapar fotones y el estado del sistema se hace mixto. Un estado mixto ya no es entrelazado, porque no hay coherencias, entonces se observa el deterioro del entrelazamiento a medida que el tiempo avanza. Hay otros dos comportamientos notables. Por un lado, se observa como el máximo del entrelazamiento decae mas lentamente para valores mas altos del detunning, esto se debe a la naturaleza da la dinámica poblacional; al aumentar el detunning, como se vio anteriormente, uno de los efectos principales es que las oscilaciones entre los estados tienen poca amplitud, y en este caso, esto implica que si bien el estado $\ket{gg1}$ tienen amplitudes no nula, principalmente la probabilidad esta concentrada en el estado inicial, que no sufre decoherencia por perdida de fotones, ya que no tiene fotones en la cavidad. Entonces, mientras mayor el detunning, menor la probabilidad de encontrar al sistema en el estado $\ket{gg1}$, y por lo tanto tiene pocas probabilidades de perder fotones. El otro efecto que es interesante y que aparece con frecuencia en este tipo de sistemas, es la muerte y reanimación súbita del entrelazamiento, que llamaremos SDE (Sudden Death Effect) y SBE (Sudden Birth Effect) por sus siglas en ingles. En el caso disipativo, hay marcadas zonas en negro, estas muestran como el entrelazamiento \textit{muere} durante un tiempo finito y revive luego. Este efecto es sorprendente, ya que uno espera que las coherencias, responsables en gran medida del entrelazamiento entre átomos, decaigan asintóticamente. Este efecto muestra que esto no es asi para algunos sitemas, y aun cuando las coherencias son distintas de cero, el entrelazamiento puede ser nulo durante un tiempo, y luego reaparecer subitamente. La razon por la que aparece este fenomeno es que se esta tomando traza parcial sobre la cavidad, lo que hace que algunas coherencias desaparezcan. Aun asi, no se entiende bien el porque de este efecto.
 
-La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambia la forma de la figura \ref{fig4:concu detunning 0}. Es de esperar que no cambie, ya que el subespacio de $N=1$ se comporta de manera sencilla, y como se concluyo anteriormente, la dependencia en los parametros $\chi$ y $k-J$ parece ser unicamente un desplazamiento de las energias de los autoestados. En la figura \ref{fig4:concu detunning 0 params} se muestran nuevamente la dinamica de entrelazamiento en funcion del detunning, pero ahora cambiando alguno de los parametros:
+La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambia la forma de la figura \ref{fig4:concu detunning 0}. En la figura \ref{fig4:concu detunning 0 params} se muestran nuevamente la dinamica de entrelazamiento en funcion del detunning, pero ahora cambiando alguno de los parametros:
 
 \begin{figure}[h]
     \centering
@@ -492,13 +535,15 @@ La pregunta natural que sigue es si cambiar los parametros $\chi$ y $k-J$, cambi
     \caption{Concurrencia en funcion del tiempo (eje x) y el detunning $\Delta$ (eje y) para diferentes parametros (los que no estan nombrados son cero).}
     \label{fig4:concu detunning 0 params}
 \end{figure}
-En el panel \ref{fig4:concu detunning x1} y \ref{fig4:concu detunning x2} se muestran dos casos en donde se puso de manifiesto la no linealidad del medio, cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectivamente, ambos casos en presencia del entorno. Comparando con la figura \ref{fig4:concu detunning 0 dis}, vemos que la forma no cambia, solamente cambia la frecuencia, y cambia el eje de simetria. Es una buena suposicion que este eje sera el caso resonante, que en analogia con la seccion \ref{sec3:medio kerr} \textcolor{red}{chequear seccion que sea la de fg en robustez}, puede ser una posible condicion de robustez para la fase geometrica, que analizaremos mas tarde. Vemos como al aumentar $\chi$, el eje de simetria tambien aumenta en esa misma cantidad. En los paneles \ref{fig4:concu detunning k1} y \ref{fig4:concu detunning k2} se muestra el cambio al considerar acomplamiento entre los atomos, dados por una intensidad de $k-J=0.5g$ y $k-J=2.5g$ respectivamente. Nuevamente hay un desplazamiento y un cambio en la frecuencia, que se comportan igual que en el caso anterior, pero ahora el desplazamiento del eje de simetria es el doble que la intensidad de la interaccion. Esto no es tan sorprendente si se observa la expresion de la energia \ref{ec4:autoenergias} \textcolor{red}{ec 4.9}, donde los parametros $\chi$ y $\Delta$ aparecen con un factor $1/2$, mientras que $k-J$ no. 
+En el panel \ref{fig4:concu detunning x1} y \ref{fig4:concu detunning x2} se muestran dos casos en donde se puso de manifiesto la no linealidad del medio, cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectivamente, ambos casos en presencia del entorno. Comparando con la figura \ref{fig4:concu detunning 0 dis}, vemos que la forma cambia al aumentar mucho las no linealidades, y la figura ya no es simetrica. De todas formas, cerca del centro el comportamiento es similar, y por lo tanto podria esperarse que este eje sera el caso coherente, que en analogia con la seccion \ref{sec3:fg disipacion}, puede ser una posible condicion de robustez para la fase geometrica, que analizaremos mas tarde. Vemos como al aumentar $\chi$, el eje de simetria tambien se desplaza en esa misma cantidad. En los paneles \ref{fig4:concu detunning k1} y \ref{fig4:concu detunning k2} se muestra el cambio al considerar acomplamiento entre los atomos, dados por una intensidad de $k-J=0.5g$ y $k-J=2.5g$ respectivamente. Nuevamente hay un desplazamiento, que se comportan igual que en el caso anterior, pero ahora el desplazamiento del eje de simetria es el doble que la intensidad de la interaccion. Esto no es tan sorprendente si se observa la expresion de la energia \ref{ec4:energias n1} \textcolor{red}{ec 4.9}, donde los parametros $\chi$ y $\Delta$ aparecen con un factor $1/2$, mientras que $k-J$ no. 
 
-Basicamente, el subespacio de $N=1$ se comporta igual que el Jaynes-Cummings de 1 atomo, pero donde tenemos un estado \textit{inerte}, el estado $\ket{eg0-ge0}$ que no interactua con los otros dos. Esto nos puede servir para, usando como condicion inicial el estado $\ket{\psi_0}=\cos\theta\ket{eg0}+\sin\theta\ket{ge0}$ que es combinacion lineal de los estados $\ket{eg0\pm ge0}$, donde el estado simetrico evoluciona como siempre, y el antisimetrico no evoluciona, teniendo asi una manera de mantener el entrelazamiento siempre por arriba de un cierto valor, que depende del valor de $\theta$, aun en presencia de decoherencia, ya que el estado $\ket{eg0-ge0}$ es un estado que no sufre perdidas.
+La simetria de la figura se rompe en una direccion, y se ve como hay en ambos casos una franja donde el entrelazamiento parace mantenerse durante un periodo mas largo de tiempo. Ademas, se observa como en el panel \ref{fig4:concu detunning k2} que se corresponde con el caso $k-J=2.5g$, en la parte superior de la imagen se ve como el entrelazamiento persiste mayor tiempo que su contraparte de menor interaccion (panel \ref{fig4:concu detunning k1}) con $k-J=0.5g$.
+
+Basicamente, el subespacio de $N=1$ se comporta igual que el Jaynes-Cummings de 1 atomo, pero donde se tiene un estado \textit{inerte}, el estado $\ket{eg0-ge0}$ que no interactua con los otros dos. Esto puede servir para, usando como condicion inicial el estado $\ket{\psi_0}=\cos\theta\ket{eg0}+\sin\theta\ket{ge0}$ que es combinacion lineal de los estados $\ket{eg0\pm ge0}$, donde el estado simetrico evoluciona como siempre, y el antisimetrico no evoluciona, teniendo asi una manera de mantener el entrelazamiento siempre por arriba de un cierto valor, que depende del valor de $\theta$, aun en presencia de decoherencia, ya que el estado $\ket{eg0-ge0}$ es un estado que no sufre perdidas.
 
 \subsubsection{\underline{Condicion inicial $\ket{eg1+ge1}$}}
-Ahora se estudia la dinamica para el estado simetrico en el subespacio de $N=2$. Igual que en el caso anterior tenemos en la figura \ref{fig4:concu detunning 1} la evolucion unitaria a la izquierda, y la disipativa a la derecha. Vemos como en este subespacio hay mas estructura, y si bien sigue siendo simetrico con respecto al eje $\Delta=0$, ahora la forma es mas complicada, y ademas en el caso unitario tambien observamos regiones que presentan SDE, cosa que para $N=1$ no se observaba. Al igual que antes, al aumentar el detunning las oscilaciones son de mayor frecuencia y menor amplitud, conservando mejor el entrelazamiento. La razon es la misma: si bien ahora el estado $\ket{eg1+ge1}$ si puede perder fotones, al hacerlo cae al estado $\ket{eg0+ge0}$, que tiene el mismo entrelazamiento, y los otros dos estados del subespacio $\ket{gg2}$ decae al $\ket{gg1}$, y $\ket{ee0}$ no tiene fotones asi que no pierde excitaciones. Por lo tanto, en el caso de alta detunning, el comportamiento es similar al de anterior. Las oscilaciones no tienen mucha amplitud y por lo tanto la probabilidad esta concentrada casi toda en el estado $\ket{eg1+ge1}$, que al perder un foton decae al estado $\ket{eg0+ge0}$ cuyo entrelazamiento es el mismo.
-\begin{figure}[h]
+Ahora se estudia la dinamica para el estado simetrico en el subespacio de $N=2$. Igual que en el caso anterior se tiene en la figura \ref{fig4:concu detunning 1} la evolucion unitaria a la izquierda, y la disipativa a la derecha. Se observa como en este subespacio hay mas estructura, y si bien sigue siendo simetrico con respecto al eje $\Delta=0$, ahora la forma es mas complicada, y ademas en el caso unitario tambien observamos regiones que presentan SDE, cosa que para $N=1$ no se observaba. Al igual que antes, al aumentar el detunning las oscilaciones son de mayor frecuencia y menor amplitud, conservando mejor el entrelazamiento. La razon es la misma: si bien ahora el estado $\ket{eg1+ge1}$ si puede perder fotones, al hacerlo cae al estado $\ket{eg0+ge0}$, que tiene el mismo entrelazamiento, y los otros dos estados del subespacio $\ket{gg2}$ decae al $\ket{gg1}$, y $\ket{ee0}$ no tiene fotones asi que no pierde excitaciones. Por lo tanto, en el caso de alta desintonia, el comportamiento es similar al de anterior. Las oscilaciones no tienen mucha amplitud y por lo tanto la probabilidad esta concentrada casi toda en el estado $\ket{eg1+ge1}$, que al perder un foton decae al estado $\ket{eg0+ge0}$ cuyo entrelazamiento es el mismo.
+\begin{figure}[H]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g gamma=0.25g concu delta uni.png}
@@ -515,7 +560,7 @@ Ahora se estudia la dinamica para el estado simetrico en el subespacio de $N=2$.
     \label{fig4:concu detunning 1}
 \end{figure}
 
-Lo interesante de este subespacio de mayor excitacion, es que como se observo anteriormente en las figuras \ref{fig4:frecuencias de rabi}, las energias presentan maximos y minimos locales, que esperamos que cambien drasticamente la estructura de las dependencias en los parametros al aumentar sus valores. En la figura \ref{fig4:concu detunning 1 params} se muestran diferentes casos; en la primera fila se muestran casos con medio Kerr cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectiamente. El primer caso, no se observa ningun cambio con repecto al caso $\chi=0$, el cambio es muy pequeño para ser notado, y la estructura queda igual. Pero al aumentar mucho la no linealidad del medio, se comienza a observar el desdoblamiento en las energias, y los maximos y minimos locales de energia comienzan a notarse. En la figura \ref{fig4:concu detunning 1 x2} se ve como hay dos zonas en donde las oscilaciones tienen gran amplitud y poca frecuencia, similar al caso \textit{resonante}. Esto se puede explicar con el desdoblamiento de energias, parece que hay dos minimos en las frecuencias de Rabi que participan en este proceso, que parecen estar en $\Delta_1=5g$ y $\Delta_2=15g$ aproximadamente. Haciendo una analogia con el caso de 1 atomo, donde veiamos que la condicion de robustez se daba para $\Delta=\chi(2n-1)$ (ver \ref{sec3:medio kerr}) y recordando que esta condicion sale de la diferencia entre las contribuciones diagonales del Hamiltoniano, entonces en este caso, podemos hacer lo mismo y obtener dos condiciones, la primera se obtiene con $\chi n^2-\chi(n-1)^2=\chi(2n-1)$ que es igual a la del caso anterior, y la segunda con $\chi(n-1)^2-\chi(n-2)^2=\chi(2n-3)$. Sustituyendo $n=2$, obtenemos que la condicion se da para $\Delta=\chi$ y $\Delta=3\chi$, que es justo donde se obtienen los minimos. Si bien el segundo minimo de $3\chi$ parece ser menos pronunciado, esta analogia funciona bien.
+Lo interesante de este subespacio de mayor excitacion, es que como se observo anteriormente en las figuras \ref{fig4:frecuencias de rabi}, las energias presentan maximos y minimos locales, que esperamos que cambien drasticamente la estructura de las dependencias en los parametros al aumentar sus valores. 
 \begin{figure}[h]
     \centering
     \begin{subfigure}{0.49\textwidth}
@@ -544,23 +589,29 @@ Lo interesante de este subespacio de mayor excitacion, es que como se observo an
     \caption{}
     \label{fig4:concu detunning 1 params}
 \end{figure}
+En la figura \ref{fig4:concu detunning 1 params} se muestran diferentes casos; en la primera fila se muestran casos con medio Kerr cuyos parametros son $\chi=0.1g$ y $\chi=5g$ respectiamente. El primer caso, no se observa ningun cambio significativo con repecto al caso $\chi=0$, el cambio es muy pequeño para ser notado, y la estructura queda igual. Pero al aumentar mucho la no linealidad del medio, se comienza a observar el desdoblamiento en las energias, y los maximos y minimos locales de energia comienzan a notarse. En la figura \ref{fig4:concu detunning 1 x2} se ve como hay dos zonas en donde las oscilaciones tienen gran amplitud y poca frecuencia, similar al caso \textit{resonante}. Esto se puede explicar con el desdoblamiento de energias, parece que hay dos minimos en las frecuencias de Rabi que participan en este proceso, que parecen estar en $\Delta_1=5g$ y $\Delta_2=15g$ aproximadamente. Haciendo una analogia con el caso de 1 atomo, donde veiamos que la condicion de robustez se daba para $\Delta=\chi(2n-1)$ (ver \ref{sec3:medio kerr}) y recordando que esta condicion sale de la diferencia entre las contribuciones diagonales del Hamiltoniano, entonces en este caso, podemos hacer lo mismo y obtener dos condiciones, la primera se obtiene con $\chi n^2-\chi(n-1)^2=\chi(2n-1)$ que es igual a la del caso anterior, y la segunda con $\chi(n-1)^2-\chi(n-2)^2=\chi(2n-3)$. Sustituyendo $n=2$, obtenemos que la condicion se da para $\Delta=\chi$ y $\Delta=3\chi$, que es justo donde se obtienen los minimos. Si bien el segundo minimo de $3\chi$ parece ser menos pronunciado, esta analogia funciona bien.
+
 Si hacemos esta resta pero ahora con $\chi=0$ y nos concentramos en $k-J$, vemos que la condicion se da cuando $\Delta=\pm 2(k-J)$, que es justo lo que observamos en la figura \ref{fig4:concu detunning 1 k2}. En general entonces, podemos decir que esta condicion de menor frecuencia y mayor amplitud de oscilacion se da cuando las energias de los estados estan cerca de la degeneracion, y como tenemos 3 estados que interactuan siempre por medio del estado del medio que es el $\ket{egn+gen}$, entonces puede haber una degeneracion entre el primero y segundo estado, o entre el segundo y tercero, que se dan en el caso general cuando
 
 \begin{equation}
     \Delta-\chi(2n-1)+2(k-J)=0
+    \label{ec4:condicion 1}
 \end{equation}
 que se corresponde con la degeneracion entre las energias del estado $\ket{ggn}$ y $(\ket{eg,n-1}+\ket{ge,n-1})/\sqrt{2}$, y en el otro caso
 \begin{equation}
     \Delta-\chi(2n-3)-2(k-J)=0
+    \label{ec4:condicion 2}
 \end{equation}
 que se corresponde con los estados $(\ket{eg,n-1}+\ket{ge,n-1})/\sqrt{2}$ y $\ket{ee,n-2}$. Tambien, se puede dar que los tres estados estan degenerados si se cumplen las dos condiciones simultaneamente.
 Algunas expresiones que surgen de pedir que los tres estados sean degenerados son sencillas: $\Delta+2\chi(n-1)=0$ o $\chi-2(k-J)=0$.
 
-\subsubsection{\underline{Condicion inicial $\ket{3er0}$}}
+\subsubsection{\underline{Condicion inicial $\ket{ee0+gg2}$}}
+Esta condicion inicial no tiene entrelazamiento incial, ya que al tomar traza parcial sobre la cavidad, vemos como uno de los estados de la superposicion tiene 0 fotones, y el otro 2, entonces el resultado de trazar sobre la cavidad en el instante inicial es que los atomos se encuentren en el estado maximamente mixto $\frac{1}{2}(\ketbra{ee}{ee}+\ketbra{gg}{gg})$, que no es entrelazado.
 
 \subsection{Dependencia con el medio $\chi$}
 \subsubsection{\underline{Condicion inicial $\ket{eg0+ge0}$}}
-\begin{figure}[h]
+En la figura \ref{fig4:concu x 0} se muestra la dinamica de entrelazamiento en funcion de la no linealidad del medio. No hay difrencias mayores con la dependencia en $\Delta$ (fig \ref{fig4:concu detunning 0}).
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g gamma=0.25g concu chi uni.png}
@@ -577,7 +628,9 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
     \label{fig4:concu x 0}
 \end{figure}
 
-\begin{figure}[h]
+Esto nos reafirma que en el espacio de $N=1$, el medio Kerr es muy similar al detunning. 
+
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg0+ge0 d=1.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
@@ -602,11 +655,13 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
         \caption{$k-J=2.5g$}
         \label{fig4:concu x k2}
     \end{subfigure}
-    \caption{}
+    \caption{Entrelazamiento $\ket{eg0+ge0}$}
     \label{fig4:concu x params}
 \end{figure}
+\newpage
 \subsubsection{\underline{Condicion inicial $\ket{eg1+ge1}$}}
-\begin{figure}[h]
+Para la condicion inicial $\ket{eg1+ge1}$, vemos que hay una diferencia en comparacion con el caso del detunning: comparando las imagenes \ref{fig4:concu x 1} y \ref{fig4:concu detunning 1} vemos que hay una diferencia en la estructura. Esto significa que ya no estan en igualdad de condiciones el detunning y el medio, como era el caso de el subespacio de $N=1$.
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=0.0g k=0.0g J=0.0g gamma=0.25g concu chi uni.png}
@@ -619,11 +674,11 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
         \caption{Dinámica con perdidas}
         \label{fig4:concu x 1 dis}
     \end{subfigure}
-    \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg0+ge0}$, en función del detunning, y para $\chi=k-J=0$.}
+    \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg1+ge1}$, en función del medio Kerr, y para $\Delta=k-J=0$.}
     \label{fig4:concu x 1}
 \end{figure}
-
-\begin{figure}[h]
+Aparte de esto, los demas comportamientos no son inesperados. Al aumentar $\chi$, el entrelazamiento inicial se conserva ya que las oscilaciones son de menor amplitud; ademas, al agregar disipacion, las oscilaciones decaen en amplitud y las zonas donde hay presente SDE se agrandan. Tambien, al aumentar la no linealidad del medio, la frecuencia de oscilacion aumenta haciendo que el entrelazamiento sea mas robusto ante el efecto del entorno.
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/chi/eg1+ge1 d=1.0g k=0.0g J=0.0g gamma=0.25g concu chi dis.png}
@@ -648,15 +703,17 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
         \caption{$k-J=2.5g$}
         \label{fig4:concu x 1 k2}
     \end{subfigure}
-    \caption{}
+    \caption{Dinamica de entrelazamiento para $\ket{eg1+ge1}$ en funcion del medio Kerr, para diferentes valores de $\Delta$ y $k-J$.}
     \label{fig4:concu x params 1}
 \end{figure}
-\subsubsection{\underline{Condicion inicial $\ket{3er0}$}}
+Al cambiar algunos de los parametros para ver como afectan el entrelazamiento en funcion de $\chi$, se muestran en las figuras \ref{fig4:concu x 1 d1} y \ref{fig4:concu x 1 d2} como afecta aumentar el detunning. En primer lugar, aumentar a $\Delta=g$ no afecta sustancialmente la estructura (comparar con \ref{fig4:concu x 1 dis}), el efecto principal es desplazar hacia arriba la figura. Pero al aumentar mucho el detunning como en el caso de $\Delta=5g$, observamos que no solo que la frecuencia cambia (poco pero cambia, en el primer caso para llegar a $t/T_0=2$ se necesitan 3 oscilaciones pero para el segundo 4), como se esperaba, sino que tambien hay nuevametne una separacion en dos regiones. Esto nuevamente se atribuye a que la diferencia de energias tiene maximos y minimos locales, haciendo que en estas regiones las oscilaciones sean de mayor amplitud. Es interesante que ahora, si se observan las figuras \ref{fig4:concu x 1 k1} y \ref{fig4:concu x 1 k2}, por un lado, \textcolor{red}{parace que la disipacion afecta menos, y por otro lado no ocurre la separacion en dos regiones al aumentar la interaccion $k-J=2.5g$. Esto es interesante, ya que parece que aumentar la interaccion entre los atmos hace que el entrelazamiento sea mas duradero ante el efecto del entorno. A este punto se volvera mas adelante}.
+\subsubsection{\underline{Condicion inicial $\ket{ee0+gg2}$}}
 
-
-\subsection{Dependencia con la interaccion $k-J$}
+\newpage
+\subsection{Dependencia con la interaccion entre atomos $k-J$}
+Ahora nos concentraremos en la interaccion entre los atomos. A diferencia de los otros dos parametros, esta interaccion solo depende los dos atomos y por lo tanto se esperan comportamientos diferentes. 
 \subsubsection{\underline{Condicion inicial $\ket{eg0+ge0}$}}
-\begin{figure}[h]
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k uni.png}
@@ -672,8 +729,10 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
     \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg0+ge0}$, en función del detunning, y para $\chi=k-J=0$.}
     \label{fig4:concu k 0}
 \end{figure}
+Desde el comienzo ya se puede ver como al aumentar el valor absoluto de la interaccion el comportamiento es el mismo que en los otros dos casos, donde aumenta la frecuecnia y disminuye la amplitud conservando el entrelazamiento inicial, pero en es te caso este comportemianto se ve acentuado. 
 
-\begin{figure}[h]
+
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg0+ge0 d=1.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
@@ -701,8 +760,13 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
     \caption{}
     \label{fig4:concu k params}
 \end{figure}
+
+La interaccion entre los atomos conserva mejor el entrelazamiento. Esto tambien se observa cuando se agrega la disipacion, en comparacion con las otras interacciones, en la figura \ref{fig4:concu k 0 uni} se ve como se conserva mejor el entrelazamiento.
+
+En la figura \ref{fig4:concu k params} se observan los efectos que tienen los otros dos parametros en la dinamica. Por un lado, vemos que aumentar el detunning \ref{fig4:concu k d1} desplaza el centro hacia abajo pero no parece haber mucha diferencia. Al seguir aumentando la desintonia \ref{fig4:concu k d2}, el centro se sigue desplazando y podemos ver que este se desplaza la mitad que lo que aumenta $\Delta$. Ademas, la estructura pierde la simetria y se observa una franja en la parte duperior donde el entrelazamiento se conserva mejor. Este valor parece corresponderse con $+\Delta/2$. Esto puede deberse a la condicion que se encontro anteriormente (\ref{ec4:condicion 1} y \ref{ec4:condicion 2}) que en este caso se resume en que la condicion de degeneracion se de para $k-J=\pm\Delta/2$. Es interesante que en este caso una de las condiciones presenta zonas de SDE, y la otra en cambio conserva mejor el entrelazamiento que las demas zonas. Por otro lado, al cambiar las no linealidades, vemos que el efecto es exactamente el mismo, pero el desplazamiento es ahora en el otro sentido, y las condiciones de degeneracion siguen siendo las mismas, a menos de un signo.
 \subsubsection{\underline{Condicion inicial $\ket{eg1+ge1}$}}
-\begin{figure}[h]
+Al considerar el espacio de $N=2$, lo primero que resalta es que la zona central que presenta SDE ahora es mas ancha. Por otro lado, al agragar disipacion, las diferencias parecen desaparecer con respecto a su contraparte de $N=1$. Esto probablemente se debe a que en presencia de disipacion, para tiempos largos, el estado del sistema sera similar. Mas aun considerando que se esta ignorando la dinamica de la cavidad al observar el entrelazamiento entre los atomos.
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=0.0g x=0.0g J=15.0g gamma=0.25g concu k uni.png}
@@ -718,8 +782,9 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
     \caption{Dinámica de entrelazamiento para el estado inicial $\ket{eg0+ge0}$, en función del detunning, y para $\chi=k-J=0$.}
     \label{fig4:concu k 1}
 \end{figure}
-
-\begin{figure}[h]
+La mayor diferencia entre ambos casos aparece cuando observamos los efectos de los parametros $\Delta$ y $\chi$. Este caso es interesante porque nos ayuda a ver concretamente como, al tener ahora 3 estados dinamicos, el efecto del detunning y del medio son diferentes, que en el caso de 1 atomo (o en el subespacio de $N=1$) por lo que se vio antes son lo mismo. En la figura \ref{fig4:concu k params 1}\ref{sub@fig4:concu k 1 d2} y \ref{sub@fig4:concu k 1 x2} muestra la clara diferencia entre estos dos efectos. Para el detunning aparecen 2 regiones, que nuevamente son correctamente predichas por las condiciones \ref{ec4:condicion 1} y \ref{ec4:condicion 2} (considerando $\chi=0$), y para el caso del medio (panel \ref{sub@fig4:concu k 1 x2}) si traducimos las condiciones para $\Delta=0$ obtenemos que la condicion de degeneracion se da para $k-J=\frac{3}{2}\chi=7.5g$ y $k-J=\frac{-\chi}{2}=-2.5g$, que es justamente donde se observan las regiones con mayor estructura.
+Esto nos dice que fundamentalmente, la degeneracion de estados lleva a una mayor coherencia entre las oscilaciones del entrelazamiento. Si bien esto es cierto, puede ser que este entrelazamiento muera subitamente, o que sea mas robusto que otras combinaciones de parametros. Esto se ve claramente en estas dos figuras (paneles \ref{sub@fig4:concu k 1 d2} y \ref{sub@fig4:concu k 1 x2}), donde se pudo predecir correctamente que habia zonas mas coherentes, pero en ambos casos tenemos una de las zonas que presenta SDE y el entrelazamiento muere, y la segunda zona donde las oscilaciones perduran en el tiempo mas que en cualquier otra combinacion de parametros. 
+\begin{figure}[h!]
     \centering
     \begin{subfigure}{0.49\textwidth}
         \includegraphics[width=\textwidth]{figuras/ch4/concu/k/eg1+ge1 d=1.0g x=0.0g J=15.0g gamma=0.25g concu k dis.png}
@@ -751,25 +816,11 @@ Algunas expresiones que surgen de pedir que los tres estados sean degenerados so
 
 
 \subsection{Acoplamiento Buck-Sukumar}
-Para seguir, se considera el efecto del acoplamiento no lineal entre la cavidad y los atomos que se considero al resolver el problema. Esta contribucion aparece en los elementos no diagonales del Hamiltoniano, e influye unicamente en la dinamica de estados con $N\geq2$, ya que si en la cavidad hay solo una excitacion, entonces $\sqrt{n_{fot}}=1$ y es lo mismo que el acoplamiento lineal. Brevemente se observa entonces las consecuencias de este acoplemiento no lineal sobre el entrelazamiento con las condiciones iniciales de $N=2$.
-\subsubsection{$\ket{eg0+ge0}$}
-\subsubsection{$\ket{eg1+ge1}$}
-\subsubsection{$\ket{3er0}$}
+Se repitio el estudio utilizando el acoplamiento no lineal entre la cavidad y los atomos, este acoplamiento es mayor mientras mas excitaciones tenga la cavidad, concretamente va como $\sqrt{n_C}$. 
+La conclusion de este estudio es que en el caso de $N=1$, es todo exactamente igual. Para $N=2$, hay algunas pequeñas diferencias, pero son casi insignificantes y no tienen consecuencias mayores sobre el entrelazamiento de los atomos. 
 
-\subsection{Conclusiones del capitulo 4}
+Por lo tanto, no justifica mostrar nada, solo mencionar que en los casos observados no afecta en casi nada.
 
-\subsection{comentarios para borrar}
+\section{Conclusiones del capitulo 4}
+En este capitulo se analizo la dinamica del sistema, primero recuperamos el caso de 1 atomo \ref{sec4:dinamica apantallamiento} apantallando uno de los dos atomos, situacion que no es fisica pero sirve tambien para estudiar el efecto de los parametros del problema \ref{sec4:dinamica sin apantallamiento}. Luego nos concentramos en la dinamica de entrelazamiento entre los dos atomos, ignorando la cavidad. Este estudio resulto util, ya que por un lado se concluye que el subespacio de $N=1$ se comporta igual que el modelo de Jaynes-Cummings de 1 atomo, y donde se observo que el detunning $\Delta$ y la no linealidad del medio Kerr $\chi$ juegan un mismo rol. Pero para el caso de $N=2$ esto ya no es cierto, y encontramos una dinamica con mucha mas estructura. Ademas, se pudo utilizar una analogia que nos llevo a estudiar los casos de degeneracion energetica entre estados, y estas condiciones nos sirvieron para predecir correctamente zonas de entrelazamiento particulares, donde la combinacion particular de estos parametros daba lugar a estructura en la figura. Vimos que si bien estas condiciones logran predecir, no se encontro una herramienta concreta para predecir si esta zona presentara muerte del enterlazamiento, o robustez ante el efecto del entorno. Ademas, se concluye que de los parametros del problema ($\Delta$, $\chi$ y $k-J$) aumentar la interaccion entre los atomos es la mas efectiva para presevar el entrelazamiento, por su contrario, aumentar las no linealidades ($\chi$) hace que el entrelazamiento muera mas rapidamente. Esto nos dice que nuestra intuicion fisica sobre estos sistemas esta correcta. Las no linealidades del medio son malas, y aumentar la interaccion entre los atomos aumenta el entrelazamiento entre estos. Para cerrar entonces, observemos una ultima situacion, que podria ser en un experimento real.
 
-eg0+ge0 en un mismo grafico
-1. k=J=x=0 
-2. k=0.1g, J=0, x=0
-3. k=5g, J=0, x=0
-eg1+ge1 en un mismo grafico
-1. k=J=x=0 
-2. k=0.1g, J=0, x=0
-3. k=5g, J=0, x=0
-ee0+gg2 en un mismo grafico
-1. k=J=x=0 
-2. k=0.1g, J=0, x=0
-3. k=5g, J=0, x=0
-GRAFICOS DE ENTRELAZAMIENTO PARA DIFERENTES PARAMETROS. PLOTS CON COLORES DEL PAPER ESE. SDE. 

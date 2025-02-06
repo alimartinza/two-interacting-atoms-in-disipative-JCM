@@ -2,6 +2,7 @@ from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import time
 
 from jcm_lib import fases
 
@@ -109,15 +110,23 @@ g=0.001*w_0
 
 p=0.005*g
 
-def robustez_delta(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:int,x:float,k:float,J:float):
+def robustez_delta(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:int,x:float,k:float,J:float,cluster_centers:list=None,cluster_radii:list=None,cluster_steps:list=None):
+
     fig_fg=plt.figure(figsize=(8,6))
     ax_fg=fig_fg.add_subplot()
     delta_list=np.linspace(delta_min,delta_max,delta_steps)
+    if cluster_centers is not None:
+        for l in range(len(cluster_centers)):
+            delta_list=np.concat((delta_list,np.linspace(cluster_centers[l]-cluster_radii[l],cluster_centers[l]+cluster_radii[l],cluster_steps[l])))
+    else:
+        None
 
+    deltafg=np.zeros((4,len(delta_list)))
+    deltafg[0]=delta_list
     for j,gamma in enumerate([0.01*g,0.1*g,0.25*g]):
 
         colors=mpl.colormaps['plasma'](np.linspace(0,1,3+1))
-        deltafg=np.zeros(len(delta_list))
+        
         for i,delta in enumerate(delta_list):
 
             
@@ -126,9 +135,12 @@ def robustez_delta(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:int
             H=x*n2 + delta/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
                 
             '''---Simulacion numerica---'''
-            T=2*np.pi/np.abs(rabi_freq(2,1,2,delta,g,k,J,x))
+            if psi0Name=='eg0+ge0':
+                T=np.pi/(np.sqrt(2*g**2+(k-J+delta/2-x/2)**2))
+            else:
+                T=2*np.pi/np.abs(rabi_freq(2,1,2,delta,g,k,J,x))
             t_final=3*T
-            steps=5000
+            steps=2000
 
             l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
             t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
@@ -137,29 +149,173 @@ def robustez_delta(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:int
             fg_u,arg,eigenvals_t_u = fases(sol_u)
             fg_d,arg,eigenvals_t_d = fases(sol_d)
 
-            deltafg[i]=fg_d[-1]-fg_u[-1]
+            deltafg[j+1][i]=fg_d[-1]-fg_u[-1]
 
-        ax_fg.plot(delta_list/g,deltafg/np.pi,color=colors[j],marker='.')
+        ax_fg.scatter(deltafg[0]/g,deltafg[j+1]/np.pi,color=colors[j],marker='.')
 
     ax_fg.set_ylabel('$\delta\phi/\pi$',size=20)
     ax_fg.set_xlabel('$\Delta/g$',size=20)
-    ax_fg.set_xlim(delta_list[0]/g,delta_list[-1]/g)
-    ax_fg.hlines(0,delta_list[0]/g,delta_list[-1]/g,colors='grey',linestyles='dashed',alpha=0.5)
-    ax_fg.vlines([x/g*3-2*(k-J)/g,x/g+2*(k-J)/g],np.min(deltafg)/np.pi,np.max(deltafg)/np.pi,color='red',linestyles='dashed',alpha=0.5)
+    ax_fg.set_xlim(delta_min/g,delta_max/g)
+    ax_fg.hlines(0,delta_min/g,delta_max/g,colors='grey',linestyles='dashed',alpha=0.5)
+    # ax_fg.vlines([x/g*3-2*(k-J)/g,x/g+2*(k-J)/g],np.min(deltafg)/np.pi,np.max(deltafg)/np.pi,color='red',linestyles='dashed',alpha=0.5)
     ax_fg.ticklabel_format(style='sci',scilimits=(-2,2),useMathText=True)
+    
+    
+    with open(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} limites.txt','a') as limites_file:
+        limites_file.write('\n')
+        limites_file.write(f'{k/g},{x/g},{J/g},{delta_min/g},{delta_max/g},{len(delta_list)},{cluster_centers},{cluster_radii},{cluster_steps}')
+
     fig_fg.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta img\{psi0Name} k={k/g}g x={x/g}g J={J/g}g.png')
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta.txt',deltafg)
+   
     plt.close('all')
 
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=0,k=0,J=0)
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=0.5*g,k=0,J=0)
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=5*g,k=0,J=0)
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=0*g,k=5.5*g,J=5*g)
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=0*g,k=7.5*g,J=5*g)
-robustez_delta((eg1+ge1).unit(),'eg1+ge1',-15*g,15*g,154,x=5/3*g,k=7.5*g,J=5*g)
+def robustez_chi(psi0,psi0Name,chi_min:float,chi_max:float,chi_steps:int,delta:float,k:float,J:float,cluster_centers:list=None,cluster_radii:list=None,cluster_steps:list=None,saveword:str=""):
+    fig_fg=plt.figure(figsize=(8,6))
+    ax_fg=fig_fg.add_subplot()
+    chi_list=np.linspace(chi_min,chi_max,chi_steps)
+    
+    if cluster_centers is not None:
+        for l in range(len(cluster_centers)):
+            chi_list=np.concat((chi_list,np.linspace(cluster_centers[l]-cluster_radii[l],cluster_centers[l]+cluster_radii[l],cluster_steps[l])))
+        chi_list=np.sort(chi_list)
+        # print(chi_list)
+    else:
+        None
+    # chi_list sort por clusters
+    deltafg=np.zeros((4,len(chi_list)))
+    deltafg[0]=chi_list
+    for j,gamma in enumerate([0.01*g,0.1*g,0.25*g]):
 
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=0,k=0,J=0)
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=0.5*g,k=0,J=0)
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=5*g,k=0,J=0)
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=0*g,k=5.5*g,J=5*g)
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=0*g,k=7.5*g,J=5*g)
-robustez_delta((eg0+ge0).unit(),'eg0+ge0',-15*g,15*g,154,x=5/3*g,k=7.5*g,J=5*g)
+        colors=mpl.colormaps['plasma'](np.linspace(0,1,3+1))
+        
+        for i,x in enumerate(chi_list):
+
+            
+            '''---Hamiltoniano---'''
+
+            H=x*n2 + delta/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+                
+            '''---Simulacion numerica---'''
+            if psi0Name=='eg0+ge0':
+                T=np.pi/(np.sqrt(2*g**2+(k-J+delta/2-x/2)**2))
+            else:
+                T=2*np.pi/np.abs(rabi_freq(2,1,2,delta,g,k,J,x))
+            t_final=3*T
+            steps=2000
+
+            l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+            t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+            sol_u=mesolve(H,psi0,t,c_ops=[])
+            sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+            fg_u,arg,eigenvals_t_u = fases(sol_u)
+            fg_d,arg,eigenvals_t_d = fases(sol_d)
+
+            deltafg[j+1][i]=fg_d[-1]-fg_u[-1]
+
+        ax_fg.scatter(deltafg[0]/g,deltafg[j+1]/np.pi,color=colors[j],marker='.')
+
+    ax_fg.set_ylabel('$\delta\phi/\pi$',size=20)
+    ax_fg.set_xlabel('$\chi/g$',size=20)
+    ax_fg.set_xlim(chi_list[0]/g,chi_list[-1]/g)
+    ax_fg.hlines(0,chi_list[0]/g,chi_list[-1]/g,colors='grey',linestyles='dashed',alpha=0.5)
+    # ax_fg.vlines([delta/g/3+2/3*(k-J)/g,delta/g-2*(k-J)/g],np.min(deltafg)/np.pi,np.max(deltafg)/np.pi,color='red',linestyles='dashed',alpha=0.5)
+    ax_fg.ticklabel_format(style='sci',scilimits=(-2,2),useMathText=True)
+
+
+    with open(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} {saveword}limites.txt','a') as limites_file:
+        limites_file.write('\n')
+        limites_file.write(f'{delta/g},{k/g},{J/g},{chi_min/g},{chi_max/g},{len(chi_list)}')
+
+    fig_fg.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi img\{psi0Name} {saveword}d={delta/g}g k={k/g}g J={J/g}g.png')
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} {saveword}d={delta/g}g k={k/g}g J={J/g}g chi.txt',deltafg)
+    plt.close('all')
+
+
+def robustez_k(psi0,psi0Name,k_min:float,k_max:float,k_steps:int,delta:float,x:float,J:float,cluster_centers:list=None,cluster_radii:list=None,cluster_steps:list=None,saveword:str=""):
+    fig_fg=plt.figure(figsize=(8,6))
+    ax_fg=fig_fg.add_subplot()
+    k_list=np.linspace(k_min,k_max,k_steps)
+    
+    if cluster_centers is not None:
+        for l in range(len(cluster_centers)):
+            k_list=np.concat((k_list,np.linspace(cluster_centers[l]-cluster_radii[l],cluster_centers[l]+cluster_radii[l],cluster_steps[l])))
+        k_list=np.sort(k_list)
+    else:
+        None
+    # k_list sort para cluster
+    deltafg=np.zeros((4,len(k_list)))
+    deltafg[0]=k_list
+    for j,gamma in enumerate([0.01*g,0.1*g,0.25*g]):
+
+        colors=mpl.colormaps['plasma'](np.linspace(0,1,3+1))
+        
+        for i,k in enumerate(k_list):
+
+            
+            '''---Hamiltoniano---'''
+
+            H=x*n2 + delta/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+                
+            '''---Simulacion numerica---'''
+            if psi0Name=='eg0+ge0':
+                T=np.pi/(np.sqrt(2*g**2+(k-J+delta/2-x/2)**2))
+            else:
+                T=2*np.pi/np.abs(rabi_freq(2,1,2,delta,g,k,J,x))
+            t_final=3*T
+            steps=2000
+
+            l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+            t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+            sol_u=mesolve(H,psi0,t,c_ops=[])
+            sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+            fg_u,arg,eigenvals_t_u = fases(sol_u)
+            fg_d,arg,eigenvals_t_d = fases(sol_d)
+
+            deltafg[j+1][i]=fg_d[-1]-fg_u[-1]
+
+        ax_fg.scatter(deltafg[0]/g,deltafg[j+1]/np.pi,color=colors[j],marker='.')
+
+    ax_fg.set_ylabel('$\delta\phi/\pi$',size=20)
+    ax_fg.set_xlabel('$k/g$',size=20)
+    ax_fg.set_xlim(k_list[0]/g,k_list[-1]/g)
+    ax_fg.hlines(0,k_list[0]/g,k_list[-1]/g,colors='grey',linestyles='dashed',alpha=0.5)
+    # ax_fg.vlines([delta/g/3+2/3*(k-J)/g,delta/g-2*(k-J)/g],np.min(deltafg)/np.pi,np.max(deltafg)/np.pi,color='red',linestyles='dashed',alpha=0.5)
+    ax_fg.ticklabel_format(style='sci',scilimits=(0,0),useMathText=True)
+
+
+    with open(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} {saveword}limites.txt','a') as limites_file:
+        limites_file.write('\n')
+        limites_file.write(f'{delta/g},{x/g},{J/g},{k_min/g},{k_max/g},{len(k_list)}')
+
+    fig_fg.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k img\{psi0Name} {saveword}d={delta/g}g x={x/g}g J={J/g}g.png')
+    np.savetxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} {saveword}d={delta/g}g x={x/g}g J={J/g}g k.txt',deltafg)
+    plt.close('all')
+
+psi0=(eg1+ge1).unit()
+psi0Name='eg1+ge1 cluster'
+robustez_delta(psi0,psi0Name,delta_min=-15*g,delta_max=15*g,delta_steps=302,x=0,k=2.5*g,J=0,cluster_centers=[0],cluster_radii=[5*g],cluster_steps=[152])
+robustez_delta(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=302,x=5*g,k=0,J=0,cluster_centers=[10*g],cluster_radii=[2.5*g],cluster_steps=[102])
+robustez_delta(psi0,psi0Name,delta_min=-10*g,delta_max=15*g,delta_steps=302,x=5*g,k=2.5*g,J=0,cluster_centers=[0],cluster_radii=[2.5*g],cluster_steps=[102])
+robustez_delta(psi0,psi0Name,delta_min=-10*g,delta_max=15*g,delta_steps=302,x=2*g,k=0,J=3*g,cluster_centers=[0],cluster_radii=[2.5*g],cluster_steps=[152])
+
+# psi0=(gg2).unit()
+# psi0Name='gg2'
+# robustez_delta(psi0,psi0Name,-12*g,12*g,203,x=0,k=0,J=0)
+# robustez_delta(psi0,psi0Name,-12*g,12*g,203,x=0,k=2.5*g,J=0)
+# robustez_delta(psi0,psi0Name,-12*g,12*g,203,x=0,k=0.5*g,J=0)
+# robustez_delta(psi0,psi0Name,-12*g,12*g,203,x=0.5*g,k=0,J=0)
+# robustez_delta(psi0,psi0Name,-12*g,12*g,203,x=2.5*g,k=0,J=0)
+
+# robustez_chi(psi0,psi0Name,-12*g,12*g,203,delta=0,k=0,J=0)
+# robustez_chi(psi0,psi0Name,-12*g,12*g,203,delta=0.5*g,k=0,J=0)
+# robustez_chi(psi0,psi0Name,-12*g,12*g,203,delta=2.5*g,k=0,J=0)
+# robustez_chi(psi0,psi0Name,-12*g,12*g,203,delta=0,k=0.5*g,J=0)
+# robustez_chi(psi0,psi0Name,-12*g,12*g,203,delta=0,k=2.5*g,J=0)
+
+# robustez_k(gg2,'gg2',-12*g,12*g,203,delta=0,x=0*g,J=0,cluster_centers=[0],cluster_radii=[0.25*g],cluster_steps=[20])
+# robustez_k(gg2,'gg2',-12*g,12*g,203,delta=2.5*g,x=0*g,J=0)
+# robustez_k(gg2,'gg2',-12*g,12*g,203,delta=0.5*g,x=0*g,J=0)
+# robustez_k(gg2,'gg2',-12*g,12*g,406,delta=0,x=2.5*g,J=0)
+# robustez_k(gg2,'gg2',-12*g,12*g,406,delta=2.5*g,x=2.5*g,J=0)
+

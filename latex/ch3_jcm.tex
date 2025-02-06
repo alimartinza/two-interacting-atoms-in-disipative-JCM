@@ -39,7 +39,7 @@ La interpretaci\'on de la interacci\'on en este caso es clara, las dos opciones 
 \begin{equation}\label{eq3:hamiltoniano jcm}
     H=\frac{\Delta}{2}\sigma_z+g(a^\dagger \sigma_-+a \sigma_+)
 \end{equation}
-donde $\Delta = \epsilon - \omega$ es el \textit{detunning} entre las frecuencias de la cavidad y el átomo. Un ejemplo de esto es un átomo de Rydberg metido en una cavidad \ref{}, o ... \textcolor{red}{BUSCAR EJEMPLOS}.
+donde $\Delta = \epsilon - \omega$ es el \textit{detunning} entre las frecuencias de la cavidad y el átomo. Un ejemplo de esto es un átomo de Rydberg metido en una cavidad \ref{}, o como puntos cuánticos, magnones, átomos de Rydberg, ondas acústicas superficiales y sistemas mecánicos, que interactúan con fotones de microondas.
 Como el Hamiltoniano conserva la cantidad de excitaciones es oportuno agrupar los estados en funci\'on de la cantidad de excitaciones: $\{\ket{g,n},\ket{e,n-1}\}$. En esta base el Hamiltoniano se diagonaliza por bloques, ya que las interacciones conservan la cantidad total de excitaciones, entonces los elementos de matriz entre estados con diferente cantidad de excitaciones se corresponde
 \begin{align*}
     [H,\hat N]=0 \implies & \bra{N'}H \hat N \ket{N} = \bra{N'}\hat N H \ket{N} \\
@@ -200,7 +200,8 @@ Dados dos valores diferentes de $\chi$ nos interesa saber si al aumentar $\Delta
 Ahora, habiendo entendido esto, podemos ver que el efecto del medio es modificar la frecuencia y también la amplitud de la oscilación, haciendo que la primera sea menor, y \textcolor{red}{para ver que pasa con las amplitudes tengo que hacer algunas cuentas}
 
 
-\section{JCM disipativo}
+\section{JCM disipativo} 
+\label{sec3:jcm disipativo}
 
 
 Habiendo desarrollado el análisis de la fase geométrica acumulada por el sistema átomo-cavidad en la situación ideal de completo aislamiento, se aborda ahora el estudio para el escenario más realista en el que el mismo sistema se encuentra en interacción con un entorno. El problema se trata para la implementación específica en estructuras semiconductoras, en las que un punto cuántico (al cual se sigue, sin embargo, refiriendo como átomo o sistema de dos niveles) se ubica en una nano o micro-cavidad.
@@ -266,6 +267,7 @@ Como se vio anteriormente, el efecto del medio Kerr sobre los autoestados y las 
 Si se comparan las figuras \ref{fig3:poblaciones e0} con \ref{fig3:poblaciones kerr}, entonces se pueden observar dos diferencias. La primera es lo mencionado anteriormente; en el mismo tiempo, es decir entre $0\leq t/T \leq 25$, en el caso de $\chi=0$ se observan 25 oscilaciones, pero en el caso de $\chi=0.5g$ solo se observan 23 oscilaciones. Esto se debe a la condición que se encontró al final de la sección \ref{sec3:medio kerr}, en este caso se cumple que $\Delta=2g>(2n-1)\frac{\chi_1+\chi_2}{2}=1\cdot\frac{0.5g}{2}$, entonces la diferencia de energías entre los autoestados disminuye al aumentar $\chi$, y por lo tanto las oscilaciones son mas lentas para el caso de $\chi=0.5g$ en comparación con $\chi=0$.
 \textcolor{red}{falta analizar las amplitudes}
 \subsection{Fase geométrica en presencia de disipación}
+\label{sec3:fg disipacion}
 Ahora se estudia la fase geométrica adquirida por el sistema, calculada siguiendo la definición \ref{}, y como esta se ve modificada con respecto del valor unitario por efecto del contacto con el entorno. Como el estado inicial es puro, la definición se reduce al caso particular descrito por la ecuación \ref{eq2}.
 
 Los autovalores y autovectores del operador densidad pueden escribirse formalmente  diagonalizando el subespacio de 2x2 de la matriz densidad:
