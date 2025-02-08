@@ -8,39 +8,38 @@
 \fancyhead[RO]{\nouppercase{\leftmark\hfill}}
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
 
-En este capitulo analizaremos en profundidad la din\'amica y los aspectos teoricos mas importantes 
-del modelo de Jaynes-Cummings, abordando el problema tanto desde un lado te\'orico, como desde
-el lado computacional, necesario para resolver la din\'amica en sistemas abiertos.
-Primero se trabajar\'a en el modelo de un átomo en una cavidad, se analizar\'an los casos importantes,
-y se explicar\' la din\'amica del problema. Esto es importante para comprender conceptualmente como
-interact\'uan fundamentalmente la materia y la luz, y nos sirve para conseguir buena intuici\'on del
-problema de dos átomos. Tambien se ver\'a la influencia del entorno sobre la cavidad, permitiendo
-perdida (o absorci\'on) de fotones, y tambien el bombeo coherente que puede excitar espontaneamente
+En este capitulo se analizará en profundidad la din\'amica y los aspectos teóricos más importantes 
+del modelo de Jaynes-Cummings (JC), abordando el problema tanto desde un lado te\'orico, como computacional, necesario para resolver la din\'amica en sistemas abiertos.
+Primero, se trabajar\'a en el modelo de un átomo en una cavidad, se analizar\'an los casos importantes,
+y se explicará la din\'amica del problema. Esto resulta importante para comprender conceptualmente cómo
+interact\'uan fundamentalmente la materia y la luz, y nos sirve para lograr buena intuici\'on del
+problema de dos átomos. También se ver\'a la influencia del entorno sobre la cavidad, permitiendo
+perdida (o absorci\'on) de fotones, y el bombeo coherente que puede excitar espontaneamente
 al átomo. \newline
 
 \section{Modelo y aproximaciónes}
-Comencemos entonces por el paradigmatico modelo de 1 átomo. El modelo de Jaynes-Cummings consiste en describir la interacción entre la materia y la luz de manera cuantica, y el experimento mas sencillo consta de un átomo de dos niveles atrapada en una cavidad. La simpleza del modelo surge de las aproximaciónes e hipotesis que se hacen, en primer lugar, el campo electromagnetico dentro de la cavidad puede en principio tener infinitos modos, pero para simplificar se considera solo un modo. 
-Entonces tenemos un Hamiltoniano ($\hbar = 1$)
+Se estudia primero el paradigmatico modelo de 1 átomo. El modelo de JC consiste en describir la interacción entre la materia y la luz de manera cuantica. El experimento más sencillo consta de un átomo de dos niveles atrapado en una cavidad. La simpleza del modelo surge de las aproximaciónes e hipotesis que se hacen; en primer lugar, el campo electromagnetico dentro de la cavidad puede, en principio, tener infinitos modos, pero para simplificar se considera solo un modo. 
+Entonces el Hamiltoniano que describe el problema es ($\hbar = 1$)
 
 \begin{equation}\label{eq3:hamiltoniano inicial}
 \begin{aligned}
-    \hat H & = \hat H_A + \hat H_C + \hat H_{int}  \\
-    \hat H_A &= \omega \frac{\sigma_z}{2} \\
-    \hat H_C &= \epsilon \hat a^\dagger\hat a = \epsilon \hat n \\
-    \hat H_{int} &= -i g (\hat\sigma_-+\hat \sigma_+)(\hat a - \hat a^\dagger)
+    \hat H & = \hat H_A + \hat H_C + \hat H_{int},  \\
+    \hat H_A &= \omega \frac{\hat \sigma_z}{2}, \\
+    \hat H_C &= \epsilon \hat a^\dagger\hat a = \epsilon \hat n, \\
+    \hat H_{int} &= -i g (\hat\sigma_-+\hat \sigma_+)(\hat a - \hat a^\dagger),
 \end{aligned}
 \end{equation}
-donde $\epsilon$ y $\omega$ son las frecuencias naturales de la cavidad y del átomo respectivamente. Los operadores $\hat a$ y $\hat a^\dagger$ son los operadores de aniquilaci\'on y creaci\'on fot\'onicos de la cavidad y $\hat n =a^\dagger a$ es el operador de n\'umero de la cavidad, y $\hat \sigma_z$ es el operador de pauli. Los estados del átomo de dos niveles los llamamos $\ket{g}$ y $\ket{e}$ al estado ground y excitado respectivamente, y con esta notación los operadores $\sigma_\pm = (\sigma_x\pm i\sigma_y)/2$ son los operadores de subida y bajada atómicos. 
-La interacci\'on es complicada, y para simplificar lo que se hace es usar la representaci\'on de interacci\'on, y uno encuentra que hay dos frecuencias, una que llamamos \textit{rotante} y es la diferencia entre las frecuencias características $\epsilon-\omega$, y la otra frecuencia es la suma $\epsilon+\omega$. La aproximación de onda rotante vale cuando las frecuencias son similares $\epsilon\sim\omega$, y consta de despreciar la dinámica de los términos contrarrotantes, ya que oscilan muy rápidamente en comparación con los términos rotantes, y entonces podemos promediar los efectos de los términos rápidos. Entonces al aplicar esta aproximación, justificada cuando $\epsilon\sim\omega$ y $g \ll \epsilon,\omega$ se obtiene el hamiltoniano de JC \ref{}\textcolor{red}{ludmi 49}
+donde $\epsilon$ y $\omega$ son las frecuencias naturales de la cavidad y del átomo respectivamente. Los operadores $\hat a$ y $\hat a^\dagger$ son los operadores de aniquilaci\'on y creaci\'on fot\'onicos de la cavidad; $\hat n =a^\dagger a$ es el operador de n\'umero de la cavidad, y $\hat \sigma_z$ es el operador de Pauli. Los estados del átomo de dos niveles los llamamos $\ket{g}$ y $\ket{e}$ al estado \textit{ground} y excitado respectivamente, y con esta notación los operadores $\hat\sigma_\pm = (\hat\sigma_x\pm i\hat\sigma_y)/2$ son los operadores de subida y bajada atómicos. Con esto en mente, la acoplamiento entre el átomo y la cavidad mediado por la intensidad $g$.  
+La interacci\'on es complicada, y para simplificar, lo que se hace es usar la representaci\'on de interacci\'on. Asi, se encuentran dos frecuencias: una que se considera \textit{rotante} y es la diferencia entre las frecuencias características $\epsilon-\omega$, y la otra frecuencia es la suma $\epsilon+\omega$. La aproximación de onda rotante vale cuando las frecuencias son similares ($\epsilon\sim\omega$), y consiste en despreciar la dinámica de los términos contrarrotantes ya que oscilan muy rápidamente en comparación con los términos rotantes. Luego, se puede promediar los efectos de los términos rápidos. Entonces al aplicar esta aproximación, justificada cuando $\epsilon\sim\omega$ y $g \ll \epsilon,\omega$ se obtiene el Hamiltoniano de JC \cite{JCoriginal}
 \begin{equation}
-    H_{JC}=\epsilon a^\dagger a + \omega \sigma_z/2 + g(a^\dagger\sigma_-+a\sigma_+)
+    \hat H_{JC}=\epsilon \hat a^\dagger \hat a + \omega \hat\sigma_z/2 + g(\hat a^\dagger\hat\sigma_-+\hat a\hat\sigma_+)
 \end{equation} 
 La interpretaci\'on de la interacci\'on en este caso es clara, las dos opciones son que el átomo suba un nivel de energ\'ia y en consecuencia la cavidad pierda un fot\'on, o que el átomo baje un nivel, y la cavidad gane una excitaci\'on. Este Hamiltoniano conserva el n\'umero total de excitaciones $\hat N= \hat n + \hat \sigma$. En este momento es usual aplicar una transformación unitaria $K=\exp{-i\omega t(a ^\dagger a + \sigma_z/2)}$ sobre el Hamiltoniano que queda 
 \begin{equation}\label{eq3:hamiltoniano jcm}
     H=\frac{\Delta}{2}\sigma_z+g(a^\dagger \sigma_-+a \sigma_+)
 \end{equation}
-donde $\Delta = \epsilon - \omega$ es el \textit{detunning} entre las frecuencias de la cavidad y el átomo. Un ejemplo de esto es un átomo de Rydberg metido en una cavidad \ref{}, o como puntos cuánticos, magnones, átomos de Rydberg, ondas acústicas superficiales y sistemas mecánicos, que interactúan con fotones de microondas.
-Como el Hamiltoniano conserva la cantidad de excitaciones es oportuno agrupar los estados en funci\'on de la cantidad de excitaciones: $\{\ket{g,n},\ket{e,n-1}\}$. En esta base el Hamiltoniano se diagonaliza por bloques, ya que las interacciones conservan la cantidad total de excitaciones, entonces los elementos de matriz entre estados con diferente cantidad de excitaciones se corresponde
+donde $\Delta = \epsilon - \omega$ es el \textit{detunning} entre las frecuencias de la cavidad y el átomo. Un ejemplo de ésto es un átomo de Rydberg atrapado en una cavidad \cite{Haroche2006}, o en general puntos cuánticos, magnones, átomos de Rydberg, ondas acústicas superficiales y sistemas mecánicos, que interactúan con fotones de microondas. \textcolor{red}{ver referencias de esto}
+Como el Hamiltoniano conserva la cantidad de excitaciones es oportuno agrupar los estados en funci\'on de la cantidad de excitaciones: $\{\ket{g,n},\ket{e,n-1}\}$. En esta base el Hamiltoniano se diagonaliza por bloques, donde los elementos de matriz entre estados con diferente cantidad de excitaciones esta dado formalmente por
 \begin{align*}
     [H,\hat N]=0 \implies & \bra{N'}H \hat N \ket{N} = \bra{N'}\hat N H \ket{N} \\
     & N \bra{N'}H  \ket{N} = N' \bra{N'}H \ket{N} \\
@@ -49,14 +48,14 @@ Como el Hamiltoniano conserva la cantidad de excitaciones es oportuno agrupar lo
         \bra{N}H \ket{N} \text{ , si } N'=N
     \end{cases}
 \end{align*}
-donde $\ket{N}$ es un estado con $N$ excitaciones totales. Entonces para resolver el problema solo tenemos que mirar el subespacio de 2x2 de n excitaciones, cuyo Hamiltoniano es
+donde $\ket{N}$ es un estado con $N$ excitaciones totales. Entonces, para resolver el problema solo se tiene que considerar el subespacio de 2x2 de n excitaciones, cuyo Hamiltoniano es
 \begin{equation}
     H_n=\begin{pmatrix}
         -\frac{\Delta}{2} & g \sqrt{n} \\
         g \sqrt{n} & \frac{\Delta}{2} 
     \end{pmatrix}
 \end{equation}
-Resolvemos el problema de autovalores y autovectores y obtenemos
+Se resuelve el problema de autovalores y autovectores y se obtiene:
 \begin{equation}
     \begin{aligned}
         \ket{\psi^n_-} & = \cos \frac{\theta_n}{2}\ket{g,n}-\sin \frac{\theta_n}{2}\ket{e,n-1} \\
@@ -70,11 +69,11 @@ con $E_{\pm}^n=\pm \frac{\Omega_n}{2}$ las autoenergias y $\Omega_n=\sqrt{\Delta
     \caption{Relaci\'on energ\'ia detunning para el modelo de Jaynes-Cummings. La diferencia de energ\'ia entre los estados de un mismo nivel para $\Delta=0$ es $2g\sqrt{n}$.}
     \label{fig:relación energia detunning jcm1}
 \end{figure}
-En la figura \ref{fig:relación energia detunning jcm1} se observan las curvas de energ\'ia en funci\'on del detunning para diferentes niveles. Lo primero que tenemos que observar es que en el caso resonante, es decir $\Delta=0$, los autoestados del sistema son los estados máximamente entrelazados de Bell
+En la figura \ref{fig:relación energia detunning jcm1} se observan las curvas de energ\'ia en funci\'on del detunning para diferentes niveles. Lo primero que se tiene que observar es que en el caso resonante, es decir $\Delta=0$, los autoestados del sistema son los estados máximamente entrelazados de Bell
 \begin{equation}
     \ket{\psi_\pm^n}=\frac{1}{\sqrt{2}}(\ket{gn}\pm\ket{e,n-1})
 \end{equation} 
-y la diferencia de energ\'ia entre los autoestados es $\Delta E^n =E^n_+-E^n_-=2g\sqrt{n}$. En el caso muy lejos de resonancia podemos asumir que $\Delta \gg g $, y entonces los autoestados coinciden en este l\'imite con los estados de la base, 
+y la diferencia de energ\'ia entre los autoestados es $\Delta E^n =E^n_+-E^n_-=2g\sqrt{n}$. En el caso muy lejos de resonancia se puede asumir que $\Delta \gg g $, y entonces los autoestados coinciden en este l\'imite con los estados de la base, 
 \begin{equation}
     \begin{aligned}
         \ket{\psi^n_+}=\ket{e,n-1} \\
@@ -82,62 +81,61 @@ y la diferencia de energ\'ia entre los autoestados es $\Delta E^n =E^n_+-E^n_-=2
     \end{aligned}
 \end{equation}
 Ac\'a hay una sutileza, y es que si $\Delta>0$, entonces $\ket{e,n-1}$ es el estado de mayor energ\'ia y la notaci\'on coincide con la energ\'ia, pero si $\Delta<0$ entonces el estado $\ket{\psi^n_+}$ es el estado de menor energ\'ia. 
-Un efecto interesante es que en el caso de alta desinton\'ia, podemos calcular la diferencia entre la energía del autoestado exacto del Hamiltoniano $\ket{\psi_\pm^n}$ y la energía asintótica a la que tiende, que es la energía de los estados de la base $\ket{g,n},\ket{e,n-1}$. Esta diferencia ... \textcolor{red}{VOLVER A ESTO Y VER SI DEJARLO O SACARLO. EVENTUALMENTE COMPLETAR.}
+Un efecto interesante es que en el caso de alta desinton\'ia, se puede calcular la diferencia entre la energía del autoestado exacto del Hamiltoniano $\ket{\psi_\pm^n}$ y la energía asintótica a la que tiende, que es la energía de los estados de la base $\ket{g,n},\ket{e,n-1}$:
 \begin{equation}
     \begin{aligned}
-        \Delta E_{e,n-1}=E_+^n-E^{(0)}_{e,n-1}=\frac{g^2}{\Delta}n
+        \Delta E_{e,n-1}=E_+^n-E^{(0)}_{e,n-1}=\frac{g^2}{\Delta}n \\
         \Delta E_{g,n}=E_-^n-E^{(0)}_{g,n}=-\frac{g^2}{\Delta}n
     \end{aligned}
 \end{equation}
-El resultado importante de esta diferencia de energías es que aun en ausencia de fotones en la cavidad $n=0$, hay una diferencia entre las energías entre el Hamiltoniano del átomo, y del $H_{JC}$. Este efecto es el \textit{Lamb Shift} y nos dice que el vac\'io electromagnetico induce un corrimiento en la energ\'ia de los estados. Esto es importante notarlo, porque para el caso de dos átomos también est\'a manifiesto.
+El resultado importante de esta diferencia de energías es que aún en ausencia de fotones en la cavidad $n=0$, hay una diferencia entre las energías entre el Hamiltoniano del átomo, y del $H_{JC}$. Este efecto es el \textit{Lamb Shift} y nos dice que el vac\'io electromagnético induce un corrimiento en la energ\'ia de los estados. Esto es importante notarlo, porque para el caso de dos átomos también est\'a manifiesto.
 
 \subsection{Fase geométrica en el JCM}
-Vamos a analizar la fase de Berry y la fase geométrica en la aproximación cinemática.
+Ahora se va a analizar la fase de Berry y la fase geométrica en la aproximación cinemática.
 \subsubsection{Fase de Berry}
-Para ver la fase de berry tenemos que tener un parámetro de control en el Hamiltoniano, el cual varía lentamente. Para esto necesitamos aplicar una transformación unitaria de corrimiento de fase al Hamiltoniano original \ref{eq3:hamiltoniano jcm} $R=\exp{-i\Omega a^\dagger a}$, que queda
+Para ver la fase de Berry se tiene que tener un parámetro de control en el Hamiltoniano, el cual varía lentamente. Para esto es necesario aplicar una transformación unitaria de corrimiento de fase $R=\exp{-i\Omega \hat a^\dagger \hat a}$ al Hamiltoniano de la Ec. \ref{eq3:hamiltoniano jcm} , obteniendo así
 \begin{equation}
-    H=\frac{\Delta}{2}\sigma_z+g(a^\dagger \sigma_e^{-i\Omega}-+a\sigma_+e^{i\Omega})
+    \hat H=\frac{\Delta}{2}\hat \sigma_z+g(\hat a^\dagger \hat \sigma_-e^{-i\Omega}-+\hat a\hat \sigma_+e^{i\Omega})
 \end{equation}
-que ahora depende explicitamente del parámetro externo de control $\Omega$. Los autoestados de este nuevo Hamiltoniano se obtienen aplicando esta misma transformación sobre los autoestados del Hamiltoniano original. Si el parámetro de control varia lentamente entre 0 y $2\pi$, entonces estamos dentro de las hipótesis propuestas por Berry, y podemos calcular la fase de Berry mediante la ecuación \ref{eq2:fg berry}:
+que ahora depende explícitamente del parámetro externo de control $\Omega$. Los autoestados de este nuevo Hamiltoniano se obtienen aplicando esta misma transformación sobre los autoestados del Hamiltoniano original. Si el parámetro de control varía lentamente entre 0 y $2\pi$, entonces estamos dentro de las hipótesis propuestas por Berry, y podemos calcular la fase de Berry mediante la Ec. \ref{eq2:fg berry}:
 \begin{equation}
-    \psi_a^n=i\oint_Cd\Omega\bra{\psi_\pm^n}R(\Omega)^\dagger \frac{d}{d\Omega}\ket{\psi_\pm^n}=\pi(1\pm \cos(\theta_n))
+    \phi_a^n=i\oint_Cd\Omega\bra{\psi_\pm^n}R(\Omega)^\dagger \frac{d}{d\Omega}\ket{\psi_\pm^n}=\pi(1\mp \cos(\theta_n))
 \end{equation}
 
-que es no trivial incluso para $n=0$, lo que nos dice que incluso el vacío electromagnetico introduce una corrección en la fase de Berry.
 \subsubsection{Aproximación Cinemática}
-Para comparar ambos métodos, ahora vamos a calcular la fase geométrica utilizando la aproximación cinemática aunque este abordaje es más general de lo necesario en este caso.
-Si se considera que el estado inicial es un atuoestado del Hamiltoniano, como los estados $\ket{\psi_\pm^n}$, entonces la fase geométrica en este caso se anula. Pero si se considera un estado inicial, por ejemplo $\ket{\psi(0)}=\ket{e,n}$, entonces el estado a tiempo $t$ resulta
+Para comparar ambos métodos, ahora se calcula la fase geométrica utilizando la aproximación cinemática (aunque este abordaje es más general de lo necesario en este caso).
+Si se considera que el estado inicial es un autoestado del Hamiltoniano, como los estados $\ket{\psi_\pm^n}$, entonces la fase geométrica en este caso se anula. Pero si se considera un estado inicial, por ejemplo $\ket{\psi(0)}=\ket{e,n}$, entonces el estado a tiempo $t$ resulta
 \begin{equation}\label{eq3:fg berry jcm}
     \ket{\psi(t)}=(\cos^2\theta_ne^{-iE_+^nt}+\sin^2\theta_ne^{iE_+^nt})\ket{e,n}-i \sin\theta_n\sin(E_+^nt)\ket{g,n+1}
 \end{equation}
-La fase geométrica acumulada \ref{eq2:fg cinematica unitaria} es
+La fase geométrica acumulada Ec. \ref{eq2:fg cinematica unitaria} es
 \begin{equation}\label{eq3:fg unitaria jcm}
     \phi_u[C]=-\pi(1-\cos\theta_n)\frac{t}{T} +\arg\left\{ 1+e^{2\pi i \frac{t}{T}}\frac{\Omega_n-\Delta}{\Omega_n+\Delta} \right\}
 \end{equation}
-con $T=\frac{2\pi}{\Omega_n}$ es un período correspondiente a la frecuencia de Rabi $\Omega_n$. Esta expresión y la anterior \ref{eq3:fg berry jcm}, deberían coincidir cuando $t=T$, que se corresponde con un ciclo cerrado. En este caso ($t=T$) se obtiene
+con $T=\frac{2\pi}{\Omega_n}$ es un período correspondiente a la frecuencia de Rabi $\Omega_n$. La FG en la aproximacion cinematica (Ec. \ref{eq3:fg unitaria jcm}) y la de Berry (Ec. \ref{eq3:fg berry jcm}), deberían coincidir cuando $t=T$, que se corresponde con un ciclo cerrado. En ese caso ($t=T$) se obtiene:
 \begin{equation}
     \phi_u=-\pi(1-\cos\theta_n)
 \end{equation}
-La diferencia de signos se puede explicar comparando las curvas descritas por la esfera de Bloch para cada evolución. 
+La diferencia de signos se puede explicar comparando las curvas descritas por la esfera de Bloch para cada evolución como muestra la figura \ref{fig3:esfera de bloch jcm}. 
 \begin{figure}[H]
     \centering
     \begin{subfigure}[h]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/ch3/bloch berry.png}
-        \caption{Evolución adiabática} 
+        \caption{} 
         \label{fig3:bloch berry}
     \end{subfigure}
     \hfill
     \begin{subfigure}[h]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{figuras/ch3/bloch cinematica.png}
-        \caption{Enfoque cinemático}
+        \caption{}
         \label{fig3:bloch cinematica}
     \end{subfigure}
-    \caption{}
+    \caption{(\ref{sub@fig3:bloch berry}) Evolución de un autoestado $\ket{\psi_\pm(t)}$ bajo un campo de control que introduce cambios de fase. (\ref{sub@fig3:bloch cinematica}) Evolucion de un estado generico $\ket{e,n}$. Las curvas se corresponden con diferentes valores del detunning, que son $\Delta=0$ (azul), $\Delta=g$ (violeta) y $\Delta=2g$ (naranja).}
     \label{fig3:esfera de bloch jcm}
 \end{figure}
-En el caso \ref{eq3:fg berry jcm}, correspondiente a la figura \ref{fig3:bloch berry}, los autoestados son los autoestados $R(\Omega)\ket{\psi_\pm^n}=e^{-i\Omega \hat n}\ket{\psi_\pm^n}$, entonces al variar $\Omega\in [0,2\pi]$ la trayectoria es simplemente un circulo en la esfera de Bloch. En cambio, en el segundo caso, si preparamos el sistema inicialmente en el estado $\ket{e,n}$ y lo dejamos evolucionar por la acción de H durante un tiempo, la trayectoria ahora no son círculos horizontales en la esfera, sino que parten del polo norte, que es el estado $\ket{e,n}$, y luego hace una trayectoria ovalada, para finalmente volver al punto inicial de partida a un tiempo $t=T$. La diferencia en el signo se explica a través de la transformación que nos lleva de una curva a la otra. Para esto, necesitamos de una rotación rígida, y una inversión de la parametrización, por su parte, esta ultima, introduce un signo negativo, cosa que se ve claramente en la ecuación \ref{eq3:fg unitaria jcm} al cambiar $t\rightarrow -t$.
+La figura \ref{fig3:bloch berry} muestra la evolucion bajo el campo que introduce un corrimiento de fases utilizado para calcular la fase de Berry, los autoestados son los autoestados $R(\Omega)\ket{\psi_\pm^n}=e^{-i\Omega \hat n}\ket{\psi_\pm^n}$, entonces al variar $\Omega\in [0,2\pi]$ la trayectoria es simplemente un circulo en la esfera de Bloch. En cambio, en el segundo caso, si preparamos el sistema inicialmente en el estado $\ket{e,n}$ y lo dejamos evolucionar por la acción del Hamiltoniano durante un tiempo, la trayectoria ahora no son círculos horizontales en la esfera, sino que parten del polo norte, que es el estado $\ket{e,n}$, y luego hace una trayectoria ovalada, para finalmente volver al punto inicial de partida a un tiempo $t=T$. La diferencia en el signo se explica a través de la transformación que nos lleva de una curva a la otra. Para esto, necesitamos de una rotación rígida, y una inversión de la parametrización, por su parte, esta ultima, introduce un signo negativo, cosa que se ve claramente en la Ec. \ref{eq3:fg unitaria jcm} al cambiar $t\rightarrow -t$.
 
 \section{Medio Kerr}\label{sec3:medio kerr}
 Ahora que ya se trabajó el caso mas sencillo, se comienza a estudiar casos mas generales. La primera generalización que se hará es agregar un medio no lineal. Este medio se lo conoce como medio Kerr, y lo que hace es agregar un término en el Hamiltoniano de la cavidad, que pasa de ser \ref{eq3:hamiltoniano inicial} 
@@ -206,7 +204,7 @@ Ahora, habiendo entendido esto, podemos ver que el efecto del medio es modificar
 
 Habiendo desarrollado el análisis de la fase geométrica acumulada por el sistema átomo-cavidad en la situación ideal de completo aislamiento, se aborda ahora el estudio para el escenario más realista en el que el mismo sistema se encuentra en interacción con un entorno. El problema se trata para la implementación específica en estructuras semiconductoras, en las que un punto cuántico (al cual se sigue, sin embargo, refiriendo como átomo o sistema de dos niveles) se ubica en una nano o micro-cavidad.
 
-Siguiendo \cite{80}, en este capítulo se estudia en detalle la fase geométrica acumulada en un modelo de Jaynes-Cummings disipativo, como caso paradigmático dentro del campo de la electrodinámica en cavidades. Se considera que los principales mecanismos por los cuales el sistema “átomo + modo” interactúa con el entorno son el flujo de fotones a través de las paredes de la cavidad y el continuo e incoherente bombeo del sistema de dos niveles, lo que conforma un escenario frecuente en electrodinámica de cavidades semiconductoras \cite{81,82,83}. 
+Siguiendo \cite{Viotti2022}, en este capítulo se estudia en detalle la fase geométrica acumulada en un modelo de Jaynes-Cummings disipativo, como caso paradigmático dentro del campo de la electrodinámica en cavidades. Se considera que los principales mecanismos por los cuales el sistema “átomo + modo” interactúa con el entorno son el flujo de fotones a través de las paredes de la cavidad y el continuo e incoherente bombeo del sistema de dos niveles, lo que conforma un escenario frecuente en electrodinámica de cavidades semiconductoras (\cite{Khitrova2006},\cite{Laussy2009},\cite{DelValle2009}). 
 
 Para poder modelar estos mecanismos, se emplea la ecuación maestra fenomenológica de Lindblad
 \begin{equation}\label{eq3:lindblad}
@@ -224,7 +222,7 @@ L_p = \sqrt{p} \ \sigma_+
 
 ,representan la pérdida de fotones y el bombeo continuo e incoherente del átomo, respectivamente, con los parámetros $\gamma$ y $p$ denominados tasa de pérdida de fotones y amplitud del bombeo. 
 
-El bombeo sobre el átomo es siempre secundario frente a la pérdida de fotones, lo cual nos da las relaciones $\frac{p}{g},\frac{p}{\gamma} \ll 1$, y la relación entre $\gamma$ y $g$ da lugar a dos regímenes que se diferencian con claridad \cite{50}-\cite{54}. El régimen de acoplamiento fuerte (SC o Strong Coupling) es cuando la interacción átomo-cavidad es mas fuerte que la disipación del entorno, es decir $\gamma /g <1$. En el caso contrario $\gamma/g>1$ estamos en el régimen de acoplamiento débil (WC o Weak Coupling). Para no generar confusiones, hay que destacar que en general, cuando en la literatura se habla de acoplamientos fuertes y débiles, se refiere a la interacción entre las partes del mismo sistema, pero en este caso, se esta haciendo referencia a la interacción del sistema con el entorno EN COMPARACIÓN con la interacción interna del sistema.
+El bombeo sobre el átomo es siempre secundario frente a la pérdida de fotones, lo cual nos da las relaciones $\frac{p}{g},\frac{p}{\gamma} \ll 1$, y la relación entre $\gamma$ y $g$ da lugar a dos regímenes que se diferencian con claridad \cite{Carmi1989}-\cite{Lodhal2015}. El régimen de acoplamiento fuerte (SC o Strong Coupling) es cuando la interacción átomo-cavidad es mas fuerte que la disipación del entorno, es decir $\gamma /g <1$. En el caso contrario $\gamma/g>1$ estamos en el régimen de acoplamiento débil (WC o Weak Coupling). Para no generar confusiones, hay que destacar que en general, cuando en la literatura se habla de acoplamientos fuertes y débiles, se refiere a la interacción entre las partes del mismo sistema, pero en este caso, se esta haciendo referencia a la interacción del sistema con el entorno EN COMPARACIÓN con la interacción interna del sistema.
 \subsection{Solucion y regimen de acoplamiento}\label{sec3:regimen acoplamiento}
 En esta ocasión nos interesa resolver el problema restringiendonos al subespacio donde el átomo puede estar en cualquiera de sus dos estados, y nos restringimos al caso en donde la cavidad tiene 1 o 2 fotones, en consecuencia, se restringe el estudio a un subespacio truncado cuya base son los estados $\{ \ket{0}=\ket{g,0} ; \ket{1}=\ket{e,0} ; \ket{2}=\ket{-,1} \}$. Desarrollando explícitamente el sistema de ecuaciones dadas por la ecuación de Lindblad \ref{eq3:lindblad}, obtenemos que los elementos $\rho_{0i}$ quedan desacoplados de los demás:
 

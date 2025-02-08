@@ -9,6 +9,8 @@
 \usepackage[T1]{fontenc}                    % encoding T1 para fonts
 \usepackage[english,spanish,es-nodecimaldot]{babel}         % multilenguaje
 
+
+
 \usepackage{graphicx}                       % inclusion de figuras 
 \usepackage{amsthm, amsmath, amssymb}       % fonts y environments para math
 \usepackage{setspace}\onehalfspacing        % espaciado entre lineas
