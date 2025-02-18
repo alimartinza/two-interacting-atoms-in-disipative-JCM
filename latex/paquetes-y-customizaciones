@@ -40,7 +40,7 @@
 \usepackage{bm}
 \hypersetup{
     colorlinks=true,
-    linkcolor=blue,
+    linkcolor=red,
     filecolor=magenta,      
     urlcolor=cyan,
     citecolor=Green,

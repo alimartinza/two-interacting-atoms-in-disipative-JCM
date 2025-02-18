@@ -213,14 +213,14 @@ y definir la fase geométrica como la diferencia de fase \ref{2.65} para este ma
 \end{equation}
 y en consecuencia, la fase geométrica resulta
 
-\begin{equation}
+\begin{equation}\label{ec2:fg general}
     \phi_g[C]=\arg \left( \sum_{k=1}^{N} \sqrt{\omega_k(0)\omega_k(t)} \braket{\psi_k(0)}{\psi_k(T)}e^{-\int_{0}^{T}dt\braket{\psi_k(t)}{\dot\psi_k(t)}} \right)
-\end{equation}\label{ec2:fg general}
+\end{equation}
 La definición propuesta satisface las condiciones que rigen sobre una noción geométrica razonable para un estado mixto, que son: (i) Efectivamente es una fase, dado que si definición a través de la funcion argumento impone una periodicidad bien definida, (ii) es manifiestamente invariante de gauge ya que toma el mismo valor para cualquier operador unitario $U(t)$ en la clase de equivalencia descrita por \ref{2.66}, y por lo tanto depende unicamente por el camino $C$ trazado por la matriz $\rho(t)$ del sistema y (iii) cuando la evolución es unitaria, se recuperan los resultados anteriores para estados iniciales puros, y \cite{9-10} para estados iniciales mixtos. Finalmente (iv) es accesible experimentalmente, por ejemplo usando interferometria.
 
 Sera de utilidad para su aplicación, el caso particular en que el sistema se encuentre inicialmente en un estado puro $\ket{\psi(0)}$. En tal situación, la descomposición de la matriz densidad del sistema en el instante inicial solo tendrá un autovalor distinto de cero: $\omega_+(0)=1$. En consecuencia, la sumatoria en la ecuación \ref{ec2:fg general} posee un unico termino no nulo, y la formula se reduce a 
-\begin{equation}
+\begin{equation}\label{ec2:fg general puro}
     \phi_g[C]=\arg{\braket{\psi(0)}{\psi_+(T)}}-\Im \int_{0}^{T}dt \braket{\psi_+(t)}{\dot\psi_+(t)}
-\end{equation}\label{ec2:fg general puro}
+\end{equation}
 Esta expresión admite la interpretación de fase geométrica acumulada por el autoestado $\ket{\psi_+(t)}$.
 

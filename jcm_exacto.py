@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib import colormaps
 from mpl_toolkits.mplot3d import axes3d
 
-SMALL_SIZE = 12
-MEDIUM_SIZE = 15
+SMALL_SIZE = 15
+MEDIUM_SIZE = 20
 BIGGER_SIZE = 30
 
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
@@ -53,13 +53,14 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
-#Definimos los parametros del problema
-# '''----ENERGIAS JCM SIMPLE----'''
-# w_0=1
-# g=0.001*w_0
-# def E_jcm1(n_:int,delta:list,x:float):
-#     return [0.5*np.sqrt((delta-x*(2*n_-1))**2+4*g**2*n_),-0.5*np.sqrt((delta-x*(2*n_-1))**2+4*g**2*n_)]
-# delta=np.linspace(-7*g,7*g,100000)
+# Definimos los parametros del problema
+w_0=1
+g=0.001*w_0
+
+'''----ENERGIAS JCM SIMPLE----'''
+def E_jcm1(n_:int,delta:list,x:float):
+    return [x*(n_-1/2)**2+x/4+0.5*np.sqrt((delta-x*(n_-1/2))**2+4*g**2*n_),x*(n_-1/2)**2+x/4-0.5*np.sqrt((delta-x*(n_-1/2))**2+4*g**2*n_)]
+# delta=np.linspace(-10*g,10*g,10000)
 # colors=colormaps['plasma'](np.linspace(0,1,10))
 # labels=['$E^1_\pm$','$E^2_\pm$','$E^3_\pm$']
 # fig=plt.figure(figsize=(8,6))
@@ -78,16 +79,12 @@ gg2=tensor(gr,gr,basis(3,2)) #11
 # plt.close(fig)
 
 '''----ENERGIAS JCM DOBLE----'''
-t_final=100000
-steps=100000
 w_0=1
 g=0.001*w_0
-p=0.005*g
-k=0.5*g
-x=0
-J=0
 
-gamma=0.1*g
+t_final=100000
+steps=100000
+
 acoplamiento='lineal'
 if acoplamiento=='lineal':
     a=1/2
@@ -104,7 +101,7 @@ def gamma_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
     return (x*(n_-1)**2-J+2*k)*(x*(n_-2)**2+x*n_**2+2*J)+(x*(n_-2)**2+d+J)*(x*n_**2-d+J)-2*g**2*(n_**(2*a)+(n_-1)**(2*a))
 
 def eta_n(n_:int,d:float,g:float,k:float,J:float,x:float,a:float=0.5):
-    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) - (n_ - 1)**(2*a)))
+    return -(x*n_**2 - d + J)*(x*(n_ - 2)**2 + d + J)*(x*(n_ - 1)**2 - J + 2*k)+ 2*g**2*(x*(n_ - 2)**2*n_**(2*a) + x*n_**2*(n_ - 1)**(2*a) + d* (n_**(2*a) - (n_ - 1)**(2*a)) + J*(n_**(2*a) + (n_ - 1)**(2*a)))
 
 def Q_n(n_:int,d:float,g:float,k:float,J:float,x:float):
     return gamma_n(n_,d,g,k,J,x)/3-beta_n(n_,k,J,x)*beta_n(n_,k,J,x)/9
@@ -127,7 +124,7 @@ def grafico2d_chilist(k,J):
     # E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
     # E_jcm=[[1/2*np.sqrt(4*g**2+(d-x)**2),-1/2*np.sqrt(4*g**2+(d-x)**2)],[1/2*np.sqrt(2*4*g**2+(d-3*x)**2),-1/2*np.sqrt(2*4*g**2+(d-3*x)**2)]]
 
-    chi_list=np.linspace(0,10*g,100)
+    chi_list=np.linspace(0,5*g,10)
     colors=colormaps['inferno'](np.linspace(0,1,len(chi_list)+2))
     labels=['$\Omega_{21}$','$\Omega_{32}$','$\Omega_{31}$']
     fig=plt.figure(figsize=(8,6))
@@ -155,7 +152,7 @@ def grafico2d_chilist(k,J):
     ax2.set_ylabel('Energia u.a.')
     plt.show()
 
-def grafico2dchi_dlist(k,J):
+def grafico2d_dlist(k,J):
     d_list=np.linspace(-10*g,10*g,21)
     # E=[[E00],[E11,E12,E13],[E21,E22,E23,E24],...,[En1,En2,En3,En4]]
     # E=[[-d+J],[1/2*(x-d)+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),1/2*(x-d)+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(-2*k-J)*np.ones_like(d)],[-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos(theta_n(2)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+2*np.pi)/3),-1/3*beta_n(2)+2*np.sqrt(-Q_n(2))*np.cos((theta_n(2)+4*np.pi)/3),(x-J-2*k)*np.ones_like(d)]]
@@ -343,4 +340,68 @@ def grafico3d_chi_k(d,J):
     plt.show()
 
 
-grafico2dchi_dlist(0,0)
+# grafico2d_klist(2.5*g,0)
+
+x=0*g
+k=0*g
+J=0*g
+xmax=10
+d=np.linspace(-xmax*g,xmax*g,10000)
+# fig_real=plt.figure(figsize=(8,6))
+# ax_real=fig_real.add_subplot()
+# # ax_real.plot(d/g,[np.real(Q_n(2,delta,g,k,J,x)**3+R_n(2,delta,g,k,J,x)**2) for delta in d],color='blue')
+# # ax_real.plot(d/g,[np.imag(Q_n(2,delta,g,k,J,x)**3+R_n(2,delta,g,k,J,x)**2) for delta in d],color='red')
+# # ax_real.plot(d/g,[R_n(2,delta,g,k,J,x) for delta in d],color='black')
+# # ax_real.plot(d/g,[Q_n(2,delta,g,k,J,x) for delta in d],color='blue')
+# # ax_real.plot(d/g,[np.arccos(R_n(2,delta,g,k,J,x)/np.sqrt(-Q_n(2,delta,g,k,J,x)**3)) for delta in d],color='black')
+# ax_real.plot(d/g,[np.sqrt(-Q_n(2,delta,g,k,J,x)**3) for delta in d],color='red')
+# ax_real.plot(d/g,[R_n(2,delta,g,k,J,x) for delta in d],color='blue')
+
+# # ax_real.plot(d/g,[R_n(2,delta,g,k,J,x)/np.sqrt(-Q_n(2,delta,g,k,J,x)**3) for delta in d],color='blue')
+# ax_real.grid()
+# plt.show()
+E_jcm=[[1/2*np.sqrt(4*g**2+(d-x)**2),-1/2*np.sqrt(4*g**2+(d-x)**2)],[1/2*np.sqrt(2*4*g**2+(d-3*x)**2),-1/2*np.sqrt(2*4*g**2+(d-3*x)**2)]]
+E=[-d+J,(x-d)/2+k+np.sqrt(2*g**2+(k-J+d/2-x/2)**2),(x-d)/2+k-np.sqrt(2*g**2+(k-J+d/2-x/2)**2),[-1/3*beta_n(2,k,J,x)+omega_general(2,1,delta,g,k,J,x) for delta in d],[-1/3*beta_n(2,k,J,x)+omega_general(2,2,delta,g,k,J,x) for delta in d],[-1/3*beta_n(2,k,J,x)+omega_general(2,3,delta,g,k,J,x) for delta in d]]
+labels=['$E^0$','$E^1$','$E^1$','$E^2$','$E^2$','$E^2$']
+
+colores=colormaps['inferno'](np.linspace(0,1,7))
+fig_e=plt.figure(figsize=(8,6))
+ax_e=fig_e.add_subplot()
+ax_e.set_xlabel('$\Delta/g$')
+ax_e.set_ylabel('Energia u.a.')
+lines=[]
+  
+line0,=ax_e.plot(d/g,E[0],color=colores[0],label=labels[0])
+line1,=ax_e.plot(d/g,E[1],color=colores[2],label=labels[1])
+line2,=ax_e.plot(d/g,E[2],color=colores[2])
+line3,=ax_e.plot(d/g,E[3],color=colores[4],label=labels[3])
+line4,=ax_e.plot(d/g,E[4],color=colores[4])
+line5,=ax_e.plot(d/g,E[5],color=colores[4])
+
+line_ejcm0,=ax_e.plot(d/g,2*E_jcm1(1,d,x)[0],color=colores[2],label='$2E^1_{JC}$',ls='dashed')
+ax_e.plot(d/g,2*E_jcm1(1,d,x)[1],color=colores[2],ls='dashed')
+line_ejcm1,=ax_e.plot(d/g,2*E_jcm1(2,d,x)[0],color=colores[4],label='$2E^2_{JC}$',ls='dashed')
+ax_e.plot(d/g,2*E_jcm1(2,d,x)[1],color=colores[4],ls='dashed')
+ax_e.set_xlim(d[0]/g,d[-1]/g)
+ax_e.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
+ax_e.legend(handles=[line_ejcm0,line_ejcm1,line0,line1,line3],loc='center right',framealpha=0.5)
+ax_e.grid()
+# fig_e.savefig('energias x=5.pdf')
+plt.show()
+
+# fig2=plt.figure(figsize=(8,6))
+# ax2=fig2.add_subplot()
+# ax2.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
+# ax2.grid()
+# ax2.set_xlim(-xmax,xmax)
+# lista=np.linspace(0,2*g,10)
+
+# colors=colormaps['inferno'](np.linspace(0,1,len(lista)))
+
+# for l,x in enumerate(lista):
+#     E2=[[-1/3*beta_n(2,k,J,x)+omega_general(2,1,delta,g,k,J,x) for delta in d],[-1/3*beta_n(2,k,J,x)+omega_general(2,2,delta,g,k,J,x) for delta in d],[-1/3*beta_n(2,k,J,x)+omega_general(2,3,delta,g,k,J,x) for delta in d]]
+
+#     ax2.plot(d/g,E2[0],color=colors[l])
+#     ax2.plot(d/g,E2[1],color=colors[l])
+#     ax2.plot(d/g,E2[2],color=colors[l])
+# plt.show()

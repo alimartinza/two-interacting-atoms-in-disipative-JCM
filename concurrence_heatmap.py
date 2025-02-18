@@ -357,52 +357,54 @@ g=0.001
 #         concurrence_heatmap_k(psi0,psi0Name,params[0],params[2],params[1])
 
 psi0=(eg1+ge1).unit()
-psi0Name='eg1+ge1 final'
-concurrence_heatmap_delta(psi0,psi0Name,x=0.5*g,J=2.5*g,k=0)
+psi0Name='eg1+ge1 mix'
+concurrence_heatmap_delta(psi0,psi0Name,x=5*g,J=0,k=2.5*g,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=2.5*g)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=2.5*g,k=0)
 
 
-psi0=gg2
-psi0Name='gg2'
+# psi0=gg2
+# psi0Name='gg2'
 
-acople='lineal'
-concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0,acople=acople)
-concurrence_heatmap_delta(psi0,psi0Name,x=0.1*g,J=0,k=0,acople=acople,unit=False)
-concurrence_heatmap_delta(psi0,psi0Name,x=5*g,J=0,k=0,acople=acople,unit=False)
-concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0.5*g,acople=acople,unit=False)
+# acople='lineal'
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0,acople=acople)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0.1*g,J=0,k=0,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=5*g,J=0,k=0,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_delta(psi0,psi0Name,x=1.25*g,J=0,k=2.5*g,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=1.25*g,J=0,k=2.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0*g,acople=acople)
-concurrence_heatmap_chi(psi0,psi0Name,d=1*g,J=0*g,k=0*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=5*g,J=0*g,k=0*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0.5*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=2.5*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0*g,acople=acople)
+# concurrence_heatmap_chi(psi0,psi0Name,d=1*g,J=0*g,k=0*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=5*g,J=0*g,k=0*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0.5*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=2.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0*g,acople=acople)
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=5*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0.5*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=1*g,x=0*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=5*g,x=0*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0*g,acople=acople)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=5*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0.5*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=1*g,x=0*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=5*g,x=0*g,acople=acople,unit=False)
 
-acople='bs'
-concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0,acople=acople)
-concurrence_heatmap_delta(psi0,psi0Name,x=0.1*g,J=0,k=0,acople=acople,unit=False)
-concurrence_heatmap_delta(psi0,psi0Name,x=5*g,J=0,k=0,acople=acople,unit=False)
-concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0.5*g,acople=acople,unit=False)
+# acople='bs'
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0,acople=acople)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0.1*g,J=0,k=0,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=5*g,J=0,k=0,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=0,J=0,k=0.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_delta(psi0,psi0Name,x=1.25*g,J=0,k=2.5*g,acople=acople,unit=False)
+# concurrence_heatmap_delta(psi0,psi0Name,x=1.25*g,J=0,k=2.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0*g,acople=acople)
-concurrence_heatmap_chi(psi0,psi0Name,d=1*g,J=0*g,k=0*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=5*g,J=0*g,k=0*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0.5*g,acople=acople,unit=False)
-concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=2.5*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0*g,acople=acople)
+# concurrence_heatmap_chi(psi0,psi0Name,d=1*g,J=0*g,k=0*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=5*g,J=0*g,k=0*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=0.5*g,acople=acople,unit=False)
+# concurrence_heatmap_chi(psi0,psi0Name,d=0*g,J=0*g,k=2.5*g,acople=acople,unit=False)
 
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0*g,acople=acople)
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=5*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0.5*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=1*g,x=0*g,acople=acople,unit=False)
-concurrence_heatmap_k(psi0,psi0Name,d=5*g,x=0*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0*g,acople=acople)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=5*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=0*g,x=0.5*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=1*g,x=0*g,acople=acople,unit=False)
+# concurrence_heatmap_k(psi0,psi0Name,d=5*g,x=0*g,acople=acople,unit=False)
 
 # '''Acoplamiento lineal'''
 # psi0=(eg0+ge0).unit()
