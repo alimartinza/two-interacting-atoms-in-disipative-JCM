@@ -2448,14 +2448,14 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     #PARA CADA GRAFICO QUE VAMOS A HACER, CREAMOS LA FIGURA EN UNA PRIMERA INSTANCIA ASI QUEDAN ESTATICOS, Y DESPUES HACEMOS UN LOOP POR LOS ARCHIVOS QUE VAN A ESTAR
     #INCLUIDOS EN CADA UNO PARA HACER LA COMPARACION
     '''N=0'''
-    fig0 = plt.figure(figsize=(16,9))
+    fig0 = plt.figure(figsize=(8,6))
     fig0.suptitle('N=0')
     ax0 = fig0.add_subplot()
     ax0.set_xlabel('gt')
     ax0.set_ylabel('Amp. Prob. ')
     ax0.set_ylim(0,1)
     '''N=1'''
-    fig1 = plt.figure(figsize=(16,9))
+    fig1 = plt.figure(figsize=(8,6))
     ax1 = fig1.add_subplot()
     fig1.suptitle('N=1')
     ax1.set_xlabel('gt')
@@ -2463,7 +2463,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax1.set_ylim(0,1)
 
     '''N=2'''
-    fig2 = plt.figure(figsize=(16,9))
+    fig2 = plt.figure(figsize=(8,6))
     ax2 = fig2.add_subplot()
     fig2.suptitle('N=2')
     ax2.set_xlabel('gt')
@@ -2471,7 +2471,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax2.set_ylim(0,1)
 
     '''PAULI'''
-    fig_pauli = plt.figure(figsize=(16,9))
+    fig_pauli = plt.figure(figsize=(8,6))
     ax_pauli = fig_pauli.add_subplot()
     fig_pauli.suptitle('Pauli ')
     ax_pauli.set_xlabel('gt')
@@ -2481,7 +2481,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     pauli_names=[]
 
     '''ENTROPIA VON NEUMAN Y LINEAL'''
-    fig_S = plt.figure(figsize=(16,9))
+    fig_S = plt.figure(figsize=(8,6))
     ax_Slin = fig_S.add_subplot(121)
     ax_Svn = fig_S.add_subplot(122)
     fig_S.suptitle('Entropia')
@@ -2495,7 +2495,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax_Slin.set_ylim(0,1)
 
     '''ESTADO REDUCIDO: ENTROPIA Y CONCURRENCIA'''
-    fig_Sr = plt.figure(figsize=(16,9))
+    fig_Sr = plt.figure(figsize=(8,6))
     ax_Srlin = fig_Sr.add_subplot(131)
     ax_Srvn = fig_Sr.add_subplot(132)
     ax_Con = fig_Sr.add_subplot(133)
@@ -2514,7 +2514,7 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
     ax_Con.set_ylim(0,1)
 
     '''---FG---'''
-    fig_fg = plt.figure(figsize=(16,9))
+    fig_fg = plt.figure(figsize=(8,6))
     ax_fg = fig_fg.add_subplot()
     fig_fg.suptitle('Fase Geometrica')
     ax_fg.set_xlabel('gt')
