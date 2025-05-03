@@ -77,31 +77,59 @@ def rabi_freq(n_:int,j1:int,j2:int,d:float,g:float,k:float,J:float,x:float):
 
 
 
+psi0=(eg0+ge0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+psi0Name='eg0+ge0'
 
 w0=1
 g=0.001*w0
 
+J=0*g
+k=0*g
+
+x=5*g
+d=0*g
+gamma=0.25*g
 p=0.005*g
-gamma=0.1*g
+steps=8000
 
-d=0
-x=0
-
-J=0
-k=0
-
-alpha=1
-
-psi0=(eg1+ge1).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-# print(psi0)
-steps=3000
-T=2*np.pi/np.abs(rabi_freq(2,1,2,d,g,k,J,x))
-
-t_final=3*T
+T=2*np.pi/np.abs(omega_general(1,2,0,g,0,0,0))
+# T=2*np.pi/np.abs(rabi_freq(2,1,2,d,g,k,J,x))
+t_final=15*T
 t=np.linspace(0,t_final,steps)
 
-# jcm_lib.plot_gamma_simu(w0,delta=0,chi=0,g=g,k=0,J=0,gamma_list=[0,0.1*g,0.5*g,g,2*g],alpha=alpha,psi0=psi0,disipation=True,steps=steps,t_final=t_final)
+H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
-# jcm_lib.plot_gamma_simu(w0,delta=d,chi=x,g=g,k=k,J=J,gamma_list=[0,0.1*g,0.5*g,2*g],alpha=alpha,psi0=psi0,disipation=True,steps=steps,t_final=t_final)
 
-jcm_lib.plot_delta_simu(w0,d,x,g,k,J,gamma,p,1,psi0,True,steps=steps,t_final=t_final)
+sol_u=mesolve(H,psi0,t)
+# concu_u[i]=concurrence(sol_u.states)
+fg_u,_,_,_=jcm_lib.fases(sol_u)
+l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+# concu_d[i]=concurrence(sol_d.states)
+fg_d,_,_,_=jcm_lib.fases(sol_d)
+
+atoms_states_d=np.empty_like(sol_d.states)
+for j in range(len(sol_d.states)):
+    atoms_states_d[j]=sol_d.states[j].ptrace([0,1])
+concu_d=jcm_lib.concurrence(atoms_states_d)
+
+atoms_states_u=np.empty_like(sol_u.states)
+for j in range(len(sol_u.states)):
+    atoms_states_u[j]=sol_u.states[j].ptrace([0,1])
+concu_u=jcm_lib.concurrence(atoms_states_u)
+
+fig=plt.figure(figsize=(8,6))
+fig.suptitle(f'$\psi_0={psi0Name} ; \chi={x/g}g ; \Delta={d/g}g ; k-J={(k-J)/g}g$')
+ax_fg=fig.add_subplot(121)
+ax_concu=fig.add_subplot(122)
+ax_fg.set_xlabel('$t/T_0$')
+ax_fg.set_ylabel('$\phi/\pi$')
+ax_fg.plot(t/T,fg_u/np.pi,color='black',label='unitario')
+ax_fg.plot(t/T,fg_d/np.pi,color='red',label='disiaptivo')
+ax_concu.plot(t/T,concu_u,color='black',label='unitario')
+ax_concu.plot(t/T,concu_d,color='red',label='disiaptivo')
+ax_fg.legend()
+ax_concu.legend()
+plt.grid()
+
+plt.show()

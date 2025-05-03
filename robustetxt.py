@@ -100,19 +100,19 @@ g=0.001*w_0
 # p=0.005*g
 
 d=0*g
-x=2.5*g
+x=0*g
 
 J=0*g
 k=0*g
 
 
 #'eg0-ge0+gg1','w(2)','eg0+ge0','eg0'
-psi0Name='eg1+ge1'
+psi0Name='ee0'
 
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez3t fg delta.txt')
-# delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta.txt')
+delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta-chi\{psi0Name} k={k/g}g J={J/g}g delta-chi.txt')
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g chi.txt')
-delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k.txt')
+#delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k.txt')
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta.txt')
 # delta_fg_10T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez10t fg delta.txt')
 
@@ -123,7 +123,7 @@ ax_rob3t=fig_rob3t.add_subplot()
 # ax_rob3t.set_xlim(np.min(delta_fg_3T[0])/g,np.max(delta_fg_3T[0])/g)
 # ax_rob3t.set_ylim(-0.6,0.6)
 ax_rob3t.hlines(0,np.min(delta_fg_3T[0])/g,np.max(delta_fg_3T[0])/g,colors='grey',linestyles='dashed',alpha=0.5)
-ax_rob3t.set_xlabel('$k-J/g$')
+ax_rob3t.set_xlabel('$\Delta/g$')
 ax_rob3t.set_ylabel('$\delta \phi/\pi$')
 ax_rob3t.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
 ax_rob3t.vlines([-x/2/g,3/2*x/g],-0.1,0.02,colors='grey',linestyles='dashed')

@@ -90,13 +90,13 @@ def omega_general(n_:int,j:int,d:float,g:float,k:float,J:float,x:float):
 '''#################################################################################################################################################
 ---------------------------------------------------REPRODUCCION RESULTADOS 1 ATOMO: ALPHA=0 -------------------------------------------------------------------
 ####################################################################################################################################################'''
-alpha=0
+alpha=1
 
 w0=1
 g=0.001*w0
 
-p=0#0.005*g
-gamma=0#0.05*g
+p=0.005*g
+gamma=0.25*g
 
 x=0
 d=0
@@ -105,23 +105,23 @@ k=0 # .1*g
 J=0
 
 
-psi0=(eg0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
-psi0Name='eg0'
+psi0=(eg0+ge0).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
+psi0Name='eg0+ge0'
 # print(psi0)
-steps=20000
+steps=10000
 esfera02=Bloch()
 esfera02.make_sphere()
 esfera02.clear()
 esfera02.set_point_marker('o')
 marker=[['o'],['^'],['s']]
 colors_pob=mpl.colormaps['plasma'](np.linspace(0,1,4))
-fig_pob_B=plt.figure(figsize=(8,6))
-ax_B=fig_pob_B.add_subplot()
+# fig_pob_B=plt.figure(figsize=(8,6))
+# ax_B=fig_pob_B.add_subplot()
 
-for l,x in enumerate([0,0.5*g,2*g]):
-    T=2*np.pi/omega_general(1,1,d,g,k,J,x) 
+for l,d in enumerate([0,0.5*g,2*g]):
+    T=2*np.pi/omega_general(1,2,d,g,k,J,x) 
 
-    t_final=1*T/np.sqrt(2)
+    t_final=1*T
 
     acoplamiento='lineal'
     def f():
@@ -143,56 +143,81 @@ for l,x in enumerate([0,0.5*g,2*g]):
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
     sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+    sol_u=mesolve(H,psi0,t)
 
-
-    points=50
+    points=100
     # colors=mpl.colormaps['inferno'](np.linspace(0,1,steps))
 
     nrm = mpl.colors.Normalize(0, points)
     colors = mpl.cm.inferno(nrm(np.linspace(0,points,points)))
 
-    '''#########---Sistema completo---##########'''
+    '''#########---N=1---##########'''
 
-    
+    # atom_states_d=np.empty_like(sol_d.states)
+    # for j in range(len(sol_d.states)):
+    #     atom_states_d[j]=sol_d.states[j].ptrace([0,1])
 
-    '''#########---Atomo A-Cavidad----##########'''
+    # atom_states_u=np.empty_like(sol_u.states)   
+    # for j in range(len(sol_u.states)):
+    #     atom_states_u[j]=sol_u.states[j].ptrace([0,1])
 
-    atom_acavity_states_d=np.empty_like(sol_d.states)
-    vec_acavity=np.zeros((3,len(sol_d.states)))
-    for j in range(len(sol_d.states)):
-        atom_acavity_states_d[j]=sol_d.states[j].ptrace([0,2])
-    
-    sz1_02=pr(e0)-pr(g1)
+    sz_a=pr((eg0+ge0).unit())-pr(gg1)
 
-    sx1_02=e0*g1.dag()+g1*e0.dag()
+    sx_a=(eg0+ge0).unit()*gg1.dag()+gg1*(eg0+ge0).unit().dag()
 
-    sy1_02=-1j*e0*g1.dag()+1j*g1*e0.dag()
+    sy_a=-1j*(eg0+ge0).unit()*gg1.dag()+1j*gg1*(eg0+ge0).unit().dag()
 
-    expect_sx1_02_acavity=[expect(atom_acavity_states_d[i],sx1_02) for i in range(0,steps,int(steps/points))]
-    expect_sy1_02_acavity=[expect(atom_acavity_states_d[i],sy1_02) for i in range(0,steps,int(steps/points))]
-    expect_sz1_02_acavity=[expect(atom_acavity_states_d[i],sz1_02) for i in range(0,steps,int(steps/points))]
+    expect_sx1=[expect(sx_a,sol_u.states[i]) for i in range(0,steps,int(steps/points))]
+    expect_sy1=[expect(sy_a,sol_u.states[i]) for i in range(0,steps,int(steps/points))]
+    expect_sz1=[expect(sz_a,sol_u.states[i]) for i in range(0,steps,int(steps/points))]
+
+    expect_sx1_d=[expect(sx_a,sol_d.states[i]) for i in range(0,steps,int(steps/points))]
+    expect_sy1_d=[expect(sy_a,sol_d.states[i]) for i in range(0,steps,int(steps/points))]
+    expect_sz1_d=[expect(sz_a,sol_d.states[i]) for i in range(0,steps,int(steps/points))]
 
 
     for i in range(points):
-        esfera02.add_points([expect_sx1_02_acavity[i],expect_sy1_02_acavity[i],expect_sz1_02_acavity[i]],colors=colors_pob[l],)#,'m',colors)
+        # esfera02.add_points([expect_sx1[i],expect_sy1[i],expect_sz1[i]],colors=colors_pob[l])
+        esfera02.add_points([expect_sx1_d[i],expect_sy1_d[i],expect_sz1_d[i]],colors=colors_pob[l])
 
-    '''####---Atomo B---###'''
+#     '''#########---Atomo A-Cavidad----##########'''
 
-    atom_b_states_d=np.empty_like(sol_d.states)
-    for j in range(len(sol_d.states)):
-        atom_b_states_d[j]=sol_d.states[j].ptrace([1])
+#     atom_acavity_states_d=np.empty_like(sol_d.states)
+#     vec_acavity=np.zeros((3,len(sol_d.states)))
+#     for j in range(len(sol_d.states)):
+#         atom_acavity_states_d[j]=sol_d.states[j].ptrace([0,2])
+    
+#     sz1_02=pr(e0)-pr(g1)
+
+#     sx1_02=e0*g1.dag()+g1*e0.dag()
+
+#     sy1_02=-1j*e0*g1.dag()+1j*g1*e0.dag()
+
+#     expect_sx1_02_acavity=[expect(atom_acavity_states_d[i],sx1_02) for i in range(0,steps,int(steps/points))]
+#     expect_sy1_02_acavity=[expect(atom_acavity_states_d[i],sy1_02) for i in range(0,steps,int(steps/points))]
+#     expect_sz1_02_acavity=[expect(atom_acavity_states_d[i],sz1_02) for i in range(0,steps,int(steps/points))]
 
 
-    ax_B.plot(t/T,[atom_b_states_d[i][0][0] for i in range(steps)],label='e',color=colors_pob[2])
-    ax_B.plot(t/T,[atom_b_states_d[i][1][1] for i in range(steps)],label='g',color=colors_pob[0])
+#     for i in range(points):
+#         esfera02.add_points([expect_sx1_02_acavity[i],expect_sy1_02_acavity[i],expect_sz1_02_acavity[i]],colors=colors_pob[l],)#,'m',colors)
 
-    ax_B.plot(t/T,[np.abs(atom_b_states_d[i][0][1]) for i in range(steps)],label='$C_{e,g}$',color=colors_pob[1],linestyle='dashed')
+#     '''####---Atomo B---###'''
+
+#     atom_b_states_d=np.empty_like(sol_d.states)
+#     for j in range(len(sol_d.states)):
+#         atom_b_states_d[j]=sol_d.states[j].ptrace([1])
+
+
+#     ax_B.plot(t/T,[atom_b_states_d[i][0][0] for i in range(steps)],label='e',color=colors_pob[2])
+#     ax_B.plot(t/T,[atom_b_states_d[i][1][1] for i in range(steps)],label='g',color=colors_pob[0])
+
+#     ax_B.plot(t/T,[np.abs(atom_b_states_d[i][0][1]) for i in range(steps)],label='$C_{e,g}$',color=colors_pob[1],linestyle='dashed')
 
 esfera02.render()
-esfera02.save(f'./graficos/{psi0Name} bloch AC a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
-ax_B.set_xlim(0,t_final/T)
-ax_B.set_ylim(0,1)
-ax_B.set_xlabel('$t/T$',size=20)
-ax_B.set_ylabel('Poblaciones',size=20)
-ax_B.legend()
+# esfera02.save(f'./graficos/{psi0Name} bloch AC a={alpha} d={d/g} x={x/g} k={k/g} J={J/g} gamma={gamma/g} p={p/g}.png')
+# ax_B.set_xlim(0,t_final/T)
+# ax_B.set_ylim(0,1)
+# ax_B.set_xlabel('$t/T$',size=20)
+# ax_B.set_ylabel('Poblaciones',size=20)
+# ax_B.legend()
 plt.show()

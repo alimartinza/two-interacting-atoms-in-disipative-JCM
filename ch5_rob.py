@@ -298,7 +298,7 @@ def robustez_delta_chi(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps
     gamma=0.25*g
     fig_fg=plt.figure(figsize=(8,6))
     ax_fg=fig_fg.add_subplot()
-    cluster_radii=0.5*g
+    cluster_radii=0.75*g
     cluster_steps=40
 
     deltafg=np.zeros((len(x_list)*2,delta_steps+3*cluster_steps))
@@ -321,11 +321,11 @@ def robustez_delta_chi(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps
             H=x*n2 + delta/2*(sz1+sz2) + g*((sm1+sm2)*f()*a.dag()+(sp1+sp2)*a*f()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
                 
             '''---Simulacion numerica---'''
-            if psi0Name=='eg0+ge0':
+            if psi0Name.startswith(('eg0+ge0','gg1'))==True:
                 T=np.pi/(np.sqrt(2*g**2+(k-J+delta/2-x/2)**2))
             else:
                 T=2*np.pi/np.abs(rabi_freq(2,1,2,delta,g,k,J,x))
-            t_final=3*T
+            t_final=5*T
             steps=2000
 
             l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
@@ -417,10 +417,12 @@ def robustez_delta_k(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:i
     plt.close('all')
 
 psi0=(eg1+ge1).unit()
-psi0Name='eg1+ge1'
+psi0Name='eg1+ge1 5t'
+robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[0,g,2*g,3*g],k=0,J=0)
+robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[0,g,2*g,3*g],k=1*g,J=0)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=0*g,J=0)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=g,J=0)
 
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=0,J=0)
@@ -429,27 +431,62 @@ robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=5*g,J=0)
 
 
-psi0=(gg2).unit()
-psi0Name='gg2'
+# psi0=(gg2).unit()
+# psi0Name='gg2'
+# robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=0,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=1*g,J=0)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=0*g,J=0)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=2.5*g,J=0)
-# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=g,J=0)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+# # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
 
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=0,J=0)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=g,J=0)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=2.5*g,J=0)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=5*g,J=0)
 
-psi0=(ee0).unit()
-psi0Name='ee0'
-# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=0*g,J=0)
-# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=2.5*g,J=0)
+# psi0=(ee0).unit()
+# psi0Name='ee0'
+# # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=0*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=0,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-35*g,delta_max=35*g,delta_steps=1,x_list=[6*g,7*g,8*g],k=1*g,J=0)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=g,J=0)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
-robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
 
+
+# psi0=(ee0+gg2).unit()
+# psi0Name='ee0+gg2'
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=0*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=2.5*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=25*g,delta_steps=1,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+
+# psi0=(eg0+ge0).unit()
+# psi0Name='eg0+ge0 long'
+# # robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=0*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=20*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=2.5*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=20*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-0*g,delta_max=20*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=15*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+
+# psi0=(gg1).unit()
+# psi0Name='gg1 long'
+# robustez_delta_chi(psi0,psi0Name,delta_min=-20*g,delta_max=20*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=0*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=2.5*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-5*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
+
+# psi0=((eg1+ge1).unit()+gg2).unit()
+# psi0Name='eg1+ge1)sqrt2+gg2'
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=0*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=2.5*g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g,6*g,7*g,8*g],k=g,J=0)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=2.5*g)
+# robustez_delta_chi(psi0,psi0Name,delta_min=-30*g,delta_max=30*g,delta_steps=302,x_list=[0,0.5*g,g,2*g,3*g,4*g,5*g,6*g,7*g,8*g],k=0*g,J=1*g)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=0,J=0)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=g,J=0)
 # robustez_delta_k(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=0,k_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],x=2.5*g,J=0)
@@ -488,8 +525,7 @@ robustez_delta_chi(psi0,psi0Name,delta_min=-25*g,delta_max=25*g,delta_steps=1,x_
 # robustez_k(gg2,'gg2',-12*g,12*g,406,delta=2.5*g,x=2.5*g,J=0)
 
 
-# psi0=(eg0+ge0).unit()
-# psi0Name='eg0+ge0'
+
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=0*g,J=0)
 # robustez_delta_chi(psi0,psi0Name,delta_min=-10*g,delta_max=25*g,delta_steps=302,x_list=[0,0.5*g,g,2.5*g,3.5*g,5*g],k=2.5*g,J=0)
 # robustez_delta(psi0,psi0Name,delta_min=-15*g,delta_max=15*g,delta_steps=202,x=0,k=0*g,J=0,cluster_centers=[0],cluster_radii=[1*g],cluster_steps=[52])

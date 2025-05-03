@@ -299,7 +299,7 @@ def fases(sol):
     max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
     psi0 = evec0[max_eigenvalue_idx]
     psi_old = psi0
-    Psi = []
+    Psi = [psi0]
     norma = []
     pan = 0
     Pan = []
@@ -321,13 +321,14 @@ def fases(sol):
         pan += np.angle(psi.overlap(psi_old))
         Pan.append(pan - np.angle(psi.overlap(psi0)))
         psi_old = psi
-
+        Psi.append(psi)
         # Almaceno el argumento para cada tiempo
         argumento[i] = np.angle(psi0.dag() * psi)
 
     eigenvals_t=np.delete(eigenvals_t,0,axis=0)
     Pan = np.array(Pan)
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+
+    return np.unwrap(Pan),Psi, argumento, np.array(eigenvals_t)
 
 def cementerio():
     def plot3D_gamma(condiciones_iniciales:list,k,J,x,d,gamma,p):
