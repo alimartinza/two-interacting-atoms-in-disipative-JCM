@@ -59,4 +59,9 @@ t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION
 psi0=eg0
 sol=mesolve(H,psi0,t,c_ops=[],progress_bar=True)
 
-print(type((sol.states[10][0]*sol.states[10][2])[0]))
+atoms_states=np.empty_like(sol.states)
+for j in range(len(sol.states)):
+    atoms_states[j]=sol.states[j].ptrace([0,1])  
+
+
+print(type(sol.states))
