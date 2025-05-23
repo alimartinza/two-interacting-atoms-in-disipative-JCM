@@ -125,9 +125,6 @@ for i in range(len(k_list)):
 
 params=np.delete(params,0,axis=0)
 
-#aasdfdasfjhaskdfjh
-#takjfhasldfkjadsfh
-#sdlfkhasdlfkjhasdlfkjhdaslfkjh
 
 ## CHEQUEAR BIEN CUALES SON LOS EJES DE CADA PARAMETRO Y PONER FLECHAS EN EL PLOT MOSTRANDO PARA DONDE CRECE CADA COSA.
 
