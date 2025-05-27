@@ -10,7 +10,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
 from matplotlib.animation import FuncAnimation
 
-from jcm_lib import simu_unit_y_disip,anim_univsdis
+from jcm_lib import plots_uni_vs_dis_chi,plots_uni_vs_dis_delta,plots_uni_vs_dis_gamma,plots_uni_vs_dis_J,plots_uni_vs_dis_kappa
 
 
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
@@ -48,65 +48,37 @@ gg0=tensor(gr,gr,basis(3,0)) #9
 gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
-# from mpl_toolkits.mplot3d import axes3d
-
-
-SMALL_SIZE = 12
-MEDIUM_SIZE = 15
-BIGGER_SIZE = 20
-
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
-psi0=(eg0+ge0).unit()
-psi0Name="eg0+ge0"
-steps=3000
-t_final=50000
+
+
 w_0=1
-J=0
 g=0.001*w_0
-p=0.005*g
-d=0
-x=0
-gamma=0.1*g
-kappa=np.linspace(0,4*g,41)#[0,0.1*g,0.2*g,0.3*g,0.4*g,0.5*g,0.6*g,0.7*g,0.8*g,0.9*g,g,1.1*g,1.2*g,1.3*g,1.4*g,1.5*g,1.6*g,1.7*g,1.8*g,1.9*g,2*g]
+# for psi0,psi0Name in zip([gg1,eg0,(eg0+ge0).unit(),(eg0-ge0).unit(),eg1,(eg1+ge1).unit(),(eg1-ge1).unit(),(eg0+ge0+gg1).unit(),(ee0-gg2).unit(),(ee0+gg2).unit(),(ee0+eg1+ge1+gg2).unit()],['gg1','eg0','eg0+ge0','eg0-ge0','eg1','eg1+ge1','eg1-ge1','w','ee0-gg2','ee0+gg2','ee0+eg1+ge1+gg2']):
+#     steps=20000
+#     t_final=10*steps
+#     ax1=plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=0, J=0, d=0, x=[0,0.1*g,g,2*g], gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+#     plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 k=0 j=0 gamma=0.1g barrido chi\{psi0Name}.png')
+#     plt.close()
+#     steps=2000
+#     t_final=10*steps
+#     ax1=plots_uni_vs_dis_chi(w_0=w_0, g=g, kappa=0, J=0, d=0, x=[0,0.1*g,g,2*g], gamma=0.1*g, psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+#     plt.savefig(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\2\d=0 k=0 j=0 gamma=0.1g barrido chi\{psi0Name} zoom.png')
+#     plt.close()
 
-param=kappa
-ops_expect_u=np.zeros((len(param),14,steps))
-ops_expect_d=np.zeros((len(param),14,steps))
-# coherencias_u=np.zeros((len(param),66,steps))
-# coherencias_d=np.zeros((len(param),66,steps))
-fg_u=np.zeros((len(param),steps))
-fg_d=np.zeros((len(param),steps))
-SvN_u=np.zeros((len(param),steps))
-SvN_d=np.zeros((len(param),steps))
-Slin_u=np.zeros((len(param),steps))
-Slin_d=np.zeros((len(param),steps))
-SvN_at_u=np.zeros((len(param),steps))
-SvN_at_d=np.zeros((len(param),steps))
-Slin_at_u=np.zeros((len(param),steps))
-Slin_at_d=np.zeros((len(param),steps))
-conc_at_u=np.zeros((len(param),steps))
-conc_at_d=np.zeros((len(param),steps))
-for i,k in enumerate(param):
-    #,coherencias_u[i],coherencias_d[i]
-    ops_expect_u[i],ops_expect_d[i],fg_u[i],fg_d[i],SvN_u[i],SvN_d[i],Slin_u[i],Slin_d[i],SvN_at_u[i],SvN_at_d[i],Slin_at_u[i],Slin_at_d[i],conc_at_u[i],conc_at_d[i]=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final=t_final,steps=steps)
-
-fg_min=min(min(fg_u.flatten()),min(fg_d.flatten()))
-fg_max=max(max(fg_u.flatten()),max(fg_d.flatten()))
-#anim uni vs disip
+psi0=eg0
+psi0Name='u_2^(1)'
+steps=2000
+t_final=10*steps
+plots_uni_vs_dis_delta(w_0=w_0, g=g, kappa=0, J=0, d=[0,0.1*g,0.25*g,0.5*g], x=0, gamma=0.1*g, alpha=0,psi0=psi0, psi0Name=psi0Name, t_final=t_final, steps=steps)
+plt.show()
 
 
-anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
-anim_concu=anim_univsdis("Concu",conc_at_u,conc_at_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,0,1])
+# '''------Animacion-----'''
+# anim_FG=anim_univsdis("FG",fg_u,fg_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,fg_min,fg_max])
+# anim_concu=anim_univsdis("Concu",concu_u,concu_d,kappa,"k",t_final,steps,psi0Name,[0,g*t_final,0,1])
 
 
-anim_FG.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} FG kappa uni vs disip chi={x/g}g delta={d/g}g.gif", writer='pillow')
-anim_concu.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} Concu kappa uni vs disip FG chi={x/g}g delta={d/g}g.gif", writer='pillow')
+# anim_FG.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} FG kappa uni vs disip chi={x/g}g delta={d/g}g.gif", writer='pillow')
+# anim_concu.save(script_path+"\\"+"gifs"+"\\"+f"animation {psi0Name} Concu kappa uni vs disip FG chi={x/g}g delta={d/g}g.gif", writer='pillow')

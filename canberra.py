@@ -8,9 +8,8 @@ import matplotlib as mpl
 import matplotlib.colors as mcolors
 from matplotlib.animation import FuncAnimation
 from matplotlib.patches import Rectangle
-from matplotlib.animation import FuncAnimation
-
 from jcm_lib import simu_unit_y_disip,canberra
+
 #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
 n=tensor(qeye(2),qeye(2),num(3))
 sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
@@ -63,6 +62,26 @@ plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
+# psi0=(ee0+gg2).unit()
+# psi0Name="ee0+gg2"
+# steps=3000
+# t_final=50000
+# w_0=1
+# J=0
+# g=0.001*w_0
+# p=0.005*g
+# delta=np.linspace(0,2*g,3)
+# x=0
+# gamma=0.1*g
+# kappa=np.linspace(0,2*g,3)
+# k_ax, delta_ax = np.meshgrid(kappa,delta,sparse=True)
+# zs=np.zeros((len(kappa),len(delta)))
+# for j,d in enumerate(delta):
+#     for i,k in enumerate(kappa):  
+#         fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
+#         zs[j][i]=canberra(fg_u,fg_d)
+
+"""DELTA vs K con algunos CHI"""
 psi0=(ee0+gg2).unit()
 psi0Name="ee0+gg2"
 steps=3000
@@ -71,25 +90,59 @@ w_0=1
 J=0
 g=0.001*w_0
 p=0.005*g
-delta=np.linspace(0,2*g,21)
-x=g
 gamma=0.1*g
-kappa=np.linspace(0,2*g,21)
-k_ax, delta_ax = np.meshgrid(kappa,delta,sparse=True)
-zs=np.zeros((len(kappa),len(delta)))
-for j,d in enumerate(delta):
-    for i,k in enumerate(kappa):  
-        ops_expect_u,ops_expect_d,fg_u,fg_d,SvN_u,SvN_d,Slin_u,Slin_d,SvN_at_u,SvN_at_d,Slin_at_u,Slin_at_d,conc_at_u,conc_at_d=simu_unit_y_disip(w_0,g,k,J,d,x,gamma,p,psi0,t_final,steps)
-        zs[j][i]=canberra(fg_u,fg_d)
 
-#color entre z.min() y z.max()
-fig=plt.figure(figsize=(16,9))
-ax=fig.add_subplot()
-fig.suptitle(f"$\psi_0$={psi0Name} chi={x/g}g")
-z_min, z_max = zs.min(), zs.max()
-#plotear el pcolormesh()
-c = ax.pcolor(k_ax/g, delta_ax/g, zs, cmap='plasma', vmin=z_min, vmax=z_max)
-ax.set_xlabel("$k/g$")
-ax.set_ylabel("$\Delta/g$")
-fig.colorbar(c, ax=ax)
-plt.show()
+len_axis=41
+
+kappa=np.linspace(0,2*g,len_axis)
+delta=np.linspace(-2*g,2*g,len_axis)
+save_frames=300
+
+
+def canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,chi,save_frames):
+
+    data=pd.DataFrame()
+
+    tot_iters=len(delta)*len(kappa)
+    iteracion=0
+    # zs0=np.zeros((len(delta),len(kappa),frames))
+    for d in delta:
+        for k in kappa:
+            param_name=f'{d/g}g;{k/g}g'
+            fg_u,fg_d=simu_unit_y_disip(w_0,g,k,J,d,chi,gamma,p,psi0,t_final,steps)
+            data[param_name]=canberra(fg_u,fg_d,temporal=True)[np.linspace(0, steps - 1, save_frames, dtype=int)]
+            iteracion+=1
+            print(f"Aprox. Progress {iteracion*100/tot_iters}%")
+
+    data.to_csv(f'canberra delta {delta[0]}-{delta[-1]} vs kappa {kappa[0]}-{kappa[-1]} x={chi} {psi0Name}.csv')
+
+def load_csv_canberra(filepath:str,chi:float):
+    """Load .csv de canberra"""
+
+    data=pd.read_csv(filepath)
+    zs=np.empty((len(data.keys())-1,len(data[data.keys()[0]])))
+    len_params=int(np.sqrt(len(data.keys())-1))
+    params_inicial,params_final=data.keys()[1].replace("g","").split(';'),data.keys()[-1].replace("g","").split(';')
+    delta_new=np.linspace(float(params_inicial[0])*g,float(params_final[0])*g,len_params)
+    kappa_new=np.linspace(float(params_inicial[1])*g,float(params_final[1])*g,len_params)
+    print()
+    for i3,param_names in enumerate(data.keys()[1:]):
+        zs[i3]=data[param_names]
+
+    delta_ax, k_ax = np.meshgrid(delta_new,kappa_new,sparse=True)
+
+
+    # #color entre z.min() y z.max()
+    fig=plt.figure(figsize=(16,9))
+    ax=fig.add_subplot()
+    fig.suptitle(f"$\psi_0$={psi0Name} chi={chi/g}g")
+    z_min, z_max = zs.min(), zs.max()
+    #plotear el pcolormesh()
+    c=ax.pcolor(delta_ax/g, k_ax/g, zs[:,-1].reshape((len_params,len_params)), cmap='plasma', vmin=0, vmax=z_max)
+    ax.set_xlabel("$k/g$")
+    ax.set_ylabel("$\Delta/g$")
+    fig.colorbar(c, ax=ax)
+    plt.show()
+
+for x in [0.1*g,g,2*g]:
+    canberra_sim_and_save_delta_vs_kappa(psi0,psi0Name,steps,t_final,w_0,J,g,p,gamma,kappa,delta,x,300)

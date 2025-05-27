@@ -4,3 +4,7 @@ desktop.ini
 borrador.py
 graficos resumen/
 gifs/
+graficos canberra/
+__pycache__/
+prueba_save_canberra.txt
+canberra datos/

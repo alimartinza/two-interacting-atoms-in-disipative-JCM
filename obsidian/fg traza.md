@@ -1,0 +1,2 @@
+- [ ] Adaptar jcm_lib.fases() para que pueda agarrar ndarrays
+- [ ] 
