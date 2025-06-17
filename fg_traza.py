@@ -115,35 +115,26 @@ g=0.001*w0
 
 gamma=0.1*g#.1*g
 
-x_list=[0.0001*g,0.5*g,1*g,2*g,5*g] #1*g va en orden ascendiente
-d=1*g #1.1001*g#.5*g
-
-k_list=[2.5*g,1*g,0.5*g,0.25*g,0*g] #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
+d=0*g #1.1001*g#.5*g
+x=0*g
+k=0*g
 J=0*g
-params=np.array([[0,0]])
-for i in range(len(k_list)):
-    for j in range(len(x_list)):
-        params=np.append(params,[[x_list[j],k_list[i]]],axis=0)
 
-params=np.delete(params,0,axis=0)
+param_list_1=[0.0001*g,1/6*g,1/3*g,1*g,2*g] #va en orden ascendiente
+param_list_2=[6*g,3*g,1*g,0.5*g,0*g] #va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 
+params_list=np.array([[0,0]])
+for i in range(len(param_list_2)):
+    for j in range(len(param_list_1)):
+        params_list=np.append(params_list,[[param_list_1[j],param_list_2[i]]],axis=0)
 
-## CHEQUEAR BIEN CUALES SON LOS EJES DE CADA PARAMETRO Y PONER FLECHAS EN EL PLOT MOSTRANDO PARA DONDE CRECE CADA COSA.
+params_list=np.delete(params_list,0,axis=0)
 
 psi0=(eg1+ge1).unit()  #gg1#(tensor(tensor(e,gr)+tensor(gr,gr),basis(3,0)+basis(3,1))).unit()#1/10*(gg0*gg0.dag()+(eg0+ge0).unit()*(eg0+ge0).unit().dag()+(eg0-ge0).unit()*(eg0-ge0).unit().dag()+gg1*gg1.dag()+ee0*ee0.dag()+(eg1+ge1).unit()*(eg1+ge1).unit().dag()+(eg1-ge1).unit()*(eg1-ge1).unit().dag()+gg2*gg2.dag()+(eg2+ge2).unit()*(eg2+ge2).unit().dag()+(eg2-ge2).unit()*(eg2-ge2).unit().dag())
 psi0Name='eg1+ge1'
 # prefijo=f'j d={d/g} x={x/g} k={k/g} J={J/g}'
 
-steps=20000
-
-# T=2*np.pi/energiasn1(1,g,d,x,k,J)
-# T=2*np.pi/(omega_general(1,1,d,g,k,J,x))
-# T=2*np.pi/(-beta_n(1,k,J,x)/3+omega_general(1,1,d,g,k,J,x))
-# print(T)
-
-# ciclos_bloch=5
-# points=2000
-
+steps=2000
 acoplamiento='lineal'
 def f():
     if acoplamiento=='lineal':
@@ -153,8 +144,6 @@ def f():
 
 def pr(estado):
     return estado.unit()*estado.unit().dag()
-
-
 
 fig_fg=plt.figure(figsize=(8,6))
 fig_fg.suptitle('FG')
@@ -168,15 +157,12 @@ fig_fg_c.suptitle('FG C')
 fig_fg_ac=plt.figure(figsize=(8,6))
 fig_fg_ac.suptitle('FG AC')
 
-
-
-for i,params in enumerate(params):
+for i,params in enumerate(params_list):
     x=params[0]
-    k=0
     d=params[1]
-
     T=2*np.pi/omega_general(1,1,d,g,k,J,x)
     t_final=10*T
+    t=np.linspace(0,t_final,steps)
 
     '''##########---Hamiltoniano---##########'''
 
@@ -217,8 +203,6 @@ for i,params in enumerate(params):
         p=0.05*gamma
         l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2] #OPERADORES DE COLAPSO
 
-        t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
-
         sol=mesolve(H,psi0,t,c_ops=l_ops)
 
         def inferno(points:int):
@@ -252,7 +236,7 @@ for i,params in enumerate(params):
             cavity_states[j]=sol.states[j].ptrace([2])
 
         fg_c,arg_cav,eigenvals_t_cav =jcm.fases(cavity_states)
-        ax_fg_c.plot(t/T,fg_atoms/np.pi,color=color)
+        ax_fg_c.plot(t/T,fg_c/np.pi,color=color)
 
 
         '''#########---Atomo A-Cavidad----##########'''
@@ -263,41 +247,52 @@ for i,params in enumerate(params):
 
         fg_ac,arg,eigenvals_t = jcm.fases(atom_acavity_states)
         ax_fg_ac.plot(t/T,fg_ac/np.pi,color=color)
-
+        if gamma==0 and i in [0,6,12,18,24]:
+            try:
+                fg_u_data=np.append(fg_u_data,[t,fg,fg_atoms,fg_ac,fg_c,concu_ab],axis=0)
+            except:
+                fg_u_data=np.array([t,fg,fg_atoms,fg_ac,fg_c,concu_ab])
+        elif gamma==0.1*g and i in [0,6,12,18,24]:
+            try:
+                fg_d_data=np.append(fg_d_data,[t,fg,fg_atoms,fg_ac,fg_c,concu_ab],axis=0)
+            except:
+                fg_d_data=np.array([t,fg,fg_atoms,fg_ac,fg_c,concu_ab])
 sang=0.05
 fig_fg.subplots_adjust(sang*1.5,sang*1.5,1-sang,1-sang,sang,sang)
 ax_fg.annotate('$\chi$',xy=(0,sang),xycoords='figure fraction', xytext=(1-sang,sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
 ax_fg.annotate('$\Delta$',xy=(sang,0),xycoords='figure fraction', xytext=(sang,1-sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
-fig_fg.savefig(f'k=0 fg.png')
+fig_fg.savefig(f'{psi0Name} k=0 fg.png')
 
 fig_concu.subplots_adjust(sang*1.5,sang*1.5,1-sang,1-sang,sang,sang)
 ax_concu.annotate('$\chi$',xy=(0,sang),xycoords='figure fraction', xytext=(1-sang,sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
 ax_concu.annotate('$\Delta$',xy=(sang,0),xycoords='figure fraction', xytext=(sang,1-sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
-fig_concu.savefig(f'k=0 concu.png')
+fig_concu.savefig(f'{psi0Name} k=0 concu.png')
 
 fig_fg_ab.subplots_adjust(sang*1.5,sang*1.5,1-sang,1-sang,sang,sang)
 ax_fg_ab.annotate('$\chi$',xy=(0,sang),xycoords='figure fraction', xytext=(1-sang,sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
 ax_fg_ab.annotate('$\Delta$',xy=(sang,0),xycoords='figure fraction', xytext=(sang,1-sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
-fig_fg_ab.savefig(f'k=0 fg ab.png')
+fig_fg_ab.savefig(f'{psi0Name} k=0 fg ab.png')
 
 fig_fg_c.subplots_adjust(sang*1.5,sang*1.5,1-sang,1-sang,sang,sang)
 ax_fg_c.annotate('$\chi$',xy=(0,sang),xycoords='figure fraction', xytext=(1-sang,sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
 ax_fg_c.annotate('$\Delta$',xy=(sang,0),xycoords='figure fraction', xytext=(sang,1-sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
-fig_fg_c.savefig(f'k=0 fg c.png')
+fig_fg_c.savefig(f'{psi0Name} k=0 fg c.png')
 
 fig_fg_ac.subplots_adjust(sang*1.5,sang*1.5,1-sang,1-sang,sang,sang)
 ax_fg_ac.annotate('$\chi$',xy=(0,sang),xycoords='figure fraction', xytext=(1-sang,sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
 ax_fg_ac.annotate('$\Delta$',xy=(sang,0),xycoords='figure fraction', xytext=(sang,1-sang),
                 arrowprops=dict(arrowstyle="<-",color='black'))
-fig_fg_ac.savefig(f'k=0 fg ac.png')
+fig_fg_ac.savefig(f'{psi0Name} k=0 fg ac.png')
 
+np.savetxt(f'{psi0Name} u delta=x(2n-1) k=0.txt',fg_u_data.T,'%.3f',delimiter=' ',header='t fg[i] fg_atoms[i] fg_ac[i] fg_c[i] concu[i]',comments=f'delta={param_list_2}')
+np.savetxt(f'{psi0Name} d delta=x(2n-1) k=0.txt',fg_d_data.T,'%.3f',delimiter=' ',header='t fg[i] fg_atoms[i] fg_ac[i] fg_c[i] concu[i]',comments=f'delta={param_list_2}')
 plt.show()

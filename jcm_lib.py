@@ -295,7 +295,7 @@ def fases(sol):
             rho0 = ket2dm(sol.states[0])
         else:
             rho0 = sol.states[0]
-        eval0,evec0=rho0.eigenstates()
+        eval0,evec0=rho0.eigenstates(sort='high')
         eigenvals_t = np.array([eval0])
         max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
         psi0 = evec0[max_eigenvalue_idx]
@@ -312,7 +312,7 @@ def fases(sol):
             else:
                 rho = sol.states[i]
             
-            eigenval,eigenvec = rho.eigenstates()
+            eigenval,eigenvec = rho.eigenstates(sort='high')
             eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
 
             psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
@@ -374,6 +374,56 @@ def fases(sol):
 
     return np.unwrap(Pan), argumento, np.array(eigenvals_t)
 
+def fases_mixta(sol):
+    """params:
+    -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
+    RETURNS
+    -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
+    -arg: no se
+    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
+    len_t=len(sol.states)
+    if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
+        rho0 = ket2dm(sol.states[0])
+    else:
+        rho0 = sol.states[0]
+    eval0,evec0=rho0.eigenstates(sort='high')
+    eigenvals_t = np.array([eval0])
+    # max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+    psi0 = evec0
+    len0=len(psi0)
+    psi_old = psi0
+    eval_old=eval0
+    # Psi = [psi0]
+    norma = []
+    pan = 0
+    Pan = []
+    argumento = np.zeros(len_t)
+    signo = 0
+    for i in range(len_t):
+        if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
+            rho = ket2dm(sol.states[i])
+        else:
+            rho = sol.states[i]
+        
+        eigenval,eigenvec = rho.eigenstates(sort='high')
+        eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
+
+        psi= [max(((autoestado, autovalor,abs(autoestado.overlap(evec_old))) for autoestado,autovalor in zip(eigenvec,eigenval)), key=lambda x: x[2]) for evec_old in psi_old]
+        psi=[psi[i][0] for i in range(len(psi_old))]
+        eigenval=[psi[i][1] for i in range(len(psi_old))]
+        # norma.append(psi.overlap(psi0))
+
+        pan += np.angle(np.sum(np.sqrt(eigenval[i]*eval_old[i])*psi[i].overlap(psi_old[i]) for i in range(len0)))
+        Pan.append(pan - np.angle(np.sum(np.sqrt(eval0[i]*eigenval[i])*psi[i].overlap(psi0[i]) for i in range(len0))))
+        psi_old = psi
+        eval_old=eigenval
+        # Psi.append(psi)
+        # Almaceno el argumento para cada tiempo
+        argumento[i] = np.angle(np.sum(psi0[i].dag() * psi[i] for i in range(len0)))
+    eigenvals_t=np.delete(eigenvals_t,0,axis=0)
+    Pan = np.array(Pan)
+
+    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
 # def cementerio():
 #     def plot3D_gamma(condiciones_iniciales:list,k,J,x,d,gamma,p):
 #         g=0.001
