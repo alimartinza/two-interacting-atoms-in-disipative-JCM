@@ -27,6 +27,12 @@ sp2=tensor(qeye(2),sigmap(),qeye(N_c))
 sz2=tensor(qeye(2),sigmaz(),qeye(N_c))
 sx2=tensor(qeye(2),sigmax(),qeye(N_c))
 
+
+for ii in [0,1]:
+    for jj in [0,1]:
+        for n in range(2,N_c):
+            ggn=
+
 # def beta_n(n_:int,k:float,J:float,x:float):
 #     return -(x*(n_**2+(n_-1)**2+(n_-2)**2)+J+2*k)
 
