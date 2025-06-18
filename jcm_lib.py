@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import os
-import pandas as pd
+# import pandas as pd
 import matplotlib as mpl
 import matplotlib.colors as mcolors
 from matplotlib.patches import Rectangle

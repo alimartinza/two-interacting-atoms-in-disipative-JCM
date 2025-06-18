@@ -1,10 +1,14 @@
 from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 import jcm_lib as jcm
+import os
 
-N_c=10
-rho_c=coherent_dm(N_c,1+1j)
+script_path= os.path.dirname(__file__)
+
+N_c=5
+rho_c=thermal_dm(N_c,2)
 ee=basis([2,2],[0,0])
 eg=basis([2,2],[0,1])
 ge=basis([2,2],[1,0])
@@ -45,7 +49,15 @@ sx2=tensor(qeye(2),sigmax(),qeye(N_c))
 #     return 2*np.sqrt(-2*Q_n(n_,d,g,k,J,x))*np.cos((theta_n(n_,d,g,k,J,x)+2*(j-1)*np.pi)/3)
 # print(1/2*(eg+ge)*(eg+ge).dag())
 rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),rho_c)
-# print(rho_0)
+
+with open("output.txt", "a") as file_object:
+    print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
+    print(f"TERMINAL {script_path} cavidad_termica.py", file=file_object)
+    print("rho_c", file=file_object)
+    print(rho_c, file=file_object)
+    print("rho_0", file=file_object)
+    print(rho_0, file=file_object)
+    
 w0=1
 g=0.001*w0
 
@@ -59,7 +71,7 @@ d=0.001*g        #1.1001*g#.5*g
 k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 J=0*g
 
-steps=10000
+steps=1000
 
 # T=2*np.pi/omega_general(1,1,d,g,k,J,x)
 t_final=100/g
@@ -103,5 +115,44 @@ fig_fg_spins.suptitle('FG SPINS')
 ax_fg_spins=fig_fg_spins.add_subplot()
 ax_fg_spins.set_xlim(0,g*t_final)
 ax_fg_spins.plot(g*t,fg_spins/np.pi,color=color)
+
+def anim_hinton(rho):
+    fig,ax=plt.subplots()
+    fig_r,ax_r=plt.subplots()
+    def init():
+        """Initial drawing of the Hinton plot"""
+        ax.clear()
+        hinton(rho[0], ax=ax)
+        ax.set_title("Frame 0")
+        return ax,
+
+    def init_r():
+        ax_r.clear()
+        hinton(rho[0].ptrace([0,1]),ax=ax_r)
+        ax_r.set_title("Frame 0")
+        return ax_r,
+
+    def update(frame):
+        """Update the Hinton plot for each frame"""
+        ax.clear()
+        hinton(rho[frame],x_basis=[],y_basis=[], ax=ax,colorbar=False)
+        ax.set_title(f"Frame {frame}")
+        return ax,
+
+    def update_r(frame):
+        ax_r.clear()
+        hinton(rho[frame].ptrace([0,1]),x_basis=[],y_basis=[], ax=ax_r,colorbar=False)
+        ax_r.set_title(f"Frame {frame}")
+        return ax_r
+
+    # Create animation
+    anim_h= FuncAnimation(fig, update, frames=len(rho), init_func=init, blit=False, repeat=True)
+    anim_h_r= FuncAnimation(fig_r, update_r, frames=len(rho), init_func=init_r, blit=False, repeat=True)
+    plt.show()
+    return anim_h,anim_h_r
+
+anim_h,anim_h_r=anim_hinton(sol.states)
+
+# Show the animation
 
 plt.show()
