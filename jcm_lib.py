@@ -1251,7 +1251,7 @@ def fases_mixta(sol):
 #                 # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
 #                 '''----EVALS----'''
 #                 for j in range(12): 
-#                     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=colors_eval[i][j],label=f"$\lambda_{j}$")
+#                     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=colors_eval[i][j],label=f"$\\lambda_{j}$")
 #                 ax_eval.legend()
 #                 '''----FG-----'''
 
@@ -1314,7 +1314,7 @@ def fases_mixta(sol):
 #         """
 #         Params:
 #         -cis: lista de strings con nombres de condiciones iniciales
-#         -modelo: [0:\'disipativo lineal\', 1:\'disipativo bs\', 2:\'unitario lineal\', 3:\'unitario bs\']"""
+#         -modelo: [0:\\'disipativo lineal\\', 1:\\'disipativo bs\\', 2:\\'unitario lineal\\', 3:\\'unitario bs\\']"""
 #         script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
 
 
@@ -1463,7 +1463,7 @@ def fases_mixta(sol):
 #                 ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=colors_eval[i][j])
 #             # ax_eval.legend()
 #             '''----FG-----'''
-#             ax_fg.plot(g*data['t'],data['FG'],color=colors1[i],label=f'$|\psi_0>=|{ci}>')
+#             ax_fg.plot(g*data['t'],data['FG'],color=colors1[i],label=f'$|\\psi_0>=|{ci}>')
 #             '''--- VM Pauli ---'''
 
 #             line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=colors3[i],label='$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+','+ci)
@@ -1535,7 +1535,7 @@ def fases_mixta(sol):
 #         ax_n0=fig_n0.add_subplot()
 #         ax_n0.set_xlabel('gt')
 #         fig_n0.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
-#                  ax=ax_n0,orientation='vertical',label='$\Delta$')
+#                  ax=ax_n0,orientation='vertical',label='$\\Delta$')
         
 #         fig_n1=plt.figure()
 #         fig_n1.suptitle("N=1 "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
@@ -1550,7 +1550,7 @@ def fases_mixta(sol):
 #         ax_n1_3.set_title('eg0-ge0')
 
 #         fig_n1.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
-#                  ax=ax_n1_3,orientation='vertical',label='$\Delta$')
+#                  ax=ax_n1_3,orientation='vertical',label='$\\Delta$')
 
 #         fig_fg=plt.figure()
 #         fig_fg.suptitle("Fase Geometrica "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
@@ -1558,7 +1558,7 @@ def fases_mixta(sol):
 #         ax_fg.set_xlabel('gt')
 #         ax_fg.set_title(ci)
 #         fig_fg.colorbar(mpl.cm.ScalarMappable(norm=norm, cmap=cmap),
-#                  ax=ax_fg,orientation='vertical',label='$\Delta$')
+#                  ax=ax_fg,orientation='vertical',label='$\\Delta$')
 #         for i,d in enumerate(delta):
 #             relative_path="datos"+"\\"+folder_name+"\\"+ci 
 #             path=os.path.join(script_path, relative_path) #CAMBIAMOS EL CHDIR A LA CARPETA DONDE QUEREMOS BUSCAR LOS ARCHIVOS
@@ -1606,7 +1606,7 @@ def fases_mixta(sol):
 
 #             # Create the figure and axes
 #         fig= plt.figure(figsize=(16,9))
-#         fig.suptitle("$|\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+#         fig.suptitle("$|\\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
 #         ax1=fig.add_subplot(131)
 #         ax2=fig.add_subplot(132)
 #         ax3=fig.add_subplot(133)
@@ -1625,7 +1625,7 @@ def fases_mixta(sol):
 #         sm = mpl.cm.ScalarMappable(cmap=cmap, norm=norm)
 #         sm.set_array([])  # ScalarMappable requires an array, but we don't need it
 #         cbar = plt.colorbar(sm, ax=ax3, orientation='vertical')
-#         cbar.set_label('$\Delta/g$')
+#         cbar.set_label('$\\Delta/g$')
 
 #         # Create a black rectangle to indicate the current position in the colorbar
 #         rect_height = 1 / len(delta)  # Height of the rectangle
@@ -1701,7 +1701,7 @@ def fases_mixta(sol):
 
 #             # Create the figure and axes
 #         fig= plt.figure(figsize=(16,9))
-#         fig.suptitle("$|\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+#         fig.suptitle("$|\\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
 #         ax1=fig.add_subplot(221)
 #         ax2=fig.add_subplot(222,sharey=ax1)
 #         ax3=fig.add_subplot(223,sharex=ax1)
@@ -1722,7 +1722,7 @@ def fases_mixta(sol):
 #         sm = mpl.cm.ScalarMappable(cmap=cmap, norm=norm)
 #         sm.set_array([])  # ScalarMappable requires an array, but we don't need it
 #         cbar = plt.colorbar(sm, ax=ax2, orientation='vertical')
-#         cbar.set_label('$\Delta/g$')
+#         cbar.set_label('$\\Delta/g$')
 
 #         # Create a black rectangle to indicate the current position in the colorbar
 #         rect_height = 1 / len(delta)  # Height of the rectangle
@@ -1802,7 +1802,7 @@ def fases_mixta(sol):
 
 #         # Create the figure and axes
 #         fig= plt.figure(figsize=(16,9))
-#         fig.suptitle("$|\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+#         fig.suptitle("$|\\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
 #         ax1=fig.add_subplot(131)
 #         ax2=fig.add_subplot(132)
 #         ax3=fig.add_subplot(133)
@@ -1812,7 +1812,6 @@ def fases_mixta(sol):
 #         line1, = ax1.plot([], [], lw=2)
 #         line2, = ax2.plot([], [], lw=2)
 #         line3, = ax3.plot([], [], lw=2)
-
 #         # Create a colormap and normalize it to the number of frames
 #         cmap = mpl.colormaps['viridis']   # Viridis colormap with as many colors as CSV files
 #         norm = mcolors.Normalize(vmin=chi[0]/g, vmax=chi[-1]/g)
@@ -1821,7 +1820,7 @@ def fases_mixta(sol):
 #         sm = mpl.cm.ScalarMappable(cmap=cmap, norm=norm)
 #         sm.set_array([])  # ScalarMappable requires an array, but we don't need it
 #         cbar = plt.colorbar(sm, ax=ax3, orientation='vertical')
-#         cbar.set_label('$\chi/g$')
+#         cbar.set_label('$\\chi/g$')
 
 #         # Create a black rectangle to indicate the current position in the colorbar
 #         rect_height = 1 / len(chi)  # Height of the rectangle
@@ -1897,7 +1896,7 @@ def fases_mixta(sol):
 
 #             # Create the figure and axes
 #         fig= plt.figure(figsize=(16,9))
-#         fig.suptitle("$|\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
+#         fig.suptitle("$|\\psi_0>=$"+ci+" ; "+folder_name.split(" ")[-2]+" "+folder_name.split(" ")[-1])
 #         ax1=fig.add_subplot(221)
 #         ax2=fig.add_subplot(222,sharey=ax1)
 #         ax3=fig.add_subplot(223,sharex=ax1)
@@ -1918,7 +1917,7 @@ def fases_mixta(sol):
 #         sm = mpl.cm.ScalarMappable(cmap=cmap, norm=norm)
 #         sm.set_array([])  # ScalarMappable requires an array, but we don't need it
 #         cbar = plt.colorbar(sm, ax=ax2, orientation='vertical')
-#         cbar.set_label('$\chi/g$')
+#         cbar.set_label('$\\chi/g$')
 
 #         # Create a black rectangle to indicate the current position in the colorbar
 #         rect_height = 1 / len(chi)  # Height of the rectangle
@@ -1987,7 +1986,7 @@ def fases_mixta(sol):
 #         mpl.use('TkAgg')
 #         # Create the figure and axes
 #         fig= plt.figure(figsize=(16,9))
-#         fig.suptitle(title+" ; $|\psi_0>=$"+psi0Name)
+#         fig.suptitle(title+" ; $|\\psi_0>=$"+psi0Name)
 #         ax1=fig.add_subplot()
 #         # Initialize a plot object (e.g., a line plot)
 #         line_u, = ax1.plot([], [], label='unitario',color='black',lw=2)
@@ -2101,11 +2100,11 @@ def fases_mixta(sol):
 #         k_ax, delta_ax = np.meshgrid(x_param_list,y_param_list,sparse=True)
 #         fig=plt.figure(figsize=(16,9))
 #         ax=fig.add_subplot()
-#         fig.suptitle(f"$\psi_0$={psi0Name} chi={chi/g}g")
+#         fig.suptitle(f"$\\psi_0$={psi0Name} chi={chi/g}g")
 #         #plotear el pcolormesh()
 #         c = ax.pcolor(k_ax/g, delta_ax/g, zs, cmap='plasma', vmin=zs_min, vmax=zs_max)
 #         ax.set_xlabel("$k/g$")
-#         ax.set_ylabel("$\Delta/g$")
+#         ax.set_ylabel("$\\Delta/g$")
 #         fig.colorbar(c, ax=ax)
 #         plt.show()
 
@@ -2144,8 +2143,8 @@ def fases_mixta(sol):
 #         #plotear el pcolormesh()
 #         c = ax.pcolor(x_ax, y_ax, z, cmap='plasma', vmin=z_min, vmax=z_max)
 #         ax.axis([x_ax.min(), x_ax.max(), y_ax.min(), y_ax.max()])
-#         ax.set_xlabel("$\Delta/g$")
-#         ax.set_ylabel("$\chi/g$")
+#         ax.set_xlabel("$\\Delta/g$")
+#         ax.set_ylabel("$\\chi/g$")
 #         fig.colorbar(c, ax=ax)
 #         plt.show()
 #     return None
@@ -2290,7 +2289,7 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
         entropiaRunTime=time.process_time() - entropiaStartTime
 
         print("-----Tiempos de computo----")
-        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
 
         return data_u,data_d
     
@@ -2404,7 +2403,7 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0
         entropiaRunTime=time.process_time() - entropiaStartTime
 
         print("-----Tiempos de computo----")
-        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
 
         return data_u
 
@@ -2517,7 +2516,7 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
         entropiaRunTime=time.process_time() - entropiaStartTime
 
         print("-----Tiempos de computo----")
-        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
+        print(f"expectRunTime: {expectRunTime}",f"pasajeRunTime: no existe",f"entropiaRunTime: {entropiaRunTime}",sep='\\n') #,f"coherenciasRunTime: {coherenciasRunTime}"
 
         return data_d
     
@@ -2645,15 +2644,15 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         d_g=d/g
 
         '''--- N=0 ---'''
-        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $\Delta={d_g}g$')
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'gg0, $\\Delta={d_g}g$')
         # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
         # ax0.set_title(param_name)
         plot_coherencias(data,9,ax0)#,0) #N=0
 
         '''--- N=1 ---'''
-        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $\Delta={d_g}g$')
-        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $\Delta={d_g}g$')
-        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $\Delta={d_g}g$')
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'gg1, $\\Delta={d_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'eg0+, $\\Delta={d_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'eg0-, $\\Delta={d_g}g$')
         plot_coherencias(data,3,ax1) #N=1
         plot_coherencias(data,6,ax1) #N=1
         plot_coherencias(data,10,ax1) #N=1
@@ -2661,10 +2660,10 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
 
         '''--- N=2 ---'''
-        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, \Delta={d_g}g$')
-        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, \Delta={d_g}g$')
-        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, \Delta={d_g}g$')
-        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, \Delta={d_g}g$')
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$gg2, \\Delta={d_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$eg1+, \\Delta={d_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$eg1-, \\Delta={d_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$ee0, \\Delta={d_g}g$')
         plot_coherencias(data,0,ax2) #N=2
         plot_coherencias(data,4,ax2) #N=2
         plot_coherencias(data,7,ax2) #N=2 
@@ -2681,22 +2680,22 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
         # '''----EVALS----'''
         # for j in range(12): 
-        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\\lambda_{j}$")
         # ax_eval.legend()
 
 
         '''--- VM Pauli ---'''
-        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, \Delta={d_g}g$')
-        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, \Delta={d_g}g$')
-        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, \Delta={d_g}g$')
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\\sigma_z>, \\Delta={d_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\\sigma_x^1>, \\Delta={d_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\\sigma_x^1>, \\Delta={d_g}g$')
         pauli_lines.append([line_p0,line_p1,line_p2])
-        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\Delta={d_g}g$','$<\\sigma_x^{(1)}>$'+f', $\Delta={d_g}g$','$<\\sigma_x^{(2)}>$'+f', $\Delta={d_g}g$'])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\\Delta={d_g}g$','$<\\sigma_x^{(1)}>$'+f', $\\Delta={d_g}g$','$<\\sigma_x^{(2)}>$'+f', $\\Delta={d_g}g$'])
 
         '''--- Entropias ---'''
         #PLOT PARA LAS ENTROPIAS
 
-        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\Delta={d_g}g$')
-        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\\Delta={d_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\\Delta={d_g}g$')
         # ax_Svn.set_title(param_name)
         #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
 
@@ -2704,13 +2703,13 @@ def plot_delta_simu(w0:float,delta:list,chi:float,g:float,k:float,J:float,gamma:
         #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
         #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
 
-        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
-        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
-        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\Delta={d_g}g$')
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\\Delta={d_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\\Delta={d_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\\Delta={d_g}g$')
         # ax_Srvn.set_title(param_name)
         # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
         '''----FG----'''
-        line_fg,=ax_fg.plot(g*data['t'],data['FG'],marker='.',color=inferno[i],label=f'$\Delta={d_g}g$')
+        line_fg,=ax_fg.plot(g*data['t'],data['FG'],marker='.',color=inferno[i],label=f'$\\Delta={d_g}g$')
 
     ax0.legend()
     ax1.legend()
@@ -2873,14 +2872,14 @@ def plot_kappa_simu(w0:float,delta:float,chi:float,g:float,kappa:list,J:float,ga
         # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
         # '''----EVALS----'''
         # for j in range(12): 
-        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\\lambda_{j}$")
         # ax_eval.legend()
 
 
         '''--- VM Pauli ---'''
-        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, k={k_g}g$')
-        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, k={k_g}g$')
-        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, k={k_g}g$')
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\\sigma_z>, k={k_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\\sigma_x^1>, k={k_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\\sigma_x^1>, k={k_g}g$')
         pauli_lines.append([line_p0,line_p1,line_p2])
         pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $k={k_g}g$','$<\\sigma_x^{(1)}>$'+f', $k={k_g}g$','$<\\sigma_x^{(2)}>$'+f', $k={k_g}g$'])
 
@@ -3061,14 +3060,14 @@ def plot_chi_simu(w0:float,delta:float,chi:list,g:float,k:float,J:float,gamma:fl
         # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
         # '''----EVALS----'''
         # for j in range(12): 
-        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\\lambda_{j}$")
         # ax_eval.legend()
 
 
         '''--- VM Pauli ---'''
-        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, x={x_g}g$')
-        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, x={x_g}g$')
-        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, x={x_g}g$')
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\\sigma_z>, x={x_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\\sigma_x^1>, x={x_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\\sigma_x^1>, x={x_g}g$')
         pauli_lines.append([line_p0,line_p1,line_p2])
         pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $x={x_g}g$','$<\\sigma_x^{(1)}>$'+f', $x={x_g}g$','$<\\sigma_x^{(2)}>$'+f', $x={x_g}g$'])
 
@@ -3249,14 +3248,14 @@ def plot_J_simu(w0:float,delta:float,chi:float,g:float,k:float,J:list,gamma:floa
         # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
         # '''----EVALS----'''
         # for j in range(12): 
-        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\\lambda_{j}$")
         # ax_eval.legend()
 
 
         '''--- VM Pauli ---'''
-        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, J={j_g}g$')
-        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, J={j_g}g$')
-        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, J={j_g}g$')
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\\sigma_z>, J={j_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\\sigma_x^1>, J={j_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\\sigma_x^1>, J={j_g}g$')
         pauli_lines.append([line_p0,line_p1,line_p2])
         pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $J={j_g}g$','$<\\sigma_x^{(1)}>$'+f', $J={j_g}g$','$<\\sigma_x^{(2)}>$'+f', $J={j_g}g$'])
 
@@ -3400,15 +3399,15 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
         gamma_g=gamma/g
 
         '''--- N=0 ---'''
-        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'Pr(gg0), $\gamma={gamma_g}g$')
+        line0,=ax0.plot(g*data['t'], data['pr(gg0)'], color=blues[i+1],label=f'Pr(gg0), $\\gamma={gamma_g}g$')
         # ax0.legend([line0],[data.keys()[0]+', d='+str(d)])
         # ax0.set_title(param_name)
         plot_coherencias(data,9,ax0)#,0) #N=0
 
         '''--- N=1 ---'''
-        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'P(gg1), $\gamma={gamma_g}g$')
-        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'Pr(eg0+), $\gamma={gamma_g}g$')
-        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'Pr(eg0-), $\gamma={gamma_g}g$')
+        line11,=ax1.plot(g*data['t'],data['pr(gg1)'],color=blues[i+1],label=f'P(gg1), $\\gamma={gamma_g}g$')
+        line12,=ax1.plot(g*data['t'],data['pr(eg0+ge0)'],color=greens[i+1],label=f'Pr(eg0+), $\\gamma={gamma_g}g$')
+        line13,=ax1.plot(g*data['t'],data['pr(eg0-ge0)'],color=greys[i+1],label=f'Pr(eg0-), $\\gamma={gamma_g}g$')
         plot_coherencias(data,3,ax1) #N=1
         plot_coherencias(data,6,ax1) #N=1
         plot_coherencias(data,10,ax1) #N=1
@@ -3416,10 +3415,10 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
         # ax1.legend([line11,line12,line13],['gg1','eg0+','eg0-'])
 
         '''--- N=2 ---'''
-        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$Pr(gg2), \gamma={gamma_g}g$')
-        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$Pr(eg1+), \gamma={gamma_g}g$')
-        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$Pr(eg1-), \gamma={gamma_g}g$')
-        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$Pr(ee0), \gamma={gamma_g}g$')
+        line21,=ax2.plot(g*data['t'],data['pr(gg2)'],color=blues[i+1],label=f'$Pr(gg2), \\gamma={gamma_g}g$')
+        line22,=ax2.plot(g*data['t'],data['pr(eg1+ge1)'],color=greens[i+1],label=f'$Pr(eg1+), \\gamma={gamma_g}g$')
+        line23,=ax2.plot(g*data['t'],data['pr(eg1-ge1)'],color=greys[i+1],label=f'$Pr(eg1-), \\gamma={gamma_g}g$')
+        line24,=ax2.plot(g*data['t'],data['pr(ee0)'],color=oranges[i+1],label=f'$Pr(ee0), \\gamma={gamma_g}g$')
         plot_coherencias(data,0,ax2) #N=2
         plot_coherencias(data,4,ax2) #N=2
         plot_coherencias(data,7,ax2) #N=2 
@@ -3436,26 +3435,26 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
         # ax[0].plot(g*t,data['pr(ee1)'],label=data.keys()[10],color='red')
         # '''----EVALS----'''
         # for j in range(12): 
-        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\lambda_{j}$")
+        #     ax_eval.plot(g*data['t'],data['Eigenvalue '+str(j)],color=viridis12[j],label=f"$\\lambda_{j}$")
         # ax_eval.legend()
 
 
         '''--- VM Pauli ---'''
-        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\sigma_z>, \gamma={gamma_g}g$')
-        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\sigma_x^1>, \gamma={gamma_g}g$')
-        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\sigma_x^1>, \gamma={gamma_g}g$')
+        line_p0,=ax_pauli.plot(g*data['t'],data['1/2 <sz1+sz2>'],color=blues[i+1],label=f'$<\\sigma_z>, \\gamma={gamma_g}g$')
+        line_p1,=ax_pauli.plot(g*data['t'],data['<sx1>'],color=greens[i+1],label=f'$<\\sigma_x^1>, \\gamma={gamma_g}g$')
+        line_p2,=ax_pauli.plot(g*data['t'],data['<sx2>'],color=oranges[i+1],label=f'$<\\sigma_x^1>, \\gamma={gamma_g}g$')
         pauli_lines.append([line_p0,line_p1,line_p2])
-        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(1)}>$'+f', $\gamma={gamma_g}g$','$<\\sigma_x^{(2)}>$'+f', $gamma={gamma_g}g$'])
+        pauli_names.append(['$\\frac{1}{2}<\\sigma_z^{(1)}+\\sigma_z^{(2)}>$'+f', $\\gamma={gamma_g}g$','$<\\sigma_x^{(1)}>$'+f', $\\gamma={gamma_g}g$','$<\\sigma_x^{(2)}>$'+f', $gamma={gamma_g}g$'])
 
         '''-----FG----'''
-        lineFG,=ax_fg.plot(g*data['t'],data['FG']/np.pi,color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineFG,=ax_fg.plot(g*data['t'],data['FG']/np.pi,color=inferno[i],label=f'$\\gamma={gamma_g}g$')
 
 
         '''--- Entropias ---'''
         #PLOT PARA LAS ENTROPIAS
 
-        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
-        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineSvn,=ax_Svn.plot(g*data['t'],data['SvN'],color=inferno[i],label=f'$\\gamma={gamma_g}g$')
+        lineSlin,=ax_Slin.plot(g*data['t'],data['Slin'],color=inferno[i],label=f'$\\gamma={gamma_g}g$')
         # ax_Svn.set_title(param_name)
         #PLOT PARA LA DISTRIBUCION DE WIGNER. QUIZAS HACER UNA ANIMACION ESTARIA COPADO
 
@@ -3463,9 +3462,9 @@ def plot_gamma_simu(w0:float,delta:float,chi:float,g:float,k:float,J:float,gamma
         #Y TOMANDO TRAZA PARCIAL SOBRE EL CAMPO, MIRAMOS EL ENTRELAZAMIENTO ENTRE ATOMOS
         #PLOT PARA LAS ENTROPIAS DEL SISTEMA TRAZANDO SOBRE LOS FOTONES
 
-        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
-        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
-        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\gamma={gamma_g}g$')
+        lineSrvn,=ax_Srvn.plot(g*data['t'],data['SvN_atom'],color=inferno[i],label=f'$\\gamma={gamma_g}g$')
+        lineSrlin,=ax_Srlin.plot(g*data['t'],data['Slin_atom'],color=inferno[i],label=f'$\\gamma={gamma_g}g$')
+        lineCon,=ax_Con.plot(g*data['t'],data['Conc_atom'],color=inferno[i],label=f'$\\gamma={gamma_g}g$')
         # ax_Srvn.set_title(param_name)
         # ax_Srvn.legend([lineSrvn,lineSrlin,lineCon],['S_vN'+', d='+str(d),'S_lin'+', d='+str(d),'Conc'+', d='+str(d)])
     ax0.legend()
@@ -3502,13 +3501,13 @@ def plots_uni_vs_dis_delta(w_0:float,g:float,kappa:float,J:float,d:list,x:float,
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$k={kappa/g}g$ $\\chi = {x/g}g$ J={J/g}g $|\\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,delta in enumerate(d):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-        labels_legend.append(f'U $\Delta$={delta/g}g')
+        labels_legend.append(f'U $\\Delta$={delta/g}g')
         line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
         # labels_legend.append(f'D k={k/g}g')
         lines_legend1.append(line_fg_u)
@@ -3552,13 +3551,13 @@ def plots_uni_vs_dis_chi(w_0:float,g:float,kappa:float,J:float,d:float,x:list,ga
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$k={kappa}$ $\Delta={d/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$k={kappa}$ $\\Delta={d/g}g$ J={J/g}g $|\\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,chi in enumerate(x):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-        labels_legend.append(f'U $\chi$={chi/g}g')
+        labels_legend.append(f'U $\\chi$={chi/g}g')
         line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
         # labels_legend.append(f'D k={k/g}g')
         lines_legend1.append(line_fg_u)
@@ -3602,7 +3601,7 @@ def plots_uni_vs_dis_kappa(w_0:float,g:float,kappa:list,J:float,d:float,x:float,
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$\Delta={d/g}g$ $\chi = {x/g}g$ J={J/g}g $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$\\Delta={d/g}g$ $\\chi = {x/g}g$ J={J/g}g $|\\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
@@ -3652,7 +3651,7 @@ def plots_uni_vs_dis_J(w_0:float,g:float,kappa:float,J:list,d:float,x:float,gamm
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$k={kappa}$ $\chi = {x}$ $\Delta = {d}$ $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$k={kappa}$ $\\chi = {x}$ $\\Delta = {d}$ $|\\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
@@ -3701,13 +3700,13 @@ def plots_uni_vs_dis_gamma(w_0:float,g:float,kappa:float,J:float,d:float,x:float
 
     '''--------PLOT-------'''
     fig = plt.figure(1,(16,9))
-    fig.suptitle(f'$k={kappa/g}g$ $\chi = {x/g}g$ $J={J/g}g$ $\Delta = {d/g}g$ $|\psi_0>$='+psi0Name)
+    fig.suptitle(f'$k={kappa/g}g$ $\\chi = {x/g}g$ $J={J/g}g$ $\\Delta = {d/g}g$ $|\\psi_0>$='+psi0Name)
     ax1 = fig.add_subplot(211)  #fg unitario en solido y disipativo en rayado
     ax2 = fig.add_subplot(212,sharex=ax1)  #concu unitario en solido y disipativo en rayado
 
     for i,gg in enumerate(gamma):
         line_fg_u,=ax1.plot(gt,fg_u[i],color=colors[i],linestyle='solid')
-        labels_legend.append(f'U $\gamma={gg/g}g$')
+        labels_legend.append(f'U $\\gamma={gg/g}g$')
         line_fg_d,=ax1.plot(gt,fg_d[i],color=colors[i],linestyle='dashed')
         # labels_legend.append(f'D k={k/g}g')
         lines_legend1.append(line_fg_u)

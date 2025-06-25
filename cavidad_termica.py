@@ -4,11 +4,13 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import jcm_lib as jcm
 import os
+import time
 
 script_path= os.path.dirname(__file__)
 
-N_c=10
+N_c=11
 
+t_0=time.time()
 
 #Matriz de cambio de base
 M=np.zeros((4*N_c,4*N_c))
@@ -29,7 +31,11 @@ for ii in range(1,N_c):
 for ii in range(1,N_c):
     M[4*ii+2,ii-1]=1
 
- #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
+M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
+M[-2]=np.zeros(4*N_c)
+M[-3]=np.zeros(4*N_c)
+M[-4]=np.zeros(4*N_c)
+
 
 ee=basis([2,2],[0,0])
 eg=basis([2,2],[0,1])
@@ -72,143 +78,158 @@ sx2=tensor(qeye(2),sigmax(),qeye(N_c)).transform(M)
 # print(1/2*(eg+ge)*(eg+ge).dag())
 
 ##### DIFERENTES ESTADOS INICIALES ######
-#CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
-rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,0)*basis(N_c,0).dag()).transform(M) 
-
-#CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
-rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0)+basis(N_c,1)))
-# rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0))+tensor(ee,basis(N_c,1)))
-
-#CAVIDAD TERMICA
-rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),thermal_dm(N_c,2)).transform(M) 
-
-#CAVIDAD COHERENTE
-rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),coherent_dm(N_c,2)).transform(M) 
-
-
-
-
-# with open("output.txt", "a") as file_object:
-#     print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
-#     print(f"TERMINAL {script_path} cavidad_termica.py", file=file_object)
-#     print("rho_c", file=file_object)
-#     print(rho_c, file=file_object)
-#     print("rho_0", file=file_object)
-#     print(rho_0, file=file_object)
+for ci in [0,1,2,3]:
     
-w0=1
-g=0.001*w0
-
-
-gamma=0*g       #.1*g
-p=0.05*gamma
-
-x=0         #1*g va en orden ascendiente
-d=1*g        #1.1001*g#.5*g
-
-k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
-J=0*g
-
-steps=2000
-
-# T=2*np.pi/omega_general(1,1,d,g,k,J,x)
-t_final=100/g
-
-modelo='SB'
-
-'''##########---Hamiltoniano---##########'''
-if modelo=='TCM' or modelo=='1':
-    #Hamiltoniano de TC
-    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-elif modelo=='RABI' or modelo=='2':
-    #Hamiltoniano de Rabi
-    H=x*n2 + d/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-elif modelo=='SpinBoson' or modelo=='SB' or modelo=='3':
-    #Hamiltoniano de "spin-boson"
-    H=x*n2 + d/2*(sz1+sz2) + g*(sz1+sz2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-else:
-    print('Este Modelo no existe. Modelo default es TCM.')
-    H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-
-t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
-
-l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
-
-sol=mesolve(H,rho_0,t,c_ops=l_ops)
-
-fg_total,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
-
-atoms_states=np.empty_like(sol.states)
-for j in range(len(sol.states)):
-    atoms_states[j]=sol.states[j].ptrace([0,1])  
-
-fg_spins,arg_spins,eigenvals_t=jcm.fases(atoms_states)
-
-concu_ab=jcm.concurrence(atoms_states)
-
-color='black'
-fig_fg=plt.figure(figsize=(8,6))
-fig_fg.suptitle('FG')
-ax_fg=fig_fg.add_subplot()
-ax_fg.set_xlim(0,t_final*g)
-ax_fg.plot(t*g,fg_total/np.pi,color=color)
-
-fig_concu=plt.figure(figsize=(8,6))
-fig_concu.suptitle('CONCU')
-ax_concu=fig_concu.add_subplot()
-ax_concu.set_xlim(0,g*t_final)
-ax_concu.plot(g*t,concu_ab,color=color)
-
-fig_fg_spins=plt.figure(figsize=(8,6))
-fig_fg_spins.suptitle('FG SPINS')
-ax_fg_spins=fig_fg_spins.add_subplot()
-ax_fg_spins.set_xlim(0,g*t_final)
-ax_fg_spins.plot(g*t,fg_spins/np.pi,color=color)
+    if ci==0:
+        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
+        fotones=1
+        rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,fotones)*basis(N_c,fotones).dag()).transform(M) 
+    elif ci==1:
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
+        rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0)+basis(N_c,1))).transform(M)
+        # rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0))+tensor(ee,basis(N_c,1)))
+    elif ci==2:
+        #CAVIDAD TERMICA
+        rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),thermal_dm(N_c,2)).transform(M) 
+    elif ci==3:
+        #CAVIDAD COHERENTE
+        rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),coherent_dm(N_c,2)).transform(M) 
+    else:
+        print('porfavor elegir una condicion inicial que este suporteada. Por default ci=0')
+        ci=0
 
 
 
-def anim_hinton(rho):
-    fig,ax=plt.subplots()
-    fig_r,ax_r=plt.subplots()
-    def init():
-        """Initial drawing of the Hinton plot"""
-        ax.clear()
-        hinton(rho[0], ax=ax)
-        ax.set_title("Frame 0")
-        return ax,
-
-    def init_r():
-        ax_r.clear()
-        hinton(rho[0].ptrace([0,1]),ax=ax_r)
-        ax_r.set_title("Frame 0")
-        return ax_r,
-
-    def update(frame:int):
-        """Update the Hinton plot for each frame"""
-        ax.clear()
-        hinton(rho[frame],x_basis=[],y_basis=[], ax=ax,colorbar=False)
-        ax.set_title(f"Frame {frame}")
-        return ax,
-
-    def update_r(frame:int):
-        ax_r.clear()
-        hinton(rho[frame].ptrace([0,1]),x_basis=[],y_basis=[], ax=ax_r,colorbar=False)
-        ax_r.set_title(f"Frame {frame}")
-        return ax_r
-
-    # Create animation
-    anim_h= FuncAnimation(fig, update, frames=len(rho), init_func=init, blit=False, repeat=True)
-    anim_h_r= FuncAnimation(fig_r, update_r, frames=len(rho), init_func=init_r, blit=False, repeat=True)
-    # plt.show()
-    return anim_h,anim_h_r
+    # with open("output.txt", "a") as file_object:
+    #     print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
+    #     print(f"TERMINAL {script_path} cavidad_termica.py", file=file_object)
+    #     print("rho_c", file=file_object)
+    #     print(rho_c, file=file_object)
+    #     print("rho_0", file=file_object)
+    #     print(rho_0, file=file_object)
+        
+    w0=1
+    g=0.001*w0
 
 
-anim_h,anim_h_r=anim_hinton(sol.states)
-anim_h.save(f'hinton/hinton {modelo} tot.mp4','ffmpeg',5)
-anim_h_r.save(f'hinton/hinton {modelo} spins.mp4','ffmpeg',5)
-# fig0=plt.figure()
-# ax0=fig0.add_subplot()
-# hinton(sol.states[1],x_basis=[],y_basis=[], ax=ax0,colorbar=False)
-# Show the animation
+    gamma=0.1*g       #.1*g
+    p=0.05*gamma
 
-# plt.show()
+    x=0         #1*g va en orden ascendiente
+    d=0*g        #1.1001*g#.5*g
+
+    k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
+    J=0*g
+
+    steps=400
+
+    # T=2*np.pi/omega_general(1,1,d,g,k,J,x)
+    t_final=5/g
+
+    for modelo in ['TCM','RABI','SB']:
+    
+        '''##########---Hamiltoniano---##########'''
+        if modelo=='TCM' or modelo=='1':
+            #Hamiltoniano de TC
+            H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+        elif modelo=='RABI' or modelo=='2':
+            #Hamiltoniano de Rabi
+            H=x*n2 + d/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+        elif modelo=='SpinBoson' or modelo=='SB' or modelo=='3':
+            #Hamiltoniano de "spin-boson"
+            H=d/2*(sz1+sz2) + g*(sz1+sz2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+        else:
+            print('Este Modelo no existe. Modelo default es TCM.')
+            H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+
+        t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+
+        l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
+
+        sol=mesolve(H,rho_0,t,c_ops=l_ops)
+
+        fg_total,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
+
+        atoms_states=np.empty_like(sol.states)
+        for j in range(len(sol.states)):
+            atoms_states[j]=sol.states[j].ptrace([0,1])  
+
+        fg_spins,arg_spins,eigenvals_t=jcm.fases(atoms_states)
+
+        concu_ab=jcm.concurrence(atoms_states)
+
+        color='black'
+        def figura_plot(id:str,x:list,y:list,color:list=['black'],figsize:list=(8,6)):
+            fig=plt.figure(id,figsize=(8,6))
+            fig.suptitle(id)
+            ax=fig.add_subplot()
+            ax.set_xlim(0,t_final*g)
+            ax.plot(x,y,color=color[0])
+
+        figura_plot('fg',g*t,fg_total/np.pi)
+        plt.figure('fg').savefig(f'fg/fg {modelo} {ci} plot.png')
+        
+        figura_plot('concu',g*t,concu_ab)
+        plt.figure('concu').savefig(f'fg/concu {modelo} {ci} plot.png')
+
+        figura_plot('fg spin',g*t,fg_spins/np.pi)
+        plt.figure('fg spin').savefig(f'fg/fg spin {modelo} {ci} plot.png')
+
+        plt.figure('fg',clear=True)
+        plt.figure('concu',clear=True)
+        plt.figure('fg spin',clear=True)
+        def anim_hinton(rho):
+            fig=plt.figure('hinton tot',figsize=(8,6))
+            ax=fig.add_subplot()
+            fig_r=plt.figure('hinton r',figsize=(8,6))
+            ax_r=fig_r.subplots()
+            def init():
+                """Initial drawing of the Hinton plot"""
+                ax.clear()
+                hinton(rho[0], ax=ax)
+                ax.set_title("Frame 0")
+                return ax,
+
+            def init_r():
+                ax_r.clear()
+                hinton(rho[0].ptrace([0,1]),ax=ax_r)
+                ax_r.set_title("Frame 0")
+                return ax_r,
+
+            def update(frame:int):
+                """Update the Hinton plot for each frame"""
+                ax.clear()
+                hinton(rho[frame],x_basis=[],y_basis=[], ax=ax,colorbar=False)
+                ax.set_title(f"Frame {frame}")
+                return ax,
+
+            def update_r(frame:int):
+                ax_r.clear()
+                hinton(rho[frame].ptrace([0,1]),x_basis=[],y_basis=[], ax=ax_r,colorbar=False)
+                ax_r.set_title(f"Frame {frame}")
+                return ax_r
+
+            # Create animation
+            anim_h= FuncAnimation(fig, update, frames=len(rho), init_func=init, blit=False, repeat=True)
+            anim_h_r= FuncAnimation(fig_r, update_r, frames=len(rho), init_func=init_r, blit=False, repeat=True)
+            # plt.show()
+            return anim_h,anim_h_r
+
+        t_in=time.time()
+        print(t_in-t_0,'s tiempo de computo de simulacion')
+        anim_h,anim_h_r=anim_hinton(sol.states)
+        if gamma==0:
+            anim_h.save(f'hinton/hinton uni {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+            print('fin guardado ginton tot')
+            anim_h_r.save(f'hinton/hinton uni {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+            print('fin guardado hinton spins')
+        elif gamma>0:
+            anim_h.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+            print('fin guardado ginton tot')
+            anim_h_r.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+            print('fin guardado hinton spins')
+        t_fin=time.time()
+        print(t_fin-t_in,'s de procesamiento y guardado de hinton')
+
+
+plt.close()
