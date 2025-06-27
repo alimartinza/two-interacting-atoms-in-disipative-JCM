@@ -9,32 +9,52 @@ import time
 script_path= os.path.dirname(__file__)
 
 N_c=11
+steps=400
+g_t=5
+
+cond_inic=[0,1,2,3]
+modelos=['RABI','TCM','SB']
+
+w0=1
+g=0.001*w0
+
+
+gamma=0.1*g       #.1*g
+p=0.05*gamma
+
+x=0         #1*g va en orden ascendiente
+d=0*g        #1.1001*g#.5*g
+
+k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
+J=0*g
+
 
 t_0=time.time()
 
 #Matriz de cambio de base
-M=np.zeros((4*N_c,4*N_c))
-M[0,3*N_c]=1
-M[1,3*N_c+1]=1
-M[2,N_c]=1/np.sqrt(2)
-M[2,2*N_c]=1/np.sqrt(2)
-M[3,N_c]=1/np.sqrt(2)
-M[3,2*N_c]=-1/np.sqrt(2)
+M=np.eye(4*N_c)
+# M=np.zeros((4*N_c,4*N_c))
+# M[0,3*N_c]=1
+# M[1,3*N_c+1]=1
+# M[2,N_c]=1/np.sqrt(2)
+# M[2,2*N_c]=1/np.sqrt(2)
+# M[3,N_c]=1/np.sqrt(2)
+# M[3,2*N_c]=-1/np.sqrt(2)
 
-for ii in range(1,N_c-1):
-    M[4*ii,3*N_c+1+ii]=1
-for ii in range(1,N_c):
-    M[4*ii+1,N_c+ii]=1/np.sqrt(2)
-    M[4*ii+1,2*N_c+ii]=1/np.sqrt(2)
-    M[4*ii+3,N_c+ii]=1/np.sqrt(2)
-    M[4*ii+3,2*N_c+ii]=-1/np.sqrt(2)
-for ii in range(1,N_c):
-    M[4*ii+2,ii-1]=1
+# for ii in range(1,N_c-1):
+#     M[4*ii,3*N_c+1+ii]=1
+# for ii in range(1,N_c-1):
+#     M[4*ii+1,N_c+ii]=1/np.sqrt(2)
+#     M[4*ii+1,2*N_c+ii]=1/np.sqrt(2)
+#     M[4*ii+3,N_c+ii]=1/np.sqrt(2)
+#     M[4*ii+3,2*N_c+ii]=-1/np.sqrt(2)
+# for ii in range(1,N_c-1):
+#     M[4*ii+2,ii-1]=1
 
-M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
-M[-2]=np.zeros(4*N_c)
-M[-3]=np.zeros(4*N_c)
-M[-4]=np.zeros(4*N_c)
+# M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
+# M[-2]=np.zeros(4*N_c)
+# M[-3]=np.zeros(4*N_c)
+# M[-4]=np.zeros(4*N_c)
 
 
 ee=basis([2,2],[0,0])
@@ -78,8 +98,7 @@ sx2=tensor(qeye(2),sigmax(),qeye(N_c)).transform(M)
 # print(1/2*(eg+ge)*(eg+ge).dag())
 
 ##### DIFERENTES ESTADOS INICIALES ######
-for ci in [0,1,2,3]:
-    
+for ci in cond_inic:
     if ci==0:
         #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
         fotones=1
@@ -98,36 +117,9 @@ for ci in [0,1,2,3]:
         print('porfavor elegir una condicion inicial que este suporteada. Por default ci=0')
         ci=0
 
+    t_final=g_t/g
 
-
-    # with open("output.txt", "a") as file_object:
-    #     print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
-    #     print(f"TERMINAL {script_path} cavidad_termica.py", file=file_object)
-    #     print("rho_c", file=file_object)
-    #     print(rho_c, file=file_object)
-    #     print("rho_0", file=file_object)
-    #     print(rho_0, file=file_object)
-        
-    w0=1
-    g=0.001*w0
-
-
-    gamma=0.1*g       #.1*g
-    p=0.05*gamma
-
-    x=0         #1*g va en orden ascendiente
-    d=0*g        #1.1001*g#.5*g
-
-    k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
-    J=0*g
-
-    steps=400
-
-    # T=2*np.pi/omega_general(1,1,d,g,k,J,x)
-    t_final=5/g
-
-    for modelo in ['TCM','RABI','SB']:
-    
+    for modelo in modelos:
         '''##########---Hamiltoniano---##########'''
         if modelo=='TCM' or modelo=='1':
             #Hamiltoniano de TC
@@ -186,26 +178,26 @@ for ci in [0,1,2,3]:
             def init():
                 """Initial drawing of the Hinton plot"""
                 ax.clear()
-                hinton(rho[0], ax=ax)
+                hinton(rho[0], ax=ax,color_style="phase")
                 ax.set_title("Frame 0")
                 return ax,
 
             def init_r():
                 ax_r.clear()
-                hinton(rho[0].ptrace([0,1]),ax=ax_r)
+                hinton(rho[0].ptrace([0,1]),ax=ax_r,color_style="phase")
                 ax_r.set_title("Frame 0")
                 return ax_r,
 
             def update(frame:int):
                 """Update the Hinton plot for each frame"""
                 ax.clear()
-                hinton(rho[frame],x_basis=[],y_basis=[], ax=ax,colorbar=False)
+                hinton(rho[frame],x_basis=[],y_basis=[], ax=ax,colorbar=False,color_style="phase")
                 ax.set_title(f"Frame {frame}")
                 return ax,
 
             def update_r(frame:int):
                 ax_r.clear()
-                hinton(rho[frame].ptrace([0,1]),x_basis=[],y_basis=[], ax=ax_r,colorbar=False)
+                hinton(rho[frame].ptrace([0,1]),x_basis=[],y_basis=[], ax=ax_r,colorbar=False,color_style="phase")
                 ax_r.set_title(f"Frame {frame}")
                 return ax_r
 
@@ -224,9 +216,9 @@ for ci in [0,1,2,3]:
             anim_h_r.save(f'hinton/hinton uni {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
             print('fin guardado hinton spins')
         elif gamma>0:
-            anim_h.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+            anim_h.save(f'hinton/B_old hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
             print('fin guardado ginton tot')
-            anim_h_r.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+            anim_h_r.save(f'hinton/B_old hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
             print('fin guardado hinton spins')
         t_fin=time.time()
         print(t_fin-t_in,'s de procesamiento y guardado de hinton')

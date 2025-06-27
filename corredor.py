@@ -2,7 +2,7 @@ from qutip import *
 import numpy as np
 import matplotlib.pyplot as plt
 import jcm_lib as jcm
-import matplotlib as mpl
+from matplotlib import cm
 import os
 
 script_path= os.path.dirname(__file__)
@@ -54,6 +54,7 @@ gg1=tensor(gr,gr,basis(3,1)) #10
 gg2=tensor(gr,gr,basis(3,2)) #11
 
 
+
 SMALL_SIZE = 15
 MEDIUM_SIZE = 15
 BIGGER_SIZE = 20
@@ -72,6 +73,7 @@ plt.rc('figure.subplot',top=0.95)
 
 
 N_c=5
+
 M=np.zeros((4*N_c,4*N_c))
 M[0,3*N_c]=1
 M[1,3*N_c+1]=1
@@ -82,18 +84,45 @@ M[3,2*N_c]=-1/np.sqrt(2)
 
 for ii in range(1,N_c-1):
     M[4*ii,3*N_c+1+ii]=1
-for ii in range(1,N_c):
+for ii in range(1,N_c-1):
     M[4*ii+1,N_c+ii]=1/np.sqrt(2)
     M[4*ii+1,2*N_c+ii]=1/np.sqrt(2)
     M[4*ii+3,N_c+ii]=1/np.sqrt(2)
     M[4*ii+3,2*N_c+ii]=-1/np.sqrt(2)
-for ii in range(1,N_c):
+for ii in range(1,N_c-1):
     M[4*ii+2,ii-1]=1
 
-M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
-M[-2]=np.zeros(4*N_c)
-M[-3]=np.zeros(4*N_c)
-M[-4]=np.zeros(4*N_c)
+n=tensor(qeye(2),qeye(2),num(N_c)).transform(M)
+# sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
+n2=tensor(qeye(2),qeye(2),Qobj(np.diag([i*i for i in range(N_c)]))).transform(M)
+a=tensor(qeye(2),qeye(2),destroy(N_c)).transform(M)
+sm1=tensor(sigmam(),qeye(2),qeye(N_c)).transform(M)
+sp1=tensor(sigmap(),qeye(2),qeye(N_c)).transform(M)
+sz1=tensor(sigmaz(),qeye(2),qeye(N_c)).transform(M)
+sx1=tensor(sigmax(),qeye(2),qeye(N_c)).transform(M)
+sm2=tensor(qeye(2),sigmam(),qeye(N_c)).transform(M)
+sp2=tensor(qeye(2),sigmap(),qeye(N_c)).transform(M)
+sz2=tensor(qeye(2),sigmaz(),qeye(N_c)).transform(M)
+sx2=tensor(qeye(2),sigmax(),qeye(N_c)).transform(M)
+
+n_old=tensor(qeye(2),qeye(2),num(N_c))
+# sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
+n2_old=tensor(qeye(2),qeye(2),Qobj(np.diag([i*i for i in range(N_c)])))
+a_old=tensor(qeye(2),qeye(2),destroy(N_c))
+sm1_old=tensor(sigmam(),qeye(2),qeye(N_c))
+sp1_old=tensor(sigmap(),qeye(2),qeye(N_c))
+sz1_old=tensor(sigmaz(),qeye(2),qeye(N_c))
+sx1_old=tensor(sigmax(),qeye(2),qeye(N_c))
+sm2_old=tensor(qeye(2),sigmam(),qeye(N_c))
+sp2_old=tensor(qeye(2),sigmap(),qeye(N_c))
+sz2_old=tensor(qeye(2),sigmaz(),qeye(N_c))
+sx2_old=tensor(qeye(2),sigmax(),qeye(N_c))
+
+# M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
+# M[-2]=np.zeros(4*N_c)
+# M[-3]=np.zeros(4*N_c)
+
+
 
 # sz1=tensor(sigmaz(),qeye(2),qeye(N_c))
 # sz1_new=sz1.transform(M)
@@ -102,15 +131,16 @@ M[-4]=np.zeros(4*N_c)
 with open("output.txt", "a") as file_object:
     print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
     print(f"TERMINAL {script_path} corredor.py", file=file_object)
-    # print("sz1", file=file_object)
-    # print(sz1, file=file_object) 
-    # print("sz1_new", file=file_object)
-    # print(sz1, file=file_object) 
-    # print("sz1 new", file=file_object)
-    # print(sz1_new, file=file_object)  
-    print("M", file=file_object)
-    print(M, file=file_object)  
-    print("M@M.T.conj()", file=file_object)
-    print(M@M.T.conj(), file=file_object)
+    # print("M", file=file_object)
+    # print(M, file=file_object)  
+    # print("M@M.T.conj()", file=file_object)
+    # A=M@M.T.conj()
+    # A[np.abs(A)<=1e-8] = 0
+    # print(A, file=file_object)
+    print("a old", file=file_object)
+    print(a_old, file=file_object) 
+    print("a", file=file_object)
+    a.tidyup()
+    print(a, file=file_object) 
 
-
+print(cm.seismic(0))
