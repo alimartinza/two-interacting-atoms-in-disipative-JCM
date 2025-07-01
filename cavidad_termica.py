@@ -8,22 +8,28 @@ import time
 
 script_path= os.path.dirname(__file__)
 
-N_c=11
-steps=500
+N_c=3
+steps=1000
 g_t=5
 
-cond_inic=[0] #,1,2,3] #[0,1,2,3]
-modelos=['TCM','SB'] #['RABI','TCM','SB']
+cond_inic=[0,4,5] #,1,2,3] #[0,1,2,3]
+modelo='TCM' #['RABI','TCM','SB']
 
 w0=1
 g=0.001*w0
 
 
-gamma=0.1*g       #.1*g
+gamma=0*g       #.1*g
 p=0.05*gamma
-
+if gamma==0:
+    disip='uni'
+elif gamma>0:
+    disip='dis'
+else: 
+    print(f'gamma tiene que ser un float cero o mayor a cero')
+    exit()
 x=0         #1*g va en orden ascendiente
-d=0*g        #1.1001*g#.5*g
+d=1*g        #1.1001*g#.5*g
 
 k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 J=0*g
@@ -96,11 +102,8 @@ sx2=tensor(qeye(2),sigmax(),qeye(N_c))
 for ci in cond_inic:
     if ci==0:
         #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
-        fotones=2
-        eef=tensor(ee,basis(N_c,fotones-2))
-        ggf=tensor(gg,basis(N_c,fotones))
-        rho_0=(eef+ggf).unit()*(eef+ggf).unit().dag()
-        # rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,fotones)*basis(N_c,fotones).dag())
+        fotones=1
+        rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,fotones)*basis(N_c,fotones).dag())
     elif ci==1:
         #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
         rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0)+basis(N_c,1)))
@@ -111,13 +114,23 @@ for ci in cond_inic:
     elif ci==3:
         #CAVIDAD COHERENTE
         rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),coherent_dm(N_c,2)) 
+    elif ci==4:
+        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
+        fotones=2
+        eef=tensor(ee,basis(N_c,fotones-2))
+        ggf=tensor(gg,basis(N_c,fotones))
+        rho_0=(eef+ggf).unit()*(eef+ggf).unit().dag()
+    elif ci==5:
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
+        rho_0=ket2dm(tensor((ee+gg).unit(),basis(N_c,0)+basis(N_c,1)))
+        # rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0))+tensor(ee,basis(N_c,1)))
     else:
         print('porfavor elegir una condicion inicial que este suporteada. Por default ci=0')
         ci=0
 
     t_final=g_t/g
 
-    for modelo in modelos:
+    for d in [0,0.05*g,1*g]:
         '''##########---Hamiltoniano---##########'''
         if modelo=='TCM' or modelo=='1':
             #Hamiltoniano de TC
@@ -143,7 +156,7 @@ for ci in cond_inic:
         t_i_cb=time.time()
         for i in range(len(sol.states)):
             sol.states[i]=sol.states[i].transform(M)
-            sol.states[i].full()[np.abs(sol.states[i].full()) <=1e-8]=0 
+            # sol.states[i].full()[np.abs(sol.states[i].full()) <=1e-8]=0 
 
 
         t_f_cb=time.time()
@@ -168,21 +181,20 @@ for ci in cond_inic:
             ax.plot(x,y,color=color[0])
 
         figura_plot('fg',g*t,fg_total/np.pi)
-        plt.figure('fg').savefig(f'fg/fg {modelo} {ci} plot.png')
+        plt.figure('fg').savefig(f'fg/{N_c}x{N_c} fg {modelo} {ci} d={d/g}g {disip} plot.png')
         
         figura_plot('concu',g*t,concu_ab)
-        plt.figure('concu').savefig(f'fg/concu {modelo} {ci} plot.png')
+        plt.figure('concu').savefig(f'fg/{N_c}x{N_c} concu {modelo} {ci} d={d/g}g {disip} plot.png')
 
         figura_plot('fg spin',g*t,fg_spins/np.pi)
-        plt.figure('fg spin').savefig(f'fg/fg spin {modelo} {ci} plot.png')
+        plt.figure('fg spin').savefig(f'fg/{N_c}x{N_c} fg spin {modelo} {ci} d={d/g}g {disip} plot.png')
 
-        plt.figure('fg',clear=True)
-        plt.figure('concu',clear=True)
-        plt.figure('fg spin',clear=True)
+        plt.close('all')
+
         def anim_hinton(rho):
-            fig=plt.figure('hinton tot',figsize=(8,6))
+            fig=plt.figure(figsize=(8,6))
             ax=fig.add_subplot()
-            fig_r=plt.figure('hinton r',figsize=(8,6))
+            fig_r=plt.figure(figsize=(8,6))
             ax_r=fig_r.subplots()
             def init():
                 """Initial drawing of the Hinton plot"""
@@ -223,17 +235,16 @@ for ci in cond_inic:
         anim_h,anim_h_r=anim_hinton(sol.states)
         t_i_guardado=time.time()
         if gamma==0:
-            anim_h.save(f'hinton/hinton uni {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+            anim_h.save(f'hinton/{N_c}x{N_c} hinton uni {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
             print('fin guardado ginton tot')
-            anim_h_r.save(f'hinton/hinton uni {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+            anim_h_r.save(f'hinton/{N_c}x{N_c} hinton uni {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
             print('fin guardado hinton spins')
         elif gamma>0:
-            anim_h.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+            anim_h.save(f'hinton/{N_c}x{N_c} hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
             print('fin guardado ginton tot')
-            anim_h_r.save(f'hinton/hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+            anim_h_r.save(f'hinton/{N_c}x{N_c} hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
             print('fin guardado hinton spins')
         t_fin=time.time()
         print(t_fin-t_i_guardado,'s de guardado de hinton')
 
-
-        plt.close()
+        plt.close('all')
