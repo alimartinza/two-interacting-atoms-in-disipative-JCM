@@ -8,33 +8,28 @@ import time
 
 script_path= os.path.dirname(__file__)
 
-N_c=3
-steps=1000
-g_t=5
+N_c=7
+steps=10000
+g_t=10
 
-cond_inic=[0,4,5] #,1,2,3] #[0,1,2,3]
-modelo='TCM' #['RABI','TCM','SB']
+
+cond_inic=[0,1,6,7,8]
+modelos=['TCM']
 
 w0=1
 g=0.001*w0
 
 
-gamma=0*g       #.1*g
-p=0.05*gamma
-if gamma==0:
-    disip='uni'
-elif gamma>0:
-    disip='dis'
-else: 
-    print(f'gamma tiene que ser un float cero o mayor a cero')
-    exit()
+gamma=[0*g,0.1*g]       #.1*g
+
+
 x=0         #1*g va en orden ascendiente
-d=1*g        #1.1001*g#.5*g
+d=[0,0.0001*g,0.2*g,1*g]        #1.1001*g#.5*g
 
 k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 J=0*g
 
-
+nested_params=[(iter1,iter2,iter3) for iter1 in cond_inic for iter2 in d for iter3 in modelos]
 
 
 #Matriz de cambio de base
@@ -98,99 +93,140 @@ sx2=tensor(qeye(2),sigmax(),qeye(N_c))
 # print(1/2*(eg+ge)*(eg+ge).dag())
 
 ##### DIFERENTES ESTADOS INICIALES ######
+def simulacion(ci:int,d:float,modelo:str,gamma_list:list,hinton:bool):
 
-for ci in cond_inic:
     if ci==0:
-        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
+        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO PURO
+        fase_pura=True
         fotones=1
         rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,fotones)*basis(N_c,fotones).dag())
     elif ci==1:
-        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO PERO SIN COHERENCIAS ENTRE ESTADOS REDUCIDOS ATOMICOS PURO
+        fase_pura=True
         rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0)+basis(N_c,1)))
         # rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0))+tensor(ee,basis(N_c,1)))
     elif ci==2:
-        #CAVIDAD TERMICA
+        #CAVIDAD TERMICA MIXTO
+        fase_pura=False
         rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),thermal_dm(N_c,2)) 
     elif ci==3:
-        #CAVIDAD COHERENTE
+        #CAVIDAD COHERENTE PURO
+        fase_pura=True
         rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),coherent_dm(N_c,2)) 
     elif ci==4:
-        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO
+        #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO PURO
+        fase_pura=True
         fotones=2
         eef=tensor(ee,basis(N_c,fotones-2))
         ggf=tensor(gg,basis(N_c,fotones))
         rho_0=(eef+ggf).unit()*(eef+ggf).unit().dag()
     elif ci==5:
-        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO PURO
+        fase_pura=True
         rho_0=ket2dm(tensor((ee+gg).unit(),basis(N_c,0)+basis(N_c,1)))
         # rho_0=ket2dm(tensor((eg+ge).unit(),basis(N_c,0))+tensor(ee,basis(N_c,1)))
+    elif ci==6:
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO Y CON COHERENCIAS ENTRE ESTADOS REDUCIDOS ATOMICOS PURO
+        fase_pura=True
+        rho_0=ket2dm(tensor(((eg+ge).unit()+gg).unit(),basis(N_c,1)))
+    elif ci==7:
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO Y CON COHERENCIAS ENTRE ESTADOS REDUCIDOS ATOMICOS PURO
+        fase_pura=True
+        rho_0=ket2dm(tensor(((eg+ge).unit()+gg+ee).unit(),basis(N_c,1)))
+    elif ci==8:
+        #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO Y CON COHERENCIAS ENTRE ESTADOS REDUCIDOS ATOMICOS MIXTO
+        fase_pura=False
+        rho_0=tensor((eg+ge).unit()*(eg+ge).unit().dag(),basis(N_c,1)*basis(N_c,1).dag())+tensor((eg+ge).unit()*(eg+ge).unit().dag(),basis(N_c,2)*basis(N_c,2).dag())
+
     else:
         print('porfavor elegir una condicion inicial que este suporteada. Por default ci=0')
         ci=0
 
     t_final=g_t/g
 
-    for d in [0,0.05*g,1*g]:
-        '''##########---Hamiltoniano---##########'''
-        if modelo=='TCM' or modelo=='1':
-            #Hamiltoniano de TC
-            H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-        elif modelo=='RABI' or modelo=='2':
-            #Hamiltoniano de Rabi
-            H=x*n2 + d/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-        elif modelo=='SpinBoson' or modelo=='SB' or modelo=='3':
-            #Hamiltoniano de "spin-boson"
-            H=d/2*(sz1+sz2) + g*(sz1+sz2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-        else:
-            print('Este Modelo no existe. Modelo default es TCM.')
-            H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-        print(modelo,' ci:',ci )
-        t_0=time.time()
 
-        t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    '''##########---Hamiltoniano---##########'''
+    if modelo=='TCM' or modelo=='1':
+        #Hamiltoniano de TC
+        H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    elif modelo=='RABI' or modelo=='2':
+        #Hamiltoniano de Rabi
+        H=x*n2 + d/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    elif modelo=='SpinBoson' or modelo=='SB' or modelo=='3':
+        #Hamiltoniano de "spin-boson"
+        H=d/2*(sz1+sz2) + g*(sz1+sz2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    else:
+        print('Este Modelo no existe. Modelo default es TCM.')
+        H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
+    print(modelo,' ci:',ci )
+    t_0=time.time()
+    color=['black','red']
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+
+    fig_fg=plt.figure(figsize=(8,6))
+    fig_fg.suptitle('FG')
+    ax_fg=fig_fg.add_subplot()
+    ax_fg.set_xlim(0,t_final*g)
+            
+    fig_concu=plt.figure(figsize=(8,6))
+    fig_concu.suptitle('CONCU')
+    ax_concu=fig_concu.add_subplot()
+    ax_concu.set_xlim(0,t_final*g)
+
+    fig_fg_spins=plt.figure(figsize=(8,6))
+    fig_fg_spins.suptitle('FG SPINS')
+    ax_fg_spins=fig_fg_spins.add_subplot()
+    ax_fg_spins.set_xlim(0,t_final*g)
+    t_i=time.time()
+    for i_gamma in range(len(gamma_list)):
+        gamma=gamma_list[i_gamma]
+        p=0.05*gamma
 
         l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
 
         sol=mesolve(H,rho_0,t,c_ops=l_ops)
 
         t_i_cb=time.time()
+
         for i in range(len(sol.states)):
             sol.states[i]=sol.states[i].transform(M)
             # sol.states[i].full()[np.abs(sol.states[i].full()) <=1e-8]=0 
 
-
         t_f_cb=time.time()
         print(t_f_cb-t_i_cb,'s tiempo de cambio de base')
 
-        fg_total,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
+        #HOY QUIERO PROBAR SI LA FASE MIXTA ANDA UTILIZANDO MAS PASOS --> NO, NO ANDA AUN AUMENTANDO LOS PASOS. HAY QUE HACERA DEVUELTA.
+
+        fg_total,arg_tot,eigenvals_tot_t=jcm.fases(sol)
+
+        # fg_total_mixta,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
 
         atoms_states=np.empty_like(sol.states)
         for j in range(len(sol.states)):
-            atoms_states[j]=sol.states[j].ptrace([0,1])  
-
+            atoms_states[j]=sol.states[j].ptrace([0,1])
+        
         fg_spins,arg_spins,eigenvals_t=jcm.fases(atoms_states)
+
+        # fg_spins_mixta,arg_spins,eigenvals_t=jcm.fases_mixta(atoms_states)
 
         concu_ab=jcm.concurrence(atoms_states)
 
-        color='black'
-        def figura_plot(id:str,x:list,y:list,color:list=['black'],figsize:list=(8,6)):
-            fig=plt.figure(id,figsize=figsize)
-            fig.suptitle(id)
-            ax=fig.add_subplot()
-            ax.set_xlim(0,t_final*g)
-            ax.plot(x,y,color=color[0])
 
-        figura_plot('fg',g*t,fg_total/np.pi)
-        plt.figure('fg').savefig(f'fg/{N_c}x{N_c} fg {modelo} {ci} d={d/g}g {disip} plot.png')
-        
-        figura_plot('concu',g*t,concu_ab)
-        plt.figure('concu').savefig(f'fg/{N_c}x{N_c} concu {modelo} {ci} d={d/g}g {disip} plot.png')
+        ax_fg.plot(g*t,fg_total/np.pi,color=color[i_gamma])
 
-        figura_plot('fg spin',g*t,fg_spins/np.pi)
-        plt.figure('fg spin').savefig(f'fg/{N_c}x{N_c} fg spin {modelo} {ci} d={d/g}g {disip} plot.png')
 
-        plt.close('all')
+        ax_concu.plot(g*t,concu_ab,color=color[i_gamma])
 
+
+        ax_fg_spins.plot(g*t,fg_spins/np.pi,color=color[i_gamma])
+
+
+    fig_fg_spins.savefig(f'fg tcm/{N_c}x{N_c} {steps/1000} fg spin {modelo} {ci} d={d/g}g plot.png')
+    fig_concu.savefig(f'fg tcm/{N_c}x{N_c} concu {modelo} {ci} d={d/g}g plot.png')
+    fig_fg.savefig(f'fg tcm/{N_c}x{N_c} fg {steps/1000} {modelo} {ci} d={d/g}g plot.png')
+    t_c=time.time()
+    print(t_c-t_i,'s computo de simulacion y fg')
+    if hinton:
         def anim_hinton(rho):
             fig=plt.figure(figsize=(8,6))
             ax=fig.add_subplot()
@@ -234,17 +270,25 @@ for ci in cond_inic:
         print(t_in-t_0,'s tiempo de computo de simulacion')
         anim_h,anim_h_r=anim_hinton(sol.states)
         t_i_guardado=time.time()
-        if gamma==0:
-            anim_h.save(f'hinton/{N_c}x{N_c} hinton uni {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
-            print('fin guardado ginton tot')
-            anim_h_r.save(f'hinton/{N_c}x{N_c} hinton uni {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
-            print('fin guardado hinton spins')
-        elif gamma>0:
-            anim_h.save(f'hinton/{N_c}x{N_c} hinton dis {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
-            print('fin guardado ginton tot')
-            anim_h_r.save(f'hinton/{N_c}x{N_c} hinton dis {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
-            print('fin guardado hinton spins')
+
+        anim_h.save(f'hinton 2.0/{N_c}x{N_c} hinton {disip} {modelo} {ci} d={d/g}g tot.mp4','ffmpeg',5)
+        print('fin guardado ginton tot')
+        anim_h_r.save(f'hinton 2.0/{N_c}x{N_c} hinton {disip} {modelo} {ci} d={d/g}g spins.mp4','ffmpeg',5)
+        print('fin guardado hinton spins')
+
         t_fin=time.time()
         print(t_fin-t_i_guardado,'s de guardado de hinton')
+    else:
+        pass
+    
+    plt.close('all')
 
-        plt.close('all')
+    return None
+
+for ci,d,modelo in nested_params:
+
+    simulacion(ci,d,modelo,gamma,False)
+
+
+
+
