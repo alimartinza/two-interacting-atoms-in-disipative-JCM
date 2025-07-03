@@ -78,13 +78,24 @@ def simu_tcm_rabi(w_q:float,w_r:float,g:float,k:float,J:float,x:float,gamma:floa
     H_tcm=w_r*n+x*n2 + w_q/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
     H_rabi=w_r*n+x*n2 + w_q/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
     '''---Simulacion numerica---'''
-    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
-    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
-    sol_tcm=mesolve(H_tcm,psi0,t,c_ops=[])
+    t_0=time.time()
+    if gamma!=0: l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
+    else: l_ops=[]
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION
+
+    sol_tcm=mesolve(H_tcm,psi0,t,c_ops=l_ops)
+    t_1=time.time()
+    print(t_1-t_0,'s en simular jcm')
+
     sol_rabi=mesolve(H_rabi,psi0,t,c_ops=l_ops)
+    t_2=time.time()
+    print(t_2-t_1,'s en simular rabi')
+
     fg_tcm,arg,eigenvals_t_tcm = jcm.fases(sol_tcm)
     fg_rabi,arg,eigenvals_t_rabi = jcm.fases(sol_rabi)
-
+    t_3=time.time()
+    print(t_3-t_2,'s en simular las FGs')
+    
 
     if return_all==False:
         atoms_states_tcm=np.empty_like(sol_tcm.states)
@@ -143,26 +154,26 @@ def simu_tcm_rabi(w_q:float,w_r:float,g:float,k:float,J:float,x:float,gamma:floa
         for key in coherencias_rabi.keys():
             data_rabi[key]=np.zeros(len(sol_rabi.states))
         #CALCULAMOS LAS COHERENCIAS Y LAS METEMOS EL EL DATAFRAME
-        coherenciasStartTime = time.process_time()
+        # coherenciasStartTime = time.process_time()
 
-        for j in range(12): 
-            for l in range(j+1,12):
-                c_help_tcm=np.zeros(len(sol_tcm.states),dtype='complex')
-                for i in range(len(sol_tcm.states)):
-                    c_help_tcm[i]=(sol_tcm.states[i][j]*sol_tcm.states[i][l])[0]
-                data_tcm[str(j)+';'+str(l)]=c_help_tcm
+        # for j in range(12): 
+        #     for l in range(j+1,12):
+        #         c_help_tcm=np.zeros(len(sol_tcm.states),dtype='complex')
+        #         for i in range(len(sol_tcm.states)):
+        #             c_help_tcm[i]=(sol_tcm.states[i][j]*sol_tcm.states[i][l])[0]
+        #         data_tcm[str(j)+';'+str(l)]=c_help_tcm
 
-        for j in range(12): 
-            for l in range(j+1,12):
-                c_help_rabi=np.zeros(len(sol_rabi.states),dtype='complex')
-                for i in range(len(sol_rabi.states)):
-                    c_help_rabi[i]=sol_rabi.states[i][j][l]
-                data_rabi[str(j)+';'+str(l)]=c_help_rabi
+        # for j in range(12): 
+        #     for l in range(j+1,12):
+        #         c_help_rabi=np.zeros(len(sol_rabi.states),dtype='complex')
+        #         for i in range(len(sol_rabi.states)):
+        #             c_help_rabi[i]=sol_rabi.states[i][j][l]
+        #         data_rabi[str(j)+';'+str(l)]=c_help_rabi
 
-        coherenciasRunTime = time.process_time()-coherenciasStartTime
-        print(f"coherenciasRunTime: {coherenciasRunTime}")
-        data_tcm['FG']=fg_tcm
-        data_rabi['FG']=fg_rabi
+        # coherenciasRunTime = time.process_time()-coherenciasStartTime
+        # print(f"coherenciasRunTime: {coherenciasRunTime}")
+        data_tcm['fg']=fg_tcm
+        data_rabi['fg']=fg_rabi
 
         expectRunTime=time.process_time()-expectStartTime
 
@@ -186,8 +197,8 @@ steps=6000
 g_t=10
 
 w_q=1
-w_r=1 
 g=0.001*w_q
+w_r=1+2*g
 
 gamma=0       #.1*g
 
@@ -206,9 +217,9 @@ ax1.plot(g*tcm['t'],tcm['pr(gg0)'],color='black',label='P|gg0>')
 ax1.plot(g*tcm['t'],tcm['pr(gg1)'],color='red',label='P|gg0>')
 ax1.plot(g*tcm['t'],tcm['pr(gg2)'],color='blue',label='P|gg0>')
 
-ax1.plot(g*rabi['t'],rabi['pr(gg0)'],color='black',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax1.plot(g*rabi['t'],rabi['pr(gg1)'],color='red',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax1.plot(g*rabi['t'],rabi['pr(gg2)'],color='blue',linestyle='dashed',marker='o',markevery=int(steps/200))
+ax1.plot(g*rabi['t'],rabi['pr(gg0)'],color='black',linestyle=' ',marker='o',markevery=int(steps/200))
+ax1.plot(g*rabi['t'],rabi['pr(gg1)'],color='red',linestyle=' ',marker='o',markevery=int(steps/200))
+ax1.plot(g*rabi['t'],rabi['pr(gg2)'],color='blue',linestyle=' ',marker='o',markevery=int(steps/200))
 ax1.set_xlabel('gt')
 ax1.set_ylabel(r'$P_{|ggn\rangle}$')
 ax1.legend()
@@ -218,9 +229,9 @@ ax2.plot(g*tcm['t'],tcm['pr(eg0)'],color='black',label='P|eg0>')
 ax2.plot(g*tcm['t'],tcm['pr(eg1)'],color='red',label='P|eg0>')
 ax2.plot(g*tcm['t'],tcm['pr(eg2)'],color='blue',label='P|eg0>')
 
-ax2.plot(g*rabi['t'],rabi['pr(eg0)'],color='black',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax2.plot(g*rabi['t'],rabi['pr(eg1)'],color='red',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax2.plot(g*rabi['t'],rabi['pr(eg2)'],color='blue',linestyle='dashed',marker='o',markevery=int(steps/200))
+ax2.plot(g*rabi['t'],rabi['pr(eg0)'],color='black',linestyle=' ',marker='o',markevery=int(steps/200))
+ax2.plot(g*rabi['t'],rabi['pr(eg1)'],color='red',linestyle=' ',marker='o',markevery=int(steps/200))
+ax2.plot(g*rabi['t'],rabi['pr(eg2)'],color='blue',linestyle=' ',marker='o',markevery=int(steps/200))
 ax2.set_xlabel('gt')
 ax2.legend()
 
@@ -229,18 +240,25 @@ ax3.plot(g*tcm['t'],tcm['pr(ee0)'],color='black',label='P|ee0>')
 ax3.plot(g*tcm['t'],tcm['pr(ee1)'],color='red',label='P|ee0>')
 ax3.plot(g*tcm['t'],tcm['pr(ee2)'],color='blue',label='P|ee0>')
 
-ax3.plot(g*rabi['t'],rabi['pr(ee0)'],color='black',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax3.plot(g*rabi['t'],rabi['pr(ee1)'],color='red',linestyle='dashed',marker='o',markevery=int(steps/200))
-ax3.plot(g*rabi['t'],rabi['pr(ee2)'],color='blue',linestyle='dashed',marker='o',markevery=int(steps/200))
+ax3.plot(g*rabi['t'],rabi['pr(ee0)'],color='black',linestyle=' ',marker='o',markevery=int(steps/200))
+ax3.plot(g*rabi['t'],rabi['pr(ee1)'],color='red',linestyle=' ',marker='o',markevery=int(steps/200))
+ax3.plot(g*rabi['t'],rabi['pr(ee2)'],color='blue',linestyle=' ',marker='o',markevery=int(steps/200))
 ax3.set_xlabel('gt')
 ax3.legend()
 
 ax4=fig_pob.add_subplot(224)
 ax4.plot(g*tcm['t'],tcm['<n>'],color='black',label='<n>')
-ax4.plot(g*rabi['t'],rabi['<n>'],color='black',linestyle='dashed',marker='o',markevery=int(steps/200))
+ax4.plot(g*rabi['t'],rabi['<n>'],color='black',linestyle=' ',marker='o',markevery=int(steps/200))
 ax4.set_ylabel(r'$\langle \hat{n} \rangle$')
 ax4.set_xlabel('gt')
 ax4.legend()
+
+fig_fg=plt.figure(figsize=(8,6))
+ax=fig_fg.add_subplot()
+ax.plot(g*tcm['t'],tcm['fg']/np.pi,color='black',label='TCM')
+ax.plot(g*rabi['t'],rabi['fg']/np.pi,color='red',label='RABI')
+ax.set_xlabel('gt')
+ax.set_ylabel('$\phi_G$')
 
 
 plt.show()
