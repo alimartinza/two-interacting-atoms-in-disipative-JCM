@@ -8,13 +8,13 @@ import time
 
 script_path= os.path.dirname(__file__)
 
-N_c=7
-steps=10000
+N_c=10
+steps=6000
 g_t=10
 
 
 cond_inic=[0,1,6,7,8]
-modelos=['TCM']
+modelos=['RABI']
 
 w0=1
 g=0.001*w0
