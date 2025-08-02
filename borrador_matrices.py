@@ -18,11 +18,15 @@ zs0[:,:,2]=[[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
 zs0[:,:,0].flatten()
 zs0[:,:,1].flatten()
 zs0[:,:,2].flatten()
-print(zs0)
+# print(zs0)
 zs0.reshape(-1,frames)
-print(np.shape(zs0))
-i=0
-for data_t in zs0:
-    print(i)
-    print(data_t)
-    i+=1
+# print(np.shape(zs0))
+# i=0
+# for data_t in zs0:
+#     print(i)
+#     print(data_t)
+#     i+=1
+
+
+a=np.array([1,2,3,4,5])
+print(a+a)

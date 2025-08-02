@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 import os
-# import pandas as pd
+import pandas as pd
 import matplotlib as mpl
 import matplotlib.colors as mcolors
 from matplotlib.patches import Rectangle
@@ -280,6 +280,33 @@ def concurrence(rho):
         lsum = np.sqrt(evals[3]) - np.sqrt(evals[2]) - np.sqrt(evals[1]) - np.sqrt(evals[0])
         c[i]=max(0, lsum)
     return c
+
+def triconcurrence(sol,alpha:float):
+    'Implementacion numerica de medida de entrelazamiento tripartita genuina planteada por unos chinos basada en una medida genuinda de entrelazamiento bipartita'
+    'A(|psi_ijk>)=sqrt(Q(Q-E^a_{i|jk})(Q-E^a_{j|ik})(Q-E^a_{k|ij})) donde E_{i|jk} es el entrelazamiento entre la particion i;jk, a es una potencia y a\in(0,1] y Q=(E^a_{i|jk}+E^a_{i|jk}+E^a_{i|jk})/2'
+    if alpha<=0 or alpha>1:
+        print('alpha tiene que ser entre (0,1]')
+        exit()
+
+    for i in range(len(sol.states)):
+        if sol.states[i].isket: 
+            pass
+        else:
+            print('No todos los estados de la evolucion son puros, corroborar porque.')
+            break
+    states12=np.empty_like(sol.states)
+    states02=np.empty_like(sol.states)
+    states01=np.empty_like(sol.states)
+    for j in range(len(sol.states)):
+        states12[j]=sol.states[j].ptrace([1,2])
+        states02[j]=sol.states[j].ptrace([0,2])
+        states01[j]=sol.states[j].ptrace([0,1])
+    E1=concurrence(states12)      #E_i|jk
+    E2=concurrence(states02)      #E_j|ik
+    E3=concurrence(states01)      #E_k|ij
+    Q=(E1^alpha+E2^alpha+E3^alpha)/2
+    A=np.sqrt(Q*(Q-E1)*(Q-E2)*(Q-E3))
+    return A
 
 def fases(sol):
     """params:
