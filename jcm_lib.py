@@ -236,7 +236,8 @@ def entropy_linear(rho):
 def concurrence(rho):
     """
     Calculate the concurrence entanglement measure for a two-qubit state.
-
+    Modificada por Ali.
+    
     Parameters
     ----------
     state : qobj or list of qobjs

@@ -3,6 +3,7 @@ from numpy.linalg import eigh
 from pymanopt import Problem
 from pymanopt.manifolds import UnitaryGroup
 from pymanopt.optimizers import ConjugateGradient
+from pymanopt.optimizers import SteepestDescent
 from pymanopt.function import autograd
 from autograd import numpy as anp
 from autograd.numpy.linalg import eigvalsh
@@ -16,12 +17,12 @@ import matplotlib.pyplot as plt
 script_path= os.path.dirname(__file__)
 
 N_c=3
-steps=600
+steps=6000
 g_t=10
 
 
 cond_inic=0
-modelos='JCM'
+modelos='TCM'
 
 w0=1
 g=0.001*w0
@@ -38,7 +39,7 @@ else:
 gamma=gamma[i_gamma]
 
 x=0         #1*g va en orden ascendiente
-d=0       #1.1001*g#.5*g
+d=0.001*g       #1.1001*g#.5*g
 
 k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 J=0*g
@@ -127,12 +128,7 @@ def simulacion(ci:int,d:float,modelo:str):
 
     sol=mesolve(H,rho_0,t,c_ops=l_ops)
 
-
-    #HOY QUIERO PROBAR SI LA FASE MIXTA ANDA UTILIZANDO MAS PASOS --> NO, NO ANDA AUN AUMENTANDO LOS PASOS. HAY QUE HACERA DEVUELTA.
-
     fg_total,arg_tot,eigenvals_tot_t=jcm.fases(sol)
-
-    # fg_total_mixta,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
 
     rho_01=np.empty_like(sol.states) #2x2
     for j in range(len(sol.states)):
@@ -150,7 +146,72 @@ def simulacion(ci:int,d:float,modelo:str):
     return sol,rho_01,rho_02,rho_12,fg_total
 
 # --- Optimized Entropy of entanglement ---
-def entropy_of_entanglement_autograd(psi):
+def tallis_entropy(psi_ij):
+    '''
+    Calculates de tallis entropy for q=2 (generalized concurrence) for a pure bipartite
+    density matrix.
+    
+    Args:
+        psi_ij: a bipartite pure state
+        
+    Returns:
+        tallis entropy'''
+    
+
+def entropy_of_entanglement_2x2(psi):
+    """
+    Calculates the entanglement entropy of a pure state psi using an
+    analytical formula for the eigenvalues of the 2x2 reduced density matrix.
+    This is more efficient than numerical diagonalization.
+
+    Args:
+        psi: A 6x1 normalized pure state vector for a qubit-qudit system.
+
+    Returns:
+        The von Neumann entropy (in bits).
+    """
+    # The state is assumed to be normalized. The components c_ij correspond to
+    # the qubit state i and qutrit state j.
+    # row1 corresponds to qubit state |0>, with components c_00, c_01, c_02, ... , c_0N
+    # row2 corresponds to qubit state |1>, with components c_10, c_11, c_12, ... , c_1N
+    row1 = psi[0:2]
+    row2 = psi[2:4]
+
+    # The 2x2 reduced density matrix rho_A is [[a, b], [b*, d]].
+    # a = |c_00|^2 + |c_01|^2 + |c_02|^2
+    # d = |c_10|^2 + |c_11|^2 + |c_12|^2
+    # b = c_00*c_10* + c_01*c_11* + c_02*c_12*
+    a = anp.sum(anp.abs(row1)**2)
+    d = anp.sum(anp.abs(row2)**2)
+
+    # Manually implement vdot using autograd-safe primitives to avoid VJP error.
+    # vdot(row1, row2) is sum(row1.conj() * row2)
+    b_conj = anp.sum(anp.conj(row1) * row2) # This is b*
+    mod_b_sq = anp.abs(b_conj)**2
+
+    # The eigenvalues are given by the analytical formula:
+    # lambda = [ 1 +/- sqrt((a-d)^2 + 4|b|^2) ] / 2
+    # Note: trace(rho_A) = a + d = 1 for a normalized state psi.
+    discriminant_sqrt = anp.sqrt((a - d)**2 + 4 * mod_b_sq)
+    
+    # Calculate the two eigenvalues
+    lambda1 = 0.5 * (1 + discriminant_sqrt)
+    lambda2 = 0.5 * (1 - discriminant_sqrt)
+
+    # Create a small array of the two eigenvalues.
+    eigs = anp.array([lambda1, lambda2])
+    
+    # Filter out numerical noise (very small or negative eigenvalues).
+    eigs = eigs[eigs > 1e-12]
+    
+    # Calculate von Neumann entropy: S = -sum(p * log2(p))
+    # Add a small epsilon for numerical stability to prevent log(0) errors,
+    # which can occur with pure states.
+    eps = 1e-16
+    return -anp.sum(eigs * anp.log2(eigs + eps))
+
+
+def entropy_of_entanglement_2x3(psi):
     """
     Calculates the entanglement entropy of a pure state psi using an
     analytical formula for the eigenvalues of the 2x2 reduced density matrix.
@@ -199,7 +260,7 @@ def entropy_of_entanglement_autograd(psi):
     # Calculate von Neumann entropy: S = -sum(p * log2(p))
     # Add a small epsilon for numerical stability to prevent log(0) errors,
     # which can occur with pure states.
-    eps = 1e-30
+    eps = 1e-16
     return -anp.sum(eigs * anp.log2(eigs + eps))
 
 rho,rho_01,rho_02,rho_12,fg_total=simulacion(cond_inic,d,modelos)
@@ -215,18 +276,18 @@ def rankV_func(rho):
     V = eigvecs @ np.diag(np.sqrt(eigvals)) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
     return rank, V
 
-def roof_etanglement_bipartite(rank,V,initial_point=None):
+def roof_etanglement_bipartite(rank,V,dims=0,initial_point=None):
     '''Calcula el entrelazamiento de un sistema bipartito mixto de dimensiones 
     arbitrarias 2xm usando convex roof de la entropia de von neuman.
-    -Parametros:
-    rho: matriz densidad a la que se le quiere calcular el entrelazamiento. tiene que ser un ndarray no un qobj y tiene que ser de [2xN]x[2xN] dimensiones (la dimension 2 tiene que ir primero)
-    -Opcional:
-    initial_point: el punto por el que se quiere comenenzar la optimizacion. Esta
-    pensado para utilizarse en caso de tener una evolucion temporal y querer calcular el entrelazamiento en funcion del tiempo.'''
+    Parametros:
+        rho: matriz densidad a la que se le quiere calcular el entrelazamiento. tiene que ser un ndarray no un qobj y tiene que ser de [2xN]x[2xN] dimensiones (la dimension 2 tiene que ir primero)
+    Opcional:
+        initial_point: el punto por el que se quiere comenenzar la optimizacion. Esta
+        pensado para utilizarse en caso de tener una evolucion temporal y querer calcular el entrelazamiento en funcion del tiempo.'''
 
     # --- Manifold Definition ---
     manifold = UnitaryGroup(rank) #definimos el grupo sobre el cual queremos hacer la optimizacion rho'=U^\dag V^\dag V U o algo asi. Usamos el grupo U(rank) porque eliminamos los autovalores que son 0 que no van a sumar a la entropia y esto nos ahorra tiempo de computo al tener que optimizar en un espacio menor
-    
+
     # --- Cost function: average entanglement after unitary mixing ---
     @autograd(manifold)
     def cost(U):
@@ -235,6 +296,7 @@ def roof_etanglement_bipartite(rank,V,initial_point=None):
         """
         W = V @ U
         total_entanglement = 0
+        nan_instances=0
         for i in range(rank):
             w_i = W[:, i]
             # Calculate the probability p_i as the squared norm of w_i.
@@ -243,14 +305,31 @@ def roof_etanglement_bipartite(rank,V,initial_point=None):
             if p_i < 1e-12:
                 continue
             psi_i = w_i / anp.sqrt(p_i)
+
+            if anp.isnan(psi_i).any():
+                print("NaN in psi_i", psi_i)
+                nan_instances+=1
+            elif anp.isnan(p_i):
+                print("NaN in p_i", p_i)
+                nan_instances+=1
+            if nan_instances>10:
+                print('muchos nans, revisar porque')
+                exit()
+
             # Call the optimized entropy function
-            ent = entropy_of_entanglement_autograd(psi_i)
+            if dims==0:
+                ent = max(0,entropy_of_entanglement_2x3(psi_i))
+            elif dims==1:
+                ent = max(0,entropy_of_entanglement_2x2(psi_i))
+            else:
+                print('No esta bien el dims')
+                exit()
             total_entanglement += p_i * ent
         return total_entanglement
 
     # --- Optimization ---
     problem = Problem(manifold=manifold, cost=cost)
-    optimizer = ConjugateGradient(verbosity=0)
+    optimizer = SteepestDescent(verbosity=0)
     result = optimizer.run(problem,initial_point=initial_point)
 
     return result
@@ -264,10 +343,10 @@ resultrank_01=[rank0_01]
 
 oldrank_01=rank0_01
 oldpoint_01=result0_01.point
-
+print('--------- rho_01 ------------')
 for i in range(1,len(rho_01)):
     rank_i_01,V_i_01=rankV_func(rho_01[i].full())
-    result_i_01=roof_etanglement_bipartite(rank_i_01,V_i_01,initial_point=oldpoint_01 if rank_i_01==oldrank_01 else None)
+    result_i_01=roof_etanglement_bipartite(rank_i_01,V_i_01,dims=1,initial_point=oldpoint_01 if rank_i_01==oldrank_01 else None)
     resultcost_01=np.append(resultcost_01,result_i_01.cost)
     oldrank_01=rank_i_01
     oldpoint_01=result_i_01.point
@@ -283,6 +362,7 @@ resultrank_02=[rank0_02]
 
 oldrank_02=rank0_02
 oldpoint_02=result0_02.point
+print('--------- rho_02 ------------')
 
 for i in range(1,len(rho_02)):
     rank_i_02,V_i_02=rankV_func(rho_02[i].full())
@@ -301,6 +381,8 @@ resultrank_12=[rank0_12]
 
 oldrank_12=rank0_12
 oldpoint_12=result0_12.point
+
+print('--------- rho_12 ------------')
 
 for i in range(1,len(rho_12)):
     rank_i_12,V_i_12=rankV_func(rho_12[i].full())
@@ -335,12 +417,12 @@ ax2.set_xlim(0,g_t)
 ax2.plot(t,A_05)
 
 fig_ent=plt.figure(figsize=(8,6))
-fig2.suptitle('Entrelazamientos reducidos')
-ax2=fig2.add_subplot()
-ax2.set_xlim(0,g_t)
-ax2.plot(t,resultcost_01,color='red',label=r'$E_{01}$')
-ax2.plot(t,resultcost_02,color='blue',label=r'$E_{02}$')
-ax2.plot(t,resultcost_12,color='black',label=r'$E_{12}$')
+fig_ent.suptitle('Entrelazamientos reducidos')
+ax_ent=fig_ent.add_subplot()
+ax_ent.set_xlim(0,g_t)
+ax_ent.plot(t,resultcost_01,color='red',label=r'$E_{01}$')
+ax_ent.plot(t,resultcost_02,color='blue',label=r'$E_{02}$')
+ax_ent.plot(t,resultcost_12,color='black',label=r'$E_{12}$')
 
 fig_fg=plt.figure(figsize=(8,6))
 fig_fg.suptitle('FG')
