@@ -68,7 +68,7 @@ def simulacion(ci:int,d:float,modelo:str):
         #CAVIDAD EN FOCK CON NUMERO BIEN DEFINIDO PURO
         fase_pura=True
         fotones=1
-        rho_0=tensor(1/2*(eg+ge)*(eg+ge).dag(),basis(N_c,fotones)*basis(N_c,fotones).dag())
+        rho_0=tensor((eg+ge).unit(),basis(N_c,fotones))
     elif ci==1:
         #CAVIDAD EN FOCK CON NUMERO NO BIEN DEFINIDO PERO SIN COHERENCIAS ENTRE ESTADOS REDUCIDOS ATOMICOS PURO
         fase_pura=True
@@ -126,7 +126,7 @@ def simulacion(ci:int,d:float,modelo:str):
 
     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
 
-    sol=mesolve(H,rho_0,t,c_ops=l_ops)
+    sol=mesolve(H,rho_0,t,)
 
     fg_total,arg_tot,eigenvals_tot_t=jcm.fases(sol)
 
@@ -144,6 +144,9 @@ def simulacion(ci:int,d:float,modelo:str):
 
 
     return sol,rho_01,rho_02,rho_12,fg_total
+
+
+rho,rho_01,rho_02,rho_12,fg_total=simulacion(cond_inic,d,modelos)
 
 # --- Optimized Entropy of entanglement ---
 def tallis_entropy(psi_ij):
@@ -165,7 +168,7 @@ def entropy_of_entanglement_2x2(psi):
     This is more efficient than numerical diagonalization.
 
     Args:
-        psi: A 6x1 normalized pure state vector for a qubit-qudit system.
+        psi: A 4x1 normalized pure state vector for a qubit-qudit system.
 
     Returns:
         The von Neumann entropy (in bits).
@@ -207,11 +210,11 @@ def entropy_of_entanglement_2x2(psi):
     # Calculate von Neumann entropy: S = -sum(p * log2(p))
     # Add a small epsilon for numerical stability to prevent log(0) errors,
     # which can occur with pure states.
-    eps = 1e-16
+    eps = 1e-13
     return -anp.sum(eigs * anp.log2(eigs + eps))
 
 
-def entropy_of_entanglement_2x3(psi):
+def entropy_of_entanglement_2xN(psi):
     """
     Calculates the entanglement entropy of a pure state psi using an
     analytical formula for the eigenvalues of the 2x2 reduced density matrix.
@@ -263,10 +266,10 @@ def entropy_of_entanglement_2x3(psi):
     eps = 1e-16
     return -anp.sum(eigs * anp.log2(eigs + eps))
 
-rho,rho_01,rho_02,rho_12,fg_total=simulacion(cond_inic,d,modelos)
 
 #primero hacemos para la condicion inicial, y con esta tomamos la semilla y vamos 
 #calculando la optimizacion paso a paso
+
 def rankV_func(rho):
     eigvals, eigvecs = eigh(rho) #primero buscamos los autovalores y autovectores de la matriz dada por dos razones
     mask = eigvals > 1e-12
@@ -318,7 +321,7 @@ def roof_etanglement_bipartite(rank,V,dims=0,initial_point=None):
 
             # Call the optimized entropy function
             if dims==0:
-                ent = max(0,entropy_of_entanglement_2x3(psi_i))
+                ent = max(0,entropy_of_entanglement_2xN(psi_i))
             elif dims==1:
                 ent = max(0,entropy_of_entanglement_2x2(psi_i))
             else:
