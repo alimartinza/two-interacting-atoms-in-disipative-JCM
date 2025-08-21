@@ -270,72 +270,93 @@ def entropy_of_entanglement_2xN(psi):
 #primero hacemos para la condicion inicial, y con esta tomamos la semilla y vamos 
 #calculando la optimizacion paso a paso
 
-def rankV_func(rho):
-    eigvals, eigvecs = eigh(rho) #primero buscamos los autovalores y autovectores de la matriz dada por dos razones
-    mask = eigvals > 1e-12
-    eigvals = eigvals[mask] #primero buscamos el rango de la matriz para optimizar la busqueda
-    eigvecs = eigvecs[:, mask]
-    rank = len(eigvals)
-    V = eigvecs @ np.diag(np.sqrt(eigvals)) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
-    return rank, V
+def rankV_func(rho, tol=1e-12):
+    # Hermitian eigendecomposition
+    eigvals, eigvecs = eigh(rho)
+    # Numerical safety: clip tiny negatives and drop negligible modes
+    eigvals = np.clip(eigvals, 0.0, 1.0)
+    keep = eigvals > tol
+    if not np.any(keep):
+        raise ValueError("rho has zero effective rank")
+    eigvals = eigvals[keep]
+    eigvecs = eigvecs[:, keep]
+    V = eigvecs @ np.diag(np.sqrt(eigvals))
+    if not np.isfinite(V).all():
+        raise ValueError("Non-finite entries in V")
+    rank = int(eigvals.size)
+    return rank, V.astype(np.complex128, copy=False)
 
-def roof_etanglement_bipartite(rank,V,dims=0,initial_point=None):
-    '''Calcula el entrelazamiento de un sistema bipartito mixto de dimensiones 
-    arbitrarias 2xm usando convex roof de la entropia de von neuman.
-    Parametros:
-        rho: matriz densidad a la que se le quiere calcular el entrelazamiento. tiene que ser un ndarray no un qobj y tiene que ser de [2xN]x[2xN] dimensiones (la dimension 2 tiene que ir primero)
-    Opcional:
-        initial_point: el punto por el que se quiere comenenzar la optimizacion. Esta
-        pensado para utilizarse en caso de tener una evolucion temporal y querer calcular el entrelazamiento en funcion del tiempo.'''
+def roof_etanglement_bipartite(rank, V, dims=0, initial_point=None):
+    """
+    Convex-roof entanglement via unitary mixing on the UnitaryGroup(rank).
+    This version *never* uses random initial points: it starts from Identity.
+    """
+    # --- Validate inputs ---
+    if not isinstance(rank, (int, np.integer)) or rank < 1:
+        raise ValueError(f"Invalid rank={rank}, expected positive int")
 
-    # --- Manifold Definition ---
-    manifold = UnitaryGroup(rank) #definimos el grupo sobre el cual queremos hacer la optimizacion rho'=U^\dag V^\dag V U o algo asi. Usamos el grupo U(rank) porque eliminamos los autovalores que son 0 que no van a sumar a la entropia y esto nos ahorra tiempo de computo al tener que optimizar en un espacio menor
+    V = np.asarray(V, dtype=np.complex128)
+    if V.ndim != 2 or V.shape[1] != rank:
+        raise ValueError(f"V must be (n, rank). Got {V.shape} with rank={rank}")
+    if not np.isfinite(V).all():
+        raise ValueError("V contains NaN/Inf")
 
-    # --- Cost function: average entanglement after unitary mixing ---
+    # Convert once for autograd
+    V_anp = anp.array(V)
+
+    # --- Manifold ---
+    manifold = UnitaryGroup(rank)
+
+    # --- Cost (use autograd-safe ops only) ---
     @autograd(manifold)
     def cost(U):
-        """
-        Calculates the average entanglement for an ensemble decomposition of rho.
-        """
-        W = V @ U
-        total_entanglement = 0
-        nan_instances=0
+        print(U)
+
+        W = anp.dot(V_anp, U)  # shape (n, rank)
+        total = 0.0
+        eps = 1e-10
+
         for i in range(rank):
             w_i = W[:, i]
-            # Calculate the probability p_i as the squared norm of w_i.
-            # Using sum(abs(x)**2) is more robust for autograd than vdot(x, x).
             p_i = anp.sum(anp.abs(w_i)**2)
-            if p_i < 1e-12:
+            # Guard against non-finite/zero
+            if (not anp.isfinite(p_i)) or (p_i <= eps):
                 continue
-            psi_i = w_i / anp.sqrt(p_i)
+            psi_i = w_i / anp.sqrt(p_i + eps)
 
-            if anp.isnan(psi_i).any():
-                print("NaN in psi_i", psi_i)
-                nan_instances+=1
-            elif anp.isnan(p_i):
-                print("NaN in p_i", p_i)
-                nan_instances+=1
-            if nan_instances>10:
-                print('muchos nans, revisar porque')
-                exit()
-
-            # Call the optimized entropy function
-            if dims==0:
-                ent = max(0,entropy_of_entanglement_2xN(psi_i))
-            elif dims==1:
-                ent = max(0,entropy_of_entanglement_2x2(psi_i))
+            if dims == 0:
+                ent = entropy_of_entanglement_2xN(psi_i)
+            elif dims == 1:
+                ent = entropy_of_entanglement_2x2(psi_i)
             else:
-                print('No esta bien el dims')
+                print('Incorrect dims for entanglement measure')
                 exit()
-            total_entanglement += p_i * ent
-        return total_entanglement
 
-    # --- Optimization ---
+            # Clamp negative tiny values due to roundoff
+            ent = anp.maximum(0.0, ent)
+            if not anp.isfinite(ent):
+                return anp.array(1e30)
+
+            total = total + p_i * ent
+
+        return total
+
+    # --- Optimization: force a clean identity start ---
+    if initial_point is None:
+        init = np.eye(rank, dtype=np.complex128)
+    else:
+        init = np.asarray(initial_point, dtype=np.complex128)
+        if init.shape != (rank, rank):
+            raise ValueError(f"initial_point must be ({rank},{rank}); got {init.shape}")
+        if not np.isfinite(init).all():
+            init = np.eye(rank, dtype=np.complex128)
+
     problem = Problem(manifold=manifold, cost=cost)
-    optimizer = SteepestDescent(verbosity=0)
-    result = optimizer.run(problem,initial_point=initial_point)
+    optimizer = SteepestDescent(verbosity=1)  # or ConjugateGradient(verbosity=1)
+    result = optimizer.run(problem, initial_point=init)
 
     return result
+
 
 
 rank0_01,V0_01=rankV_func(rho_01[0].full())
