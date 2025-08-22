@@ -1,4 +1,4 @@
-# import numpy as np
+import numpy
 from numpy.linalg import eigh
 from pymanopt import Problem
 from pymanopt.manifolds import UnitaryGroup
@@ -17,8 +17,8 @@ import matplotlib.pyplot as plt
 script_path= os.path.dirname(__file__)
 
 N_c=3
-steps=4000
-g_t=5
+steps=6000
+g_t=30
 
 w0=1
 g=0.001*w0
@@ -48,6 +48,8 @@ sm2=tensor(qeye(2),sigmam(),qeye(N_c))
 sp2=tensor(qeye(2),sigmap(),qeye(N_c))
 sz2=tensor(qeye(2),sigmaz(),qeye(N_c))
 sx2=tensor(qeye(2),sigmax(),qeye(N_c))
+
+metodo=str(input('Metodo: '))
 
 # --- DIFERENTES ESTADOS INICIALES --- #
 def simulacion(d:float):
@@ -231,10 +233,13 @@ def roof_etanglement_bipartite(rank,V,initial_point,dims=0,min_step=1e-10):
 
     # Use identity matrix as initial point
     # initial_point = np.eye(rank)
-    optimizer_cg = ParticleSwarm(verbosity=1,max_iterations=1000,min_step_size=min_step)
-    result_cg = optimizer_cg.run(problem,initial_point=initial_point)
+    optimizer = ParticleSwarm(verbosity=1,max_iterations=5,population_size=25)
+    # optimizer= SteepestDescent(verbosity=1,max_iterations=1000)
+    # optimizer= ConjugateGradient(beta_rule="HagerZhang",verbosity=1,max_iterations=1000)
+    # optimizer = NelderMead(verbosity=1)
+    result = optimizer.run(problem,initial_point=initial_point)
 
-    return result_cg
+    return result
 
 # ---- rho_01 ----- #
 print('--------- rho_01 ------------')
@@ -255,16 +260,13 @@ concu_01=jcm.concurrence(rho_01)
 
 for i in range(1,len(rho_01)):
     rank_i_01,V_i_01=rankV_func(rho_01[i].full())
-    # print(rank_i_01)
-    # print(V_i_01)
+
     # if rank_i_01==oldrank_01:
-    #     initial_point=oldpoint_01  
-    # else:
-    #     print('initial_point no tiene el mismo rank')
-    #     initial_point=UnitaryGroup(rank_i_01).random_point()
+    #     initial_point=oldpoint_01
+    # else: initial_point= None
+    initial_point=None
 
-
-    result_i_01=roof_etanglement_bipartite(rank_i_01,V_i_01,initial_point=None,dims=1)
+    result_i_01=roof_etanglement_bipartite(rank_i_01,V_i_01,initial_point=initial_point ,dims=1)
     resultcost_01=np.append(resultcost_01,result_i_01.cost)
     resultrank_01=np.append(resultrank_01,rank_i_01)
     oldrank_01=rank_i_01
@@ -273,89 +275,155 @@ for i in range(1,len(rho_01)):
 
 
 # # ---- rho_02 ---- #
-# print('--------- rho_02 ------------')
+print('--------- rho_02 ------------')
 
-# rank0_02,V0_02=rankV_func(rho_02[0].full())
-# result0_02=roof_etanglement_bipartite(rank0_02,V0_02,initial_point=np.eye(rank0_02,dtype=np.complex128))
-# # print(rank0_02)
-# # print('V0_02',V0_02)
-# resultcost_02=[result0_02.cost]
-# resultrank_02=[rank0_02]
+rank0_02,V0_02=rankV_func(rho_02[0].full())
+result0_02=roof_etanglement_bipartite(rank0_02,V0_02,initial_point=initial_point)
 
-# oldrank_02=rank0_02
-# oldpoint_02=result0_02.point
+resultcost_02=[result0_02.cost]
+resultrank_02=[rank0_02]
 
-# for i in range(1,len(rho_02)):
-#     rank_i_02,V_i_02=rankV_func(rho_02[i].full())
-#     # print(rank_i_02)
-#     # print('V_i_02',V_i_02)
-#     result_i_02=roof_etanglement_bipartite(rank_i_02,V_i_02,initial_point=oldpoint_02 if rank_i_02==oldrank_02 else None)
-#     resultcost_02=np.append(resultcost_02,result_i_02.cost)
-#     oldrank_02=rank_i_02
-#     oldpoint_02=result_i_02.point
+oldrank_02=rank0_02
+oldpoint_02=result0_02.point
 
-
-# # --- rho_12 ---#
-# print('--------- rho_12 ------------')
-
-# rank0_12,V0_12=rankV_func(rho_12[0].full())
-# result0_12=roof_etanglement_bipartite(rank0_12,V0_12,initial_point=np.eye(rank0_12,dtype=np.complex128))
-# # print(rank0_12)
-# # print('V0_12',V0_12)
-
-# resultcost_12=[result0_12.cost]
-# resultrank_12=[rank0_12]
-
-# oldrank_12=rank0_12
-# oldpoint_12=result0_12.point
+for i in range(1,len(rho_02)):
+    rank_i_02,V_i_02=rankV_func(rho_02[i].full())
+    # if rank_i_01==oldrank_01:
+    #     initial_point=oldpoint_01
+    # else: initial_point= None
+    initial_point=None
+    result_i_02=roof_etanglement_bipartite(rank_i_02,V_i_02,initial_point=initial_point)
+    resultcost_02=np.append(resultcost_02,result_i_02.cost)
+    oldrank_02=rank_i_02
+    oldpoint_02=result_i_02.point
 
 
-# for i in range(1,len(rho_12)):
-#     rank_i_12,V_i_12=rankV_func(rho_12[i].full())
-#     # print(rank_i_12)
-#     # print('V_i_12',V_i_12)
-#     result_i_12=roof_etanglement_bipartite(rank_i_12,V_i_12,initial_point=oldpoint_12 if rank_i_12==oldrank_12 else None)
-#     resultcost_12=np.append(resultcost_12,result_i_12.cost)
-#     oldrank_12=rank_i_12
-#     oldpoint_12=result_i_12.point
+# --- rho_12 ---#
+print('--------- rho_12 ------------')
+
+rank0_12,V0_12=rankV_func(rho_12[0].full())
+result0_12=roof_etanglement_bipartite(rank0_12,V0_12,initial_point=None)
 
 
-# # --- MEdida tripartita --- #
-# def pure_tripartite_ent(E_01:list,E_02:list,E_12:list,alpha:float):
-#     Q=(E_01**alpha+E_02**alpha+E_12**alpha)/2
-#     A=(Q*(Q-E_01)*(Q-E_02)*(Q-E_12))**0.5
-#     return A
+resultcost_12=[result0_12.cost]
+resultrank_12=[rank0_12]
 
-# A_1=pure_tripartite_ent(resultcost_01,resultcost_02,resultcost_12,1)
-# A_05=pure_tripartite_ent(resultcost_01,resultcost_02,resultcost_12,0.5)
+oldrank_12=rank0_12
+oldpoint_12=result0_12.point
+
+
+for i in range(1,len(rho_12)):
+    rank_i_12,V_i_12=rankV_func(rho_12[i].full())
+    # if rank_i_01==oldrank_01:
+    #     initial_point=oldpoint_01
+    # else: initial_point= None
+    initial_point=None
+    result_i_12=roof_etanglement_bipartite(rank_i_12,V_i_12,initial_point=initial_point)
+    resultcost_12=np.append(resultcost_12,result_i_12.cost)
+    oldrank_12=rank_i_12
+    oldpoint_12=result_i_12.point
+
+def hl_envelopes_idx(s, dmin=1, dmax=1, split=False):
+    """
+    Input :
+    s: 1d-array, data signal from which to extract high and low envelopes
+    dmin, dmax: int, optional, size of chunks, use this if the size of the input signal is too big
+    split: bool, optional, if True, split the signal in half along its mean, might help to generate the envelope in some cases
+    Output :
+    lmin,lmax : high/low envelope idx of input signal s
+    """
+
+    # locals min      
+    lmin = (np.diff(np.sign(np.diff(s))) > 0).nonzero()[0] + 1 
+    # locals max
+    lmax = (np.diff(np.sign(np.diff(s))) < 0).nonzero()[0] + 1 
+    
+    if split:
+        # s_mid is zero if s centered around x-axis or more generally mean of signal
+        s_mid = np.mean(s) 
+        # pre-sorting of locals min based on relative position with respect to s_mid 
+        lmin = lmin[s[lmin]<s_mid]
+        # pre-sorting of local max based on relative position with respect to s_mid 
+        lmax = lmax[s[lmax]>s_mid]
+
+    # global min of dmin-chunks of locals min 
+    lmin = lmin[[i+np.argmin(s[lmin[i:i+dmin]]) for i in range(0,len(lmin),dmin)]]
+    # global max of dmax-chunks of locals max 
+    lmax = lmax[[i+np.argmax(s[lmax[i:i+dmax]]) for i in range(0,len(lmax),dmax)]]
+    
+    return lmin,lmax
+
+# --- MEdida tripartita --- #
+def pure_tripartite_ent(E_01:list,E_02:list,E_12:list,alpha:float):
+    Q=(E_01**alpha+E_02**alpha+E_12**alpha)
+    A=(Q*(Q-E_01)*(Q-E_02)*(Q-E_12))**0.5
+    return A
+
+A_1=pure_tripartite_ent(resultcost_01,resultcost_02,resultcost_12,1)
+A_05=pure_tripartite_ent(resultcost_01,resultcost_02,resultcost_12,0.5)
 
 t_final=g_t/g
 t=np.linspace(0,t_final,steps)
 
-# fig1=plt.figure(figsize=(8,6))
-# fig1.suptitle(r'$A(|\psi\rangle) ; \alpha=1$')
-# ax1=fig1.add_subplot()
-# ax1.set_xlim(0,g_t)
-# ax1.plot(t,A_1)
+# metodo=input()
+header=f'Metodo: {metodo}; steps: {steps}; gt_f= {g_t}; N_c= {N_c}; detunning = {d/g}g; x= {x/g}g; k= {k/g}g, J={J/g}g'
 
-# fig2=plt.figure(figsize=(8,6))
-# fig2.suptitle(r'$A(|\psi\rangle) ; \alpha=1/2$')
-# ax2=fig2.add_subplot()
-# ax2.set_xlim(0,g_t)
-# ax2.plot(t,A_05)
+
+with open('CRE data/data_log.txt', "r+", encoding="utf-8") as f:
+        # Read the first line only
+        first_line = f.readline()
+        parts = first_line.strip().split()
+
+        # Get the number at the end
+        try:
+            current_number = int(parts[-1])
+        except ValueError:
+            raise ValueError("The last element of the first line is not a number.")
+
+        # Increment
+        new_number = current_number + 1
+
+        # --- Update first line in place ---
+        parts[-1] = str(new_number)
+        new_first_line = " ".join(parts) + "\n"
+
+        # Go back to start and overwrite only the first line
+        f.seek(0)
+        f.write(new_first_line)
+
+        # Move to end of file to append
+        f.seek(0, 2)
+        f.write(f"{new_number}: "+header+"\n")
+
+
+numpy.savetxt(f'CRE data/{new_number} resultcost.txt',[resultcost_01,resultcost_02,resultcost_12],header='E_01; E_02; E_12')
+
+
+fig1=plt.figure(figsize=(8,6))
+fig1.suptitle(r'$A(|\psi\rangle) ; \alpha=1$')
+ax1=fig1.add_subplot()
+ax1.set_xlim(0,g_t)
+ax1.plot(g*t,A_1)
+
+fig2=plt.figure(figsize=(8,6))
+fig2.suptitle(r'$A(|\psi\rangle) ; \alpha=1/2$')
+ax2=fig2.add_subplot()
+ax2.set_xlim(0,g_t)
+ax2.plot(g*t,A_05)
 
 fig_ent=plt.figure(figsize=(8,6))
 fig_ent.suptitle('Entrelazamientos reducidos')
 ax_ent=fig_ent.add_subplot()
 ax_ent.set_xlim(0,g_t)
-color=['red','blue','green','orange']
-# for resultcost,color,step_size in zip(resultcost_stepsize,color,step_size_list):
-ax_ent.plot(g*t,resultcost_01,color=color,label=r'$E_{01}$')#+f'step: {step_size:.1f}')   
-# ax_ent.plot(g*t,resultrank_01,color='black',label='rank(rho_01(t))')
-ax_ent.plot(g*t,concu_01,color='black',label='concu_01')
+ax_ent.plot(g*t,resultcost_01,color='red',label=r'$E_{01}$')#+f'step: {step_size:.1f}')   
+# ax_ent.plot(g*t,concu_01,color='black',label='concu_01')
+ax_ent.plot(g*t,resultcost_02,color='blue',label=r'$E_{02}$')
+ax_ent.plot(g*t,resultcost_12,color='green',label=r'$E_{12}$')
+# ax_ent.plot(g*t,A_05)
+# ax_ent.plot(g*t,A_1)
+
 plt.legend()
-# ax_ent.plot(g*t,resultcost_02,color='blue',label=r'$E_{02}$')
-# ax_ent.plot(g*t,resultcost_12,color='black',label=r'$E_{12}$')
+
 
 fig_fg=plt.figure(figsize=(8,6))
 fig_fg.suptitle('FG')

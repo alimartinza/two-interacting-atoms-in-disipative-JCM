@@ -143,24 +143,32 @@
 #     # a.tidyup()
 #     # print(a, file=file_object) 
 
-import numpy as np
-from numpy.linalg import eigh
+# import numpy as np
+# from numpy.linalg import eigh
 
-rho=np.array([[1,1],[1,1]])
-def rankV_func(rho):
-    eigvals, eigvecs = eigh(rho) #primero buscamos los autovalores y autovectores de la matriz dada por dos razones
-    rank = len(eigvals)
-    V = np.dot(eigvecs, np.power(np.diag(eigvals),1/2)) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
-    return rank, V,eigvals,eigvecs
-rank,V,eigvals,eigvecs=rankV_func(rho)
-print('rank')
-print(rank)
-print('eigvals')
-print(eigvals)
-print('shape eigenvecs')
-print(eigvecs.shape)
-print('eigvecs')
-print(eigvecs)
-print('V')
-print(V)
-
+# rho=np.array([[1,1],[1,1]])
+# def rankV_func(rho):
+#     eigvals, eigvecs = eigh(rho) #primero buscamos los autovalores y autovectores de la matriz dada por dos razones
+#     rank = len(eigvals)
+#     V = np.dot(eigvecs, np.power(np.diag(eigvals),1/2)) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
+#     return rank, V,eigvals,eigvecs
+# rank,V,eigvals,eigvecs=rankV_func(rho)
+# print('rank')
+# print(rank)
+# print('eigvals')
+# print(eigvals)
+# print('shape eigenvecs')
+# print(eigvecs.shape)
+# print('eigvecs')
+# print(eigvecs)
+# print('V')
+# print(V)
+steps=10
+g_t=1
+N_c=1
+d=1
+g=1
+x=1
+k=1
+J=1
+metodo='PSO with random initial point'

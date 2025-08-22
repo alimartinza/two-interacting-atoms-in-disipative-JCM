@@ -133,6 +133,7 @@ def concurrence_heatmap_delta(psi0,psi0Name,x,J,k,delta_min=None,delta_max=None,
 
     T=2*np.pi/np.abs(omega_general(1,2,0,g,0,0,0))
     t_final=7*T
+    print(t_final*g)
     t=np.linspace(0,t_final,steps)
     delta=np.linspace(delta_min,delta_max,150)
     delta_ticks=np.linspace(delta_min/g,delta_max/g,150)
