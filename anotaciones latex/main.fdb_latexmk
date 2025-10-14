@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1760366841.83712 "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/anotaciones latex/main.tex" "main.pdf" "main" 1760366846.99629 0
+["pdflatex"] 1760369992.79105 "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/anotaciones latex/main.tex" "main.pdf" "main" 1760369998.68812 0
   "DF-MSc-titlepage.sty" 1756245221 3476 94776143e82c11763c672529a11f083b ""
   "agradecimientos.tex" 1756245120 355 ecc15d385b2ced143c144d729a40af64 ""
   "c:/Users/alima/Estudios/Tesis/two-interacting-atoms-in-disipative-JCM/anotaciones latex/main.tex" 1760366422 1864 dbe71b1da87b0b64376f1d07ad736eae ""
@@ -85,6 +85,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1727706901 32587 65067f817f408bc71a7312f3d9828a9b ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1727706901 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb" 1727706901 32442 c975af247b6702f7ca0c299af3616b80 ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb" 1727706901 30273 87a352d78b6810ae5cfdc68d2fb827b2 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1727706901 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb" 1727709994 143961 fe73b0de40bc9eebafe5b31a39c455e0 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb" 1727709994 154600 32e699453da826d3cdd1305e7e476670 ""
@@ -291,7 +292,7 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1727725260 5523052 a6c4264ca43d05e5adfe84e964c2ac4c ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1727725600 3325999 4a75e3a50b7d31100cf68dd077d529c8 ""
   "c:/texlive/2024/texmf.cnf" 1727725233 713 e69b156964470283e0530f5060668171 ""
-  "ch1_fg.tex" 1760366835 474 146196d1057f9441b6b43241c1a001d7 ""
+  "ch1_fg.tex" 1760369991 640 78869e2165b540ad75a5ef8fbd5d26d5 ""
   "ch2_entrelazamiento.tex" 1759513989 34251 1a1864d066c170855c680cbac356a0a4 ""
   "ch3_fg_tcm.tex" 1760366835 44248 89c5524291f7b91c174279da5057beca ""
   "ch4_decoherencia.tex" 1756245196 9248 0b13bb332f791d2260bc0f25bedc8ab6 ""
@@ -332,10 +333,10 @@
   "figuras/logouba.pdf" 1756307334 134806 01b363a338bdfb3e5baa1248b3cb8fc6 ""
   "licencia.png" 1756245229 7216 371d8f2ef65cd464c8695b8da4ea055a ""
   "licencia.tex" 1756245237 268 5133218be5e047e1aa191024eb6eb6bd ""
-  "main.aux" 1760366846 47694 ae816610fffbcc420f73d7628b4266b0 "pdflatex"
-  "main.lof" 1760366846 4079 4567df279e3ace325deda444a082b13d "pdflatex"
+  "main.aux" 1760369998 47694 ae816610fffbcc420f73d7628b4266b0 "pdflatex"
+  "main.lof" 1760369998 4079 4567df279e3ace325deda444a082b13d "pdflatex"
   "main.tex" 1760366422 1864 dbe71b1da87b0b64376f1d07ad736eae ""
-  "main.toc" 1760366846 5366 5da476a457037fe79a55bf7e962f60e9 "pdflatex"
+  "main.toc" 1760369998 5366 5da476a457037fe79a55bf7e962f60e9 "pdflatex"
   "paquetes-y-customizaciones.tex" 1756245248 3723 19874cc4f528c5ba6ea83741e7458398 ""
   "resumen.tex" 1756245257 345 964de53c0405eb4ce18d96855c40bc24 ""
   "tabladecontenidos.tex" 1756245266 103 cb524b2d10bd518df2f456df2996eaac ""

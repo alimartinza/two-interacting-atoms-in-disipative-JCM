@@ -1,0 +1,168 @@
+\chapter{Derivación de las ecuaciones maestras}
+\label{ap_ecsmaestras}
+
+%CAMBIAR ESTO PARA PERSONALIZARLO A MI GUSTO
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\nouppercase{\rightmark\hfill}}
+\fancyhead[RO]{\nouppercase{\leftmark\hfill}}
+\fancyfoot[LE,RO]{\hfill\thepage\hfill}
+
+En este apéndice se desarrolla la derivación d
+e la ecuación de Lindblad, que es la ecuación maestra que determina la evolución temporal de una matriz densidad $\rho$, que esta en contacto con un entorno del cual no se conoce la dinámica. La dinámica en conjunto esta regida por un Hamiltoniano que formalmente puede escribirse como
+\begin{equation}
+    H=H_S+H_B+H_{int}
+\end{equation}
+donde los subíndices se refieren a diferentes partes del problema. En primer lugar S se refiere al sistema de estudio, del cual se quiere encontrar la evolución temporal, y esta en contacto con un entorno B, entonces $H_B$ es el Hamiltoniano que rige la dinámica del entorno que en principio no conocemos. Finalmente, tenemos la interacción entre las dos partes, dada por el Hamiltoniano de interacción $H_{int}$.
+El conjunto completo se puede pensar como un sistema cerrado, y por lo tanto su evolución temporal esta formalmente dada por la ecuación de Schr\"odinger, y su correspondiente operador de evolución $U(t)$ es
+\begin{equation}
+    U(t)=\mathcal{T}\exp\left( -i\int_{0}^{t}dt'H(t') \right)
+\end{equation}
+donde $\mathcal{T}$ indica la prescripción de ordenamiento temporal, y $U(0)=\mathbb{1}$. Si se representa el estado del sistema total con un operador densidad $\rho_{tot}=\ketbra{\psi(t)}{\psi(t)}$, entonces al aplicar la ecuación de Schr\"odinger de ambos lados se obtiene que 
+
+\begin{equation}
+    \dot\rho_{tot}(t)=-\frac{i}{\hbar}[H(t),\rho_{tot}(t)]
+\end{equation}
+que es la ecuación de Louiville-Von Neumann, que describe la trayectoria en el espacio de Hilbert del operador densidad del sistema total cerrado.
+
+Va a ser útil trabajar en el \textit{picture} de interacción, en donde reescribimos el Hamiltoniano separandolo en dos partes
+\begin{equation}
+    H(t)=H_0+\hat H_I(t)
+\end{equation}
+la manera de separar el sistema va a variar de problema a problema, pero en general se tiene que $H_0$ es simplemente la energía de las dos partes del sistema si despreciamos la interacción entre ellos, y que asumimos es independiente del tiempo; y luego tenemos $\hat H_I(t)$ que es el Hamiltoniano que describe las interacciones entre los sistemas. Como siempre, notamos $U(t,t_0)$ al operador de evolución temporal, y el valor de expectación de un observable $A(t)$ en la representación de Schroedinger
+\begin{equation}
+    \langle A(t) \rangle = \tr \{ A(t)U(t,t_0) \rho(t_0)U^\dagger(t,t_0) \}
+    \label{ecA1:valor de expectacion}
+\end{equation}
+
+Ahora se introducen los operadores unitarios
+
+\begin{equation}
+    U_0(t,t_0)\equiv\exp [ -i H_0(t-t_0)]
+\end{equation}
+
+con $U_I(t,t_0)\equiv U_0^\dagger(t,t_0)U(t,t_0)$. Entonces el valor de expectación \ref{ecA1:valor de expectacion} también puede escribirse como
+\begin{equation}
+    \begin{aligned}
+    \langle A(t) \rangle &= \tr \{ U_0^\dagger(t,t_0)A(t)U_0(t,t_0)U_I(t,t_0) \rho(t_0)U_I^\dagger(t,t_0) \} \\
+    & \equiv \tr \{A_I(t)\rho_I(t) \}
+    \end{aligned}
+    \label{ecA1:valor de expectacion interaccion}
+\end{equation}
+donde introducimos al operador en el \textit{picture} de interacción, y entonces la matriz densidad evoluciona en esta representación segundo
+\begin{equation}
+    \rho_I(t)=U_I(t,t_0)\rho(t_0)U^\dagger_I(t,t_0)
+\end{equation}
+De esto lo que se debe recordar es que en la representación de interacción el Hamiltoniano y la ecuación de von Neumann, se escriben como
+\begin{equation}
+    H_I(t)=U_0^\dagger(t,t_0)\hat H_I(t)U_0(t,t_0)
+\end{equation}
+Y
+\begin{equation}
+    \frac{d}{dt}\rho_I(t)=-i[H_{int,I}(t),\rho_I(t)]
+    \label{ecA1:ec von neumman}
+\end{equation}
+Si se integra esta ecuación se obtiene la solución formal
+\begin{equation}
+    \rho_I(t)=\rho_I(t_0)-i\int_{t_0}^{t}dt' [H_{int,I}(t'),\rho_I(t')].
+    \label{ecA1:ec maestra integrodiferencial}
+\end{equation}
+Esta ecuación puede sustituirse nuevamente en \ref{ecA1:ec von neumman}, y se toma traza parcial sobre los grados de libertad del entorno para obtener
+
+\begin{equation}
+    \dot \rho_{S,I}(t)=-\frac{1}{\hbar}\tr_B[H_{int,I}(t),\rho_I(t_0)]-\frac{1}{\hbar^2} \tr_B \int_{t_0}^{t}dt' [H_{int,I}(t),[H_{int,I}(t'),\rho_{I}(t')]].
+\end{equation}
+Esta ecuación sigue siendo exacta, ya que todavía no se aplico ninguna aproximación, pero esta ecuación sigue siendo formal, en el sentido que se necesita la matriz densidad TOTAL $\rho_I(t)$ para resolver el problema. Para eliminarlo, se introduce la \textit{aproximación de Born}, que consiste en suponer que las correlaciones entre el sistema y el entorno son despreciables, y por lo tanto en las escalas de tiempo que se consideran, el estado del conjunto es separable $\rho_I(t)=\rho_{S,I}(t)\otimes\rho_{B,I}(t)$. Ademas, suponemos que el entorno es muy grande, y por lo tanto su tiempo de decoherencia es muy pequeño en comparación con los tiempos considerados, y por lo tanto suponemos que $\rho_B(t)\sim\rho_B(0)$. Aplicando estas suposiciones sobre \ref{ecA1:ec maestra integrodiferencial}
+\begin{equation}
+    \dot \rho_{S,I}(t)=-\frac{1}{\hbar}\tr_B[H_{int,I}(t),\rho_{S,I}(t_0)\otimes \rho_B]-\frac{1}{\hbar^2} \tr_B \int_{t_0}^{t}dt' [H_{int,I}(t),[H_{int,I}(t'),\rho_{S,I}(t')\otimes \rho_B]]
+\end{equation}
+Para lo que incumbe en este trabajo, nos concentraremos en situaciones donde es valida la aproximación de Markov. La característica principal de los procesos de Markov se pueden resumir en que los tiempos de correlación del entorno son muy cortos, y en palabras mas amigables, que el entorno tiene una memoria muy corta. Esto permite decir que la evolución del sistema depende unicamente del estado actual de este, y no de su historia, ya que el entorno tiene una memoria muy corta y todo lo que el estado instantáneo del sistema no nos pueda decir, se pierde. Esto permite eliminar la dependencia en $t'$ que tiene la matriz dentro de la integral, sustituyendola por el tiempo actual $t$.
+\begin{equation}
+    \dot \rho_{S,I}(t)=-\frac{1}{\hbar}\tr_B[H_{int,I}(t),\rho_{S,I}(t_0)\otimes \rho_B]-\frac{1}{\hbar^2} \tr_B \int_{t_0}^{t}dt' [H_{int,I}(t),[H_{int,I}(t'),\rho_{S,I}(t)\otimes \rho_B]]
+    \label{ecA1:ec markov}
+\end{equation}
+Esta expresión es local en el tiempo, y permite tratamiento analítico o numérico dependiendo de la complejidad y la forma explicita de los operadores involucrados. Sin embargo, se puede todavía seguir trabajando la expresión, para llegar a la ecuación de tipo Lindblad. 
+
+Para esto, se nota que el Hamiltoniano de interacción en la representación de Schrödinger puede escribirse en término de un conjunto de operadores hermíticos ${A_\alpha}$ y ${B_\alpha}$ que actúan sobre el sistema y el entorno respectivamente, de manera que 
+\begin{equation}
+    H_{int}=g\sum_\alpha A_\alpha\otimes B_\alpha
+\end{equation}
+En la representación de Interacción, estos operadores evolucionan de forma que el Hamiltoniano puede escribirse en esta representación como
+\begin{equation}
+    H_{int,I}=g\sum_\alpha A_{\alpha,I}(t)\otimes B_{int,I}(t)
+\end{equation}
+con $A_{int,I}(t)=U^\dagger_S(t)A_\alpha U_S(t)$ y $B_{int,I}(t)=U^\dagger_B(t)B_\alpha U_B(t)$, y reemplazando en \ref{ecA1:ec markov}
+\begin{equation}
+    \dot \psi_{S,I}(t)=-\frac{g^2}{\hbar^2}\int_{t_0}^{t}dt'\sum_{\alpha,\beta}\langle B_{\alpha,I}(t)B_{\beta,I}(t') \rangle [A_{\alpha,I}(t)A_{\beta,I}(t')\rho_{s,I}(t)-A_{\beta,I}(t')\rho_{s,I}(t)A_{\alpha,I}(t) + \text{h.c.}]
+\end{equation}
+donde $\langle B_{\alpha,I}(t)B_{\beta,I}(t') \rangle = \tr_B( B_{\alpha,I}(t)B_{\beta,I}(t') \rho_B)$ son las funciones de correlación del entorno. Se supone ademas, que el primer termino de \ref{ecA1:ec markov} se anula, que es equivalente a pedir que los operadores que actúan sobre el entorno se anulan en valor medio $\langle B_{\alpha,I}(t) \rangle =0$
+Para proseguir, se realiza un cambio de variables de integración $t \rightarrow t-t'$ e imponiendo que el estado del entorno es estacionario mediante la condición $[H_B,\rho_B]=0$, se tiene que las funciones de correlación son homogeneas en T
+\begin{equation}
+    \langle B_{\alpha,I}(t)B_{\beta,I}(t-t') \rangle = \langle B_{\alpha,I}(t')B_{\beta,I}(0) \rangle
+\end{equation}
+Como se supuso anteriormente mediante la aproximación de Born, las correlaciones del entorno decaen en una escala temporal corta, y esto justifica tomar $t\rightarrow \infty$ en el limite superior de la integral.
+
+Finalmente, la última aproximación que se debe hacer, consiste en despreciar términos que resulten altamente oscilantes, y se vincula estrechamente con la aproximación de onda rotante \cite{115}. Para justificar esta última aproximación, se considera la descomposición espectral del Hamiltoniano del sistema $H_S$, y denominando $\epsilon$ a los autovalores de $H_S$ y $\Pi(\epsilon)$ al proyector al espacio asociado a al autovalor $\epsilon$, pueden definirse operadores
+\begin{equation}
+    A(\omega) = \sum_{\epsilon-\epsilon'=\omega}\Pi(\epsilon)A_\alpha\Pi(\epsilon')
+\end{equation}
+donde la suma es sobre todos los autovalores de S cuya diferencia toma el valor fijo $\omega$. Una consecuencia inmediata es que en la representación de interacción se puede escribir $A_{\alpha,I}(\omega)=\exp(-i\omega t)A_\alpha(\omega)$, tal que
+\begin{equation}
+    A_{\alpha,I}(t)=\sum_\omega e^{-i\omega t}A_{\alpha}(\omega)
+\end{equation}
+Si se introduce explícitamente la descomposición espectral de los operadores se obtiene
+\begin{equation}
+    \dot \rho_{S,I}=\frac{-1}{\hbar^2}\sum_{\alpha,\beta}\sum_{\omega,\omega'} \left( \Gamma_{\alpha\beta}(\omega')[A_\alpha(\omega)A_\beta(\omega')\rho_{S,I}(t)-A_\beta(\omega')\rho_{S,I}(t)A_\alpha(\omega)]e^{-i(\omega-\omega')t}+\text{h.c.} \right)
+    \label{ecA1:rho dot con sumas}
+\end{equation}
+donde se definieron las transformadas de Fourier de las funciones de correlación
+\begin{equation}
+    \Gamma_{\alpha\beta}(\omega) = g^2 \int_0^\infty dt' \langle B_{\alpha,I}(t')B_{\beta,I}(0) \rangle e^{i\omega t'}
+\end{equation}
+Se denota $\tau_S$ cada escala típica de evolución intrínseca del sistema, definida por $|\omega+\omega'|^{-1}$. Si $\tau_S$ es chico en comparación con la escala $\tau_R$ de relajación del sistema abierto, entonces los términos no seculares presentes en la suma \ref{ecA1:rho dot con sumas}, pueden despreciarse los términos para los cuales $\omega+\omega'\neq 0$ ya que oscilan rápidamente. En consecuencia
+\begin{equation}
+    \dot \rho_{S,I}=\frac{-1}{\hbar^2}\sum_{\alpha,\beta}\sum_{\omega} \left( \Gamma_{\alpha\beta}(\omega)[A^\dagger_\alpha(\omega)A^\dagger_\beta(\omega)\rho_{S,I}(t)-A_\beta(\omega')\rho_{S,I}(t)A_\alpha(\omega)]+\text{h.c.} \right)
+    \label{ecA1:rho dot con sumas 2}
+\end{equation}
+donde se uso que $A^\dagger(\omega)=A(-\omega)$. El factor $\Gamma_{\alpha\beta}(\omega)$ es el que contiene toda la informacion sobre el entorno, y es conveniente separarlo en partes imaginaria y real, según $\Gamma_{\alpha\beta}(\omega)=\frac{1}{2}\gamma_{\alpha\beta}(\omega)+iS_{\alpha\beta}(\omega)$, lo que nos permite retomando la representación de Schrödinger
+\begin{equation}
+    \dot \rho_S(t)=\frac{-i}{\hbar}[H_S,\rho_S(t)]-\frac{i}{\hbar}[H_{LS},\rho_S(t)]+\mathcal{D}[\rho_S(t)]
+\end{equation}
+donde el operador hermítico $H_{LS}=\sum_{a,b}\sum_\omega S_{a,b}(\omega)A^\dagger_a(\omega)A_b(\omega)$ da una contribución hamiltoniana a la ecuación y es usualmente llamado corrimiento Lamb, puesto que describe una renormalizacion de las energias del sistema introducido por el acoplamiento al entorno. El termino $\mathcal{D}[\rho_S(t)]$ es el \textit{disipador}
+\begin{equation}
+    \mathcal{D}[\rho_S(t)]=\frac{1}{2}\sum_{a,b}\sum_\omega \gamma_{a,b}(\omega) \left( {A^\dagger_a(\omega)A_b(\omega),\rho_S(t)}-2A_b(\omega)\rho_S(t)A^\dagger_a(\omega)\right)
+\end{equation}
+Diagonalizando las matrices $\gamma_{ab}(\omega)$ se obtiene la ecuación de tipo Linblad que se utiliza para estudiar la evolución de los sistemas:
+\begin{equation}
+    \dot \rho_S(t)=-i [H,\rho_S(t)]+\frac{1}{2}\sum_\alpha \left(2L_\alpha\rho_S(t)L^\dagger_\alpha-{L^\dagger_\alpha L_\alpha,\rho_S(t)} \right)
+\end{equation}
+. Particularmente, en el marco de electrodinámica de cavidades, los dos operadores de Lindblad que contribuyen a la decoherencia son $L_\gamma=\sqrt{\gamma}a$ y $L_p=\sqrt{p} \sigma_+$, que se refieren a la perdida de fotones por las imperfecciones de la cavidad según la tasa $\gamma$, y el bombeo incoherente de los átomos según una tasa $p$. Estos \textit{superoperadores} (operadores de Lindblad) no tienen una derivación microscópica clara, son elegidos fenomenologicamente, y se comprobó en extensivas ocaciones que describen correctamente la dinámica de sistemas dentro del marco de la electrodinámica cuántica de cavidades, como lo es el caso del modelo de Jaynes-Cummings.
+% Si ahora se considera que el sistema esta abierto, es decir, que el sistema de interes S esta en contacto con otro sistema cuentoco B que llamamos entorno, entonces el sistema total S+B se puede describir usando lo que escribimos anteriormente. Pero si nos concentramos en la dinamica de el subsistema S, entonces este va a cambiar por la influencia de B, y en general no va a seguir una dinamica Hamiltoniana.
+% Llamemos $\mathcal{H_S}$ el espacio de Hilbert del sistema, y $\mathcal{H_B}$ al del entorno. El espacio total del sistema S+B es el producto tensorial $\mathcal{H}=\mathcal{H_S}\otimes\mathcal{H_B}$, y el Hamiltoniano total se puede tomar de la forma
+% \begin{equation}
+%     H(t)=H_S\otimes I_B +I_S\otimes H_B + \hat H_I(t)
+% \end{equation}
+% Todos los observables que solo actuan sobre el subespacio S pueden escribirse como $A\otimes I_B$, y si el sistema total se puede describir segun el operador densidad $\rho$, etnonces los valores de expectacion de todos los observables que actuan sobre S estan determinados por
+% \begin{equation}
+%     \langle A \rangle = \tr_S\{A\rho_S\}
+% \end{equation}
+% donde 
+% \begin{equation}
+%     \rho_S=\tr_B \rho
+% \end{equation}
+% es la matriz densidad reducida del sistema abierto S, y la notacion $\tr_A$ denota la traza parcial sobre los grados de libertad del sistema A (A=S,B). 
+
+% La matriz densidad reducida $\rho_S(t)$ describe la dinamica del sistema S al eliminar, o en otras palabras, no tener en cuenta, los grados de libertad del entorno B. Ya que la matriz densidad total S+B evoluciona unitariamente, entonces
+% \begin{equation}
+%     \rho_S(t)=\tr_B\{U(t,t_0)\rho(t_0)U^\dagger(t,t_0)\}
+% \end{equation}
+% donde $U(t,t_0)$ sera el operador evolucion temporal del sistema total. De manera que la ecuacion de von Neumann para la ecolucion temporal de la matriz densidad reducida sera 
+ 
+% \begin{equation}
+%     \frac{d}{dt}\rho_S(t)=-i\tr_B [H(t),\rho(t)]
+% \end{equation}
+% Integrando esta ecuacion obtenemos
+% Para lo que incumbe en este trabajo, nos concentraremos en situaciones donde es valida la aproximacion de Markov. La caracteristica principal de los procesos de Markov se pueden resumir en que los tiempos de correlacion del entorno son muy cortos, y en palabras mas amigables, que el entorno tiene una memoria muy corta. Esto nos permite decir que la evolucion del sistema depende unicamente del estado actual de este, y no de su historia, ya que el entorno tiene una memoria muy corta y todo lo que el estado instantaneo del sistema no nos pueda decir, se pierde. 
+
+% Lo que tenemos que introducir 
+

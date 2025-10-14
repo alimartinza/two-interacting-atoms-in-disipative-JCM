@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  13 OCT 2025 11:47
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  13 OCT 2025 12:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1019,7 +1019,7 @@ l.33 \begin{equation}
 
 LaTeX Warning: Citation `' on page 5 undefined on input line 38.
 
-<figuras/ch2/triangulos.png, id=282, 575.14874pt x 741.77126pt>
+<figuras/ch2/triangulos.png, id=285, 575.14874pt x 741.77126pt>
 File: figuras/ch2/triangulos.png Graphic file (type png)
 <use figuras/ch2/triangulos.png>
 Package pdftex.def Info: figuras/ch2/triangulos.png  used on input line 41.
@@ -1153,12 +1153,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [11]
-<figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png, id=339, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png, id=342, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png  used on input line 218.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png, id=340, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png, id=343, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png  used on input line 225.
@@ -1175,22 +1175,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [12 <./figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png>]
-<figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png, id=348, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png, id=351, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png  used on input line 232.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png, id=349, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png, id=352, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png  used on input line 241.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png, id=350, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png, id=353, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png  used on input line 248.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png, id=351, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png, id=354, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png  used on input line 255.
@@ -1245,12 +1245,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 
 [16]
 Cap\'{\i }tulo 3.
-<figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png, id=379, 566.5968pt x 424.2249pt>
+<figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png, id=382, 566.5968pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png  used on input line 24.
 (pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
-<figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png, id=380, 566.5968pt x 424.2249pt>
+<figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png, id=383, 566.5968pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png  used on input line 30.
@@ -1263,12 +1263,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [17
 
 ]
-<figuras/ch5/dependencia/eg0+/detunning todo 0.png, id=389, 552.1428pt x 424.2249pt>
+<figuras/ch5/dependencia/eg0+/detunning todo 0.png, id=392, 552.1428pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg0+/detunning todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg0+/detunning todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg0+/detunning todo 0.png  used on input line 46.
 (pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
-<figuras/ch5/dependencia/eg1+/detunning todo 0.png, id=390, 566.5968pt x 424.2249pt>
+<figuras/ch5/dependencia/eg1+/detunning todo 0.png, id=393, 566.5968pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg1+/detunning todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg1+/detunning todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg1+/detunning todo 0.png  used on input line 52.
@@ -1289,12 +1289,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [18 <./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png> <./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>]
-<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png, id=399, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png, id=402, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png  used on input line 66.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png, id=400, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png, id=403, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png  used on input line 72.
@@ -1303,12 +1303,12 @@ Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png, id=403, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png, id=406, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png  used on input line 86.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png, id=404, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png, id=407, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png  used on input line 92.
@@ -1345,12 +1345,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [20 <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>]
-<figuras/ch5/dependencia/eg0+/kerr todo 0.png, id=425, 963.6pt x 722.7pt>
+<figuras/ch5/dependencia/eg0+/kerr todo 0.png, id=428, 963.6pt x 722.7pt>
 File: figuras/ch5/dependencia/eg0+/kerr todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg0+/kerr todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg0+/kerr todo 0.png  used on input line 110.
 (pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-<figuras/ch5/dependencia/eg1+/kerr todo 0.png, id=426, 963.6pt x 722.7pt>
+<figuras/ch5/dependencia/eg1+/kerr todo 0.png, id=429, 963.6pt x 722.7pt>
 File: figuras/ch5/dependencia/eg1+/kerr todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg1+/kerr todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr todo 0.png  used on input line 116.
@@ -1359,12 +1359,12 @@ Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr todo 0.png  used on i
 
 LaTeX Warning: Reference `ec4:condicion 3' on page 21 undefined on input line 126.
 
-<figuras/ch5/dependencia/eg0+/ker d=0.5g.png, id=429, 963.6pt x 722.7pt>
+<figuras/ch5/dependencia/eg0+/ker d=0.5g.png, id=432, 963.6pt x 722.7pt>
 File: figuras/ch5/dependencia/eg0+/ker d=0.5g.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg0+/ker d=0.5g.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg0+/ker d=0.5g.png  used on input line 131.
 (pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-<figuras/ch5/dependencia/eg1+/kerr d=0.5g.png, id=430, 963.6pt x 722.7pt>
+<figuras/ch5/dependencia/eg1+/kerr d=0.5g.png, id=433, 963.6pt x 722.7pt>
 File: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg1+/kerr d=0.5g.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png  used on input line 137.
@@ -1384,22 +1384,22 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [21 <./figuras/ch5/dependencia/eg0+/kerr todo 0.png> <./figuras/ch5/dependencia/eg1+/kerr todo 0.png>]
-<figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png, id=438, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png, id=441, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png  used on input line 150.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png, id=439, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png, id=442, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png  used on input line 156.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png, id=442, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png, id=445, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png Graphic file (type png)
 <use figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png>
 Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png  used on input line 169.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png, id=443, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png, id=446, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png  used on input line 175.
@@ -1426,12 +1426,12 @@ LaTeX Warning: Reference `ec4:condicion 3' on page 23 undefined on input line 18
 
 LaTeX Warning: Reference `fig4:concu x 1 d2' on page 23 undefined on input line 185.
 
-<figuras/ch5/dependencia/eg0+/interaccion todo 0.png, id=455, 552.1428pt x 424.2249pt>
+<figuras/ch5/dependencia/eg0+/interaccion todo 0.png, id=458, 552.1428pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg0+/interaccion todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg0+/interaccion todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg0+/interaccion todo 0.png  used on input line 193.
 (pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
-<figuras/ch5/dependencia/eg1+/interaccion todo 0.png, id=456, 566.5968pt x 424.2249pt>
+<figuras/ch5/dependencia/eg1+/interaccion todo 0.png, id=459, 566.5968pt x 424.2249pt>
 File: figuras/ch5/dependencia/eg1+/interaccion todo 0.png Graphic file (type png)
 <use figuras/ch5/dependencia/eg1+/interaccion todo 0.png>
 Package pdftex.def Info: figuras/ch5/dependencia/eg1+/interaccion todo 0.png  used on input line 199.
@@ -1439,12 +1439,12 @@ Package pdftex.def Info: figuras/ch5/dependencia/eg1+/interaccion todo 0.png  us
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png, id=458, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png, id=461, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png  used on input line 210.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png, id=459, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png, id=462, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png  used on input line 216.
@@ -1452,12 +1452,12 @@ Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png, id=462, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png, id=465, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png  used on input line 228.
 (pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png, id=463, 578.16pt x 433.62pt>
+<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png, id=466, 578.16pt x 433.62pt>
 File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
 <use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png>
 Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png  used on input line 234.
@@ -2411,7 +2411,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 [72]
-<licencia.png, id=958, 30.1125pt x 10.5996pt>
+<licencia.png, id=960, 30.1125pt x 10.5996pt>
 File: licencia.png Graphic file (type png)
 <use licencia.png>
 Package pdftex.def Info: licencia.png  used on input line 8.
@@ -2436,18 +2436,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 34357 strings out of 473578
- 677788 string characters out of 5732242
+ 34358 strings out of 473578
+ 677802 string characters out of 5732242
  1204794 words of memory out of 5000000
  56246 multiletter control sequences out of 15000+600000
  589093 words of font info for 111 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,19n,110p,3031b,1024s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
-Output written on main.pdf (87 pages, 4565214 bytes).
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
+Output written on main.pdf (87 pages, 4573987 bytes).
 PDF statistics:
- 1314 PDF objects out of 1440 (max. 8388607)
- 1062 compressed objects within 11 object streams
- 373 named destinations out of 1000 (max. 500000)
+ 1320 PDF objects out of 1440 (max. 8388607)
+ 1066 compressed objects within 11 object streams
+ 374 named destinations out of 1000 (max. 500000)
  656 words of extra memory for PDF output out of 10000 (max. 10000000)
 
