@@ -1,0 +1,58 @@
+\babel@toc {spanish}{}\relax 
+\babel@toc {spanish}{}\relax 
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Fases Geometricas: Teoria general}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Ecuaciones de FG}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Entrelazamiento}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Medidas de entrelazamiento basadas en distancia}{3}{section.2.1}%
+\contentsline {subsubsection}{Pure State Decomposition and Convex Roof Extension}{9}{section*.4}%
+\contentsline {section}{\numberline {2.2}Exploring optimization algorithms for entangled mixed states}{10}{section.2.2}%
+\contentsline {subsubsection}{Negativity}{11}{section*.5}%
+\contentsline {subsubsection}{Schmidt Decomposition}{16}{section*.13}%
+\contentsline {subsubsection}{Ent: A Multipartite Entanglement Measure, and Parameterization of Entangled States}{16}{section*.14}%
+\contentsline {chapter}{\numberline {3}Fase geométrica en JCM generalizado}{17}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Dependencias de la FG}{17}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Dependencia con el régimen de acoplamiento}{17}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Dependencia con el detunning}{18}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Dependencia con el medio Kerr}{21}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Dependencia con la interacción entre átomos}{23}{subsection.3.1.4}%
+\contentsline {section}{\numberline {3.2}Robustez en función del detunning}{25}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Continuación del trabajo luego de presentar la tesis}{26}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Decoherencia}{31}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Dynamics of quantum open systems: master equiations. Curso Paz y Zurek. Capitulo 3.}{31}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Ecuaciones maestras: evaluación perturbativa}{31}{subsection.4.1.1}%
+\contentsline {subsubsection}{Ecuacion maestra perturbativa para un sistema de dos niveles acoplado a un baño térmico bosonico}{32}{section*.26}%
+\contentsline {subsubsection}{Ecuación maestra para spin-boson}{33}{section*.28}%
+\contentsline {subsubsection}{Ecuación maestra para una partícula interactuando con un quantum field}{33}{section*.30}%
+\contentsline {chapter}{\numberline {5}cQED}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Driven Multiphoton Qubit-Resonator Interactions}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Introduction}{35}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Enhancing multiphoton interactions with cross-resonant driving}{36}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}System Hamiltonian}{36}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Effective interaction}{37}{subsection.5.3.2}%
+\contentsline {subsubsection}{Strong driving regime}{39}{section*.31}%
+\contentsline {subsubsection}{Qubit-detuned weak driving regime}{39}{section*.32}%
+\contentsline {subsection}{\numberline {5.3.3}Engineering effective $n$-photon Rabi Hamiltonian with arbitrary coupling strength}{40}{subsection.5.3.3}%
+\contentsline {section}{\numberline {5.4}Applications}{41}{section.5.4}%
+\contentsline {subsection}{\numberline {5.4.1}Two-photon interactions}{41}{subsection.5.4.1}%
+\contentsline {subsubsection}{Schr\"odinger-cat-like superposition of orthogonally squeezed states}{42}{section*.33}%
+\contentsline {subsubsection}{Bosonic phase estimation using a controlled-squeeze gate}{44}{section*.34}%
+\contentsline {subsubsection}{Expanding the generating set for universal qubit-resonator control}{46}{section*.35}%
+\contentsline {subsection}{\numberline {5.4.2}Higher-order interactions}{48}{subsection.5.4.2}%
+\contentsline {section}{\numberline {5.5}Circuit QED implementation}{48}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Two-photon operation mode}{49}{subsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.5.2}Higher-order interactions}{51}{subsection.5.5.2}%
+\contentsline {section}{\numberline {5.6}Summary and Conclusions}{52}{section.5.6}%
+\contentsline {section}{\numberline {5.7}Decoherence}{53}{section.5.7}%
+\contentsline {section}{\numberline {5.8}Derivation of Circuit QED Implementation}{54}{section.5.8}%
+\contentsline {subsection}{\numberline {5.8.1}Circuit Hamiltonian}{54}{subsection.5.8.1}%
+\contentsline {subsection}{\numberline {5.8.2}Two-photon Jaynes-Cummings Hamiltonian}{57}{subsection.5.8.2}%
+\contentsline {chapter}{\numberline {6}Landau-Zener-Stückelberg-Majorana}{61}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Introducción}{61}{section.6.1}%
+\contentsline {section}{\numberline {6.2}El modelo LZSM}{61}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Solución analítica del problema LZSM}{62}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Fase de Stokes}{63}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}Pasajes multiples}{64}{subsection.6.4.1}%
+\contentsline {section}{\numberline {6.5}Fase geométrica en el problema LZSM}{64}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Atajo adiabático en el problema LZSM}{65}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Conclusiones}{67}{chapter.7}%

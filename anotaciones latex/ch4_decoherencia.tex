@@ -1,0 +1,113 @@
+\chapter{Decoherencia}
+\label{ch4_decoherencia}
+
+
+%CAMBIAR ESTO PARA PERSONALIZARLO A MI GUSTO
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\nouppercase{\rightmark\hfill}}
+\fancyhead[RO]{\nouppercase{\leftmark\hfill}}
+\fancyfoot[LE,RO]{\hfill\thepage\hfill}
+
+En este capitulo voy a poner algunas cuentas y deducciones que estén relacionadas a la decoherencia. Mi objetivo es encontrar modelos analíticos para describir la decohrencia en el modelo de Jaynes-Cummings/Tavis-Cummings y en particular comparar con el caso de 2 átomos en un entorno bosonico, por ejemplo en el paper de fer y pau \cite{fg1}, el curso dictado por J.P. Paz y Zurek sobre decoherencia \cite{CursoPazZurek1999}  y también el libro de Breuer y Petruccione \cite{Breuer2002}.
+
+\section{Dynamics of quantum open systems: master equiations. Curso Paz y Zurek. Capitulo 3.}
+
+En este capitulo presentan varias herramientas y métodos para obtener ecuaciones maestras. En particular se utilizan perturbaciones en el acoplamiento entre sistema y entorno hasta segundo orden para describir un esquema general que luego es aplicado a dos ejemplos interesantes: movimiento browniano de una partícula acoplada a un entorno de osciladores, y una partícula acoplada localmente a un campo escalar cuántico. 
+
+\subsection{Ecuaciones maestras: evaluación perturbativa}
+El Hamiltoniano a considerar es
+$$H=H_S+H_\varepsilon+V$$
+donde los primeros dos son los hamiltonianos libres del sistema y el entorno respectivamente, y $V$ es la interacción.
+En el picture de interacción la ecuación para la matriz densidad es
+$$i \hbar \dot{\tilde\rho} = [\tilde V(t),\tilde\rho_{tot}(t)] $$
+donde el tilde nos dice que estamos en la representación de interacción $\tilde O(t) =U_0^\dagger O U_0 $. Resolvemos perturbativamente y nos sale la serie de Dyson
+\begin{equation}
+    \tilde\rho_{tot}=\sum_{n\geq1}\int_0^tdt_1\dots\int_0^{t_{n-1}}dt_n(\frac{1}{i\hbar})^n[\tilde V(t_1),\dots,[\tilde V(t_n),\tilde\rho_{tot}(0)]]
+\end{equation}
+Si nos quedamos a segundo orden, entonces obtenemos
+\begin{equation}
+    \dot{\tilde\rho}(t)=\frac{1}{i\hbar}Tr_\varepsilon[\tilde V(t),\rho_{tot}(0)]-\frac{1}{\hbar^2}\int_0^tdt_1Tr_\varepsilon[\tilde V(t),[\tilde V(t_1),\rho_{tot}(0)]]
+\end{equation}
+Si suponemos que inicialmente el estado entre sistema y entorno no esta entrelazado, entonces $\rho_{tot}(0)=\rho(0)\otimes\rho_\varepsilon(0)$
+\begin{equation}
+      \dot{\tilde\rho}(t)=\frac{1}{i\hbar}Tr_\varepsilon[\tilde V(t),\rho(0)\otimes\rho_\varepsilon(0)]-\frac{1}{\hbar^2}\int_0^tdt_1Tr_\varepsilon[\tilde V(t),[\tilde V(t_1),\rho(0)\otimes\rho_\varepsilon(0)]]
+\end{equation}
+Lo que necesitamos ahora es que esto quede en función de la matriz densidad a tiempo $t$. Para eso la observación es que podemos escribir el $\rho(0)$ en función de $\tilde\rho(t)$ usando la misma expansión perturbativa que antes. Podemos entonces reescribir la ecuación como 
+
+\begin{equation}
+    \begin{split}
+        \dot{\tilde\rho}(t)=&\frac{1}{i\hbar}Tr_\varepsilon[\tilde V(t),\tilde\rho\otimes\rho_\varepsilon(0)]-\frac{1}{\hbar^2}\int_0^tdt_1Tr_\varepsilon[\tilde V(t),[\tilde V(t_1),\rho\otimes\rho_\varepsilon]] \\ &+\frac{1}{\hbar^2}\int_0^tdt_1Tr_\varepsilon\left([\tilde V(t),Tr_\varepsilon([\tilde V(t_1),\tilde\rho\otimes\rho_\varepsilon])\otimes\rho_\varepsilon]\right)
+    \end{split}
+\end{equation}
+Lo interesante es que solo hicimos dos suposiciones, que es valida la expansión hasta segundo orden en el acoplamiento con el entorno, y que el estado inicial no esta correlacionado.
+\subsubsection{Ecuacion maestra perturbativa para un sistema de dos niveles acoplado a un baño térmico bosonico}
+Si consideramos un sistema de dos niveles acoplado a un entorno bosonico térmico, entonces un modelo de interacción posible es el siguiente hamiltoniano, que es valido \textbf{bajo la aproximación RWA}:
+\begin{equation}
+    H=\frac{\hbar\Delta}{2}\sigma_z+\sum_n\lambda_n(a_n\sigma_++a^\dagger_n\sigma_-)+\sum_n\hbar\omega_na^\dagger_na_n
+\end{equation}
+Si seguimos con el procedimiento anterior, se obtiene la ecuación maestra en la picture de Schroedinger
+\begin{equation}
+    \begin{split}
+        \dot\rho=&\frac{1}{i\hbar}[H_S,\rho] \\ & -\frac{1}{2\hbar^2}\int_0^tdt_1k(t_1)([\sigma_+,[\sigma_-(-t_1),\rho]]+[\sigma_+,\{\sigma_-(-t_1),\rho\}] + \text{h.c.})
+    \end{split}
+\end{equation}
+donde el nucleo $k(t)$ esta definido como
+\begin{equation}
+    k(t)=\sum_n\lambda_n^2\langle[a_n(t),a_n^\dagger]\rangle=\sum_n\lambda_n^2\exp(-i\omega_nt)
+\end{equation}
+Usando la solucion de las ecuaciones de Heisenberg libres para los operadores del spin, que son
+$$\sigma_\pm(t)=\sigma_\pm\exp(\pm i\Delta t)$$
+obtenemos
+\coloredeq{eq:spin-sigmax}{\dot\rho=\frac{1}{i}[\frac{\Delta}{2}-c(t),\rho]+a(t)(\sigma_+\sigma_-\rho+\rho\sigma_+\sigma_--2\sigma_-\rho\sigma_+)}
+
+con $a(t)=2\Re\{f(t)\}$, $c(t)=\Im\{f(t)\}$, $f(t)=\frac{1}{2\hbar^2}\int_0^tdsk(s)\exp(i\Delta s)$
+
+\subsubsection{Ecuación maestra para spin-boson}
+La diferencia entre este modelo y el anterior radica en el tipo de interacción. Este modelo tiene una interacción que no conserva la cantidad de excitaciones. El Hamiltoniano del spin-boson es
+\begin{equation}
+    H=\frac{\hbar\Delta}{2}\sigma_x+\sigma_z\sum_n\lambda_nq_n+\sum_n\hbar\omega_na_n^\dagger a_n
+\end{equation}
+donde $q_n$ son las coordenadas de los osciladores del entorno (bosones). La ecuación maestra es
+\begin{equation}
+    \dot\rho =\frac{1}{i\hbar}[H_S,\rho]-\frac{1}{\hbar}\int_0^tdt_1\left( \nu(t_1)[\sigma_z,[\sigma_z(-t_1),\rho]]-i\eta(t_1)[\sigma_z,\{\sigma_z(-t_1),\rho\}] \right)
+\end{equation}
+con los núcleos de ruido y de decoherencia dados respectivamente por
+\begin{equation}
+    \begin{aligned}
+        \nu(t)=& \frac{1}{2\hbar}\sum_n\lambda_n^2\langle\{q_n(t),q_n(0)\}\rangle=\int_0^\infty d\omega J(\omega)\cos(\omega t)(1+2N(\omega))\\
+        \eta(t) = & \frac{1}{2\hbar}\sum_n\lambda_n^2\langle[q_n(t),q_n(0)]\rangle=\int_0^\infty d\omega J(\omega)\sin(\omega t)
+    \end{aligned}
+\end{equation}
+con la densidad espectral $J(\omega)=\sum_n\lambda_n^2\delta(\omega-\omega_n)/2m_n\omega_n$ y también recordemos que $N(\omega)$ es el numero de ocupación de Boltzmann,  y por lo tanto $1+2N(\omega)=\coth(\beta\hbar\omega/2)$
+Usando las ecuaciones libre de Heisenberg $\sigma_z(t)=\sigma_z\cos(\Delta t)+\sigma_y\sin(\Delta t)$, entonces obtenemos
+\coloredeq{eq:spin-boson}{\frac{1}{i\hbar}[H_{eff},\rho]-\tilde D(t)[\sigma_z,[\sigma_z,\rho]]+z(t)\sigma_z\rho\sigma_y+z^*(t)\sigma_y\rho\sigma_z }
+donde tenemos un Hamiltoniano efectivo y coeficientes dependientes del tiempo
+\begin{equation}
+    \begin{aligned}
+        H_{eff}=&\hbar\left(\frac{\Delta}{2}-z^*(t)\right)\sigma_x \\
+        \tilde D(t) =&\int_0^tds\;\nu(s)\cos(\Delta s) \\
+        z(t) = & \int_0^tds\;(\nu(s)-i\eta(s))\sin\Delta s
+    \end{aligned}
+\end{equation}
+
+\subsubsection{Ecuación maestra para una partícula interactuando con un quantum field}
+\textit{Esto creo que puede servir para pensar en una linea de transmisión en el limite continuo, ya que en ese caso creo que tenemos un campo}
+El sistema a considerar es una partícula con posición $\vec{x}$ y el entorno es un campo escalar $\phi$. La interacción es local, descrita por el termino $V=e\phi(\vec x)$, donde $e$ es la constante de acoplamiento (lo podemos pensar como la carga de la partícula). Expandiendo el campo en modos normales, la interacción la podemos escribir como
+$$V=\int d\vec k (h_{\vec k}\exp(i\vec k \vec x) + \text{h.c.})$$ donde los $h_{\vec k}$ son proporcionales a los operadores de creación y destrucción:
+$$h_{\vec k} = e a_{\vec k} /(2\pi)^{1/2}(2\omega_k)^{1/2}$$.
+Es interesante notar que estamos haciendo un tratamiento puntual de la partícula, ya que la interacción es totalmente local. Esto sera consistente solo si intentamos de localizar a la partícula por fuera de la longitud de onda de Compton, de otra manera, necesitaríamos un tratamiento relativista donde tenemos en cuenta una interacción no local porque necesitamos tener en cuenta la extensión de la partícula. Se puede ver que el efecto de considerar una interacción no local es que al final, vamos a tener un cutoff dado por la longitud de onda de compton, la partícula no interactúa con modos cuyas frecuencias sean mayores que la masa en reposo de esta.
+
+Asumiendo que el campo esta en equilibrio térmico, podemos obtener la ecuacion maestra para la partícula:
+\begin{equation}
+\begin{split}
+    \dot \rho =  -\frac{i}{\hbar}[H,\rho]-\frac{e^2}{\hbar^2}\int d\vec k \int_0^t dt_1&\bigg(G_H(\vec k,t_1)[e^{i\vec k \vec x},[e^{-i\vec k \vec x(-t_1)},\rho]] -\\ & iG_R(\vec k,t_1)[e^{i\vec k \vec x},\{e^{-i\vec k \vec x(-t_1)},\rho\}]\bigg).
+\end{split}
+\end{equation}
+donde $\vec x(t)$ es el operador de Heisenberg para la posición de la partícula (evolucionado con el H libre) y $G_{R,H}(\vec k,t)$ son las transformadas de Fourier de la función de dos puntos retardada y simétrica del campo escalar. Cuando el entorno es un campo libre tenemos
+\begin{equation}
+\begin{aligned}
+    G_R(\vec{k},t) = & W(\vec k)\sin(\omega_{\vec k} t)/2\omega_{\vec k} \\
+    G_H(\vec{k},t) = & W(\vec k)\cos(\omega_{\vec k} t)(1+2N(\omega))/2\omega_{\vec k} 
+\end{aligned}    
+\end{equation}

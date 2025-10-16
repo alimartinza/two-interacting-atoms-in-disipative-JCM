@@ -1,46 +1,28 @@
-import jcm_lib as jcm
 import numpy as np
+# from pymanopt.function import numpy
 from qutip import *
-import matplotlib.pyplot as plt
-import time
+import jcm_lib as jcm
 import os
+import time
+import matplotlib.pyplot as plt
+from entrelazamiento_lib import negativity_hor,roof_etanglement_bipartite,rankV_func,pure_tripartite_ent
 
-script_path= os.path.dirname(__file__)
+script_path = os.path.dirname(__file__) 
 
-N_c=4
-steps=6000
-g_t=10
+N_c=3
+steps=3000
+g_t=30
 
 w0=1
 g=0.001*w0
 
+gamma=0.1*g
+
 x=0         #1*g va en orden ascendiente
-w_q=1
-d=0.01*g
-w_r=w_q+d        #1.1001*g#.5*g
+d=1*g       #1.1001*g#.5*g
 
 k=0*g        #0*g va en orden descendiente para ser consistente con la flecha dibujada mas abajo en el plot
 J=0*g
-
-#Matriz de cambio de base
-# M=np.eye(4*N_c)
-M=np.zeros((4*N_c,4*N_c))
-M[0,3*N_c]=1
-M[1,3*N_c+1]=1
-M[2,N_c]=1/np.sqrt(2)
-M[2,2*N_c]=1/np.sqrt(2)
-M[3,N_c]=1/np.sqrt(2)
-M[3,2*N_c]=-1/np.sqrt(2)
-
-for ii in range(1,N_c-1):
-    M[4*ii,3*N_c+1+ii]=1
-for ii in range(1,N_c-1):
-    M[4*ii+1,N_c+ii]=1/np.sqrt(2)
-    M[4*ii+1,2*N_c+ii]=1/np.sqrt(2)
-    M[4*ii+3,N_c+ii]=1/np.sqrt(2)
-    M[4*ii+3,2*N_c+ii]=-1/np.sqrt(2)
-for ii in range(1,N_c-1):
-    M[4*ii+2,ii-1]=1
 
 ee=basis([2,2],[0,0])
 eg=basis([2,2],[0,1])
@@ -60,91 +42,100 @@ sp2=tensor(qeye(2),sigmap(),qeye(N_c))
 sz2=tensor(qeye(2),sigmaz(),qeye(N_c))
 sx2=tensor(qeye(2),sigmax(),qeye(N_c))
 
-#entrelazamiento unitario para 3x3
-t_final=g_t/g
+# metodo=str(input('Metodo: '))
 
-ci=0
-if ci==0:
-    psi_0=tensor((eg+ge).unit(),basis(N_c,1))
-elif ci==1:
-    psi_0=tensor(gg,basis(N_c,2))
+# --- DIFERENTES ESTADOS INICIALES --- #
+def simulacion(d:float):
+    rho_0=tensor((eg+ge).unit(),basis(N_c,1))
 
+    t_final=g_t/g
 
-
-modelo='TCM'
-'''##########---Hamiltoniano---##########'''
-if modelo=='TCM' or modelo=='1':
-    #Hamiltoniano de TC
-    H=w_r*n+x*n2 + w_q/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-elif modelo=='RABI' or modelo=='2':
-    #Hamiltoniano de Rabi
-    H=x*n2 + d/2*(sz1+sz2) + g*(sx1+sx2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-elif modelo=='SpinBoson' or modelo=='SB' or modelo=='3':
-    #Hamiltoniano de "spin-boson"
-    H=d/2*(sz1+sz2) + g*(sz1+sz2)*(a+a.dag()) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
-else:
-    print('Este Modelo no existe. Modelo default es TCM.')
     H=x*n2 + d/2*(sz1+sz2) + g*((sm1+sm2)*a.dag()+(sp1+sp2)*a) + 2*k*(sm1*sp2+sp1*sm2) + J*sz1*sz2
 
-t_0=time.time()
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
-color='black'
-t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    p=0.05*gamma
 
-fig_fg=plt.figure(figsize=(8,6))
-fig_fg.suptitle('FG')
-ax_fg=fig_fg.add_subplot()
-ax_fg.set_xlim(0,t_final*g)
+    sol=mesolve(H,rho_0,t)#,c_ops=[p*sp1,p*sp2,gamma*a])
+
+    fg_total,arg_tot,eigenvals_tot_t=jcm.fases(sol)
+
+    rho_01=np.empty_like(sol.states) #2x2
+    rho_02=np.empty_like(sol.states)  #2x3
+    rho_12=np.empty_like(sol.states) #2x3
+
+    for j in range(len(sol.states)):
+        rho_01[j]=sol.states[j].ptrace([0,1])
+        rho_02[j]=sol.states[j].ptrace([0,2])
+        rho_12[j]=sol.states[j].ptrace([1,2])
+
+    return sol,rho_01,rho_02,rho_12,fg_total
+
+sol,rho_01,rho_02,rho_12,fg_total=simulacion(d)
+
+
+
+def negativ():
+    '''En total, para un sistema tripartito, hay 6 negatividades que podemos intentar
+    de observar. Las primeras 3 se corresponden con elegir alguna biparticion, por ejemplo
+    B|AC, y entonces tomamos transposicion parcial sobre B, y calculamos la negatividad. Esto seria
+    como ver el entrelazamiento entre Bob y el conjunto de (Alice+Charlie). 
+    Las otras 3 opciones son tomar traza parcial sobre alguno de los 3, es decir, los 
+    olvidamos o pensamos que se estan aislando, y vemos la negatividad que resta. Por
+    ejemplo, supongamos que Bob se aisla del mundo, entonces tenemos rho_AC, al cual le
+    calculamos la negatividad, y nos dice cual es el entrelazamiento entre Alice y Charlie 
+    si Bob no participa o se rehusa a compartir su informacion (pero sigue afectando el experimento)'''
+    N_0=np.zeros(len(sol.states)) #estas tres son las negatividades que se obtienen haciendo
+    N_1=np.zeros(len(sol.states)) # transpocicion parcial del subsystema indicado. Por ejejmplo
+    N_2=np.zeros(len(sol.states)) # el N_1 hace partial_transpose sobre el sistema 1 (atomo B) y calcula la negatividad
+
+    # N_01=np.zeros(len(sol.states)) # haciendo trasposicion parcial sobre 0 y 1 a la vez
+    # N_02=np.zeros(len(sol.states)) # 
+    # N_12=np.zeros(len(sol.states))
+
+    N_01_t0=np.zeros(len(sol.states)) # a diferencia de lo de arriba, esto toma primero traza parcial y deja estados
+    N_02_t0=np.zeros(len(sol.states)) # bipartitos, a los cuales se les calcula la negatividad.
+    N_12_t1=np.zeros(len(sol.states))
+    # t0=time.process_time()
+    for j in range(len(sol.states)):
         
-fig_concu=plt.figure(figsize=(8,6))
-fig_concu.suptitle('CONCU')
-ax_concu=fig_concu.add_subplot()
-ax_concu.set_xlim(0,t_final*g)
+        # print(sol.states[j])
+        N_0[j]=negativity_hor(sol.states[j],[1,0,0])
+        N_1[j]=negativity_hor(sol.states[j],[0,1,0])
+        N_2[j]=negativity_hor(sol.states[j],[0,0,1])
 
-fig_3concu=plt.figure(figsize=(8,6))
-fig_3concu.suptitle('3-CONCU')
-ax_3concu=fig_3concu.add_subplot()
-ax_3concu.set_xlim(0,t_final*g)
+        # N_01[j]=negativity_hor(sol.states[j],[1,1,0])
+        # N_02[j]=negativity_hor(sol.states[j],[1,0,1])
+        # N_12[j]=negativity_hor(sol.states[j],[0,1,1])
 
-fig_fg_spins=plt.figure(figsize=(8,6))
-fig_fg_spins.suptitle('FG SPINS')
-ax_fg_spins=fig_fg_spins.add_subplot()
-ax_fg_spins.set_xlim(0,t_final*g)
-t_i=time.time()
+        N_01_t0[j]=negativity_hor(sol.states[j].ptrace([0,1]),[1,0])
+        N_02_t0[j]=negativity_hor(sol.states[j].ptrace([0,2]),[1,0])
+        N_12_t1[j]=negativity_hor(sol.states[j].ptrace([1,2]),[1,0])
+        # print(time.process_time()-t0)
 
-sol=mesolve(H,psi_0,t)
+    t_final=g_t/g
+    t=np.linspace(0,t_final,steps)
+    fig1=plt.figure(figsize=(8,6))
+    fig1.suptitle(r'$\mathcal{N}(\rho)$')
+    ax1=fig1.add_subplot()
+    ax1.set_xlim(0,g_t)
+    ax1.plot(g*t,N_0,'.g',label='A|BC')
+    ax1.plot(g*t,N_1,'.r',label='B|AC')
+    ax1.plot(g*t,N_2,'.b',label='C|AB')
 
-t_i_cb=time.time()
+    ax1.legend()
 
-for i in range(len(sol.states)):
-    sol.states[i]=sol.states[i].transform(M)
-    # sol.states[i].full()[np.abs(sol.states[i].full()) <=1e-8]=0 
 
-t_f_cb=time.time()
-print(t_f_cb-t_i_cb,'s tiempo de cambio de base')
+    fig3=plt.figure(figsize=(8,6))
+    fig3.suptitle(r'$\mathcal{N}(\rho_{ij})$')
+    ax3=fig3.add_subplot()
+    ax3.set_xlim(0,g_t)
+    ax3.plot(g*t,N_01_t0,'.g',label='ij=AB')
+    ax3.plot(g*t,N_02_t0,'.r',label='ij=AC')
+    ax3.plot(g*t,N_12_t1,'.b',label='ij=BC')
+    ax3.legend()
+    plt.show()
+    return None
 
-#HOY QUIERO PROBAR SI LA FASE MIXTA ANDA UTILIZANDO MAS PASOS --> NO, NO ANDA AUN AUMENTANDO LOS PASOS. HAY QUE HACERA DEVUELTA.
+negativ()
 
-fg_total,arg_tot,eigenvals_tot_t=jcm.fases(sol)
-triconcu=jcm.triconcurrence(sol,0.5)
-# fg_total_mixta,arg_tot,eigenvals_tot_t=jcm.fases_mixta(sol)
-
-atoms_states=np.empty_like(sol.states)
-for j in range(len(sol.states)):
-    atoms_states[j]=sol.states[j].ptrace([0,1])
-
-fg_spins,arg_spins,eigenvals_t=jcm.fases(atoms_states)
-# fg_spins_mixta,arg_spins,eigenvals_t=jcm.fases_mixta(atoms_states)
-concu_ab=jcm.concurrence(atoms_states)
-
-ax_fg.plot(g*t,fg_total/np.pi,color=color)
-ax_concu.plot(g*t,concu_ab,color=color)
-ax_fg_spins.plot(g*t,fg_spins/np.pi,color=color)
-ax_3concu.plot(g*t,triconcu,color='black')
-
-fig_fg_spins.savefig(f'fg tcm/{N_c}x{N_c} fg spin {modelo} {ci} d={d/g}g plot.png')
-fig_concu.savefig(f'fg tcm/{N_c}x{N_c} concu {modelo} {ci} d={d/g}g plot.png')
-fig_fg.savefig(f'fg tcm/{N_c}x{N_c} fg {modelo} {ci} d={d/g}g plot.png')
-fig_3concu.savefig(f'3concu/{N_c}x{N_c} 3concu {modelo} {ci} d={d/g}g plot.png')
-t_c=time.time()
-print(t_c-t_i,'s computo de simulacion, fg, concu y 3concu')
