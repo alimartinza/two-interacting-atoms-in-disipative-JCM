@@ -189,7 +189,7 @@ def rankV_func(rho):
     V = np.dot(eigvecs, np.diag(np.sqrt(eigvals))) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
     return rank, V
 
-def roof_etanglement_bipartite(rank,V,initial_point,dims=0,min_step=1e-10):
+def roof_etanglement_bipartite(rank,V,initial_point=None,dims=0):
     '''Calcula el entrelazamiento de un sistema bipartito mixto de dimensiones 
     arbitrarias 2xm usando convex roof de la entropia de von neuman.
     Parametros:
@@ -239,6 +239,8 @@ def roof_etanglement_bipartite(rank,V,initial_point,dims=0,min_step=1e-10):
     # optimizer = NelderMead(verbosity=1)
     result = optimizer.run(problem,initial_point=initial_point)
 
+    result = optimizer.run(problem,initial_point=initial_point)
+    
     return result
 
 # ---- rho_01 ----- #
@@ -275,6 +277,8 @@ for i in range(1,len(rho_01)):
 
 
 # # ---- rho_02 ---- #
+print('--------- rho_02 ------------')
+
 print('--------- rho_02 ------------')
 
 rank0_02,V0_02=rankV_func(rho_02[0].full())

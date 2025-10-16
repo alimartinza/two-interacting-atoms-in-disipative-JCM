@@ -310,12 +310,17 @@ def roof_etanglement_bipartite(rank, V, dims=0, initial_point=None):
     # --- Cost (use autograd-safe ops only) ---
     @autograd(manifold)
     def cost(U):
-        print(U)
+        """
+        Calculates the average entanglement for an ensemble decomposition of rho.
+        """
+        if np.isnan(U.any()):
+            print('la concha de tu madre')
+            print(U)
+            exit()
 
-        W = anp.dot(V_anp, U)  # shape (n, rank)
-        total = 0.0
-        eps = 1e-10
-
+        W = V @ U
+        total_entanglement = 0
+        # nan_instances=0
         for i in range(rank):
             w_i = W[:, i]
             p_i = anp.sum(anp.abs(w_i)**2)
@@ -324,10 +329,21 @@ def roof_etanglement_bipartite(rank, V, dims=0, initial_point=None):
                 continue
             psi_i = w_i / anp.sqrt(p_i + eps)
 
-            if dims == 0:
-                ent = entropy_of_entanglement_2xN(psi_i)
-            elif dims == 1:
-                ent = entropy_of_entanglement_2x2(psi_i)
+            # if anp.isnan(psi_i).any():
+            #     print("NaN in psi_i", psi_i)
+            #     nan_instances+=1
+            # elif anp.isnan(p_i):
+            #     print("NaN in p_i", p_i)
+            #     nan_instances+=1
+            # if nan_instances>10:
+            #     print('muchos nans, revisar porque')
+            #     exit()
+
+            # Call the optimized entropy function
+            if dims==0:
+                ent = max(0,entropy_of_entanglement_2xN(psi_i))
+            elif dims==1:
+                ent = max(0,entropy_of_entanglement_2x2(psi_i))
             else:
                 print('Incorrect dims for entanglement measure')
                 exit()
@@ -352,15 +368,20 @@ def roof_etanglement_bipartite(rank, V, dims=0, initial_point=None):
             init = np.eye(rank, dtype=np.complex128)
 
     problem = Problem(manifold=manifold, cost=cost)
-    optimizer = SteepestDescent(verbosity=1)  # or ConjugateGradient(verbosity=1)
-    result = optimizer.run(problem, initial_point=init)
+    optimizer = SteepestDescent(verbosity=0)
+    try:
+        if initial_point==None:
+            initial_point=manifold.random_point()
+    except: None
+
+    result = optimizer.run(problem,initial_point=initial_point)
 
     return result
 
 
 
 rank0_01,V0_01=rankV_func(rho_01[0].full())
-result0_01=roof_etanglement_bipartite(rank0_01,V0_01)
+result0_01=roof_etanglement_bipartite(rank0_01,V0_01,dims=1)
 
 resultcost_01=[result0_01.cost]
 resultrank_01=[rank0_01]
