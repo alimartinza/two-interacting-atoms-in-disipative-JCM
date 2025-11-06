@@ -143,7 +143,7 @@ def robustez_delta(psi0,psi0Name,delta_min:float,delta_max:float,delta_steps:int
             t_final=3*T
             steps=2000
 
-            l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*(sp1+sp2)]
+            l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sp1,np.sqrt(p)*sp2]
             t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
             sol_u=mesolve(H,psi0,t,c_ops=[])
             sol_d=mesolve(H,psi0,t,c_ops=l_ops)

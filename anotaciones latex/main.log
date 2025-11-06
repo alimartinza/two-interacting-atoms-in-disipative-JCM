@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  16 OCT 2025 18:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.9.30)  3 NOV 2025 12:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -888,16 +888,16 @@ LaTeX Info: Redefining \% on input line 2.
 LaTeX Info: Redefining \. on input line 3.
 LaTeX Info: Redefining \% on input line 3.
 
-Overfull \hbox (19.95808pt too wide) in paragraph at lines 35--35
- [][] [][][]\T1/cmr/m/n/10.95 Engineering ef-fec-ti-ve $\OML/cmm/m/it/10.95 n$\T1/cmr/m/n/10.95 -photon Ra-bi Ha-mil-to-nian with ar-bi-trary coupling 
- []
-
-
 
 [1
 
 
-])
+]
+Overfull \hbox (19.95808pt too wide) in paragraph at lines 56--56
+ [][] [][][]\T1/cmr/m/n/10.95 Engineering ef-fec-ti-ve $\OML/cmm/m/it/10.95 n$\T1/cmr/m/n/10.95 -photon Ra-bi Ha-mil-to-nian with ar-bi-trary coupling 
+ []
+
+)
 \tf@toc=\write5
 \openout5 = `main.toc'.
 
@@ -912,7 +912,14 @@ LaTeX Info: Redefining \. on input line 2.
 LaTeX Info: Redefining \% on input line 2.
 LaTeX Info: Redefining \. on input line 3.
 LaTeX Info: Redefining \% on input line 3.
-)
+
+Underfull \vbox (badness 1888) has occurred while \output is active []
+
+
+
+[3
+
+])
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -921,18 +928,14 @@ LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
 
 
-[3
-
-]
-
-[4
-
-]
+[4]
 LaTeX Info: Redefining \. on input line 19.
 LaTeX Info: Redefining \% on input line 19.
 ) (./agradecimientos.tex
 
-[5]
+[5
+
+]
 
 [6
 
@@ -942,59 +945,82 @@ LaTeX Info: Redefining \% on input line 19.
 
 [8
 
-] (./ch1_fg.tex
-Cap\'{\i }tulo 1.
-) (./ch2_entrelazamiento.tex
+] (./borrador.tex) (./ch1_fg.tex
+
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {Entrelazamiento} [1
-
-]
+            {Fases Geometricas: Teoria general} [1]
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.1 \chapter
-            {Entrelazamiento} [2
+            {Fases Geometricas: Teoria general} [2
 
 ]
-Cap\'{\i }tulo 2.
-
-LaTeX Warning: Citation `quantumentanglementhorodecki' on page 3 undefined on input line 14.
-
-
+Cap\'{\i }tulo 1.
+) (./ch2_entrelazamiento.tex
 
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
+l.1 \chapter
+            {Entrelazamiento} [3]
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.1 \chapter
+            {Entrelazamiento} [4
+
+]
+Cap\'{\i }tulo 2.
+
+LaTeX Warning: Citation `quantumentanglementhorodecki' on page 5 undefined on input line 14.
+
+
+
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
 l.17 \begin{equation}
-                      [3]
+                      [5]
 
-LaTeX Warning: Citation `verdalplenio1998' on page 4 undefined on input line 20.
-
-
-LaTeX Warning: Citation `Rains2000' on page 4 undefined on input line 24.
+LaTeX Warning: Citation `verdalplenio1998' on page 6 undefined on input line 20.
 
 
-LaTeX Warning: Citation `Vedral1998' on page 4 undefined on input line 24.
+LaTeX Warning: Citation `Rains2000' on page 6 undefined on input line 24.
 
 
-LaTeX Warning: Citation `MeyerWallach2001' on page 4 undefined on input line 28.
+LaTeX Warning: Citation `Vedral1998' on page 6 undefined on input line 24.
 
 
-LaTeX Warning: Citation `Coffman2000' on page 4 undefined on input line 28.
+LaTeX Warning: Citation `MeyerWallach2001' on page 6 undefined on input line 28.
 
 
-LaTeX Warning: Citation `Lohmayer2006' on page 4 undefined on input line 32.
+LaTeX Warning: Citation `Coffman2000' on page 6 undefined on input line 28.
 
 
-LaTeX Warning: Citation `Linden1999a' on page 4 undefined on input line 32.
+LaTeX Warning: Citation `Lohmayer2006' on page 6 undefined on input line 32.
+
+
+LaTeX Warning: Citation `Linden1999a' on page 6 undefined on input line 32.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1011,15 +1037,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has been already used, duplicate ignored
+pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.33 \begin{equation}
-                      [4]
+                      [6]
 
-LaTeX Warning: Citation `' on page 5 undefined on input line 38.
+LaTeX Warning: Citation `' on page 7 undefined on input line 38.
 
-<figuras/ch2/triangulos.png, id=285, 575.14874pt x 741.77126pt>
+<figuras/ch2/triangulos.png, id=391, 575.14874pt x 741.77126pt>
 File: figuras/ch2/triangulos.png Graphic file (type png)
 <use figuras/ch2/triangulos.png>
 Package pdftex.def Info: figuras/ch2/triangulos.png  used on input line 41.
@@ -1043,12 +1069,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.5}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.52 \end{equation}
-                    [5 <./figuras/ch2/triangulos.png>]
+[7 <./figuras/ch2/triangulos.png>]
 Underfull \vbox (badness 1715) has occurred while \output is active []
 
 
@@ -1062,17 +1083,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
+[8]
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.6}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.62 
-      [6]
-
-LaTeX Warning: Citation `' on page 7 undefined on input line 72.
+LaTeX Warning: Citation `' on page 9 undefined on input line 72.
 
 
-LaTeX Warning: Citation `https://scispace.com/pdf/genuine-multipartite-entanglement-detection-and-lower-bound-1j5nw9cffj.pdf' on page 7 undefined on input line 74.
+LaTeX Warning: Citation `https://scispace.com/pdf/genuine-multipartite-entanglement-detection-and-lower-bound-1j5nw9cffj.pdf' on page 9 undefined on input line 74.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1088,9 +1104,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[7]
+[9]
 
-LaTeX Warning: Citation `http://arxiv.org/abs/quant-ph/9909060v4' on page 8 undefined on input line 91.
+LaTeX Warning: Citation `http://arxiv.org/abs/quant-ph/9909060v4' on page 10 undefined on input line 91.
 
 
 
@@ -1103,9 +1119,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[8]
+[10]
 
-LaTeX Warning: Citation `arXiv:2208.04745v1 [quant-ph] 2 Aug 2022' on page 9 undefined on input line 140.
+LaTeX Warning: Citation `arXiv:2208.04745v1 [quant-ph] 2 Aug 2022' on page 11 undefined on input line 140.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1121,9 +1137,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[9]
+[11]
 
-LaTeX Warning: Citation `JMLR:v17:16-177' on page 10 undefined on input line 164.
+LaTeX Warning: Citation `JMLR:v17:16-177' on page 12 undefined on input line 164.
 
 
 Overfull \hbox (40.79866pt too wide) in paragraph at lines 174--175
@@ -1141,7 +1157,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[10]
+[12]
 
 LaTeX Info: Redefining \. on input line 214.
 LaTeX Info: Redefining \% on input line 214.
@@ -1152,13 +1168,13 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[11]
-<figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png, id=342, 722.7pt x 578.16pt>
+[13]
+<figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png, id=449, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png  used on input line 218.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png, id=343, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png, id=450, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png  used on input line 225.
@@ -1174,23 +1190,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[12 <./figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png>]
-<figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png, id=351, 722.7pt x 578.16pt>
+[14 <./figuras/ch2/negatividad/3x3 eg1+ $N_{01}$ 012 012.png>]
+<figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png, id=457, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png  used on input line 232.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png, id=352, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png, id=458, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png  used on input line 241.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png, id=353, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png, id=459, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png  used on input line 248.
 (pdftex.def)             Requested size: 339.6134pt x 271.69112pt.
-<figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png, id=354, 722.7pt x 578.16pt>
+<figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png, id=460, 722.7pt x 578.16pt>
 File: figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png Graphic file (type png)
 <use figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png>
 Package pdftex.def Info: figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png  used on input line 255.
@@ -1206,7 +1222,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[13 <./figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png>]
+[15 <./figuras/ch2/negatividad/3x3 eg1+ $N_{02}$ 012 012.png>]
 
 LaTeX Info: Redefining \. on input line 262.
 LaTeX Info: Redefining \% on input line 262.
@@ -1217,7 +1233,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[14 <./figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png> <./figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png>]
+[16 <./figuras/ch2/negatividad/3x3 eg1+ $N_{12}$ 012 012.png> <./figuras/ch2/negatividad/3x3 eg1+ $N_0$ 012 012.png>]
 
 LaTeX Info: Redefining \. on input line 262.
 LaTeX Info: Redefining \% on input line 262.
@@ -1228,11 +1244,11 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[15 <./figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png> <./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png>]
+[17 <./figuras/ch2/negatividad/3x3 eg1+ $N_1$ 012 012.png> <./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png>]
 
-LaTeX Warning: Reference `a' on page 16 undefined on input line 265.
+LaTeX Warning: Reference `a' on page 18 undefined on input line 265.
 
-) (./ch3_fg_tcm.tex
+) (./ch_jcm.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1243,44 +1259,36 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[16]
+[18]
 Cap\'{\i }tulo 3.
-<figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png, id=382, 566.5968pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png  used on input line 24.
-(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
-<figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png, id=383, 566.5968pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png  used on input line 30.
-(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+LaTeX Warning: Reference `ec3:hamiltoniano inicial' on page 19 undefined on input line 15.
+
+
+LaTeX Warning: Reference `ec3:hamiltoniano jcm' on page 19 undefined on input line 19.
 
 
 
-[17
+[19
 
 ]
-<figuras/ch5/dependencia/eg0+/detunning todo 0.png, id=392, 552.1428pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg0+/detunning todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg0+/detunning todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg0+/detunning todo 0.png  used on input line 46.
-(pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
-<figuras/ch5/dependencia/eg1+/detunning todo 0.png, id=393, 566.5968pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg1+/detunning todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg1+/detunning todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg1+/detunning todo 0.png  used on input line 52.
-(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
+<figuras/ch3/relacion energia detunning jcm simple kerr.png, id=497, 578.16pt x 433.62pt>
+File: figuras/ch3/relacion energia detunning jcm simple kerr.png Graphic file (type png)
+<use figuras/ch3/relacion energia detunning jcm simple kerr.png>
+Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple kerr.png  used on input line 52.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch3/relacion energia detunning jcm simple kerr 2.png, id=498, 578.16pt x 433.62pt>
+File: figuras/ch3/relacion energia detunning jcm simple kerr 2.png Graphic file (type png)
+<use figuras/ch3/relacion energia detunning jcm simple kerr 2.png>
+Package pdftex.def Info: figuras/ch3/relacion energia detunning jcm simple kerr 2.png  used on input line 59.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-
-LaTeX Info: Redefining \. on input line 62.
-LaTeX Info: Redefining \% on input line 62.
+LaTeX Info: Redefining \. on input line 77.
+LaTeX Info: Redefining \% on input line 77.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1288,44 +1296,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[18 <./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png> <./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>]
-<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png, id=402, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png  used on input line 66.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png, id=403, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png  used on input line 72.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+[20 <./figuras/ch3/relacion energia detunning jcm simple kerr.png> <./figuras/ch3/relacion energia detunning jcm simple kerr 2.png>]
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png, id=406, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png  used on input line 86.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png, id=407, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png  used on input line 92.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 19 undefined on input line 99.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \vbox (badness 1199) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \. on input line 100.
-LaTeX Info: Redefining \% on input line 100.
+LaTeX Info: Redefining \. on input line 113.
+LaTeX Info: Redefining \% on input line 113.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1333,172 +1307,17 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[19 <./figuras/ch5/dependencia/eg0+/detunning todo 0.png> <./figuras/ch5/dependencia/eg1+/detunning todo 0.png>]
+[21]
 
-LaTeX Info: Redefining \. on input line 106.
-LaTeX Info: Redefining \% on input line 106.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[20 <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>]
-<figuras/ch5/dependencia/eg0+/kerr todo 0.png, id=428, 963.6pt x 722.7pt>
-File: figuras/ch5/dependencia/eg0+/kerr todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg0+/kerr todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg0+/kerr todo 0.png  used on input line 110.
-(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-<figuras/ch5/dependencia/eg1+/kerr todo 0.png, id=429, 963.6pt x 722.7pt>
-File: figuras/ch5/dependencia/eg1+/kerr todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg1+/kerr todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr todo 0.png  used on input line 116.
-(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 21 undefined on input line 126.
-
-<figuras/ch5/dependencia/eg0+/ker d=0.5g.png, id=432, 963.6pt x 722.7pt>
-File: figuras/ch5/dependencia/eg0+/ker d=0.5g.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg0+/ker d=0.5g.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg0+/ker d=0.5g.png  used on input line 131.
-(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-<figuras/ch5/dependencia/eg1+/kerr d=0.5g.png, id=433, 963.6pt x 722.7pt>
-File: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg1+/kerr d=0.5g.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png  used on input line 137.
-(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-
-LaTeX Info: Redefining \. on input line 146.
-LaTeX Info: Redefining \% on input line 146.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[21 <./figuras/ch5/dependencia/eg0+/kerr todo 0.png> <./figuras/ch5/dependencia/eg1+/kerr todo 0.png>]
-<figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png, id=441, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png  used on input line 150.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png, id=442, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png  used on input line 156.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png, id=445, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png Graphic file (type png)
-<use figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png>
-Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png  used on input line 169.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png, id=446, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png  used on input line 175.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-
-LaTeX Info: Redefining \. on input line 185.
-LaTeX Info: Redefining \% on input line 185.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[22 <./figuras/ch5/dependencia/eg0+/ker d=0.5g.png> <./figuras/ch5/dependencia/eg1+/kerr d=0.5g.png> <./figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png> <./figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png>]
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 23 undefined on input line 185.
-
-
-LaTeX Warning: Reference `fig4:concu x 1 d2' on page 23 undefined on input line 185.
-
-<figuras/ch5/dependencia/eg0+/interaccion todo 0.png, id=458, 552.1428pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg0+/interaccion todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg0+/interaccion todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg0+/interaccion todo 0.png  used on input line 193.
-(pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
-<figuras/ch5/dependencia/eg1+/interaccion todo 0.png, id=459, 566.5968pt x 424.2249pt>
-File: figuras/ch5/dependencia/eg1+/interaccion todo 0.png Graphic file (type png)
-<use figuras/ch5/dependencia/eg1+/interaccion todo 0.png>
-Package pdftex.def Info: figuras/ch5/dependencia/eg1+/interaccion todo 0.png  used on input line 199.
-(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png, id=461, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png  used on input line 210.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png, id=462, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png  used on input line 216.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png, id=465, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png  used on input line 228.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png, id=466, 578.16pt x 433.62pt>
-File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
-<use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png>
-Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png  used on input line 234.
-(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 23 undefined on input line 241.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-LaTeX Warning: Reference `ec4:condicion 2' on page 23 undefined on input line 243.
-
-
-LaTeX Warning: Reference `ec4:condicion 1' on page 23 undefined on input line 243.
-
-
-
-LaTeX Info: Redefining \. on input line 244.
-LaTeX Info: Redefining \% on input line 244.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[23 <./figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png> <./figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png>]
-
-LaTeX Warning: Reference `ec4:condicion 1' on page 24 undefined on input line 247.
-
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 24 undefined on input line 247.
+LaTeX Warning: Reference `ap_ecsmaestras' on page 22 undefined on input line 114.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-LaTeX Info: Redefining \. on input line 248.
-LaTeX Info: Redefining \% on input line 248.
+LaTeX Info: Redefining \. on input line 147.
+LaTeX Info: Redefining \% on input line 147.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1506,56 +1325,28 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[24 <./figuras/ch5/dependencia/eg0+/interaccion todo 0.png> <./figuras/ch5/dependencia/eg1+/interaccion todo 0.png> <./figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png> <./figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png>]
-
-LaTeX Warning: Reference `ec4:condicion 1' on page 25 undefined on input line 249.
-
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 25 undefined on input line 249.
-
-
-LaTeX Warning: Reference `ec4:base' on page 25 undefined on input line 249.
-
-
-LaTeX Warning: Reference `fig5:raices' on page 25 undefined on input line 251.
-
-
-LaTeX Warning: Reference `ec4:condicion 1' on page 25 undefined on input line 251.
+[22]
+<figuras/ch3/poblaciones sc vs wc.png, id=539, 1092.7224pt x 460.3599pt>
+File: figuras/ch3/poblaciones sc vs wc.png Graphic file (type png)
+<use figuras/ch3/poblaciones sc vs wc.png>
+Package pdftex.def Info: figuras/ch3/poblaciones sc vs wc.png  used on input line 152.
+(pdftex.def)             Requested size: 424.51515pt x 178.84421pt.
+<figuras/ch3/poblaciones kerr.png, id=542, 1092.7224pt x 460.3599pt>
+File: figuras/ch3/poblaciones kerr.png Graphic file (type png)
+<use figuras/ch3/poblaciones kerr.png>
+Package pdftex.def Info: figuras/ch3/poblaciones kerr.png  used on input line 160.
+(pdftex.def)             Requested size: 424.51515pt x 178.84421pt.
 
 
-LaTeX Warning: Reference `ec4:condicion 3' on page 25 undefined on input line 251.
+LaTeX Warning: Reference `sec3:medio kerr' on page 23 undefined on input line 165.
 
 
-
-LaTeX Info: Redefining \. on input line 261.
-LaTeX Info: Redefining \% on input line 261.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[25 <./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png>]
-
-LaTeX Warning: Reference `ec4:condicion 2' on page 26 undefined on input line 261.
-
-
-LaTeX Warning: Reference `ec4:condicion 3' on page 26 undefined on input line 266.
-
-
-LaTeX Warning: Reference `fig5:raices' on page 26 undefined on input line 274.
-
-
-LaTeX Warning: Reference `ec3:condicion robuestez 1 atomo' on page 26 undefined on input line 274.
-
-
-LaTeX Warning: Reference `fig5:inutil' on page 26 undefined on input line 288.
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 
-LaTeX Info: Redefining \. on input line 296.
-LaTeX Info: Redefining \% on input line 296.
+LaTeX Info: Redefining \. on input line 166.
+LaTeX Info: Redefining \% on input line 166.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1563,24 +1354,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[26]
+[23 <./figuras/ch3/poblaciones sc vs wc.png>]
 
-LaTeX Info: Redefining \. on input line 314.
-LaTeX Info: Redefining \% on input line 314.
-
-Package fancyhdr Warning: \headheight is too small (12.0pt): 
-(fancyhdr)                Make it at least 13.59999pt, for example:
-(fancyhdr)                \setlength{\headheight}{13.59999pt}.
-(fancyhdr)                You might also make \topmargin smaller to compensate:
-(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
-
-[27]
-Underfull \vbox (badness 1515) has occurred while \output is active []
-
-
-
-LaTeX Info: Redefining \. on input line 331.
-LaTeX Info: Redefining \% on input line 331.
+LaTeX Info: Redefining \. on input line 181.
+LaTeX Info: Redefining \% on input line 181.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1588,10 +1365,23 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[28]
+[24 <./figuras/ch3/poblaciones kerr.png>]
 
-LaTeX Info: Redefining \. on input line 347.
-LaTeX Info: Redefining \% on input line 347.
+LaTeX Warning: Reference `ec2:fg general' on page 25 undefined on input line 184.
+
+
+LaTeX Warning: Reference `ec2:fg general puro' on page 25 undefined on input line 184.
+
+
+LaTeX Warning: Reference `ec2:fg general puro' on page 25 undefined on input line 195.
+
+
+Underfull \vbox (badness 6792) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 215.
+LaTeX Info: Redefining \% on input line 215.
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
 (fancyhdr)                Make it at least 13.59999pt, for example:
@@ -1599,7 +1389,88 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[29]) (./ch4_decoherencia.tex
+[25]
+<./figuras/ch3/jcm1 fg ci modificada 1.png, id=576, 574.5465pt x 432.8973pt>
+File: ./figuras/ch3/jcm1 fg ci modificada 1.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 fg ci modificada 1.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 fg ci modificada 1.png  used on input line 220.
+(pdftex.def)             Requested size: 212.25757pt x 159.92508pt.
+<./figuras/ch3/jcm1 bloch ci modificada 1.png, id=577, 375.0813pt x 375.0813pt>
+File: ./figuras/ch3/jcm1 bloch ci modificada 1.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 bloch ci modificada 1.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 bloch ci modificada 1.png  used on input line 226.
+(pdftex.def)             Requested size: 212.25757pt x 212.25328pt.
+
+
+LaTeX Info: Redefining \. on input line 231.
+LaTeX Info: Redefining \% on input line 231.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[26 <./figuras/ch3/jcm1 fg ci modificada 1.png>]
+<./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png, id=585, 574.5465pt x 432.8973pt>
+File: ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png  used on input line 237.
+(pdftex.def)             Requested size: 212.25757pt x 159.92508pt.
+<./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png, id=586, 375.0813pt x 375.0813pt>
+File: ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png  used on input line 243.
+(pdftex.def)             Requested size: 212.25757pt x 212.25328pt.
+<./figuras/ch3/jcm1 bloch ci modificada 2.png, id=587, 375.0813pt x 375.0813pt>
+File: ./figuras/ch3/jcm1 bloch ci modificada 2.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 bloch ci modificada 2.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 bloch ci modificada 2.png  used on input line 252.
+(pdftex.def)             Requested size: 212.25757pt x 212.25328pt.
+<./figuras/ch3/jcm1 bloch no resonancia.png, id=588, 375.0813pt x 375.0813pt>
+File: ./figuras/ch3/jcm1 bloch no resonancia.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 bloch no resonancia.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 bloch no resonancia.png  used on input line 265.
+(pdftex.def)             Requested size: 169.80347pt x 169.80376pt.
+<./figuras/ch3/jcm1 bloch no resonancia 2.png, id=589, 375.0813pt x 375.0813pt>
+File: ./figuras/ch3/jcm1 bloch no resonancia 2.png Graphic file (type png)
+<use ./figuras/ch3/jcm1 bloch no resonancia 2.png>
+Package pdftex.def Info: ./figuras/ch3/jcm1 bloch no resonancia 2.png  used on input line 271.
+(pdftex.def)             Requested size: 169.80347pt x 169.80376pt.
+
+
+LaTeX Info: Redefining \. on input line 281.
+LaTeX Info: Redefining \% on input line 281.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[27 <./figuras/ch3/jcm1 bloch ci modificada 1.png>]
+
+LaTeX Info: Redefining \. on input line 281.
+LaTeX Info: Redefining \% on input line 281.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[28 <./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png> <./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png>]
+
+LaTeX Info: Redefining \. on input line 281.
+LaTeX Info: Redefining \% on input line 281.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[29 <./figuras/ch3/jcm1 bloch ci modificada 2.png> <./figuras/ch3/jcm1 bloch no resonancia.png> <./figuras/ch3/jcm1 bloch no resonancia 2.png>]) (./ch3_fg_tcm.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1613,8 +1484,431 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 [30]
 Cap\'{\i }tulo 4.
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 
 [31
+
+]
+
+LaTeX Warning: Reference `sec3:minE' on page 32 undefined on input line 96.
+
+<figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png, id=624, 566.5968pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png  used on input line 113.
+(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
+<figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png, id=625, 566.5968pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png  used on input line 119.
+(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+
+LaTeX Info: Redefining \. on input line 127.
+LaTeX Info: Redefining \% on input line 127.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[32]
+<figuras/ch5/dependencia/eg0+/detunning todo 0.png, id=632, 552.1428pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg0+/detunning todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg0+/detunning todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg0+/detunning todo 0.png  used on input line 135.
+(pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
+<figuras/ch5/dependencia/eg1+/detunning todo 0.png, id=633, 566.5968pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg1+/detunning todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg1+/detunning todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg1+/detunning todo 0.png  used on input line 141.
+(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
+
+
+LaTeX Info: Redefining \. on input line 151.
+LaTeX Info: Redefining \% on input line 151.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[33 <./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png> <./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png>]
+<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png, id=641, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png  used on input line 155.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png, id=642, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png  used on input line 161.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png, id=645, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png  used on input line 175.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png, id=646, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png  used on input line 181.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 34 undefined on input line 188.
+
+
+
+LaTeX Info: Redefining \. on input line 189.
+LaTeX Info: Redefining \% on input line 189.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[34 <./figuras/ch5/dependencia/eg0+/detunning todo 0.png> <./figuras/ch5/dependencia/eg1+/detunning todo 0.png>]
+
+LaTeX Info: Redefining \. on input line 189.
+LaTeX Info: Redefining \% on input line 189.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[35 <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg0+ge0 k=0.0g x=5.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/delta/eg1+ge1 k=0.0g x=5.0g J=0.0g.png>]
+<figuras/ch5/dependencia/eg0+/kerr todo 0.png, id=668, 963.6pt x 722.7pt>
+File: figuras/ch5/dependencia/eg0+/kerr todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg0+/kerr todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg0+/kerr todo 0.png  used on input line 199.
+(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
+<figuras/ch5/dependencia/eg1+/kerr todo 0.png, id=669, 963.6pt x 722.7pt>
+File: figuras/ch5/dependencia/eg1+/kerr todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg1+/kerr todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr todo 0.png  used on input line 205.
+(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 36 undefined on input line 215.
+
+
+
+LaTeX Info: Redefining \. on input line 216.
+LaTeX Info: Redefining \% on input line 216.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[36 <./figuras/ch5/dependencia/eg0+/kerr todo 0.png> <./figuras/ch5/dependencia/eg1+/kerr todo 0.png>]
+<figuras/ch5/dependencia/eg0+/ker d=0.5g.png, id=678, 963.6pt x 722.7pt>
+File: figuras/ch5/dependencia/eg0+/ker d=0.5g.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg0+/ker d=0.5g.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg0+/ker d=0.5g.png  used on input line 220.
+(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
+<figuras/ch5/dependencia/eg1+/kerr d=0.5g.png, id=679, 963.6pt x 722.7pt>
+File: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg1+/kerr d=0.5g.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg1+/kerr d=0.5g.png  used on input line 226.
+(pdftex.def)             Requested size: 208.01476pt x 156.00603pt.
+<figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png, id=681, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png  used on input line 239.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png, id=682, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png  used on input line 245.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Info: Redefining \. on input line 254.
+LaTeX Info: Redefining \% on input line 254.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[37 <./figuras/ch5/dependencia/eg0+/ker d=0.5g.png> <./figuras/ch5/dependencia/eg1+/kerr d=0.5g.png> <./figuras/ch5/robustez/chi/eg0+ge0 d=0.0g k=0.0g J=0.0g.png> <./figuras/ch5/robustez/chi/eg0+ge0 d=5.0g k=0.0g J=0.0g.png>]
+<figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png, id=693, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png Graphic file (type png)
+<use figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png>
+Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png  used on input line 258.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png, id=694, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png  used on input line 264.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 38 undefined on input line 274.
+
+
+LaTeX Warning: Reference `fig4:concu x 1 d2' on page 38 undefined on input line 274.
+
+
+
+LaTeX Info: Redefining \. on input line 278.
+LaTeX Info: Redefining \% on input line 278.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[38 <./figuras/ch5/robustez/chi/eg1+ge1 chi zoom.png> <./figuras/ch5/robustez/chi/eg1+ge1 chi d=5.0g.png>]
+<figuras/ch5/dependencia/eg0+/interaccion todo 0.png, id=704, 552.1428pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg0+/interaccion todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg0+/interaccion todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg0+/interaccion todo 0.png  used on input line 282.
+(pdftex.def)             Requested size: 208.01476pt x 159.82187pt.
+<figuras/ch5/dependencia/eg1+/interaccion todo 0.png, id=705, 566.5968pt x 424.2249pt>
+File: figuras/ch5/dependencia/eg1+/interaccion todo 0.png Graphic file (type png)
+<use figuras/ch5/dependencia/eg1+/interaccion todo 0.png>
+Package pdftex.def Info: figuras/ch5/dependencia/eg1+/interaccion todo 0.png  used on input line 288.
+(pdftex.def)             Requested size: 208.01476pt x 155.74379pt.
+<figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png, id=707, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png  used on input line 299.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png, id=708, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png  used on input line 305.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png, id=711, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png  used on input line 317.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+<figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png, id=712, 578.16pt x 433.62pt>
+File: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png Graphic file (type png)
+<use figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png>
+Package pdftex.def Info: figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png  used on input line 323.
+(pdftex.def)             Requested size: 208.01476pt x 156.01045pt.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 39 undefined on input line 330.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: Reference `ec4:condicion 2' on page 39 undefined on input line 332.
+
+
+LaTeX Warning: Reference `ec4:condicion 1' on page 39 undefined on input line 332.
+
+
+
+LaTeX Info: Redefining \. on input line 333.
+LaTeX Info: Redefining \% on input line 333.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[39 <./figuras/ch5/dependencia/eg0+/interaccion todo 0.png> <./figuras/ch5/dependencia/eg1+/interaccion todo 0.png> <./figuras/ch5/robustez/k/eg0+ge0 d=2.5g x=2.5g J=0.0g.png> <./figuras/ch5/robustez/k/eg0+ge0 d=0.0g x=2.5g J=0.0g.png>]
+
+LaTeX Warning: Reference `ec4:condicion 1' on page 40 undefined on input line 336.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 40 undefined on input line 336.
+
+
+LaTeX Warning: Reference `ec4:condicion 1' on page 40 undefined on input line 338.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 40 undefined on input line 338.
+
+
+LaTeX Warning: Reference `ec4:base' on page 40 undefined on input line 338.
+
+
+LaTeX Warning: Reference `fig5:raices' on page 40 undefined on input line 340.
+
+
+LaTeX Warning: Reference `ec4:condicion 1' on page 40 undefined on input line 340.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 40 undefined on input line 340.
+
+
+
+LaTeX Info: Redefining \. on input line 341.
+LaTeX Info: Redefining \% on input line 341.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[40 <./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=0.0g J=0.0g.png> <./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png>]
+
+LaTeX Warning: Reference `ec4:condicion 2' on page 41 undefined on input line 350.
+
+
+LaTeX Warning: Reference `ec4:condicion 3' on page 41 undefined on input line 355.
+
+
+LaTeX Warning: Reference `fig5:raices' on page 41 undefined on input line 363.
+
+
+LaTeX Warning: Reference `ec3:condicion robuestez 1 atomo' on page 41 undefined on input line 363.
+
+
+LaTeX Warning: Reference `fig5:inutil' on page 41 undefined on input line 377.
+
+
+
+LaTeX Info: Redefining \. on input line 380.
+LaTeX Info: Redefining \% on input line 380.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[41]
+
+LaTeX Info: Redefining \. on input line 403.
+LaTeX Info: Redefining \% on input line 403.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[42]
+Underfull \vbox (badness 3590) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 418.
+LaTeX Info: Redefining \% on input line 418.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[43]
+
+LaTeX Info: Redefining \. on input line 436.
+LaTeX Info: Redefining \% on input line 436.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[44]
+
+LaTeX Info: Redefining \. on input line 453.
+LaTeX Info: Redefining \% on input line 453.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[45]
+<figuras/ch3/representacion-qutrit.png, id=765, 358.33875pt x 266.1945pt>
+File: figuras/ch3/representacion-qutrit.png Graphic file (type png)
+<use figuras/ch3/representacion-qutrit.png>
+Package pdftex.def Info: figuras/ch3/representacion-qutrit.png  used on input line 512.
+(pdftex.def)             Requested size: 212.25757pt x 157.67891pt.
+<./figuras/ch3/qubloch.png, id=766, 1104.125pt x 828.09375pt>
+File: ./figuras/ch3/qubloch.png Graphic file (type png)
+<use ./figuras/ch3/qubloch.png>
+Package pdftex.def Info: ./figuras/ch3/qubloch.png  used on input line 519.
+(pdftex.def)             Requested size: 212.25757pt x 159.18425pt.
+<./figuras/ch3/tcm minimo e12.png, id=767, 1104.125pt x 828.09375pt>
+File: ./figuras/ch3/tcm minimo e12.png Graphic file (type png)
+<use ./figuras/ch3/tcm minimo e12.png>
+Package pdftex.def Info: ./figuras/ch3/tcm minimo e12.png  used on input line 531.
+(pdftex.def)             Requested size: 169.80347pt x 127.34235pt.
+<./figuras/ch3/tcm minimo e23.png, id=768, 1104.125pt x 828.09375pt>
+File: ./figuras/ch3/tcm minimo e23.png Graphic file (type png)
+<use ./figuras/ch3/tcm minimo e23.png>
+Package pdftex.def Info: ./figuras/ch3/tcm minimo e23.png  used on input line 537.
+(pdftex.def)             Requested size: 169.80347pt x 127.34235pt.
+<./figuras/ch3/tcm minimo e31.png, id=769, 1104.125pt x 828.09375pt>
+File: ./figuras/ch3/tcm minimo e31.png Graphic file (type png)
+<use ./figuras/ch3/tcm minimo e31.png>
+Package pdftex.def Info: ./figuras/ch3/tcm minimo e31.png  used on input line 543.
+(pdftex.def)             Requested size: 169.80347pt x 127.34235pt.
+
+Underfull \vbox (badness 1960) has occurred while \output is active []
+
+
+
+LaTeX Info: Redefining \. on input line 556.
+LaTeX Info: Redefining \% on input line 556.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[46]
+
+LaTeX Info: Redefining \. on input line 556.
+LaTeX Info: Redefining \% on input line 556.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[47 <./figuras/ch3/representacion-qutrit.PNG> <./figuras/ch3/qubloch.png> <./figuras/ch3/tcm minimo e12.png> <./figuras/ch3/tcm minimo e23.png> <./figuras/ch3/tcm minimo e31.png>]) (./ch4_decoherencia.tex
+
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+
+Package fancyhdr Warning: \headheight is too small (12.0pt): 
+(fancyhdr)                Make it at least 13.59999pt, for example:
+(fancyhdr)                \setlength{\headheight}{13.59999pt}.
+(fancyhdr)                You might also make \topmargin smaller to compensate:
+(fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
+
+[48]
+Cap\'{\i }tulo 5.
+
+
+[49
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1630,7 +1924,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-13.22153pt}.
 
-[32]
+[50]
 
 LaTeX Info: Redefining \. on input line 97.
 LaTeX Info: Redefining \% on input line 97.
@@ -1641,7 +1935,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[33]) (./ch5_cqed.tex
+[51]) (./ch5_cqed.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -1652,32 +1946,32 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-13.22153pt}.
 
-[34]
-Cap\'{\i }tulo 5.
+[52]
+Cap\'{\i }tulo 6.
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 32.
-
-
-LaTeX Warning: Citation `' on page 35 undefined on input line 32.
+LaTeX Warning: Citation `' on page 53 undefined on input line 32.
 
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 32.
+LaTeX Warning: Citation `' on page 53 undefined on input line 32.
 
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 32.
+LaTeX Warning: Citation `' on page 53 undefined on input line 32.
 
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 34.
+LaTeX Warning: Citation `' on page 53 undefined on input line 32.
 
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 34.
+LaTeX Warning: Citation `' on page 53 undefined on input line 34.
 
 
-LaTeX Warning: Citation `' on page 35 undefined on input line 34.
+LaTeX Warning: Citation `' on page 53 undefined on input line 34.
+
+
+LaTeX Warning: Citation `' on page 53 undefined on input line 34.
 
 
 
-[35
+[53
 
 ]
 
@@ -1690,7 +1984,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[36]
+[54]
 
 LaTeX Info: Redefining \. on input line 81.
 LaTeX Info: Redefining \% on input line 81.
@@ -1701,9 +1995,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[37]
+[55]
 
-LaTeX Warning: Citation `GeneralizedSqueezing' on page 38 undefined on input line 98.
+LaTeX Warning: Citation `GeneralizedSqueezing' on page 56 undefined on input line 98.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1719,44 +2013,44 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[38]
+[56]
 
-LaTeX Warning: Citation `ResSchCats' on page 39 undefined on input line 110.
-
-
-LaTeX Warning: Citation `SolanoCat' on page 39 undefined on input line 110.
+LaTeX Warning: Citation `ResSchCats' on page 57 undefined on input line 110.
 
 
-LaTeX Warning: Citation `QECGrid2020' on page 39 undefined on input line 110.
+LaTeX Warning: Citation `SolanoCat' on page 57 undefined on input line 110.
 
 
-LaTeX Warning: Citation `FastUnivControlDisp' on page 39 undefined on input line 110.
+LaTeX Warning: Citation `QECGrid2020' on page 57 undefined on input line 110.
 
 
-LaTeX Warning: Citation `CWilson2' on page 39 undefined on input line 111.
+LaTeX Warning: Citation `FastUnivControlDisp' on page 57 undefined on input line 110.
 
 
-LaTeX Warning: Citation `Trisq2' on page 39 undefined on input line 111.
+LaTeX Warning: Citation `CWilson2' on page 57 undefined on input line 111.
 
 
-LaTeX Warning: Citation `UncondSqTrappedIons' on page 39 undefined on input line 111.
+LaTeX Warning: Citation `Trisq2' on page 57 undefined on input line 111.
 
 
-LaTeX Warning: Citation `CubicPhase' on page 39 undefined on input line 111.
+LaTeX Warning: Citation `UncondSqTrappedIons' on page 57 undefined on input line 111.
 
 
-LaTeX Warning: Citation `GatedConditionalDisp' on page 39 undefined on input line 119.
+LaTeX Warning: Citation `CubicPhase' on page 57 undefined on input line 111.
 
 
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 121.
+LaTeX Warning: Citation `GatedConditionalDisp' on page 57 undefined on input line 119.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `math shift' on input line 121.
 
 
-LaTeX Warning: Citation `USCQuantumSim' on page 39 undefined on input line 122.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 121.
+
+
+LaTeX Warning: Citation `USCQuantumSim' on page 57 undefined on input line 122.
 
 
 Underfull \vbox (badness 1163) has occurred while \output is active []
@@ -1772,7 +2066,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[39]
+[57]
 
 LaTeX Info: Redefining \. on input line 146.
 LaTeX Info: Redefining \% on input line 146.
@@ -1783,12 +2077,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[40]
+[58]
 
-LaTeX Warning: Reference `fig:QuantumSim' on page 41 undefined on input line 150.
+LaTeX Warning: Reference `fig:QuantumSim' on page 59 undefined on input line 150.
 
 
-LaTeX Warning: Reference `fig:QuantumSim' on page 41 undefined on input line 150.
+LaTeX Warning: Reference `fig:QuantumSim' on page 59 undefined on input line 150.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 152--154
@@ -1811,30 +2105,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[41]
+[59]
 
-LaTeX Warning: Citation `SolanoCat' on page 42 undefined on input line 165.
-
-
-LaTeX Warning: Citation `ResSchCats' on page 42 undefined on input line 165.
+LaTeX Warning: Citation `SolanoCat' on page 60 undefined on input line 165.
 
 
-LaTeX Warning: Citation `SD-MotSqueezing' on page 42 undefined on input line 165.
+LaTeX Warning: Citation `ResSchCats' on page 60 undefined on input line 165.
 
 
-LaTeX Warning: Reference `fig:WignerFunctions' on page 42 undefined on input line 187.
+LaTeX Warning: Citation `SD-MotSqueezing' on page 60 undefined on input line 165.
 
 
-LaTeX Warning: Reference `fig:WignerFunctions' on page 42 undefined on input line 187.
+LaTeX Warning: Reference `fig:WignerFunctions' on page 60 undefined on input line 187.
 
 
-LaTeX Warning: Citation `ResourceWignerNeg' on page 42 undefined on input line 187.
+LaTeX Warning: Reference `fig:WignerFunctions' on page 60 undefined on input line 187.
 
 
-LaTeX Warning: Citation `BCSanders_SqueezedSuperposition' on page 42 undefined on input line 187.
+LaTeX Warning: Citation `ResourceWignerNeg' on page 60 undefined on input line 187.
 
 
-LaTeX Warning: Citation `azuma2024heralded' on page 42 undefined on input line 187.
+LaTeX Warning: Citation `BCSanders_SqueezedSuperposition' on page 60 undefined on input line 187.
+
+
+LaTeX Warning: Citation `azuma2024heralded' on page 60 undefined on input line 187.
 
 
 
@@ -1847,21 +2141,21 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[42]
+[60]
 
-LaTeX Warning: Reference `fig:ParameterDynamics' on page 43 undefined on input line 198.
-
-
-LaTeX Warning: Citation `CochraneCatCode' on page 43 undefined on input line 202.
+LaTeX Warning: Reference `fig:ParameterDynamics' on page 61 undefined on input line 198.
 
 
-LaTeX Warning: Citation `qcMAP' on page 43 undefined on input line 202.
+LaTeX Warning: Citation `CochraneCatCode' on page 61 undefined on input line 202.
 
 
-LaTeX Warning: Citation `girvin2017schrodinger' on page 43 undefined on input line 202.
+LaTeX Warning: Citation `qcMAP' on page 61 undefined on input line 202.
 
 
-LaTeX Warning: Citation `BCSanders_SqueezedSuperposition' on page 43 undefined on input line 206.
+LaTeX Warning: Citation `girvin2017schrodinger' on page 61 undefined on input line 202.
+
+
+LaTeX Warning: Citation `BCSanders_SqueezedSuperposition' on page 61 undefined on input line 206.
 
 
 Underfull \vbox (badness 1881) has occurred while \output is active []
@@ -1877,33 +2171,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[43]
+[61]
 
-LaTeX Warning: Citation `CochraneCatCode' on page 44 undefined on input line 210.
-
-
-LaTeX Warning: Citation `SqueezedCats' on page 44 undefined on input line 212.
+LaTeX Warning: Citation `CochraneCatCode' on page 62 undefined on input line 210.
 
 
-LaTeX Warning: Reference `fig:PhaseEstimation' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `SqueezedCats' on page 62 undefined on input line 212.
 
 
-LaTeX Warning: Citation `FastPhaseEstimation' on page 44 undefined on input line 228.
+LaTeX Warning: Reference `fig:PhaseEstimation' on page 62 undefined on input line 228.
 
 
-LaTeX Warning: Citation `PhaseEstimLinearEq' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `FastPhaseEstimation' on page 62 undefined on input line 228.
 
 
-LaTeX Warning: Citation `lloyd2020quantumpolardecompositionalgorithm' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `PhaseEstimLinearEq' on page 62 undefined on input line 228.
 
 
-LaTeX Warning: Citation `ShorFactorization' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `lloyd2020quantumpolardecompositionalgorithm' on page 62 undefined on input line 228.
 
 
-LaTeX Warning: Citation `GroundStatePhaseEstim' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `ShorFactorization' on page 62 undefined on input line 228.
 
 
-LaTeX Warning: Citation `SyncPhaseEstim' on page 44 undefined on input line 228.
+LaTeX Warning: Citation `GroundStatePhaseEstim' on page 62 undefined on input line 228.
+
+
+LaTeX Warning: Citation `SyncPhaseEstim' on page 62 undefined on input line 228.
 
 
 
@@ -1916,33 +2210,33 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[44]
+[62]
 
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 45 undefined on input line 233.
-
-
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 45 undefined on input line 235.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 63 undefined on input line 233.
 
 
-LaTeX Warning: Reference `fig:PhaseEstimation' on page 45 undefined on input line 245.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 63 undefined on input line 235.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 45 undefined on input line 245.
+LaTeX Warning: Reference `fig:PhaseEstimation' on page 63 undefined on input line 245.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 45 undefined on input line 245.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 63 undefined on input line 245.
 
 
-LaTeX Warning: Reference `fig:PhaseEstimation' on page 45 undefined on input line 245.
+LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 63 undefined on input line 245.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 45 undefined on input line 245.
+LaTeX Warning: Reference `fig:PhaseEstimation' on page 63 undefined on input line 245.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 45 undefined on input line 245.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 63 undefined on input line 245.
 
 
-LaTeX Warning: Citation `EigenSqueeze' on page 45 undefined on input line 245.
+LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 63 undefined on input line 245.
+
+
+LaTeX Warning: Citation `EigenSqueeze' on page 63 undefined on input line 245.
 
 
 
@@ -1955,30 +2249,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[45]
+[63]
 
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 46 undefined on input line 249.
-
-
-LaTeX Warning: Citation `GKPPaper2001' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `GKPPaper2001' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `GKPPaper2001' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `GKPPaper2001' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `PhaseEstimationTerhal1' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `SU11Decomposition' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `PhaseEstimationTerhal2' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `GKPPaper2001' on page 46 undefined on input line 249.
+LaTeX Warning: Citation `SU11Decomposition' on page 64 undefined on input line 249.
 
 
-LaTeX Warning: Citation `FastUnivControlDisp' on page 46 undefined on input line 253.
+LaTeX Warning: Citation `GKPPaper2001' on page 64 undefined on input line 249.
+
+
+LaTeX Warning: Citation `FastUnivControlDisp' on page 64 undefined on input line 253.
 
 
 
@@ -1991,15 +2285,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[46]
+[64]
 
-LaTeX Warning: Citation `FastUnivControlDisp' on page 47 undefined on input line 256.
-
-
-LaTeX Warning: Citation `Park2017_RepeatedIdentities' on page 47 undefined on input line 256.
+LaTeX Warning: Citation `FastUnivControlDisp' on page 65 undefined on input line 256.
 
 
-LaTeX Warning: Citation `FastUnivControlDisp' on page 47 undefined on input line 260.
+LaTeX Warning: Citation `Park2017_RepeatedIdentities' on page 65 undefined on input line 256.
+
+
+LaTeX Warning: Citation `FastUnivControlDisp' on page 65 undefined on input line 260.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 266--268
@@ -2017,21 +2311,21 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[47]
+[65]
 
-LaTeX Warning: Reference `fig:PhaseEstimation' on page 48 undefined on input line 273.
-
-
-LaTeX Warning: Citation `CochraneCatCode' on page 48 undefined on input line 278.
+LaTeX Warning: Reference `fig:PhaseEstimation' on page 66 undefined on input line 273.
 
 
-LaTeX Warning: Citation `SqueezingDivergence' on page 48 undefined on input line 278.
+LaTeX Warning: Citation `CochraneCatCode' on page 66 undefined on input line 278.
 
 
-LaTeX Warning: Citation `GeneralizedSqueezing' on page 48 undefined on input line 278.
+LaTeX Warning: Citation `SqueezingDivergence' on page 66 undefined on input line 278.
 
 
-LaTeX Warning: Citation `SqueezingStats' on page 48 undefined on input line 278.
+LaTeX Warning: Citation `GeneralizedSqueezing' on page 66 undefined on input line 278.
+
+
+LaTeX Warning: Citation `SqueezingStats' on page 66 undefined on input line 278.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 278--280
@@ -2039,25 +2333,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 278--280
  []
 
 
-LaTeX Warning: Citation `ImplementationSC1' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `ImplementationSC1' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `ImplementationSC2' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `ImplementationSC2' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `ImplementationSC3' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `ImplementationSC3' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `SQUIDCoupler_00' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `SQUIDCoupler_00' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `SQUIDCoupler_01' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `SQUIDCoupler_01' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `CWilson2' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `CWilson2' on page 66 undefined on input line 283.
 
 
-LaTeX Warning: Citation `JJEmbedded' on page 48 undefined on input line 283.
+LaTeX Warning: Citation `JJEmbedded' on page 66 undefined on input line 283.
 
 
 
@@ -2070,12 +2364,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[48]
+[66]
 
-LaTeX Warning: Citation `TransmonPaper' on page 49 undefined on input line 291.
+LaTeX Warning: Citation `TransmonPaper' on page 67 undefined on input line 291.
 
 
-LaTeX Warning: Reference `fig:cQEDImplement' on page 49 undefined on input line 291.
+LaTeX Warning: Reference `fig:cQEDImplement' on page 67 undefined on input line 291.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2091,7 +2385,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[49]
+[67]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2105,24 +2399,24 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[50]
+[68]
 
-LaTeX Warning: Reference `fig:TwoPhJC' on page 51 undefined on input line 352.
-
-
-LaTeX Warning: Citation `CWilson1' on page 51 undefined on input line 355.
+LaTeX Warning: Reference `fig:TwoPhJC' on page 69 undefined on input line 352.
 
 
-LaTeX Warning: Citation `CWilson2' on page 51 undefined on input line 355.
+LaTeX Warning: Citation `CWilson1' on page 69 undefined on input line 355.
 
 
-LaTeX Warning: Citation `JJEmbedded' on page 51 undefined on input line 355.
+LaTeX Warning: Citation `CWilson2' on page 69 undefined on input line 355.
 
 
-LaTeX Warning: Citation `CombinedConf' on page 51 undefined on input line 355.
+LaTeX Warning: Citation `JJEmbedded' on page 69 undefined on input line 355.
 
 
-LaTeX Warning: Citation `DynamicProtecCat' on page 51 undefined on input line 355.
+LaTeX Warning: Citation `CombinedConf' on page 69 undefined on input line 355.
+
+
+LaTeX Warning: Citation `DynamicProtecCat' on page 69 undefined on input line 355.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 360--362
@@ -2140,7 +2434,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[51]
+[69]
 Overfull \hbox (5.41246pt too wide) in paragraph at lines 368--369
 []\T1/cmr/m/n/10.95 After de-ve-lo-ping the ge-ne-ral fra-me-work for driving-enhance mul-tipho-ton qubit-resonator
  []
@@ -2159,18 +2453,18 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[52]
+[70]
 
-LaTeX Warning: Citation `Breuer_Petruccione_2010' on page 53 undefined on input line 383.
-
-
-LaTeX Warning: Citation `Carmichael_1993' on page 53 undefined on input line 383.
+LaTeX Warning: Citation `Breuer_Petruccione_2010' on page 71 undefined on input line 383.
 
 
-LaTeX Warning: Citation `QuTiP' on page 53 undefined on input line 387.
+LaTeX Warning: Citation `Carmichael_1993' on page 71 undefined on input line 383.
 
 
-LaTeX Warning: Reference `fig:Fidelity' on page 53 undefined on input line 390.
+LaTeX Warning: Citation `QuTiP' on page 71 undefined on input line 387.
+
+
+LaTeX Warning: Reference `fig:Fidelity' on page 71 undefined on input line 390.
 
 
 
@@ -2183,12 +2477,12 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[53]
+[71]
 
-LaTeX Warning: Reference `fig:cQEDImplement' on page 54 undefined on input line 401.
+LaTeX Warning: Reference `fig:cQEDImplement' on page 72 undefined on input line 401.
 
 
-LaTeX Warning: Citation `CWilson2' on page 54 undefined on input line 404.
+LaTeX Warning: Citation `CWilson2' on page 72 undefined on input line 404.
 
 
 
@@ -2201,9 +2495,9 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[54]
+[72]
 
-LaTeX Warning: Reference `fig:cQEDImplement' on page 55 undefined on input line 421.
+LaTeX Warning: Reference `fig:cQEDImplement' on page 73 undefined on input line 421.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -2219,7 +2513,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[55]
+[73]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2233,7 +2527,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[56]
+[74]
 Underfull \hbox (badness 10000) in paragraph at lines 515--524
 
  []
@@ -2249,7 +2543,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[57]
+[75]
 Overfull \hbox (61.67084pt too wide) detected at line 539
 []
  []
@@ -2268,7 +2562,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[58]) (./ch6_montecarlo.tex) (./ch7_lzsm.tex
+[76]) (./ch6_montecarlo.tex) (./ch7_lzsm.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -2279,30 +2573,30 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[59]
+[77]
 
-[60
+[78
 
 ]
-Cap\'{\i }tulo 6.
+Cap\'{\i }tulo 7.
 
-LaTeX Warning: Citation `zener1932non' on page 61 undefined on input line 13.
-
-
-LaTeX Warning: Citation `johansson2012qutip' on page 61 undefined on input line 15.
+LaTeX Warning: Citation `zener1932non' on page 79 undefined on input line 13.
 
 
-LaTeX Warning: Citation `johansson2013qutip2' on page 61 undefined on input line 15.
+LaTeX Warning: Citation `johansson2012qutip' on page 79 undefined on input line 15.
+
+
+LaTeX Warning: Citation `johansson2013qutip2' on page 79 undefined on input line 15.
 
 
 
-[61]
+[79]
 Overfull \hbox (33.54349pt too wide) in paragraph at lines 26--27
 []\T1/cmr/m/n/10.95 Los es-ta-dos adia-ba-ti-cos son los au-to-es-ta-dos del Ha-mil-to-niano en to-do mo-men-to $\OML/cmm/m/it/10.95 H\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) [] =
  []
 
 
-LaTeX Warning: Citation `abramowitz1964handbook' on page 62 undefined on input line 56.
+LaTeX Warning: Citation `abramowitz1964handbook' on page 80 undefined on input line 56.
 
 
 
@@ -2315,7 +2609,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[62]
+[80]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -2329,7 +2623,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[63]
+[81]
 Underfull \vbox (badness 1194) has occurred while \output is active []
 
 
@@ -2343,7 +2637,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[64]
+[82]
 
 LaTeX Info: Redefining \. on input line 154.
 LaTeX Info: Redefining \% on input line 154.
@@ -2354,7 +2648,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[65]) (./conclusiones.tex
+[83]) (./conclusiones.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -2365,19 +2659,19 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[66]
-Cap\'{\i }tulo 7.
+[84]
+Cap\'{\i }tulo 8.
 ) (./zbibliografia.tex
 
-[67
+[85
 
 ]
 
-[68
+[86
 
 ]
 
-[69]
+[87]
 
 LaTeX Info: Redefining \. on input line 88.
 LaTeX Info: Redefining \% on input line 88.
@@ -2388,7 +2682,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[70{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
+[88{c:/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 
 LaTeX Info: Redefining \. on input line 133.
 LaTeX Info: Redefining \% on input line 133.
@@ -2399,7 +2693,7 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[71]) (./licencia.tex
+[89]) (./licencia.tex
 
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
@@ -2410,15 +2704,15 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller to compensate:
 (fancyhdr)                \addtolength{\topmargin}{-1.59999pt}.
 
-[72]
-<licencia.png, id=960, 30.1125pt x 10.5996pt>
+[90]
+<licencia.png, id=1222, 30.1125pt x 10.5996pt>
 File: licencia.png Graphic file (type png)
 <use licencia.png>
 Package pdftex.def Info: licencia.png  used on input line 8.
 (pdftex.def)             Requested size: 84.90173pt x 29.88824pt.
 )
 
-[73 <./licencia.png>] (./main.aux
+[91 <./licencia.png>] (./main.aux
 LaTeX Info: Redefining \. on input line 12.
 LaTeX Info: Redefining \% on input line 12.
 LaTeX Info: Redefining \. on input line 13.
@@ -2436,18 +2730,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 34358 strings out of 473578
- 677802 string characters out of 5732242
- 1204794 words of memory out of 5000000
- 56246 multiletter control sequences out of 15000+600000
- 589093 words of font info for 111 fonts, out of 8000000 for 9000
+ 34666 strings out of 473578
+ 686649 string characters out of 5732242
+ 1215168 words of memory out of 5000000
+ 56464 multiletter control sequences out of 15000+600000
+ 591988 words of font info for 122 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  103i,19n,110p,3031b,1024s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
-Output written on main.pdf (87 pages, 4573987 bytes).
+<c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfbx2488.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfcc1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0600.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0800.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm0900.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb><c:/texlive/2024/texmf-dist/fonts/type1/public/cm-super/sfxc2488.pfb>
+Output written on main.pdf (105 pages, 6595564 bytes).
 PDF statistics:
- 1320 PDF objects out of 1440 (max. 8388607)
- 1066 compressed objects within 11 object streams
- 374 named destinations out of 1000 (max. 500000)
- 656 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1666 PDF objects out of 1728 (max. 8388607)
+ 1354 compressed objects within 14 object streams
+ 455 named destinations out of 1000 (max. 500000)
+ 904 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -8,7 +8,96 @@
 \fancyhead[LE]{\nouppercase{\rightmark\hfill}}
 \fancyhead[RO]{\nouppercase{\leftmark\hfill}}
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
-Este capítulo se divide en dos partes. En la primera se estudia la dependencia de la FG con los parámetros del problema, y se analizan situaciones de robustez, intentando ver si las condiciones halladas en el capítulo anterior predicen correctamente dichas características. En la segunda parte, se examina en detalle la robustez para varias condiciones iniciales diferentes, pero siempre en función del detunning, ya que este es el parámetro más accesible experimentalmente.
+
+
+\section{Solucion unitaria y autoenergias}
+
+\subsection{Hamiltoniano}
+\begin{equation}
+    \hat H^{(n)}=
+    \begin{pmatrix}
+     \chi n^2 - \Delta +  J & \sqrt{2} g f(n)\sqrt{n} & 0 & 0 \\
+    \sqrt{2} g f(n)\sqrt{n} &  \chi (n-1)^2  -  J + 2 k & \sqrt{2} g f(n-1)\sqrt{n-1} & 0 \\
+    0 & \sqrt{2} g f(n-1)\sqrt{n-1} &  \chi (n-2)^2 +  \Delta +  J & 0 \\
+    0&0&0& \begin{aligned} 
+                 & \chi (n-1)^2  \\ 
+                 &-  J - 2 k
+        \end{aligned}
+    \end{pmatrix}.
+\end{equation}
+Quiero representar esta matriz como matrices de Gell-Mann, sin tener en cuenta el 4to vector que esta aislado. Lo que quiero hacer (con el diario del lunes), es cambiar la ultima matriz de Gellmann por otra que me gusta mas, que es combinacion de la 7 y 8,
+\begin{equation}
+    \rho = \frac{1}{3} \left( \mathcal{I}_3+\sum_{j=1}^3x_j\hat X_j + \sum_{k=1}^3y_k\hat Y_k + \sum_{l=1}^2z_l\hat Z_l \right)
+\end{equation}
+donde $x_j=\Tr(\hat X_j \rho)$,$y_j=\Tr(\hat Y_j \rho)$ y $z_j=\Tr(\hat Z_j \rho)$, y las matrices $\hat X_j$, $Y_j$ ($j=1,2,3$) y $Z_l$ ($l=1,2$) son las matrices de Gell-Mann normalizadas
+\begin{align*}
+    X_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 1 & 0 \\
+        1 & 0 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix} 
+     & X_2 =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 1 \\
+        0 & 0 & 0 \\
+        1 & 0 & 0
+    \end{bmatrix} \;\;\;
+    & X_3  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 0 \\
+        0 & 0 & 1 \\
+        0 & 1 & 0
+    \end{bmatrix} 
+\end{align*}
+
+\begin{align*}
+    Y_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & -i & 0 \\
+        i & 0 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix}
+     & Y_2  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & -i \\
+        0 & 0 & 0 \\
+        i & 0 & 0
+    \end{bmatrix} \;\;\;
+     & Y_3  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 0 \\
+        0 & 0 & -i \\
+        0 & i & 0
+    \end{bmatrix} 
+\end{align*}
+
+\begin{align*}
+     Z_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & -1 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix} 
+     & Z_2  =\sqrt{\frac{1}{2}} \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & -2
+    \end{bmatrix} \;\;\;
+     & Z_3  =\frac{1}{2}(\sqrt{3}Z_2-Z_1)=\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & -1
+    \end{bmatrix} 
+\end{align*}
+
+Estoy bastante seguro que esto es legal y las matrices cambiando $Z_2 \rightarrow Z_3$ siguen formando un grupo y toda la bola, ahora cambian los factores de estructura pero todo bien supongo. 
+
+Ahora quiero escribir el Hamiltoniano en funcion de estos generadores.
+
+
+\section{Avoided Level Crossing}
+
+\begin{itemize}
+    \item Se puede usar perturbaciones?
+    \item Podemos encontrar los minimos/maximos de energia analiticamente? RTA: No, pero si podemos ver numericamente, ver sec \ref{sec3:minE}
+    \item Podemos ver como son las amplitudes de oscilacion entre los niveles en alguna de estas condiciones?
+\end{itemize}
+
+Lo que queda de este capítulo se divide en dos partes. En la primera se estudia la dependencia de la FG con los parámetros del problema, y se analizan situaciones de robustez, intentando ver si las condiciones halladas en el capítulo anterior predicen correctamente dichas características. En la segunda parte, se examina en detalle la robustez para varias condiciones iniciales diferentes, pero siempre en función del detunning, ya que este es el parámetro más accesible experimentalmente.
 
 \section{Dependencias de la FG}
 
@@ -349,3 +438,119 @@ En este problema, tenemos un entrelazamiento entre tres partes, es decir, multip
 
 Implemente la negatividad y tambien otra medida que es la entropia relativa de entrelazamiento, que se implementa computacionalmente con el convex roof extension. Es muy cara computacionalmente asi que me quedo con la negatividad. 
 
+\section{Analisis minimos de energia}
+
+Quizas es medio obvio pensar que para que la FG sea robusta, es decir, para que la trayectoria
+
+
+
+\section{Representacion de un qutrit}
+
+La matriz densidad esta parametrizada por 
+
+\begin{equation}
+    \rho = \frac{1}{3} \left( \mathcal{I}_3+\sum_{j=1}^3x_j\hat X_j + \sum_{k=1}^3y_k\hat Y_k + \sum_{l=1}^2z_l\hat Z_l \right)
+\end{equation}
+donde $x_j=\Tr(\hat X_j \rho)$,$y_j=\Tr(\hat Y_j \rho)$ y $z_j=\Tr(\hat Z_j \rho)$, y las matrices $\hat X_j$, $Y_j$ ($j=1,2,3$) y $Z_l$ ($l=1,2$) son las matrices de Gell-Mann normalizadas
+\begin{align*}
+    X_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 1 & 0 \\
+        1 & 0 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix} 
+     & X_2 =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 1 \\
+        0 & 0 & 0 \\
+        1 & 0 & 0
+    \end{bmatrix} \;\;\;
+    & X_3  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 0 \\
+        0 & 0 & 1 \\
+        0 & 1 & 0
+    \end{bmatrix} 
+\end{align*}
+
+\begin{align*}
+    Y_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & -i & 0 \\
+        i & 0 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix}
+     & Y_2  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & -i \\
+        0 & 0 & 0 \\
+        i & 0 & 0
+    \end{bmatrix} \;\;\;
+     & Y_3  =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        0 & 0 & 0 \\
+        0 & 0 & -i \\
+        0 & i & 0
+    \end{bmatrix} 
+\end{align*}
+
+\begin{align*}
+     Z_1 & =\sqrt{\frac{3}{2}} \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & -1 & 0 \\
+        0 & 0 & 0
+    \end{bmatrix} 
+     & Z_2  =\sqrt{\frac{1}{2}} \begin{bmatrix}
+        1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & -2
+    \end{bmatrix} \\
+\end{align*}
+Para poder representar entonces esta matriz densidad necesitamos 8 numeros, o 8 coordenadas. 
+
+Una manera de representar estos estados en $\mathcal{R}^3$ es de la siguiente manera, que llamamos $\mathcal{Q}_3^{(1)}$, que es usar como coordenadas $x$ e $y$, vamos a usar los valores $x\equiv z_1 = \Tr(\hat Z_1 \rho)$ e $y \equiv z_2=\Tr(\hat Z_2 \rho)$. Nos quedan las otras 6 coordenadas, que las combinamos en la coordenada 
+\begin{equation}
+    w = \sqrt{\sum_{j=1}^3x_j^2+y_j^2}.
+\end{equation}
+Esta representacion cumple bastante bien con las propiedades que queremos, obviamente no es super fiel pero bueno sirve, y se ve que en la base $\{\ket{0},\ket{1},\ket{2}\}$ es
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{figuras/ch3/representacion-qutrit.png}
+    \caption{}
+\end{figure}
+
+La verdad que no parece servir mucho para determinar si una curva es geodesica o no. Por ejemplo aca tenemos una trayectoria para el caso resonante
+\begin{figure}
+    \centering
+    \includegraphics[width=0.5\textwidth]{ch3/qubloch.png}
+    \caption{}
+\end{figure}
+
+\section{Energias en TCM}
+
+Aca busque el minimo de energias e hice una superficie que nos indica la relacion $\Delta(\chi,k)$ tq las frecuencias $\Omega_{ij}$ presentan un maximo o un minimo.
+
+
+\begin{figure}
+\centering
+\begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{ch3/tcm minimo e12.png}
+    \caption{$\Omega_{12}$}
+    \label{fig3:min-e12}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{ch3/tcm minimo e23.png}
+    \caption{$\Omega_{23}$}
+    \label{fig3:min-e23}
+\end{subfigure}
+       \hfill
+\begin{subfigure}{0.4\textwidth}
+    \includegraphics[width=\textwidth]{ch3/tcm minimo e31.png}
+    \caption{$\Omega_{31}$}
+    \label{fig3:min-e31}
+\end{subfigure} 
+\caption{Esfera de Bloch fuera de resonancia. $\frac{1}{\sqrt{2}}(\ket{g1}+\ket{e0})$, $\Delta=0,\chi=g$}
+\label{fig3:minimos-energias}
+\end{figure}
+
+Lo interesante de esto es que los minimos de energia, que encontramos numericamente (intente algo analitico pero es imposible para el caso general), coincide con estas condiciones de robustez que habia encontrado en su momento, que son
+\begin{align}
+    &\Delta=2\chi \\
+    &\Delta = \chi + 2(k-J)\\
+    &\Delta = 3\chi - 2(k-J)
+\end{align}

@@ -233,7 +233,7 @@ def entropy_linear(rho):
         s[i] = float(np.real(1.0 - (rho[i] ** 2).tr()))
     return s
 
-def concurrence(rho):
+def concurrence_ali(rho):
     """
     Calculate the concurrence entanglement measure for a two-qubit state.
     Modificada por Ali.
@@ -256,10 +256,10 @@ def concurrence(rho):
     """
     c=np.zeros(len(rho))
     for i in range(len(rho)):
-        if rho[i].isket and rho[i].dims != [[2, 2], [1, 1]]:
+        if rho[i].isket and rho[i].dims != [[2, 2], [1]]:
             raise Exception("Ket must be tensor product of two qubits.")
 
-        elif rho[i].isbra and rho[i].dims != [[1, 1], [2, 2]]:
+        elif rho[i].isbra and rho[i].dims != [[1], [2, 2]]:
             raise Exception("Bra must be tensor product of two qubits.")
 
         elif rho[i].isoper and rho[i].dims != [[2, 2], [2, 2]]:
@@ -315,7 +315,8 @@ def fases(sol):
     RETURNS
     -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
     -arg: no se
-    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
+    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k.
+    -Psi: lista de eigenvectors que tienen maor coincidencia con el anterior"""
     try: 
 
         len_t=len(sol.states)
@@ -400,7 +401,7 @@ def fases(sol):
     eigenvals_t=np.delete(eigenvals_t,0,axis=0)
     Pan = np.array(Pan)
 
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+    return np.unwrap(Pan), argumento, np.array(eigenvals_t) , Psi
 
 def fases_mixta(sol):
     """params:
@@ -2249,8 +2250,8 @@ def simu_unit_y_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:fl
     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
     sol_u=mesolve(H,psi0,t,c_ops=[])
     sol_d=mesolve(H,psi0,t,c_ops=l_ops)
-    fg_u,arg,eigenvals_t_u = fases(sol_u)
-    fg_d,arg,eigenvals_t_d = fases(sol_d)
+    fg_u,arg,eigenvals_t_u,_ = fases(sol_u)
+    fg_d,arg,eigenvals_t_d,_ = fases(sol_d)
 
 
     if return_all==False:
@@ -2403,7 +2404,7 @@ def simu_unit(w_0:float,g:float,k:float,J:float,d:float,x:float,alpha:float,psi0
         # return fg_u,concu_u
         return concu_u
     else:
-        fg_u,arg,eigenvals_t_u = fases(sol_u)
+        fg_u,arg,eigenvals_t_u,_ = fases(sol_u)
 
         data_u=pd.DataFrame()
         data_u['t']=t
@@ -2517,7 +2518,7 @@ def simu_disip(w_0:float,g:float,k:float,J:float,d:float,x:float,gamma:float,p:f
         # return fg_d,concu_d
         return concu_d
     else:
-        fg_d,arg,eigenvals_t_d = fases(sol_d)
+        fg_d,arg,eigenvals_t_d,_ = fases(sol_d)
 
         data_d=pd.DataFrame()
         data_d['t']=t

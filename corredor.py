@@ -1,174 +1,260 @@
-# from qutip import *
-# import numpy as np
-# import matplotlib.pyplot as plt
-# import jcm_lib as jcm
-# from matplotlib import cm
-# import os
+from qutip import *
+import numpy as np
+import matplotlib.pyplot as plt
+from jcm_lib import fases,concurrence_ali
+import matplotlib as mpl
+from entrelazamiento_lib import negativity_hor
 
-# script_path= os.path.dirname(__file__)
+e=basis(2,0)
+gr=basis(2,1)
 
+N_c=4
 
-# #DEFINIMOS LOS OPERADORES QUE VAMOS A USAR EN LOS CALCULOS
-# n=tensor(qeye(2),qeye(2),num(3))
-# sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
-# n2=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,4])))
-# a=tensor(qeye(2),qeye(2),destroy(3))
-# sm1=tensor(sigmam(),qeye(2),qeye(3))
-# sp1=tensor(sigmap(),qeye(2),qeye(3))
-# sz1=tensor(sigmaz(),qeye(2),qeye(3))
-# sx1=tensor(sigmax(),qeye(2),qeye(3))
-# sm2=tensor(qeye(2),sigmam(),qeye(3))
-# sp2=tensor(qeye(2),sigmap(),qeye(3))
-# sz2=tensor(qeye(2),sigmaz(),qeye(3))
-# sx2=tensor(qeye(2),sigmax(),qeye(3))
+e0=tensor(e,basis(N_c,0)) #1
+e1=tensor(e,basis(N_c,1)) #2
+g0=tensor(gr,basis(N_c,0)) #3
+g1=tensor(gr,basis(N_c,1)) #4
+g2=tensor(gr,basis(N_c,2)) 
 
-# #DEFINIMOS LOS VECTORES DE LA BASE
-# e=basis(2,0)
-# gr=basis(2,1)
+sz=tensor(sigmaz(),qeye(N_c))
+sx=tensor(sigmax(),qeye(N_c))
+sy=tensor(sigmay(),qeye(N_c))
+sp=tensor(sigmap(),qeye(N_c))
+sm=tensor(sigmam(),qeye(N_c))
+a=tensor(qeye(2),destroy(N_c))
 
-# e0=tensor(e,basis(3,0))
-# g0=tensor(gr,basis(3,0))
-# g1=tensor(gr,basis(3,1))
-# sx=tensor(sigmax(),qeye(3))
-# sy=tensor(sigmay(),qeye(3))
-# sz=tensor(sigmaz(),qeye(3))
-# sp=tensor(sigmap(),qeye(3))
-# sm=tensor(sigmam(),qeye(3))
+w_0=1
+g=0.001*w_0
 
+def omega_n(n_:int,delta:float):
+    return np.sqrt(delta**2+4*g**2*n_)
 
-# ee0=tensor(e,e,basis(3,0)) #0
-# ee1=tensor(e,e,basis(3,1)) #1
-# ee2=tensor(e,e,basis(3,2)) #2
+def cos_theta_n(n_:int,delta:float):
+    return np.sqrt((omega_n(n_,delta)+delta)/(2*omega_n(n_,delta)))
 
-# eg0=tensor(e,gr,basis(3,0)) #3
-# ge0=tensor(gr,e,basis(3,0)) #6
+def sin_theta_n(n_:int,delta:float):
+    return np.sqrt((omega_n(n_,delta)-delta)/(2*omega_n(n_,delta)))
+def pr(estado):
+    return estado.unit()*estado.unit().dag()
+def omega_n(n_:int,delta:float,chi:float):
+    return np.sqrt((delta-chi*(2*n_-1))**2+4*g**2*n_)
 
-# eg1=tensor(e,gr,basis(3,1)) #4
-# ge1=tensor(gr,e,basis(3,1)) #7
+def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
+    sz_1=pr(v1)-pr(v2)
+    sx_1=v1*v2.dag()+v2*v1.dag()
 
-# eg2=tensor(e,gr,basis(3,2)) #5
-# ge2=tensor(gr,e,basis(3,2)) #8
+    sy_1=-1j*v1*v2.dag()+1j*v2*v1.dag()
 
-# gg0=tensor(gr,gr,basis(3,0)) #9
-# gg1=tensor(gr,gr,basis(3,1)) #10
-# gg2=tensor(gr,gr,basis(3,2)) #11
+    expect_sx_1=[expect(sx_1,sol_states[i]) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+    expect_sy_1=[expect(sy_1,sol_states[i]) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+    expect_sz_1=[expect(sz_1,sol_states[i]) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
+    return [expect_sx_1,expect_sy_1,expect_sz_1]
 
 
+gamma=0.1*g
+p=0.1*0.1*g
 
-# SMALL_SIZE = 15
-# MEDIUM_SIZE = 15
-# BIGGER_SIZE = 20
+points=15000
+x=0*g
+delta=1*g
+# psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
+tita=np.pi/4
+phi=0
+psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+omega=np.sqrt(4*g**2+(delta-x)**2)
+'''---Simulacion numerica---'''
+T=2*np.pi/omega
+t_final=210*T
+steps=200000
+ciclos_bloch=210
+colors=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
 
-# plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-# plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-# plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
-# plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
-# plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
-# plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-# plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
-# plt.rc('figure.subplot',left=0.1)
-# plt.rc('figure.subplot',bottom=0.102)
-# plt.rc('figure.subplot',right=0.962)
-# plt.rc('figure.subplot',top=0.95)
+'''-------------------------    BLOCH UNIT PUNTERO DISIP FG --------------------------'''
 
+fig_e=plt.figure(figsize=(8,6))
 
-# N_c=5
+ax_n=fig_e.add_subplot(321)
+ax_n_zoom=fig_e.add_subplot(322)
+ax_n.set_xlabel('$t/T$')
+ax_n.set_ylabel(r'$\mathcal{N}(\rho)$')
+# ax_e.set_ylabel(r'$E(\rho)$')
+ax_fg=fig_e.add_subplot(323,sharex=ax_n)
+ax_fg_zoom=fig_e.add_subplot(324,sharex=ax_n_zoom)
 
-# M=np.zeros((4*N_c,4*N_c))
-# M[0,3*N_c]=1
-# M[1,3*N_c+1]=1
-# M[2,N_c]=1/np.sqrt(2)
-# M[2,2*N_c]=1/np.sqrt(2)
-# M[3,N_c]=1/np.sqrt(2)
-# M[3,2*N_c]=-1/np.sqrt(2)
-
-# for ii in range(1,N_c-1):
-#     M[4*ii,3*N_c+1+ii]=1
-# for ii in range(1,N_c-1):
-#     M[4*ii+1,N_c+ii]=1/np.sqrt(2)
-#     M[4*ii+1,2*N_c+ii]=1/np.sqrt(2)
-#     M[4*ii+3,N_c+ii]=1/np.sqrt(2)
-#     M[4*ii+3,2*N_c+ii]=-1/np.sqrt(2)
-# for ii in range(1,N_c-1):
-#     M[4*ii+2,ii-1]=1
-
-# n=tensor(qeye(2),qeye(2),num(N_c)).transform(M)
-# # sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
-# n2=tensor(qeye(2),qeye(2),Qobj(np.diag([i*i for i in range(N_c)]))).transform(M)
-# a=tensor(qeye(2),qeye(2),destroy(N_c)).transform(M)
-# sm1=tensor(sigmam(),qeye(2),qeye(N_c)).transform(M)
-# sp1=tensor(sigmap(),qeye(2),qeye(N_c)).transform(M)
-# sz1=tensor(sigmaz(),qeye(2),qeye(N_c)).transform(M)
-# sx1=tensor(sigmax(),qeye(2),qeye(N_c)).transform(M)
-# sm2=tensor(qeye(2),sigmam(),qeye(N_c)).transform(M)
-# sp2=tensor(qeye(2),sigmap(),qeye(N_c)).transform(M)
-# sz2=tensor(qeye(2),sigmaz(),qeye(N_c)).transform(M)
-# sx2=tensor(qeye(2),sigmax(),qeye(N_c)).transform(M)
-
-# n_old=tensor(qeye(2),qeye(2),num(N_c))
-# # sqrtN=tensor(qeye(2),qeye(2),Qobj(np.diag([0,1,np.sqrt(2)])))
-# n2_old=tensor(qeye(2),qeye(2),Qobj(np.diag([i*i for i in range(N_c)])))
-# a_old=tensor(qeye(2),qeye(2),destroy(N_c))
-# sm1_old=tensor(sigmam(),qeye(2),qeye(N_c))
-# sp1_old=tensor(sigmap(),qeye(2),qeye(N_c))
-# sz1_old=tensor(sigmaz(),qeye(2),qeye(N_c))
-# sx1_old=tensor(sigmax(),qeye(2),qeye(N_c))
-# sm2_old=tensor(qeye(2),sigmam(),qeye(N_c))
-# sp2_old=tensor(qeye(2),sigmap(),qeye(N_c))
-# sz2_old=tensor(qeye(2),sigmaz(),qeye(N_c))
-# sx2_old=tensor(qeye(2),sigmax(),qeye(N_c))
-
-# # M[-1]=np.zeros(4*N_c) #Esta columna deberia pertenecer al gg,n+1, pero no existe asi que la matriz tiene 0's en esta fila. Para poder invertirla le ponemos un 1 en el estado een, para que el een se mapee al een, y listo. El estado gg,N+1 y gg,N+1 no estan disponibles
-# # M[-2]=np.zeros(4*N_c)
-# # M[-3]=np.zeros(4*N_c)
+ax_e=fig_e.add_subplot(325,sharex=ax_fg)
+ax_e_zoom=fig_e.add_subplot(326,sharex=ax_fg_zoom)
+ax_e.set_xlabel('$t/T$')
+ax_e.set_ylabel(r'$E(\rho)$')
 
 
+colors_fg=['blue','black','red']
+labels_fg=['u','d','d+']
 
-# # sz1=tensor(sigmaz(),qeye(2),qeye(N_c))
-# # sz1_new=sz1.transform(M)
-# # sz1_new.tidyup(atol=1e-10)
+l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
-# with open("output.txt", "a") as file_object:
-#     print("-------------------------------------------------------------------------------------------------------------------------------------------", file=file_object)
-#     print(f"TERMINAL {script_path} corredor.py", file=file_object)
-#     print("M", file=file_object)
-#     print(M, file=file_object)  
-#     # print("M@M.T.conj()", file=file_object)
-#     # A=M@M.T.conj()
-#     # A[np.abs(A)<=1e-8] = 0
-#     # print(A, file=file_object)
-#     # print("a old", file=file_object)
-#     # print(a_old, file=file_object) 
-#     # print("a", file=file_object)
-#     # a.tidyup()
-#     # print(a, file=file_object) 
 
-# import numpy as np
-# from numpy.linalg import eigh
+sol_u=mesolve(H,psi0,t)
+sol_d=mesolve(H,psi0,t,c_ops=l_ops)
 
-# rho=np.array([[1,1],[1,1]])
-# def rankV_func(rho):
-#     eigvals, eigvecs = eigh(rho) #primero buscamos los autovalores y autovectores de la matriz dada por dos razones
-#     rank = len(eigvals)
-#     V = np.dot(eigvecs, np.power(np.diag(eigvals),1/2)) #la segunda y mas fundamental es para encontrar esta matriz que vendria a ser la descomposicion espectral de rho: rho=V^{\dagger}V. Esta matriz V nos sirve para ir transformandola con la matriz unitaria arbitraria e ir buscando el minimo de entropia
-#     return rank, V,eigvals,eigvecs
-# rank,V,eigvals,eigvecs=rankV_func(rho)
-# print('rank')
-# print(rank)
-# print('eigvals')
-# print(eigvals)
-# print('shape eigenvecs')
-# print(eigvecs.shape)
-# print('eigvecs')
-# print(eigvecs)
-# print('V')
-# print(V)
-steps=10
-g_t=1
-N_c=1
-d=1
-g=1
-x=1
-k=1
-J=1
-metodo='PSO with random initial point'
+fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+
+N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+
+# C_u=concurrence_ali(sol_u.states)
+# C_d=concurrence_ali(sol_d.states)
+
+vBloch_u=vectorBloch(e0,g1,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+vBloch_eigevec=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+vBloch_d=vectorBloch(e0,g1,sol_d.states,steps,ciclos_bloch,T,t_final,points)
+esfera1=Bloch()
+esfera1.make_sphere()
+
+esfera1.add_points(vBloch_u,'m',colors='black')
+esfera1.add_points(vBloch_eigevec,'m',colors=colors[1])
+esfera1.add_points(vBloch_d,'m',colors=colors[2])
+
+# vBloch_u=vectorBloch(e1,g2,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+# vBloch_eigevec=vectorBloch(e1,g2,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+# vBloch_d=vectorBloch(e1,g2,sol_d.states,steps,ciclos_bloch,T,t_final,points)
+esfera1.render()
+# esfera.save('bloch berry.png')
+esfera1.show()
+
+# esfera2=Bloch()
+# esfera2.make_sphere()
+
+# esfera2.add_points(vBloch_u,'m',colors='black')
+# esfera2.add_points(vBloch_eigevec,'m',colors=colors[1])
+# esfera2.add_points(vBloch_d,'m',colors=colors[2])
+# esfera2.render()
+# # esfera.save('bloch berry.png')
+# esfera2.show()
+
+zoom_steps=steps
+colors_e=mpl.colormaps['hot'](np.linspace(0,1,len(eigenvals_t_d[0])))
+for i1 in range(len(eigenvals_t_d[0])): 
+    if i1==2:
+        max_eig2=np.max(eigenvals_t_d[:,i1])
+        eigenvals_t_d[:,i1]=eigenvals_t_d[:,i1]/max_eig2
+        ax_e.text(0.6*t_final/T,0.75,"x{0:.2E}".format(max_eig2),color=colors_e[i1])
+    ax_e.plot(t/T,eigenvals_t_d[:,i1],color=colors_e[i1])
+    ax_e_zoom.plot(t[:zoom_steps]/T,eigenvals_t_d[:zoom_steps,i1],color=colors_e[i1])
+
+ax_n.plot(t/T,N_u,color='red',linestyle='dashed',label='N_u')
+ax_n.plot(t/T,N_d,color='green',linestyle='dashed',label='N_d')
+
+ax_n_zoom.plot(t[:zoom_steps]/T,N_u[:zoom_steps],color='red',linestyle='dashed',label='N_u')
+ax_n_zoom.plot(t[:zoom_steps]/T,N_d[:zoom_steps],color='green',linestyle='dashed',label='N_d')
+
+ax_fg.plot(t/T,fg_u,color=colors_fg[0],label=labels_fg[0])
+ax_fg.plot(t/T,fg_d,color=colors_fg[1],label=labels_fg[1])
+
+ax_fg_zoom.plot(t[:zoom_steps]/T,fg_u[:zoom_steps],color=colors_fg[0],label=labels_fg[0])
+ax_fg_zoom.plot(t[:zoom_steps]/T,fg_d[:zoom_steps],color=colors_fg[1],label=labels_fg[1])
+
+ax_fg.set_xlabel('$t/T$')
+ax_fg.set_ylabel(r'$\phi_g$')
+ax_fg.legend()
+ax_e.legend()
+plt.show()
+
+'''------------------   CONDICIONES INICIALES TITA  ---------------------------------------------------------'''
+
+# def heatplot(t,y,z_data:list,title:str,ylabel):
+#     fig_u=plt.figure(figsize=(8,6))
+#     fig_u.suptitle(title)
+#     ax_u=fig_u.add_subplot()
+#     ax_u.set_xlabel('$t/T$')
+#     ax_u.set_ylabel(ylabel)
+#     c0 = ax_u.pcolor(t/T, y, z_data, shading='auto', cmap='jet',vmin=0,vmax=0.5)
+#     contour_u = ax_u.contourf(t/T, y, z_data,levels=[0,0.01],colors='black',linewidths=1)
+#     ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
+#     fig_u.colorbar(c0, ax=ax_u,shrink=0.7)
+#     # fig_u.savefig(rf'graficos\negativity\{psi0Name} {title} x={x/g}g k={k/g}g J={J/g}g neg delta dis.png')
+
+# esfera=Bloch()
+# esfera.make_sphere()
+
+
+# #Parametros y Hamiltoniano
+
+# gamma=0.1*g
+# p=0.0*g#*0.1*g
+
+# x=0*g
+# delta=0*g
+
+# H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+# omega=np.sqrt(4*g**2+(delta-x)**2)
+
+# # Simulacion numerica
+
+# T=2*np.pi/omega
+# t_final=110*T
+# steps=50000
+
+# ciclos_bloch=110
+# points=4000
+
+# # Barrido de condiciones iniciales
+
+# num_tita=1
+# tita_eig=2*np.arctan2((-delta+x-np.sqrt(np.power((-delta+x),2)+4*g**2)),(2*g))
+
+# # tita_array=np.linspace(tita_eig,tita_eig+np.pi/2,num_tita)
+# tita_array=np.linspace(np.pi/4,np.pi/2,num_tita)
+# colors=[mpl.colormaps['plasma'](np.linspace(0,1,num_tita))] #colores para pintar en la esfera de bloch
+# colors_map=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
+
+# #definimos los arrays de negatividad
+
+# N_u=np.zeros((num_tita,steps))
+# N_d=np.zeros((num_tita,steps))
+
+# print(tita_eig)
+# #ahora hacemos el barrido
+# #paara cada valor de tita hacemos una simulacion y calculamos 
+
+# fig_fg_tita=plt.figure(figsize=(8,6))
+# ax_fg_tita=fig_fg_tita.add_subplot()
+# ax_fg_tita.set_xlabel(r'$t/T$')
+# ax_fg_tita.set_ylabel(r'$\delta\phi_g/\pi$')
+
+# phi=[0,np.pi/4]
+# for j,tita in enumerate(tita_array):
+#     # phi=np.arcsin(0.5/np.sin(tita))
+#     psi0=np.cos(tita/2)*e0+np.exp(1j*phi[j])*np.sin(tita/2)*g1
+#     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sz] #operadores de colapso/lindblad
+#     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+
+#     sol_u=mesolve(H,psi0,t)
+#     sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+    
+#     fg_u,arg,eigenvals_t_d,psi_eig_u = fases(sol_u)
+#     fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+#     ax_fg_tita.plot(t/T,fg_d/np.pi,color=colors[j],label=fr'$\theta={tita/np.pi}$',linestyle='dashed')
+#     ax_fg_tita.plot(t/T,fg_u/np.pi,color=colors[j])
+#     N_u[j]=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+#     N_d[j]=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+
+#     vBloch_tita=vectorBloch(e0,g1,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+#     esfera.add_points(vBloch_tita,'m',colors=colors[j])
+
+#     vBloch_tita=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+#     esfera.add_points(vBloch_tita,'m',colors=colors_map[j])
+# ax_fg_tita.legend()
+# # print(N_d)
+# # heatplot(t,tita_array/np.pi,N_u,'Negativity unit',r"$\theta/\pi$")  
+# # heatplot(t,tita_array/np.pi,N_d,'Negativity disip',r"$\theta/\pi$")  
+# # heatplot(t,tita_array/np.pi,fg_u/np.pi,r'$\phi_g$ uni',r"$\phi_g/\pi$")
+# # heatplot(t,tita_array/np.pi,fg_d/np.pi,r'$\phi_g$ dis',r"$\phi_g/\pi$")
+# # heatplot(t,tita_array/np.pi,(fg_u-fg_d)/np.pi,r'$\delta\phi$ dis',r"$\phi_g/\pi$")
+
+# esfera.render()
+# # esfera.save('bloch berry.png')
+# esfera.show()
+# plt.show()

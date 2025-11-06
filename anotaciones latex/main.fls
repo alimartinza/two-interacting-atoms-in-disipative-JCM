@@ -425,14 +425,17 @@ INPUT resumen.tex
 INPUT ./agradecimientos.tex
 INPUT ./agradecimientos.tex
 INPUT agradecimientos.tex
+INPUT ./borrador.tex
+INPUT ./borrador.tex
+INPUT borrador.tex
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm
 INPUT ./ch1_fg.tex
 INPUT ./ch1_fg.tex
 INPUT ch1_fg.tex
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/eccc1095.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/eccc2488.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecxc2488.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm
 INPUT ./ch2_entrelazamiento.tex
 INPUT ./ch2_entrelazamiento.tex
 INPUT ch2_entrelazamiento.tex
@@ -473,16 +476,67 @@ INPUT ./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png
 INPUT ./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png
 INPUT ./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png
 INPUT ./figuras/ch2/negatividad/3x3 eg1+ $N_2$ 012 012.png
+INPUT ./ch_jcm.tex
+INPUT ./ch_jcm.tex
+INPUT ch_jcm.tex
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr.png
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr 2.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr 2.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr 2.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr 2.png
+INPUT ./figuras/ch3/relacion energia detunning jcm simple kerr 2.png
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm
+INPUT ./figuras/ch3/poblaciones sc vs wc.png
+INPUT ./figuras/ch3/poblaciones sc vs wc.png
+INPUT ./figuras/ch3/poblaciones sc vs wc.png
+INPUT ./figuras/ch3/poblaciones sc vs wc.png
+INPUT ./figuras/ch3/poblaciones sc vs wc.png
+INPUT ./figuras/ch3/poblaciones kerr.png
+INPUT ./figuras/ch3/poblaciones kerr.png
+INPUT ./figuras/ch3/poblaciones kerr.png
+INPUT ./figuras/ch3/poblaciones kerr.png
+INPUT ./figuras/ch3/poblaciones kerr.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 fg ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 1 no dephasing.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 2.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 2.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 2.png
+INPUT ./figuras/ch3/jcm1 bloch ci modificada 2.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia 2.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia 2.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia 2.png
+INPUT ./figuras/ch3/jcm1 bloch no resonancia 2.png
 INPUT ./ch3_fg_tcm.tex
 INPUT ./ch3_fg_tcm.tex
 INPUT ch3_fg_tcm.tex
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT ./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg0+/acoplamiento d=0.1g.png
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecrm1000.tfm
 INPUT ./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png
 INPUT ./figuras/ch5/dependencia/eg1+/acoplamiento d=0.1g.png
@@ -588,6 +642,44 @@ INPUT ./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png
 INPUT ./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png
 INPUT ./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png
 INPUT ./figuras/ch5/robustez/k/eg1+ge1 d=0.0g x=2.5g J=0.0g.png
+INPUT ./figuras/ch3/representacion-qutrit.PNG
+INPUT ./figuras/ch3/representacion-qutrit.PNG
+INPUT ./figuras/ch3/representacion-qutrit.PNG
+INPUT ./figuras/ch3/representacion-qutrit.PNG
+INPUT ./figuras/ch3/representacion-qutrit.PNG
+INPUT ./figuras/ch3/qubloch.png
+INPUT ./figuras/ch3/qubloch.png
+INPUT ./figuras/ch3/qubloch.png
+INPUT ./figuras/ch3/qubloch.png
+INPUT ./figuras/ch3/tcm minimo e12.png
+INPUT ./figuras/ch3/tcm minimo e12.png
+INPUT ./figuras/ch3/tcm minimo e12.png
+INPUT ./figuras/ch3/tcm minimo e12.png
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm
+INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
+INPUT ./figuras/ch3/tcm minimo e23.png
+INPUT ./figuras/ch3/tcm minimo e23.png
+INPUT ./figuras/ch3/tcm minimo e23.png
+INPUT ./figuras/ch3/tcm minimo e23.png
+INPUT ./figuras/ch3/tcm minimo e31.png
+INPUT ./figuras/ch3/tcm minimo e31.png
+INPUT ./figuras/ch3/tcm minimo e31.png
+INPUT ./figuras/ch3/tcm minimo e31.png
 INPUT ./ch4_decoherencia.tex
 INPUT ./ch4_decoherencia.tex
 INPUT ./ch4_decoherencia.tex
@@ -612,17 +704,11 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi9.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib9.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy9.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/ecbx0900.tfm
 INPUT ./ch6_montecarlo.tex
 INPUT ./ch6_montecarlo.tex
@@ -659,6 +745,7 @@ INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
+INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
