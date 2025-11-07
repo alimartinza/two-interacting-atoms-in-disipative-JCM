@@ -4,6 +4,10 @@ import matplotlib.pyplot as plt
 from jcm_lib import fases,concurrence_ali
 import matplotlib as mpl
 from entrelazamiento_lib import negativity_hor
+import os 
+
+script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENTE PARA QUE FUNCIONE DESDE CUALQUIER COMPU
+os.chdir(script_path)
 
 e=basis(2,0)
 gr=basis(2,1)
@@ -56,7 +60,7 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
 
 steps=200
 band=1
-percent=0.2
+# percent=0.2
 
 gamma=0.1*g
 p=0.1*0.1*g
@@ -71,6 +75,8 @@ t_final=210*T
 t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
 fg_delta=np.zeros((len(delta_array),steps))
+fg_u_delta=np.zeros((len(delta_array),steps))
+fg_d_delta=np.zeros((len(delta_array),steps))
 # print(fg_delta[0])
 N_u_delta=np.zeros((len(delta_array),steps))
 N_d_delta=np.zeros((len(delta_array),steps))
@@ -99,6 +105,8 @@ for i_delta,delta in enumerate(delta_array):
     fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
 
     fg_delta[i_delta]=fg_d-fg_u
+    fg_d_delta[i_delta]=fg_d
+    fg_u_delta[i_delta]=fg_u
 
     N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
     N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
@@ -126,7 +134,7 @@ for i_delta,delta in enumerate(delta_array):
 
     #deepseek
     mask = np.full(steps, True)
-    mask[0] = False  # Skip the first element
+    mask[:11] = False  # Skip the first element
     
     # Check if eigenvals_t_d has the expected structure
     if hasattr(eigenvals_t_d, 'shape') and len(eigenvals_t_d.shape) > 1:
@@ -145,17 +153,52 @@ for i_delta,delta in enumerate(delta_array):
         eigvals_death_z[i_delta] = -1
 
    
-fig_fg=plt.figure()
-ax_fg=fig_fg.add_subplot(projection='3d')
-DELTA, gT = np.meshgrid(delta_array, g*t,indexing='ij')
-ax_fg.plot_wireframe(DELTA,gT,fg_delta,cstride=len(delta_array))
-ax_fg.scatter(delta_array,g*eigvals_death_t,eigvals_death_z,color='red')
-ax_fg.scatter(delta_array,g*negativity_revival_t,negativity_revival_z,color='green')
-ax_fg.set_xlabel(r'$\Delta$')
-ax_fg.set_ylabel(r'$gt$')
-ax_fg.set_zlabel(r'$\delta \phi$')
-plt.show()
+# fig_fg=plt.figure()
+# ax_fg=fig_fg.add_subplot(projection='3d')
+# dELTA, gT = np.meshgrid(delta_array, g*t,indexing='ij')
+# ax_fg.plot_wireframe(dELTA,gT,fg_delta,cstride=len(delta_array))
+# ax_fg.scatter(delta_array,g*eigvals_death_t,eigvals_death_z,color='red')
+# ax_fg.scatter(delta_array,g*negativity_revival_t,negativity_revival_z,color='green')
+# ax_fg.set_xlabel(r'$\Delta$')
+# ax_fg.set_ylabel(r'$gt$')
+# ax_fg.set_zlabel(r'$\delta \phi$')
+
+np.savetxt(f'datajcm/fgu x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',fg_u_delta)
+np.savetxt(f'datajcm/fgd x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',fg_d_delta)
+np.savetxt(f'datajcm/Nu x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',N_u_delta)
+np.savetxt(f'datajcm/Nd x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',N_d_delta)
+
+import subprocess
+
+def run_git_command(*args):
+    """Executes a Git command and prints its output."""
+    try:
+        # subprocess.run is generally preferred for simple command execution
+        result = subprocess.run(['git'] + list(args), capture_output=True, text=True, check=True)
+        print("STDOUT:", result.stdout)
+        print("STDERR:", result.stderr)
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing Git command: {e}")
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+
+# Example usage:
+run_git_command("status")
+# run_git_command("clone", "https://github.com/user/repo.git", "my_local_repo")
+run_git_command("add", ".")
+run_git_command("commit", "-m", "Automated commit terminada la corrida larga")
+run_git_command("push")
+
+# plt.show()
+
 # fig_N=plt.figure()
+# ax_N=fig_N.add_subplot(projection='3d')
+# ax_N.plot_surface(dELTA,gT,N_d_delta,cstride=len(delta_array))
+# ax_N.set_xlabel(r'$\Delta$')
+# ax_N.set_ylabel(r'$gt$')
+# ax_N.set_zlabel(r'$N_d$')
+# plt.show()
+
 
 '''-------------------------- GRAFICOS FUNCIONABLES --------------------------'''
 
