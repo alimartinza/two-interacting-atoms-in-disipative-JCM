@@ -51,116 +51,224 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
     return [expect_sx_1,expect_sy_1,expect_sz_1]
 
 
+'''--------------- CORRIDA Y BARRIDO EN DELTA --------------'''
+#LA IDEA ES BARRER EN DELTA Y MIRAR PHI_D-PHI_U EN FUNCION DEL TIEMPO, Y MARCAR EN EL PLOT 3D CUANDO LOS AUTOVALORES SON CERO Y CUANDO LA NEGATIVITY REVIVE (A TIEMPOS LARGOS).
+
+steps=200
+band=1
+percent=0.2
+
 gamma=0.1*g
 p=0.1*0.1*g
 
-points=15000
 x=0*g
-delta=1*g
-# psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
-tita=np.pi/4
-phi=0
-psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
-H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
-omega=np.sqrt(4*g**2+(delta-x)**2)
+delta_array=np.linspace(-g,g,31)
+omega=np.sqrt(4*g**2+(0-x)**2)
 '''---Simulacion numerica---'''
 T=2*np.pi/omega
 t_final=210*T
-steps=200000
-ciclos_bloch=210
-colors=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
 
-'''-------------------------    BLOCH UNIT PUNTERO DISIP FG --------------------------'''
-
-fig_e=plt.figure(figsize=(8,6))
-
-ax_n=fig_e.add_subplot(321)
-ax_n_zoom=fig_e.add_subplot(322)
-ax_n.set_xlabel('$t/T$')
-ax_n.set_ylabel(r'$\mathcal{N}(\rho)$')
-# ax_e.set_ylabel(r'$E(\rho)$')
-ax_fg=fig_e.add_subplot(323,sharex=ax_n)
-ax_fg_zoom=fig_e.add_subplot(324,sharex=ax_n_zoom)
-
-ax_e=fig_e.add_subplot(325,sharex=ax_fg)
-ax_e_zoom=fig_e.add_subplot(326,sharex=ax_fg_zoom)
-ax_e.set_xlabel('$t/T$')
-ax_e.set_ylabel(r'$E(\rho)$')
-
-
-colors_fg=['blue','black','red']
-labels_fg=['u','d','d+']
-
-l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
 t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
+fg_delta=np.zeros((len(delta_array),steps))
+# print(fg_delta[0])
+N_u_delta=np.zeros((len(delta_array),steps))
+N_d_delta=np.zeros((len(delta_array),steps))
 
-sol_u=mesolve(H,psi0,t)
-sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+eigvals_death_t=np.full(len(delta_array),0)
+eigvals_death_z=np.full(len(delta_array),0)
 
-fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
-fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+negativity_revival_t=np.full(len(delta_array),0)
+negativity_revival_z=np.full(len(delta_array),0)
 
-N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
-N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+for i_delta,delta in enumerate(delta_array):
+    print(f'delta #{i_delta}/{len(delta_array)}')
+    # psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
+    tita=np.pi/4
+    phi=0
+    psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+    H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
 
-# C_u=concurrence_ali(sol_u.states)
-# C_d=concurrence_ali(sol_d.states)
 
-vBloch_u=vectorBloch(e0,g1,sol_u.states,steps,ciclos_bloch,T,t_final,points)
-vBloch_eigevec=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
-vBloch_d=vectorBloch(e0,g1,sol_d.states,steps,ciclos_bloch,T,t_final,points)
-esfera1=Bloch()
-esfera1.make_sphere()
+    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+    
+    sol_u=mesolve(H,psi0,t)
+    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
 
-esfera1.add_points(vBloch_u,'m',colors='black')
-esfera1.add_points(vBloch_eigevec,'m',colors=colors[1])
-esfera1.add_points(vBloch_d,'m',colors=colors[2])
+    fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+    fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
 
-# vBloch_u=vectorBloch(e1,g2,sol_u.states,steps,ciclos_bloch,T,t_final,points)
-# vBloch_eigevec=vectorBloch(e1,g2,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
-# vBloch_d=vectorBloch(e1,g2,sol_d.states,steps,ciclos_bloch,T,t_final,points)
-esfera1.render()
-# esfera.save('bloch berry.png')
-esfera1.show()
+    fg_delta[i_delta]=fg_d-fg_u
 
-# esfera2=Bloch()
-# esfera2.make_sphere()
+    N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+    N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
 
-# esfera2.add_points(vBloch_u,'m',colors='black')
-# esfera2.add_points(vBloch_eigevec,'m',colors=colors[1])
-# esfera2.add_points(vBloch_d,'m',colors=colors[2])
-# esfera2.render()
-# # esfera.save('bloch berry.png')
-# esfera2.show()
+    for i_find in range(band,steps):
+        #if np.array_equiv(N_d[i_find-band:i_find],np.zeros(band)) and np.count_nonzero(N_d[i_find+1:i_find+1+band])>percent*band:
+        if N_d[i_find]<1e-10 and N_d[i_find+1]>1e-8:
+            negativity_revival_t[i_delta]=t[i_find]
+            negativity_revival_z[i_delta]=fg_delta[i_delta][i_find]
+            print(f'i_find = {i_find}')
+            break
+    
 
-zoom_steps=steps
-colors_e=mpl.colormaps['hot'](np.linspace(0,1,len(eigenvals_t_d[0])))
-for i1 in range(len(eigenvals_t_d[0])): 
-    if i1==2:
-        max_eig2=np.max(eigenvals_t_d[:,i1])
-        eigenvals_t_d[:,i1]=eigenvals_t_d[:,i1]/max_eig2
-        ax_e.text(0.6*t_final/T,0.75,"x{0:.2E}".format(max_eig2),color=colors_e[i1])
-    ax_e.plot(t/T,eigenvals_t_d[:,i1],color=colors_e[i1])
-    ax_e_zoom.plot(t[:zoom_steps]/T,eigenvals_t_d[:zoom_steps,i1],color=colors_e[i1])
+    N_u_delta[i_delta]=N_u
+    N_d_delta[i_delta]=N_d
 
-ax_n.plot(t/T,N_u,color='red',linestyle='dashed',label='N_u')
-ax_n.plot(t/T,N_d,color='green',linestyle='dashed',label='N_d')
+    # mask=np.full(steps,True)
+    # mask[0]=False
+    # for i_ev in range(1,len(eigenvals_t_d[0])):
+    #     mask_step=eigenvals_t_d[:,i_ev]<1e-8
+    #     mask= mask*mask_step
+    # print(mask)
+    # eigvals_death_t[i_delta]= t[mask.index(True) if True in mask else -1]
+    # eigvals_death_z[i_delta]=fg_delta[i_delta][mask.index(True) if True in mask else -1]
 
-ax_n_zoom.plot(t[:zoom_steps]/T,N_u[:zoom_steps],color='red',linestyle='dashed',label='N_u')
-ax_n_zoom.plot(t[:zoom_steps]/T,N_d[:zoom_steps],color='green',linestyle='dashed',label='N_d')
+    #deepseek
+    mask = np.full(steps, True)
+    mask[0] = False  # Skip the first element
+    
+    # Check if eigenvals_t_d has the expected structure
+    if hasattr(eigenvals_t_d, 'shape') and len(eigenvals_t_d.shape) > 1:
+        for i_ev in range(1, eigenvals_t_d.shape[1]):  # Iterate over columns (time steps)
+            mask_step = eigenvals_t_d[:, i_ev] < 1e-8
+            mask = mask & mask_step  # Use bitwise AND for numpy arrays
+    
+    # Find first True using numpy methods
+    true_indices = np.where(mask)[0]
+    if len(true_indices) > 0:
+        first_true_index = true_indices[0]
+        eigvals_death_t[i_delta] = t[first_true_index]
+        eigvals_death_z[i_delta] = fg_delta[i_delta][first_true_index]
+    else:
+        eigvals_death_t[i_delta] = -1
+        eigvals_death_z[i_delta] = -1
 
-ax_fg.plot(t/T,fg_u,color=colors_fg[0],label=labels_fg[0])
-ax_fg.plot(t/T,fg_d,color=colors_fg[1],label=labels_fg[1])
-
-ax_fg_zoom.plot(t[:zoom_steps]/T,fg_u[:zoom_steps],color=colors_fg[0],label=labels_fg[0])
-ax_fg_zoom.plot(t[:zoom_steps]/T,fg_d[:zoom_steps],color=colors_fg[1],label=labels_fg[1])
-
-ax_fg.set_xlabel('$t/T$')
-ax_fg.set_ylabel(r'$\phi_g$')
-ax_fg.legend()
-ax_e.legend()
+   
+fig_fg=plt.figure()
+ax_fg=fig_fg.add_subplot(projection='3d')
+DELTA, gT = np.meshgrid(delta_array, g*t,indexing='ij')
+ax_fg.plot_wireframe(DELTA,gT,fg_delta,cstride=len(delta_array))
+ax_fg.scatter(delta_array,g*eigvals_death_t,eigvals_death_z,color='red')
+ax_fg.scatter(delta_array,g*negativity_revival_t,negativity_revival_z,color='green')
+ax_fg.set_xlabel(r'$\Delta$')
+ax_fg.set_ylabel(r'$gt$')
+ax_fg.set_zlabel(r'$\delta \phi$')
 plt.show()
+# fig_N=plt.figure()
+
+'''-------------------------- GRAFICOS FUNCIONABLES --------------------------'''
+
+# gamma=0.1*g
+# p=0.1*0.1*g
+
+# points=15000
+# x=0*g
+# delta=1*g
+# # psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
+# tita=np.pi/4
+# phi=0
+# psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+# H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+# omega=np.sqrt(4*g**2+(delta-x)**2)
+# '''---Simulacion numerica---'''
+# T=2*np.pi/omega
+# t_final=210*T
+# steps=200000
+# ciclos_bloch=210
+# colors=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
+
+# '''-------------------------    BLOCH UNIT PUNTERO DISIP FG --------------------------'''
+
+# fig_e=plt.figure(figsize=(8,6))
+
+# ax_n=fig_e.add_subplot(321)
+# ax_n_zoom=fig_e.add_subplot(322)
+# ax_n.set_xlabel('$t/T$')
+# ax_n.set_ylabel(r'$\mathcal{N}(\rho)$')
+# # ax_e.set_ylabel(r'$E(\rho)$')
+# ax_fg=fig_e.add_subplot(323,sharex=ax_n)
+# ax_fg_zoom=fig_e.add_subplot(324,sharex=ax_n_zoom)
+
+# ax_e=fig_e.add_subplot(325,sharex=ax_fg)
+# ax_e_zoom=fig_e.add_subplot(326,sharex=ax_fg_zoom)
+# ax_e.set_xlabel('$t/T$')
+# ax_e.set_ylabel(r'$E(\rho)$')
+
+
+# colors_fg=['blue','black','red']
+# labels_fg=['u','d','d+']
+
+# l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+# t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+
+
+# sol_u=mesolve(H,psi0,t)
+# sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+
+# fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+# fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+
+# N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+# N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+
+# # C_u=concurrence_ali(sol_u.states)
+# # C_d=concurrence_ali(sol_d.states)
+
+# vBloch_u=vectorBloch(e0,g1,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+# vBloch_eigevec=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+# vBloch_d=vectorBloch(e0,g1,sol_d.states,steps,ciclos_bloch,T,t_final,points)
+# esfera1=Bloch()
+# esfera1.make_sphere()
+
+# esfera1.add_points(vBloch_u,'m',colors='black')
+# esfera1.add_points(vBloch_eigevec,'m',colors=colors[1])
+# esfera1.add_points(vBloch_d,'m',colors=colors[2])
+
+# # vBloch_u=vectorBloch(e1,g2,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+# # vBloch_eigevec=vectorBloch(e1,g2,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+# # vBloch_d=vectorBloch(e1,g2,sol_d.states,steps,ciclos_bloch,T,t_final,points)
+# esfera1.render()
+# # esfera.save('bloch berry.png')
+# esfera1.show()
+
+# # esfera2=Bloch()
+# # esfera2.make_sphere()
+
+# # esfera2.add_points(vBloch_u,'m',colors='black')
+# # esfera2.add_points(vBloch_eigevec,'m',colors=colors[1])
+# # esfera2.add_points(vBloch_d,'m',colors=colors[2])
+# # esfera2.render()
+# # # esfera.save('bloch berry.png')
+# # esfera2.show()
+
+# zoom_steps=steps
+# colors_e=mpl.colormaps['hot'](np.linspace(0,1,len(eigenvals_t_d[0])))
+# for i1 in range(len(eigenvals_t_d[0])): 
+#     if i1==2:
+#         max_eig2=np.max(eigenvals_t_d[:,i1])
+#         eigenvals_t_d[:,i1]=eigenvals_t_d[:,i1]/max_eig2
+#         ax_e.text(0.6*t_final/T,0.75,"x{0:.2E}".format(max_eig2),color=colors_e[i1])
+#     ax_e.plot(t/T,eigenvals_t_d[:,i1],color=colors_e[i1])
+#     ax_e_zoom.plot(t[:zoom_steps]/T,eigenvals_t_d[:zoom_steps,i1],color=colors_e[i1])
+
+# ax_n.plot(t/T,N_u,color='red',linestyle='dashed',label='N_u')
+# ax_n.plot(t/T,N_d,color='green',linestyle='dashed',label='N_d')
+
+# ax_n_zoom.plot(t[:zoom_steps]/T,N_u[:zoom_steps],color='red',linestyle='dashed',label='N_u')
+# ax_n_zoom.plot(t[:zoom_steps]/T,N_d[:zoom_steps],color='green',linestyle='dashed',label='N_d')
+
+# ax_fg.plot(t/T,fg_u,color=colors_fg[0],label=labels_fg[0])
+# ax_fg.plot(t/T,fg_d,color=colors_fg[1],label=labels_fg[1])
+
+# ax_fg_zoom.plot(t[:zoom_steps]/T,fg_u[:zoom_steps],color=colors_fg[0],label=labels_fg[0])
+# ax_fg_zoom.plot(t[:zoom_steps]/T,fg_d[:zoom_steps],color=colors_fg[1],label=labels_fg[1])
+
+# ax_fg.set_xlabel('$t/T$')
+# ax_fg.set_ylabel(r'$\phi_g$')
+# ax_fg.legend()
+# ax_e.legend()
+# plt.show()
 
 '''------------------   CONDICIONES INICIALES TITA  ---------------------------------------------------------'''
 
@@ -258,3 +366,4 @@ plt.show()
 # # esfera.save('bloch berry.png')
 # esfera.show()
 # plt.show()
+
