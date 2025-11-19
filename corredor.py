@@ -58,136 +58,105 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
 '''--------------- CORRIDA Y BARRIDO EN DELTA --------------'''
 #LA IDEA ES BARRER EN DELTA Y MIRAR PHI_D-PHI_U EN FUNCION DEL TIEMPO, Y MARCAR EN EL PLOT 3D CUANDO LOS AUTOVALORES SON CERO Y CUANDO LA NEGATIVITY REVIVE (A TIEMPOS LARGOS).
 
-steps=200
+steps=40000
 band=1
 # percent=0.2
 
-gamma=0.1*g
-p=0.1*0.1*g
 
-x=0*g
-delta_array=np.linspace(-g,g,31)
-omega=np.sqrt(4*g**2+(0-x)**2)
-'''---Simulacion numerica---'''
-T=2*np.pi/omega
-t_final=210*T
+for p in [0,0.1*0.1*g]:
+    for gamma in [0.1*g]:
+        for x in [0,0.5*g,1*g]:
+            delta_array=np.linspace(-g,g,33)
+            omega=np.sqrt(4*g**2+(0-x)**2)
+            '''---Simulacion numerica---'''
+            T=2*np.pi/omega
+            t_final=210*T
 
-t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+            t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
-fg_delta=np.zeros((len(delta_array),steps))
-fg_u_delta=np.zeros((len(delta_array),steps))
-fg_d_delta=np.zeros((len(delta_array),steps))
-# print(fg_delta[0])
-N_u_delta=np.zeros((len(delta_array),steps))
-N_d_delta=np.zeros((len(delta_array),steps))
+            fg_delta=np.zeros((len(delta_array),steps))
+            fg_u_delta=np.zeros((len(delta_array),steps))
+            fg_d_delta=np.zeros((len(delta_array),steps))
+            # print(fg_delta[0])
+            N_u_delta=np.zeros((len(delta_array),steps))
+            N_d_delta=np.zeros((len(delta_array),steps))
 
-eigvals_death_t=np.full(len(delta_array),0)
-eigvals_death_z=np.full(len(delta_array),0)
+            eigvals_death_t=np.full(len(delta_array),-1)
+            # eigvals_death_z=np.full(len(delta_array),0)
 
-negativity_revival_t=np.full(len(delta_array),0)
-negativity_revival_z=np.full(len(delta_array),0)
+            # negativity_revival_t=np.full(len(delta_array),-1)
+            # negativity_revival_z=np.full(len(delta_array),0)
 
-for i_delta,delta in enumerate(delta_array):
-    print(f'delta #{i_delta}/{len(delta_array)}')
-    # psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
-    tita=np.pi/4
-    phi=0
-    psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
-    H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+            for i_delta,delta in enumerate(delta_array):
+                print(f'delta #{i_delta}/{len(delta_array)}')
+                # psi0=(e0+(1+1j)*g1).unit()#(np.sqrt(2+np.sqrt(2))/2*e0+1j*np.sqrt(2-np.sqrt(2))/2*g1).unit()
+                tita=0
+                phi=0
+                psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+                H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
 
+                l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+                
+                sol_u=mesolve(H,psi0,t)
+                sol_d=mesolve(H,psi0,t,c_ops=l_ops)
 
-    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
-    
-    sol_u=mesolve(H,psi0,t)
-    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+                fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+                fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
 
-    fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
-    fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+                fg_delta[i_delta]=fg_d-fg_u
+                fg_d_delta[i_delta]=fg_d
+                fg_u_delta[i_delta]=fg_u
 
-    fg_delta[i_delta]=fg_d-fg_u
-    fg_d_delta[i_delta]=fg_d
-    fg_u_delta[i_delta]=fg_u
+                N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+                N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
 
-    N_u=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
-    N_d=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+                # for i_find in range(0,band-1,steps):
+                #     #if np.array_equiv(N_d[i_find-band:i_find],np.zeros(band)) and np.count_nonzero(N_d[i_find+1:i_find+1+band])>percent*band:
+                #     if N_d[i_find]<1e-6 and N_d[i_find+1]>1e-4:
+                #         negativity_revival_t[i_delta]=t[i_find]
+                #         negativity_revival_z[i_delta]=fg_delta[i_delta][i_find]
+                #         print(f'i_find = {i_find}')
+                #         break 
 
-    for i_find in range(band,steps):
-        #if np.array_equiv(N_d[i_find-band:i_find],np.zeros(band)) and np.count_nonzero(N_d[i_find+1:i_find+1+band])>percent*band:
-        if N_d[i_find]<1e-10 and N_d[i_find+1]>1e-8:
-            negativity_revival_t[i_delta]=t[i_find]
-            negativity_revival_z[i_delta]=fg_delta[i_delta][i_find]
-            print(f'i_find = {i_find}')
-            break
-    
+                N_u_delta[i_delta]=N_u
+                N_d_delta[i_delta]=N_d
 
-    N_u_delta[i_delta]=N_u
-    N_d_delta[i_delta]=N_d
+                mask = np.full(steps, True)
+                mask[:11] = False  # Skip the first element
+                
+                # Check if eigenvals_t_d has the expected structure
+                if hasattr(eigenvals_t_d, 'shape') and len(eigenvals_t_d.shape) > 1:
+                    for i_ev in range(1, eigenvals_t_d.shape[1]):  # Iterate over columns (time steps)
+                        mask_step = eigenvals_t_d[:, i_ev] < 1e-5
+                        mask = mask & mask_step  # Use bitwise AND for numpy arrays
+                
+                # Find first True using numpy methods
+                true_indices = np.where(mask)[0]
+                if len(true_indices) > 0:
+                    first_true_index = true_indices[0]
+                    eigvals_death_t[i_delta] = t[first_true_index]
+                    # eigvals_death_z[i_delta] = fg_delta[i_delta][first_true_index]
+                else:
+                    eigvals_death_t[i_delta] = -1
+                    # eigvals_death_z[i_delta] = -1
 
-    # mask=np.full(steps,True)
-    # mask[0]=False
-    # for i_ev in range(1,len(eigenvals_t_d[0])):
-    #     mask_step=eigenvals_t_d[:,i_ev]<1e-8
-    #     mask= mask*mask_step
-    # print(mask)
-    # eigvals_death_t[i_delta]= t[mask.index(True) if True in mask else -1]
-    # eigvals_death_z[i_delta]=fg_delta[i_delta][mask.index(True) if True in mask else -1]
+            
+            # fig_fg=plt.figure()
+            # ax_fg=fig_fg.add_subplot(projection='3d')
+            # dELTA, tT = np.meshgrid(delta_array, t/T,indexing='ij')
+            # ax_fg.plot_wireframe(dELTA,tT,fg_delta,cstride=len(delta_array))
+            # ax_fg.scatter(delta_array,eigvals_death_t/T,eigvals_death_z,color='red')
+            # ax_fg.scatter(delta_array,negativity_revival_t/T,negativity_revival_z,color='green')
+            # ax_fg.set_xlabel(r'$\Delta$')
+            # ax_fg.set_ylabel(r'$t/T$')
+            # ax_fg.set_zlabel(r'$\delta \phi$')
+            # plt.show()
+            np.savetxt(f'datajcm/evalst death x{x/g} ga{gamma/g} p{p/g:.3f} tita{tita/np.pi}.txt',eigvals_death_t)
+            np.savetxt(f'datajcm/fgu x{x/g} ga{gamma/g} p{p/g:.3f} tita{tita/np.pi}.txt',fg_u_delta)
+            np.savetxt(f'datajcm/fgd x{x/g} ga{gamma/g} p{p/g:.3f} tita{tita/np.pi}.txt',fg_d_delta)
+            np.savetxt(f'datajcm/Nu x{x/g} ga{gamma/g} p{p/g:.3f} tita{tita/np.pi}.txt',N_u_delta)
+            np.savetxt(f'datajcm/Nd x{x/g} ga{gamma/g} p{p/g:.3f} tita{tita/np.pi}.txt',N_d_delta)
 
-    #deepseek
-    mask = np.full(steps, True)
-    mask[:11] = False  # Skip the first element
-    
-    # Check if eigenvals_t_d has the expected structure
-    if hasattr(eigenvals_t_d, 'shape') and len(eigenvals_t_d.shape) > 1:
-        for i_ev in range(1, eigenvals_t_d.shape[1]):  # Iterate over columns (time steps)
-            mask_step = eigenvals_t_d[:, i_ev] < 1e-8
-            mask = mask & mask_step  # Use bitwise AND for numpy arrays
-    
-    # Find first True using numpy methods
-    true_indices = np.where(mask)[0]
-    if len(true_indices) > 0:
-        first_true_index = true_indices[0]
-        eigvals_death_t[i_delta] = t[first_true_index]
-        eigvals_death_z[i_delta] = fg_delta[i_delta][first_true_index]
-    else:
-        eigvals_death_t[i_delta] = -1
-        eigvals_death_z[i_delta] = -1
-
-   
-# fig_fg=plt.figure()
-# ax_fg=fig_fg.add_subplot(projection='3d')
-# dELTA, gT = np.meshgrid(delta_array, g*t,indexing='ij')
-# ax_fg.plot_wireframe(dELTA,gT,fg_delta,cstride=len(delta_array))
-# ax_fg.scatter(delta_array,g*eigvals_death_t,eigvals_death_z,color='red')
-# ax_fg.scatter(delta_array,g*negativity_revival_t,negativity_revival_z,color='green')
-# ax_fg.set_xlabel(r'$\Delta$')
-# ax_fg.set_ylabel(r'$gt$')
-# ax_fg.set_zlabel(r'$\delta \phi$')
-
-np.savetxt(f'datajcm/fgu x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',fg_u_delta)
-np.savetxt(f'datajcm/fgd x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',fg_d_delta)
-np.savetxt(f'datajcm/Nu x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',N_u_delta)
-np.savetxt(f'datajcm/Nd x{x/g} ga{gamma/g} p{p/gamma:.1f}.txt',N_d_delta)
-
-import subprocess
-
-def run_git_command(*args):
-    """Executes a Git command and prints its output."""
-    try:
-        # subprocess.run is generally preferred for simple command execution
-        result = subprocess.run(['git'] + list(args), capture_output=True, text=True, check=True)
-        print("STDOUT:", result.stdout)
-        print("STDERR:", result.stderr)
-    except subprocess.CalledProcessError as e:
-        print(f"Error executing Git command: {e}")
-        print("STDOUT:", e.stdout)
-        print("STDERR:", e.stderr)
-
-# Example usage:
-run_git_command("status")
-# run_git_command("clone", "https://github.com/user/repo.git", "my_local_repo")
-run_git_command("add", ".")
-run_git_command("commit", "-m", "Automated commit terminada la corrida larga")
-run_git_command("push")
 
 # plt.show()
 
