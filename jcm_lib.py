@@ -348,7 +348,7 @@ def fases(sol):
 
             # norma.append(psi.overlap(psi0))
 
-            pan += np.angle(psi.overlap(psi_old))
+            pan += np.angle(psi_old.overlap(psi))
             Pan.append(pan - np.angle(psi.overlap(psi0)))
             psi_old = psi
             Psi.append(psi)
@@ -387,8 +387,8 @@ def fases(sol):
 
                 # norma.append(psi.overlap(psi0))
 
-                pan += np.angle(psi.overlap(psi_old))
-                Pan.append(pan - np.angle(psi.overlap(psi0)))
+                pan += np.angle(psi_old.overlap(psi))
+                Pan.append(pan - np.angle(psi0.overlap(psi)))
                 psi_old = psi
                 Psi.append(psi)
                 # Almaceno el argumento para cada tiempo
@@ -402,6 +402,53 @@ def fases(sol):
     Pan = np.array(Pan)
 
     return np.unwrap(Pan), argumento, np.array(eigenvals_t) , Psi
+
+
+def fases_manual(result, times):
+    # Autoestado calculado diagonalizando la matriz   --->   autoestado_2
+    rho0 = result.states[0]
+    eigenval, eigenvec = rho0.eigenstates()    # Diagonalizar la matriz
+    max_eigenvalue_idx = eigenval.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+    psi0 = eigenvec[max_eigenvalue_idx]
+    psi_old = eigenvec[max_eigenvalue_idx]
+    Psi = []
+    norma = []
+    pan = 0
+    Pan = []
+    argumento = np.zeros(len(times))
+    autoval, autoval_2, autoval_3, autoval_4 = [], [], [], []
+    signo = 0
+    for i in range(len(times)):
+        # Autoestado numérico
+        rho = result.states[i]
+        eigenval, eigenvec = rho.eigenstates()    # diagonalizo la matriz
+
+        psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+        eigenvec_list = list(eigenvec)
+        psi_prueba, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+
+        index = np.array([0, 1, 2, 3])
+        autoval.append(eigenval[eigenvec_list.index(psi_prueba)])
+
+        index = np.delete(index, int(eigenvec_list.index(psi_prueba)))
+
+        autoval_2.append(eigenval[index[0]])       ## solo para probar
+        autoval_3.append(eigenval[index[1]])       ## despues borrar
+        autoval_4.append(eigenval[index[2]])
+
+        norma.append(psi.overlap(psi0))
+
+        pan += np.angle(psi.overlap(psi_old))
+        Pan.append(pan - np.angle(psi.overlap(psi0)))
+        psi_old = psi
+
+        # Almaceno el argumento para cada tiempo
+        argumento[i] = np.angle(psi0.dag() * psi)
+
+
+    Pan = np.array(Pan)
+    return np.unwrap(Pan), argumento, autoval, autoval_2, autoval_3, autoval_4
+
 
 def fases_mixta(sol):
     """params:
@@ -498,6 +545,16 @@ def fases_mixta(sol):
     Pan = np.array(Pan)
 
     return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+
+# def simulacion_qutip_jcm(psi0,t:list,N_cav:int,delta:float,x:float,g:float,w_0,photon_rate:float,pumping_rate:float,dephasing_rate:float):
+    
+#     a_jcm=tensor(qeye(2),destroy(N_cav))
+#     n_jcm=tensor(qeye(2),num(N_cav))
+#     sm_jcm=tensor(destroy(2),qeye(N_cav))
+#     sz_jcm=tensor(sigmaz(),qeye(N_cav))
+#     H_jcm=delta/2*sz_jcm + x*n_jcm*n_jcm + g*(sm_jcm*a_jcm.dag()+sm_jcm.dag()*a_jcm)
+#     sol=mesolve(H_jcm,psi0,t,c_ops=[np.sqrt(photon_rate)*a_jcm,np.sqrt(pumping_rate)*sm_jcm,np.sqrt(dephasing_rate)*sz_jcm])
+#     return sol
 # def cementerio():
 #     def plot3D_gamma(condiciones_iniciales:list,k,J,x,d,gamma,p):
 #         g=0.001
