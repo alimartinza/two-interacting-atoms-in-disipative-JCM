@@ -308,15 +308,13 @@ def triconcurrence(sol,alpha:float):
     Q=(E1^alpha+E2^alpha+E3^alpha)/2
     A=np.sqrt(Q*(Q-E1)*(Q-E2)*(Q-E3))
     return A
-
 def fases(sol):
     """params:
     -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
     RETURNS
     -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
     -arg: no se
-    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k.
-    -Psi: lista de eigenvectors que tienen maor coincidencia con el anterior"""
+    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
     try: 
 
         len_t=len(sol.states)
@@ -348,7 +346,7 @@ def fases(sol):
 
             # norma.append(psi.overlap(psi0))
 
-            pan += np.angle(psi_old.overlap(psi))
+            pan += np.angle(psi.overlap(psi_old))
             Pan.append(pan - np.angle(psi.overlap(psi0)))
             psi_old = psi
             Psi.append(psi)
@@ -387,8 +385,8 @@ def fases(sol):
 
                 # norma.append(psi.overlap(psi0))
 
-                pan += np.angle(psi_old.overlap(psi))
-                Pan.append(pan - np.angle(psi0.overlap(psi)))
+                pan += np.angle(psi.overlap(psi_old))
+                Pan.append(pan - np.angle(psi.overlap(psi0)))
                 psi_old = psi
                 Psi.append(psi)
                 # Almaceno el argumento para cada tiempo
@@ -401,7 +399,146 @@ def fases(sol):
     eigenvals_t=np.delete(eigenvals_t,0,axis=0)
     Pan = np.array(Pan)
 
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t) , Psi
+    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+
+# def fases(sol):
+#     """params:
+#     -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
+#     RETURNS
+#     -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
+#     -arg: no se
+#     -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k.
+#     -Psi: lista de eigenvectors que tienen maor coincidencia con el anterior"""
+#     try: 
+
+#         len_t=len(sol.states)
+#         if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
+#             rho0 = ket2dm(sol.states[0])
+#         else:
+#             rho0 = sol.states[0]
+#         eval0,evec0=rho0.eigenstates(sort='high')
+#         eigenvals_t = np.array([eval0])
+#         max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+#         psi0 = evec0[max_eigenvalue_idx]
+#         psi_old = psi0
+#         Psi = [psi0]
+#         norma = []
+#         pan = 0
+#         Pan = []
+#         argumento = np.zeros(len_t)
+#         signo = 0
+#         for i in range(len_t):
+#             if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
+#                 rho = ket2dm(sol.states[i])
+#             else:
+#                 rho = sol.states[i]
+            
+#             eigenval,eigenvec = rho.eigenstates(sort='high')
+#             eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
+
+#             psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+
+#             # norma.append(psi.overlap(psi0))
+
+#             pan += np.angle(psi_old.overlap(psi))
+#             Pan.append(pan - np.angle(psi.overlap(psi0)))
+#             psi_old = psi
+#             Psi.append(psi)
+#             # Almaceno el argumento para cada tiempo
+#             argumento[i] = np.angle(psi0.dag() * psi)
+
+#     except:
+
+#         if type(sol) is np.ndarray: #ya sabemos que no es un solver, asi que probamos a ver si es un ndarray. Si no, sigue al else y tira un error.
+#             len_t=len(sol)
+#             if sol[0].type == 'ket' or sol[0].type == 'bra':
+#                 rho0 = ket2dm(sol[0])
+#             else:
+#                 rho0 = sol[0]
+#             eval0,evec0=rho0.eigenstates()
+#             eigenvals_t = np.array([eval0])
+#             max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+#             psi0 = evec0[max_eigenvalue_idx]
+#             psi_old = psi0
+#             Psi = [psi0]
+#             norma = []
+#             pan = 0
+#             Pan = []
+#             argumento = np.zeros(len_t)
+#             signo = 0
+#             for i in range(len_t):
+#                 if sol[i].type == 'ket' or sol[i].type == 'bra':
+#                     rho = ket2dm(sol[i])
+#                 else:
+#                     rho = sol[i]
+                
+#                 eigenval,eigenvec = rho.eigenstates()
+#                 eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
+
+#                 psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+
+#                 # norma.append(psi.overlap(psi0))
+
+#                 pan += np.angle(psi_old.overlap(psi))
+#                 Pan.append(pan - np.angle(psi0.overlap(psi)))
+#                 psi_old = psi
+#                 Psi.append(psi)
+#                 # Almaceno el argumento para cada tiempo
+#                 argumento[i] = np.angle(psi0.dag() * psi)
+
+    
+#         else: 
+#             raise ValueError('jcm_lib.fases() no toma como argumento estados de este tipo. Solo puede ser un Solver de qutip.mesolve() o un ndarray.')
+        
+#     eigenvals_t=np.delete(eigenvals_t,0,axis=0)
+#     Pan = np.array(Pan)
+
+#     return np.unwrap(Pan), argumento, np.array(eigenvals_t) , Psi
+
+def fases_nuevo(result, times):
+    # Autoestado calculado diagonalizando la matriz   --->   autoestado_2
+    rho0 = result.states[0]
+    eigenval, eigenvec = rho0.eigenstates()    # Diagonalizar la matriz
+    max_eigenvalue_idx = eigenval.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
+    psi0 = eigenvec[max_eigenvalue_idx]
+    psi_old = eigenvec[max_eigenvalue_idx]
+    Psi = []
+    norma = []
+    pan = 0
+    Pan = []
+    argumento = np.zeros(len(times))
+    autoval, autoval_2, autoval_3, autoval_4 = [], [], [], []
+    signo = 0
+    for i in range(len(times)):
+        # Autoestado numérico
+        rho = result.states[i]
+        eigenval, eigenvec = rho.eigenstates()    # diagonalizo la matriz
+
+        psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+        # eigenvec_list = list(eigenvec)
+        # psi_prueba, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+
+        # index = np.array([0, 1, 2, 3])
+        # autoval.append(eigenval[eigenvec_list.index(psi_prueba)])
+
+        # index = np.delete(index, int(eigenvec_list.index(psi_prueba)))
+
+        # autoval_2.append(eigenval[index[0]])       ## solo para probar
+        # autoval_3.append(eigenval[index[1]])       ## despues borrar
+        # autoval_4.append(eigenval[index[2]])
+
+        # norma.append(psi.overlap(psi0))
+
+        pan += np.angle(psi.overlap(psi_old))
+        Pan.append(pan - np.angle(psi.overlap(psi0)))
+        psi_old = psi
+
+        # Almaceno el argumento para cada tiempo
+        argumento[i] = np.angle(psi0.dag() * psi)
+
+
+    Pan = np.array(Pan)
+    return Pan #, argumento, autoval, autoval_2, autoval_3, autoval_4
 
 
 def fases_manual(result, times):
