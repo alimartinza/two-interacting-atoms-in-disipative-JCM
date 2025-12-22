@@ -35,8 +35,7 @@ sp=tensor(sigmap(),qeye(N_c))
 sm=tensor(sigmam(),qeye(N_c))
 a=tensor(qeye(2),destroy(N_c))
 
-w_0=1
-g=0.001*w_0
+
 
 def omega_n(n_:int,delta:float):
     return np.sqrt(delta**2+4*g**2*n_)
@@ -46,15 +45,16 @@ def cos_theta_n(n_:int,delta:float):
 
 def sin_theta_n(n_:int,delta:float):
     return np.sqrt((omega_n(n_,delta)-delta)/(2*omega_n(n_,delta)))
+
 def pr(estado):
     return estado.unit()*estado.unit().dag()
+
 def omega_n(n_:int,delta:float,chi:float):
     return np.sqrt((delta-chi*(2*n_-1))**2+4*g**2*n_)
 
 def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
     sz_1=pr(v1)-pr(v2)
     sx_1=v1*v2.dag()+v2*v1.dag()
-
     sy_1=-1j*v1*v2.dag()+1j*v2*v1.dag()
 
     expect_sx_1=[expect(sx_1,sol_states[i]) for i in range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))]
@@ -66,7 +66,7 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
 '''--------------- CORRIDA Y BARRIDO EN DELTA --------------'''
 #LA IDEA ES BARRER EN DELTA Y MIRAR PHI_D-PHI_U EN FUNCION DEL TIEMPO, Y MARCAR EN EL PLOT 3D CUANDO LOS AUTOVALORES SON CERO Y 
 # CUANDO LA NEGATIVITY REVIVE (A TIEMPOS LARGOS).
-
+#SUPERFICIE 3D WIREFRAME EJEX=DELTA EJEY=TIEMPO EJEZ=DELTAFG
 
 
 # steps=160000
@@ -199,11 +199,12 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
 # plt.show()
 
 '''----BLOCH---'''
-
-
-# steps=160000
+#ESFERA DE BLOCH. LA IDEA ES ELEGIR ALGUNAS COMBINACIONES DE PARAMETROS PARA COMPARAR LAS TRAYECTORIAS 
+#PARA LOS DIFERENTES CASOS.
 
 # ciclos_bloch=40
+# steps=3000*ciclos_bloch
+
 # points=ciclos_bloch*50
 # for p in [0.1*0.1*g]:
 #     for gamma in [0.1*g]:
@@ -262,94 +263,107 @@ def vectorBloch(v1,v2,sol_states,steps,ciclos_bloch,T,t_final,points):
 
 
 '''----FG con pocos delta para analizar casos------'''
-fig_tau=plt.figure(figsize=(8,6))
-ax_tau=fig_tau.add_subplot()
-fig_fg=plt.figure(figsize=(8,6))
-ax_fg=fig_fg.add_subplot()
 
-colors=['black','red','blue','green']
-i_color=0
-# steps=160000
-tita=0
-ciclos_bloch=40
-points=ciclos_bloch*50
-for p in [0.1*0.1*g]:
-    for gamma in [0.1*g]:
-        for x in [0*g]:
-            for steps in [160,1600]:
-                delta_array=[1*g]
-                omega=np.sqrt(4*g**2+(0-x)**2)
-                '''---Simulacion numerica---'''
-                T=2*np.pi/omega
-                t_final=40*T
+# fig_tau=plt.figure(figsize=(8,6))
+# ax_tau=fig_tau.add_subplot()
+# fig_fg=plt.figure(figsize=(8,6))
+# ax_fg=fig_fg.add_subplot()
+# esfera1=Bloch()
+# esfera1.make_sphere()
+# w_0=1
+# g=0.01*w_0
 
-                t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+# colors=['black','red','blue','green']
+# i_color=0
+# steps=3000*10
+# # tita=0
+# ciclos_bloch=10
+# points=ciclos_bloch*50
+# for p in [0.1*0.1*g]:
+#     for gamma in [0.1*g]:
+#         for x in [0*g]:
+#             # for steps in [160,1600]:
+#             delta_array=[2*g]
+#             omega=np.sqrt(4*g**2+(delta_array[0]-x)**2)
+#             '''---Simulacion numerica---'''
+#             T=2*np.pi/omega
+#             t_final=10*T
+             
+#             t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
-                fg_delta=np.zeros((len(delta_array),steps))
-                fg_u_delta=np.zeros((len(delta_array),steps))
-                fg_d_delta=np.zeros((len(delta_array),steps))
-                # print(fg_delta[0])
-                N_u_delta=np.zeros((len(delta_array),steps))
-                N_d_delta=np.zeros((len(delta_array),steps))
+#             fg_delta=np.zeros((len(delta_array),steps))
+#             fg_u_delta=np.zeros((len(delta_array),steps))
+#             fg_d_delta=np.zeros((len(delta_array),steps))
+#             # print(fg_delta[0])
+#             N_u_delta=np.zeros((len(delta_array),steps))
+#             N_d_delta=np.zeros((len(delta_array),steps))
 
-                vBloch_u_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
-                vBloch_d_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
-                vBloch_eigenvec_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
+#             vBloch_u_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
+#             vBloch_d_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
+#             vBloch_eigenvec_delta=np.zeros((3,len(delta_array),int(steps*ciclos_bloch*T/t_final/points)))
 
-                eigvals_death_t=np.full(len(delta_array),-1)
-                # eigvals_death_z=np.full(len(delta_array),0)
+#             eigvals_death_t=np.full(len(delta_array),-1)
+#             # eigvals_death_z=np.full(len(delta_array),0)
+#             # negativity_revival_t=np.full(len(delta_array),-1)
+#             # negativity_revival_z=np.full(len(delta_array),0)
 
-                # negativity_revival_t=np.full(len(delta_array),-1)
-                # negativity_revival_z=np.full(len(delta_array),0)
+#             for i_delta,delta in enumerate(delta_array):
+#                 tita_rob=np.arctan2(delta-x,-2*g)
+#                 tita=tita_rob
+#                 print(f'{tita/np.pi}pi') 
+#                 phi=0
+#                 psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+#                 H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+#                 # print(psi0)
+#                 # print(H*psi0)
+#                 l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+                
+#                 sol_u=mesolve(H,psi0,t)
+#                 sol_d=mesolve(H,psi0,t,c_ops=l_ops)
 
-                for i_delta,delta in enumerate(delta_array):
-                    
-                    phi=0
-                    psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
-                    H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
-                    print(psi0)
-                    print(H*psi0)
-                    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
-                    
-                    sol_u=mesolve(H,psi0,t)
-                    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+#                 fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+#                 fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
 
-                    fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
-                    fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+#                 fg_delta[i_delta]=fg_d-fg_u
+#                 fg_d_delta[i_delta]=fg_d
+#                 fg_u_delta[i_delta]=fg_u
+#                 vBloch_u=vectorBloch(e0,g1,sol_u.states,steps,ciclos_bloch,T,t_final,points)
+#                 vBloch_eigevec=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
+#                 vBloch_d=vectorBloch(e0,g1,sol_d.states,steps,ciclos_bloch,T,t_final,points)
+#                 esfera1.add_points(vBloch_u,'m',colors='black')
+#                 esfera1.add_points(vBloch_eigevec,'m',colors='red')
+#                 esfera1.add_points(vBloch_d,'m',colors='yellow')
 
-                    fg_delta[i_delta]=fg_d-fg_u
-                    fg_d_delta[i_delta]=fg_d
-                    fg_u_delta[i_delta]=fg_u
-
-                label=fr'steps={steps}, $\gamma={gamma/g :.2f}g, p={p/g :.2f}g$'
-                dfg=fg_d-fg_u
+#                 label=fr'$\gamma={gamma/g :.2f}g, p={p/g :.2f}g$'
+#                 dfg=fg_d-fg_u
 
 
-                ax_fg.plot(t/T,fg_u,color=colors[i_color],label=f'u {steps}')
-                ax_fg.plot(t/T,fg_d,color=colors[i_color],linestyle='dashed',label=f'd {steps}')
-                ax_fg.scatter(t/T,dfg,color=colors[i_color],label=f'd-u {steps}')
-                # ax_fg.vlines(t_saltos,-2,2)
-                # plt.show()
+#                 ax_fg.plot(t/T,fg_u/np.pi,color=colors[i_color],label=f'u')
+#                 ax_fg.plot(t/T,fg_d/np.pi,color=colors[i_color],linestyle='dashed',label=f'd')
+#                 # ax_fg.scatter(t/T,dfg,color=colors[i_color],label=f'd-u')
+#                 # ax_fg.vlines(t_saltos,-2,2)
+#                 # plt.show()
 
-                index_saltos=[]
-                t_saltos=[]
+#                 # index_saltos=[]
+#                 # t_saltos=[]
 
-                for i_tau in range(len(dfg)-1):
-                    if np.abs(dfg[i_tau+1]-dfg[i_tau])>3:
-                        index_saltos.append(i_tau)
-                        t_saltos.append(t[i_tau]/T)
-                dif_tiempo_salto=[]
-                for i in range(0,len(t_saltos)-2,2):
-                    dif_tiempo_salto.append(t_saltos[i+1]-t_saltos[i])
-                ax_tau.plot(dif_tiempo_salto,color=colors[i_color])
-                ax_tau.scatter(range(len(dif_tiempo_salto)),dif_tiempo_salto,color=colors[i_color],label=label)
-                i_color+=1
+#                 # for i_tau in range(len(dfg)-1):
+#                 #     if np.abs(dfg[i_tau+1]-dfg[i_tau])>3:
+#                 #         index_saltos.append(i_tau)
+#                 #         t_saltos.append(t[i_tau]/T)
+#                 # dif_tiempo_salto=[]
+#                 # for i in range(0,len(t_saltos)-2,2):
+#                 #     dif_tiempo_salto.append(t_saltos[i+1]-t_saltos[i])
+#                 # ax_tau.plot(dif_tiempo_salto,color=colors[i_color])
+#                 # ax_tau.scatter(range(len(dif_tiempo_salto)),dif_tiempo_salto,color=colors[i_color],label=label)
+#                 # i_color+=1
+# esfera1.render()
+# esfera1.show()
+# # ax_tau.legend()
 
-ax_tau.legend()
+# ax_fg.legend()
 
-ax_fg.legend()
-
-plt.show()
+# plt.show()
 
 '''-------------------------- GRAFICOS FUNCIONABLES --------------------------'''
 
@@ -372,7 +386,7 @@ plt.show()
 # ciclos_bloch=70
 # colors=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
 
-# '''-------------------------    BLOCH UNIT PUNTERO DISIP FG --------------------------'''
+'''-------------------------    BLOCH UNIT PUNTERO DISIP FG --------------------------'''
 
 # fig_e=plt.figure(figsize=(8,6))
 
@@ -465,6 +479,7 @@ plt.show()
 # plt.show()
 
 '''------------------   CONDICIONES INICIALES TITA  ---------------------------------------------------------'''
+#ESFERA DE BLOCH Y HEATPLOT DE NEGATIVIDAD. BARREMOS EN UN ANGULO TITA (DE CONDICION INICIAL). MIRAMOS 1 CICLO DE EVOLUCION PARA CADA CONDICION INICIAL
 
 # def heatplot(t,y,z_data:list,title:str,ylabel):
 #     fig_u=plt.figure(figsize=(8,6))
@@ -485,39 +500,40 @@ plt.show()
 # #Parametros y Hamiltoniano
 
 # gamma=0.1*g
-# p=0.0*g#*0.1*g
+# p=0.01*g#*0.1*g
 
 # x=0*g
-# delta=0*g
+# delta=1*g
 
 # H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
 # omega=np.sqrt(4*g**2+(delta-x)**2)
 
 # # Simulacion numerica
-
+# num_ciclos=3
 # T=2*np.pi/omega
-# t_final=110*T
-# steps=50000
+# t_final=num_ciclos*T
+# steps=3000*num_ciclos
 
-# ciclos_bloch=110
-# points=4000
+# ciclos_bloch=2
+# points=ciclos_bloch*50
 
 # # Barrido de condiciones iniciales
 
-# num_tita=1
+# num_tita=15
 # tita_eig=2*np.arctan2((-delta+x-np.sqrt(np.power((-delta+x),2)+4*g**2)),(2*g))
-
+# tita_rob=np.arctan2(2*g,delta-x)+np.pi/2
 # # tita_array=np.linspace(tita_eig,tita_eig+np.pi/2,num_tita)
-# tita_array=np.linspace(np.pi/4,np.pi/2,num_tita)
-# colors=[mpl.colormaps['plasma'](np.linspace(0,1,num_tita))] #colores para pintar en la esfera de bloch
-# colors_map=[mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points))))),mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))]
+# tita_array=np.linspace(0,np.pi,num_tita)
+# colors=mpl.colormaps['plasma'](np.linspace(0,1,num_tita)) #colores para pintar en la esfera de bloch
+# colors_map=mpl.colormaps['viridis'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))#,mpl.colormaps['winter'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))#,mpl.colormaps['magma'](np.linspace(0,1,len(range(0,int(steps*ciclos_bloch*T/t_final),int(steps*ciclos_bloch*T/t_final/points)))))
 
 # #definimos los arrays de negatividad
 
 # N_u=np.zeros((num_tita,steps))
 # N_d=np.zeros((num_tita,steps))
 
-# print(tita_eig)
+# print(f'{tita_eig/np.pi}pi')
+# print(f'{tita_rob/np.pi}pi')
 # #ahora hacemos el barrido
 # #paara cada valor de tita hacemos una simulacion y calculamos 
 
@@ -526,11 +542,12 @@ plt.show()
 # ax_fg_tita.set_xlabel(r'$t/T$')
 # ax_fg_tita.set_ylabel(r'$\delta\phi_g/\pi$')
 
-# phi=[0,np.pi/4]
+# phi=0
+# # tita_array=[np.pi/4]
 # for j,tita in enumerate(tita_array):
 #     # phi=np.arcsin(0.5/np.sin(tita))
-#     psi0=np.cos(tita/2)*e0+np.exp(1j*phi[j])*np.sin(tita/2)*g1
-#     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sz] #operadores de colapso/lindblad
+#     psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+#     l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
 #     t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
 
 #     sol_u=mesolve(H,psi0,t)
@@ -547,11 +564,12 @@ plt.show()
 #     esfera.add_points(vBloch_tita,'m',colors=colors[j])
 
 #     vBloch_tita=vectorBloch(e0,g1,psi_eig_d,steps,ciclos_bloch,T,t_final,points)
-#     esfera.add_points(vBloch_tita,'m',colors=colors_map[j])
+#     esfera.add_points(vBloch_tita,'m',colors=colors_map)
+#     print(j)
 # ax_fg_tita.legend()
 # # print(N_d)
-# # heatplot(t,tita_array/np.pi,N_u,'Negativity unit',r"$\theta/\pi$")  
-# # heatplot(t,tita_array/np.pi,N_d,'Negativity disip',r"$\theta/\pi$")  
+# heatplot(t,tita_array/np.pi,N_u,'Negativity unit',r"$\theta/\pi$")  
+# heatplot(t,tita_array/np.pi,N_d,'Negativity disip',r"$\theta/\pi$")  
 # # heatplot(t,tita_array/np.pi,fg_u/np.pi,r'$\phi_g$ uni',r"$\phi_g/\pi$")
 # # heatplot(t,tita_array/np.pi,fg_d/np.pi,r'$\phi_g$ dis',r"$\phi_g/\pi$")
 # # heatplot(t,tita_array/np.pi,(fg_u-fg_d)/np.pi,r'$\delta\phi$ dis',r"$\phi_g/\pi$")
@@ -561,3 +579,90 @@ plt.show()
 # esfera.show()
 # plt.show()
 
+'''------- BARRIDA DELTA CONDICION INICIAL PERPENDICULAR A LA DIRECCION DE ROTACION DEL HAMILTONIANO --------'''
+#EL HAMILTONIANO DE 2X2 DEFINE UNA DIRECCION n=(g*sqrt(n),0,delta/2). PONEMOS LA CONDICION INICIAL QUE SEA 
+#PERPENDICULAR A ESTA DIRECCION CALCULANDO EL ANGULO THETA DE LA DIRECCION n, SABIENDO QUE EL ANGULO POLAR
+#phi=0 PORQUE EN n_y=0, DE ESTA MANERA LA TRAYECTORIA UNITARIA ES SIEMPRE POR UNA GEODESICA INDEPENDIENTEMENTE
+#DE LA CONDICION DE RESONANCIA
+
+def heatplot(t,y,z_data:list,title:str,ylabel):
+    fig_u=plt.figure(figsize=(8,6))
+    fig_u.suptitle(title)
+    ax_u=fig_u.add_subplot()
+    ax_u.set_xlabel('$t/T$')
+    ax_u.set_ylabel(ylabel)
+    c0 = ax_u.pcolor(t/T, y, z_data, shading='auto', cmap='jet',vmin=0,vmax=0.5)
+    contour_u = ax_u.contourf(t/T, y, z_data,levels=[0,0.01],colors='black',linewidths=1)
+    ax_u.clabel(contour_u, fmt="%.1f",colors='red',fontsize=10)
+    fig_u.colorbar(c0, ax=ax_u,shrink=0.7)
+    # fig_u.savefig(rf'graficos\negativity\{psi0Name} {title} x={x/g}g k={k/g}g J={J/g}g neg delta dis.png')
+
+
+# fig_fg=plt.figure(figsize=(8,6))
+# ax_fg=fig_fg.add_subplot()
+
+w_0=1
+g=0.01*w_0
+
+gamma=0.1*g
+p=0.01*g
+x=0
+
+steps=3000*9
+delta_array=np.linspace(0,10*g,100)
+
+fg_delta=np.zeros((len(delta_array),steps))
+fg_u_delta=np.zeros((len(delta_array),steps))
+fg_d_delta=np.zeros((len(delta_array),steps))
+N_u_delta=np.zeros((len(delta_array),steps))
+N_d_delta=np.zeros((len(delta_array),steps))
+omega0=2*g
+T0=2*np.pi/omega0
+
+fig_fgs=plt.figure(figsize=(8,6))
+ax_fgs=fig_fgs.add_subplot()
+colors=mpl.colormaps['plasma'](np.linspace(0,1,len(delta_array)))
+
+for i_delta,delta in enumerate(delta_array):
+    print(i_delta)
+    omega=np.sqrt(4*g**2+(delta-x)**2)
+    T=2*np.pi/omega
+    t_final=3*T
+        
+    t=np.linspace(0,t_final,steps) #TIEMPO DE LA SIMULACION 
+    tita_rob=np.arctan2(delta-x,-2*g)
+    tita=tita_rob
+    phi=0
+    psi0=np.cos(tita/2)*e0+np.exp(1j*phi)*np.sin(tita/2)*g1
+    H=x*a.dag()*a*a.dag()*a+delta/2*sz + g*(a.dag()*sm+a*sp)
+    l_ops=[np.sqrt(gamma)*a,np.sqrt(p)*sm] #operadores de colapso/lindblad
+    
+    sol_u=mesolve(H,psi0,t)
+    sol_d=mesolve(H,psi0,t,c_ops=l_ops)
+
+    fg_u,arg,eigenvals_t_u,psi_eig_u = fases(sol_u)
+    fg_d,arg,eigenvals_t_d,psi_eig_d = fases(sol_d)
+
+    fg_delta[i_delta]=np.abs(fg_d)-np.abs(fg_u)
+    fg_d_delta[i_delta]=np.abs(fg_d)
+    fg_u_delta[i_delta]=np.abs(fg_u)
+
+    N_u_delta[i_delta]=np.array([negativity_hor(sol_u.states[i],[0,1]) for i in range(len(sol_u.states))])
+    N_d_delta[i_delta]=np.array([negativity_hor(sol_d.states[i],[0,1]) for i in range(len(sol_d.states))])
+    ax_fgs.plot(t/T,fg_u,color=colors[i_delta],label=f'{delta}')
+    ax_fgs.plot(t/T,fg_d,color=colors[i_delta],linestyle='dashed')
+t=np.linspace(0,3*T0,steps)
+heatplot(t/T0,delta_array/g,N_u_delta,'Negatividad u',r'$\Delta/g$')
+heatplot(t/T0,delta_array/g,N_u_delta,'Negatividad d',r'$\Delta/g$')
+
+heatplot(t/T0,delta_array/g,fg_delta/np.pi,r'$\delta \phi/\pi$',r'$\Delta/g$')
+
+fig_rob=plt.figure(figsize=(8,6))
+ax_rob=fig_rob.add_subplot()
+ax_rob.scatter(delta_array/g,fg_delta[:,-1]/np.pi,color='red')
+ax_rob.set_xlabel(r'$\Delta/g$')
+ax_rob.set_ylabel(r'$\delta\phi/\pi$')
+
+# ax_fgs.legend()
+
+plt.show()

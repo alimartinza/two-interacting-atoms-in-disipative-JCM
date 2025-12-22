@@ -399,7 +399,7 @@ def fases(sol):
     eigenvals_t=np.delete(eigenvals_t,0,axis=0)
     Pan = np.array(Pan)
 
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+    return np.unwrap(Pan), argumento, np.array(eigenvals_t),Psi
 
 # def fases(sol):
 #     """params:
