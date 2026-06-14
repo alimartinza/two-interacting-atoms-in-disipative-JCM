@@ -94,41 +94,120 @@ script_path = os.path.dirname(__file__)  #DEFINIMOS EL PATH AL FILE GENERICAMENT
 
 
 w_0=1
-g=0.001*w_0
+g=0.01*w_0
 
 # gamma_list=[0.01*g,0.1*g,0.25*g]
 # p=0.005*g
 
-d=0*g
-x=0*g
+d=2*g
+x=2*g
 
 J=0*g
 k=0*g
-
+border=0.02
 
 #'eg0-ge0+gg1','w(2)','eg0+ge0','eg0'
-psi0Name='ee0'
+psi0Name='eg2'
 
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez3t fg delta.txt')
-delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta-chi\{psi0Name} k={k/g}g J={J/g}g delta-chi.txt')
+# delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta-chi\{psi0Name} k={k/g}g J={J/g}g delta-chi.txt')
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g chi.txt')
 #delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k.txt')
 # delta_fg_3T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\5\robustez\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta.txt')
 # delta_fg_10T=np.loadtxt(rf'D:\Estudios\Tesis\imagenes analisis\t-ordenado\4\concu\{psi0Name} k={k/g}g x={x/g}g J={J/g}g rebustez10t fg delta.txt')
+def try_load(file):
+    try:
+        return np.loadtxt(file)
+    except:
+        print('no se encontro',file)
+        return np.zeros((4,406))
+delta_fg_chi_3T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g chi3t.txt')
+delta_fg_chi_2T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g chi2t.txt')
+delta_fg_chi_1T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\chi\{psi0Name} d={d/g}g k={k/g}g J={J/g}g chi1t.txt')
+
+delta_fg_delta_3T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta 3t.txt')
+delta_fg_delta_2T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta 2t.txt')
+delta_fg_delta_1T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\delta\{psi0Name} k={k/g}g x={x/g}g J={J/g}g delta 1t.txt')
+
+
+delta_fg_k_3T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k3t.txt')
+delta_fg_k_2T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k2t.txt')
+delta_fg_k_1T=try_load(rf'C:\Users\alima\Estudios\Tesis\two-interacting-atoms-in-disipative-JCM\robusteces\tcm\k\{psi0Name} d={d/g}g x={x/g}g J={J/g}g k1t.txt')
+for i in [1,2,3]:
+    delta_fg_delta_3T[i][delta_fg_delta_3T[i]>np.pi]+=-2*np.pi
+    delta_fg_delta_3T[i][delta_fg_delta_3T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_delta_2T[i][delta_fg_delta_2T[i]>np.pi]+=-2*np.pi
+    delta_fg_delta_2T[i][delta_fg_delta_2T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_delta_1T[i][delta_fg_delta_1T[i]>np.pi]+=-2*np.pi
+    delta_fg_delta_1T[i][delta_fg_delta_1T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_chi_3T[i][delta_fg_chi_3T[i]>np.pi]+=-2*np.pi
+    delta_fg_chi_3T[i][delta_fg_chi_3T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_chi_2T[i][delta_fg_chi_2T[i]>np.pi]+=-2*np.pi
+    delta_fg_chi_2T[i][delta_fg_chi_2T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_chi_1T[i][delta_fg_chi_1T[i]>np.pi]+=-2*np.pi
+    delta_fg_chi_1T[i][delta_fg_chi_1T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_k_3T[i][delta_fg_k_3T[i]>np.pi]+=-2*np.pi
+    delta_fg_k_3T[i][delta_fg_k_3T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_k_2T[i][delta_fg_k_2T[i]>np.pi]+=-2*np.pi
+    delta_fg_k_2T[i][delta_fg_k_2T[i]<-np.pi]+=2*np.pi
+
+    delta_fg_k_1T[i][delta_fg_k_1T[i]>np.pi]+=-2*np.pi
+    delta_fg_k_1T[i][delta_fg_k_1T[i]<-np.pi]+=2*np.pi
 
 colors=mpl.colormaps['plasma'](np.linspace(0,1,3+1))
 
-fig_rob3t=plt.figure(figsize=(8,6))
-ax_rob3t=fig_rob3t.add_subplot()
-# ax_rob3t.set_xlim(np.min(delta_fg_3T[0])/g,np.max(delta_fg_3T[0])/g)
-# ax_rob3t.set_ylim(-0.6,0.6)
-ax_rob3t.hlines(0,np.min(delta_fg_3T[0])/g,np.max(delta_fg_3T[0])/g,colors='grey',linestyles='dashed',alpha=0.5)
-ax_rob3t.set_xlabel('$\Delta/g$')
-ax_rob3t.set_ylabel('$\delta \phi/\pi$')
-ax_rob3t.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
-ax_rob3t.vlines([-x/2/g,3/2*x/g],-0.1,0.02,colors='grey',linestyles='dashed')
-# print(delta_fg_3T[0])
-for i in range(1,len(delta_fg_3T)):
-    ax_rob3t.scatter(delta_fg_3T[0]/g,delta_fg_3T[i]/np.pi,color=colors[i-1],marker='.')
+fig_rob_delta=plt.figure(figsize=(8,6),dpi=120)
+ax_rob_delta=fig_rob_delta.add_subplot()
+ax_rob_delta.set_xlim(np.min(delta_fg_delta_2T[0])/g,np.max(delta_fg_delta_2T[0])/g)
+ax_rob_delta.set_ylim(np.min(delta_fg_delta_3T[3])/np.pi-border,np.max(delta_fg_delta_3T[3])/np.pi+border)
+ax_rob_delta.hlines(0,np.min(delta_fg_delta_3T[0])/g,np.max(delta_fg_delta_3T[0])/g,colors='grey',linestyles='dashed',alpha=0.5)
+ax_rob_delta.set_xlabel('$\Delta/g$')
+ax_rob_delta.set_ylabel('$\delta \phi/\pi$')
+ax_rob_delta.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
+# ax_rob_delta.vlines([-x/2/g,3/2*x/g],-0.1,0.02,colors='grey',linestyles='dashed')
+
+for i in range(1,len(delta_fg_delta_3T)):
+    ax_rob_delta.plot(delta_fg_delta_3T[0]/g,delta_fg_delta_3T[i]/np.pi,color=colors[i-1])
+    ax_rob_delta.plot(delta_fg_delta_2T[0]/g,delta_fg_delta_2T[i]/np.pi,color=colors[i-1],linestyle='dashed')
+    ax_rob_delta.plot(delta_fg_delta_1T[0]/g,delta_fg_delta_1T[i]/np.pi,color=colors[i-1],linestyle='dashdot')
+
+
+fig_rob_chi=plt.figure(figsize=(8,6))
+ax_rob_chi=fig_rob_chi.add_subplot()
+ax_rob_chi.set_xlim(np.min(delta_fg_chi_2T[0])/g,np.max(delta_fg_chi_2T[0])/g)
+ax_rob_chi.set_ylim(np.min(delta_fg_chi_3T[3])/np.pi-border,np.max(delta_fg_chi_3T[3])/np.pi+border)
+ax_rob_chi.hlines(0,np.min(delta_fg_chi_3T[0])/g,np.max(delta_fg_chi_3T[0])/g,colors='grey',linestyles='dashed',alpha=0.5)
+ax_rob_chi.set_xlabel('$\chi/g$')
+ax_rob_chi.set_ylabel('$\delta \phi/\pi$')
+ax_rob_chi.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
+# ax_rob_chi.vlines([-x/2/g,3/2*x/g],-0.1,0.02,colors='grey',linestyles='dashed')
+
+for i in range(1,len(delta_fg_chi_3T)):
+    ax_rob_chi.plot(delta_fg_chi_3T[0]/g,delta_fg_chi_3T[i]/np.pi,color=colors[i-1])
+    ax_rob_chi.plot(delta_fg_chi_2T[0]/g,delta_fg_chi_2T[i]/np.pi,color=colors[i-1],linestyle='dashed')
+    ax_rob_chi.plot(delta_fg_chi_1T[0]/g,delta_fg_chi_1T[i]/np.pi,color=colors[i-1],linestyle='dashdot')
+
+
+fig_rob_k=plt.figure(figsize=(8,6))
+ax_rob_k=fig_rob_k.add_subplot()
+ax_rob_k.set_xlim(np.min(delta_fg_k_2T[0])/g,np.max(delta_fg_k_2T[0])/g)
+ax_rob_k.set_ylim(np.min(delta_fg_k_3T[3])/np.pi-border,np.max(delta_fg_k_3T[3])/np.pi+border)
+ax_rob_k.hlines(0,np.min(delta_fg_k_3T[0])/g,np.max(delta_fg_k_3T[0])/g,colors='grey',linestyles='dashed',alpha=0.5)
+ax_rob_k.set_xlabel('$k/g$')
+ax_rob_k.set_ylabel('$\delta \phi/\pi$')
+ax_rob_k.ticklabel_format(style='scientific',scilimits=(-1,2),useMathText=True)
+# ax_rob_k.vlines([-x/2/g,3/2*x/g],-0.1,0.02,colors='grey',linestyles='dashed')
+
+for i in range(1,len(delta_fg_k_3T)):
+    ax_rob_k.plot(delta_fg_k_3T[0]/g,delta_fg_k_3T[i]/np.pi,color=colors[i-1])
+    ax_rob_k.plot(delta_fg_k_2T[0]/g,delta_fg_k_2T[i]/np.pi,color=colors[i-1],linestyle='dashed')
+    ax_rob_k.plot(delta_fg_k_1T[0]/g,delta_fg_k_1T[i]/np.pi,color=colors[i-1],linestyle='dashdot')
 
 plt.show()
