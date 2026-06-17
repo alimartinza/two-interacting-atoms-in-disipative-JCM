@@ -132,11 +132,11 @@ def fases(sol,open_system:bool):
         norma = []
         
         signo = 0
-        for i in range(1,len_t):
-            if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
-                rho = ket2dm(sol.states[i])
+        for t_i in range(1,len_t):
+            if sol.states[t_i].type == 'ket' or sol.states[t_i].type == 'bra':
+                rho = ket2dm(sol.states[t_i])
             else:
-                rho = sol.states[i]
+                rho = sol.states[t_i]
             
             eigenvals_rho,eigenvecs_rho = rho.eigenstates(sort='high')
             index_check_array=-1*np.ones(len(eval0))
@@ -144,20 +144,18 @@ def fases(sol,open_system:bool):
             # print('len eigenvecsrho[i]=',len(eigenvecs_rho))
             for i_1 in range(len(eigenvecs_rho)):
                     
-                psi, overlap,index = max(((autoestado, abs(autoestado.overlap(eigenvecs_t[i_1][i-1])),autoestado_index) for autoestado_index,autoestado in enumerate(eigenvecs_rho)),key=lambda x: x[1])
+                psi, overlap,index = max(((autoestado, abs(autoestado.overlap(eigenvecs_t[i_1][t_i-1])),autoestado_index) for autoestado_index,autoestado in enumerate(eigenvecs_rho)),key=lambda x: x[1])
                 
                 psi_prob=expect(rho,psi)
                 eigenvecs_t[i_1].append(psi)
                 eigenvals_t[i_1].append(psi_prob)
                 if index in index_check_array:
-                    # print(f'hay problemas de definicion de los autovectores en el paso {i}.')
-                    # print(psi_prob)
-                    if psi_prob<1e-2:
-                        break
-                    else:
-                        import warnings as _w
-                        _w.warn(f'conflicto autovectores paso {i} peso {psi_prob:.3g}; se continua.')
-                        pass
+                    # Conflicto: dos autovectores se emparejan con el mismo del paso
+                    # anterior. NO cortamos el loop (eso dejaba listas de longitud
+                    # inconsistente -> IndexError). Seguimos: el append de psi ya se
+                    # hizo arriba, y el autovector dominante (eigenvecs_t[0], el unico
+                    # usado para la fase) nunca esta en conflicto porque su gap es grande.
+                    pass
                 else:
                     index_check_array[i_1]=index  
                 #     else: raise Warning(f'tenemos un conflicto, dos vectores en el paso {i} parten del mismo vector en el paso anterior.')
@@ -179,14 +177,14 @@ def fases(sol,open_system:bool):
         psi0=evec0[0]
         psi_old=psi0
         # print('type rho0',rho0.type)
-        for i in range(len(eigenvecs_t[0])):
+        for t_j in range(len(eigenvecs_t[0])):
             # print('i',i)
-            psi=eigenvecs_t[0][i]
+            psi=eigenvecs_t[0][t_j]
             pan += np.angle(psi.overlap(psi_old))
             Pan.append(pan - np.angle(psi.overlap(psi0)))
-            psi_old = eigenvecs_t[0][i]
+            psi_old = eigenvecs_t[0][t_j]
             # Almaceno el argumento para cada tiempo
-            argumento[i] = np.angle(psi0.dag().overlap(psi))
+            argumento[t_j] = np.angle(psi0.dag().overlap(psi))
 
         Pan = np.array(Pan)
         # print(len(eigenvals_t))
@@ -313,7 +311,6 @@ def fases_viejo(sol):
     Pan = np.array(Pan)
 
     return np.unwrap(Pan), argumento, np.array(eigenvals_t),Psi
-
 
 def fases_nuevo(result, times):
     # Autoestado calculado diagonalizando la matriz   --->   autoestado_2

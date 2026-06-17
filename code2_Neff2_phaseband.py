@@ -105,12 +105,12 @@ def initial_state(theta, phi1_, phi2_, eigstates):
 # ============================================================================
 #  3) METRICA (identica al Codigo 1)
 # ============================================================================
-def delta_phi_curve(H, psi0, c_ops, T, Ncyc, spc, N1):
+def delta_phi_curve(H, psi0, c_ops, T, Ncyc, spc):
     t  = np.linspace(0, Ncyc*T, Ncyc*spc)
     su = mesolve(H, psi0, t, c_ops=[])
     sd = mesolve(H, psi0, t, c_ops=c_ops)
     fu, _       = fases(su, open_system=False)
-    fd, _, _, _ = fases(sd, open_system=True, N1=N1)
+    fd, _, _, _ = fases(sd, open_system=True)
     return t, (fd - fu)
 
 def valley_metric(d, Ncyc, spc):
@@ -126,7 +126,7 @@ def robustness(theta, phi1_, phi2_, eigstates, T):
     psi0 = initial_state(theta, phi1_, phi2_, eigstates)
     if psi0 is None:
         return np.nan
-    _, d = delta_phi_curve(H_tcm(Delta), psi0, l_ops(), T, Ncyc, spc, N1=4)
+    _, d = delta_phi_curve(H_tcm(Delta), psi0, l_ops(), T, Ncyc, spc)
     return valley_metric(d, Ncyc, spc)
 
 # ============================================================================
