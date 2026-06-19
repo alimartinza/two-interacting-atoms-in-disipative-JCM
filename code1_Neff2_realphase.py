@@ -54,7 +54,7 @@ from jcm_lib import fases, verificar_signo_por_continuidad
 g       = 0.01
 gamma   = 0.1   * g        # tasa de perdida de cavidad
 p_at    = 0.05 * g        # tasa de decaimiento atomico (igual en ambos atomos)
-Delta   = 0*g              # resonancia (poner !=0 para explorar fuera de resonancia)
+Delta   = 0.5*g              # resonancia (poner !=0 para explorar fuera de resonancia)
 N_theta = 100               # numero de puntos en el barrido de theta
 Ncyc    = 6            # numero de oscilaciones (ciclos de Rabi)
 spc     = 10000             # pasos temporales por ciclo (resolucion)
@@ -299,12 +299,12 @@ if __name__ == "__main__":
 
 
     fig, ax = plt.subplots(figsize=(9,5))
-    ax.plot(theta_arr, metric, 'o-', color='#228833')
+    ax.plot(theta_arr/np.pi, metric, 'o-', color='#228833')
     ax2=ax.twinx()
-    ax2.set_ylabel(r'$F(|\langle psi_+ | \psi \rangle )[\tau]$')
-    ax2.plot(theta_arr,fid[:,-1],'o-',color='red',label=fr'$\tau={Ncyc}T')
-    ax2.plot(theta_arr,fid[:,int(Ncyc*spc/2)],'o-',color='orange',label=fr'$\tau={int(Ncyc/2)}T')
-    ax.set_xlabel(r'$\theta$ (parametriza la familia $N_{\rm eff}=2$)')
+    ax2.set_ylabel(r'$F(|\langle \psi_+ | \psi \rangle )[\tau]$')
+    ax2.plot(theta_arr/np.pi,fid[:,-1],'o-',color='red',label=fr'$\tau={Ncyc}T')
+    ax2.plot(theta_arr/np.pi,fid[:,int(Ncyc*spc/2)],'o-',color='orange',label=fr'$\tau={int(Ncyc/2)}T$')
+    ax.set_xlabel(r'$\theta/\pi$')
     ax.set_ylabel(r'robustez: $\max_{\rm cyc}|\delta\phi_{\rm base}|$')
     ax.set_title(rf'Robustez sobre la familia $N_{{\rm eff}}=2$ (fase real), '
                  rf'$\Delta={Delta/g}g$, $N_{{\rm cyc}}={Ncyc}$')

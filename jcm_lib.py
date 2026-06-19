@@ -102,10 +102,141 @@ def triconcurrence(sol,alpha:float):
     A=np.sqrt(Q*(Q-E1)*(Q-E2)*(Q-E3))
     return A
 
-def fases(sol,open_system:bool):
+def _detectar_saltos_absoluto(t, phi, Omega, margen=5.0):
+    """
+    Encuentra puntos donde |dphi/dt| excede un umbral ABSOLUTO ligado a la
+    escala fisica del sistema (margen*Omega), en vez de un umbral relativo
+    (percentil) que siempre encuentra "algo" incluso en curvas suaves.
+
+    Por que un umbral absoluto funciona: una discontinuidad numerica (error
+    de redondeo en np.angle/np.unwrap cerca del corte de rama) ocurre en UN
+    paso de integracion dt_sim, asi que su derivada aparente es ~1/dt_sim,
+    ORDENES DE MAGNITUD mayor que Omega (la escala de variacion fisica del
+    sistema, ej. el gap espectral maximo |E2-E0|). Una transicion suave
+    nunca excede ~Omega por construccion fisica, asi que la separacion de
+    escalas permite un umbral fijo sin calibrar caso por caso.
+
+    Devuelve: (t_saltos, mags_con_signo, bordes, umbral_usado)
+    """
+    if len(t) < 3:
+        return [], np.array([]), [], margen * Omega
+    dt = np.diff(t)
+    deriv = np.diff(phi) / dt
+    umbral = margen * Omega
+    es_salto = np.abs(deriv) > umbral
+    idx_salto = np.where(es_salto)[0]
+    if len(idx_salto) == 0:
+        return [], np.array([]), [], umbral
+    grupos = np.split(idx_salto, np.where(np.diff(idx_salto) > 1)[0] + 1)
+    t_saltos = [t[g].mean() for g in grupos]
+    mags, bordes = [], []
+    for g in grupos:
+        i0 = max(g[0] - 1, 0)
+        i1 = min(g[-1] + 2, len(phi) - 1)
+        mags.append(phi[i1] - phi[i0])
+        bordes.append((i0, i1))
+    return t_saltos, np.array(mags), bordes, umbral
+
+
+def _agrupar_por_magnitud(abs_mags, tol_rel=0.15):
+    """Agrupa indices de saltos por similitud de magnitud (sin mirar signo),
+    via clustering simple por umbral relativo. El grupo con mas miembros
+    define la magnitud "tipica" del salto geodesico, inferida de los propios
+    datos (no se asume de antemano que valga pi, 2pi, etc.)."""
+    if len(abs_mags) == 0:
+        return []
+    orden = np.argsort(abs_mags)
+    usados = np.zeros(len(abs_mags), dtype=bool)
+    grupos = []
+    for i in orden:
+        if usados[i]:
+            continue
+        ref = abs_mags[i]
+        miembros = [j for j in range(len(abs_mags))
+                    if not usados[j] and abs(abs_mags[j] - ref) <= tol_rel * max(ref, 1e-12)]
+        for j in miembros:
+            usados[j] = True
+        grupos.append(miembros)
+    return grupos
+
+
+def _corregir_signos_saltos(t, phi, Omega, margen=5.0, tol_rel=0.15, min_grupo=2, verbose=False):
+    """
+    Aplica deteccion + correccion local de saltos con signo invertido sobre
+    UNA curva de fase ya calculada (phi = Pan, ANTES de np.unwrap).
+
+    Logica de correccion: si la mayoria de los saltos abruptos detectados
+    comparten una magnitud similar pero unos pocos tienen el signo opuesto,
+    esos pocos se reinterpretan como error de redondeo de np.angle cerca del
+    corte de rama, y se corrigen al signo mayoritario. Si no hay una mayoria
+    clara (menos de 'min_grupo' saltos del mismo tipo), NO se corrige nada:
+    mas vale no tocar que corregir sin evidencia suficiente.
+
+    Esta funcion NO resimula nada ni necesita el Hamiltoniano: solo usa la
+    curva ya calculada. Ver tambien verificar_signo_por_continuidad() en
+    este mismo modulo para una verificacion mas fuerte (pero mas cara)
+    cuando se dispone del Hamiltoniano y la parametrizacion del estado
+    inicial.
+
+    Devuelve: (phi_corregida, log_de_acciones)
+    """
+    t_s, mags, bordes, umbral = _detectar_saltos_absoluto(t, phi, Omega, margen=margen)
+    phi_corr = phi.copy()
+    log = []
+
+    if len(mags) == 0:
+        return phi_corr, log
+
+    abs_mags = np.abs(mags)
+    grupos_mag = _agrupar_por_magnitud(abs_mags, tol_rel=tol_rel)
+    grupo_dom = max(grupos_mag, key=len) if grupos_mag else []
+
+    if len(grupo_dom) < min_grupo:
+        for k in range(len(mags)):
+            log.append({'t': t_s[k], 'magnitud': mags[k], 'accion': 'sin evidencia suficiente, no se toca'})
+        if verbose:
+            import warnings as _w
+            _w.warn(f"fases(): {len(mags)} salto(s) abrupto(s) detectado(s) pero sin mayoria clara; no se corrige nada.")
+        return phi_corr, log
+
+    signos_grupo = np.sign(mags[grupo_dom])
+    signo_mayoritario = 1 if np.sum(signos_grupo > 0) >= np.sum(signos_grupo < 0) else -1
+    s_dom = np.mean(abs_mags[grupo_dom]) * signo_mayoritario
+
+    for k, (i0, i1) in enumerate(bordes):
+        if k in grupo_dom and np.sign(mags[k]) != signo_mayoritario:
+            delta = s_dom - mags[k]
+            phi_corr[i1:] += delta
+            log.append({'t': t_s[k], 'magnitud': mags[k], 'accion': 'CORREGIDO', 'magnitud_corregida': s_dom})
+            if verbose:
+                import warnings as _w
+                _w.warn(f"fases(): salto con signo invertido detectado en t~{t_s[k]:.4g} "
+                        f"(magnitud observada {mags[k]:.4g} -> corregida a {s_dom:.4g}).")
+        else:
+            log.append({'t': t_s[k], 'magnitud': mags[k], 'accion': 'sin cambios'})
+
+    return phi_corr, log
+
+
+def fases(sol, open_system: bool, corregir_saltos=False, Omega=None, margen_salto=5.0, tol_rel_salto=0.15):
     """params:
     -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
     -N_c 
+    -corregir_saltos: si True, aplica una correccion LOCAL (no resimula nada)
+        de saltos abruptos con signo invertido por error de redondeo de
+        np.angle/np.unwrap cerca del corte de rama. Detecta los saltos via
+        un umbral absoluto |dphi/dt| > margen_salto*omega (requiere pasar
+        omega), y corrige solo si una mayoria clara de saltos similares
+        respalda el signo correcto. Default False: preserva exactamente el
+        comportamiento historico de esta funcion si no se pide explicitamente.
+        ADVERTENCIA: esta correccion es conservadora pero local; para casos
+        donde se sospeche un bug y se quiera la verificacion mas fuerte por
+        continuidad en un parametro de control, usar
+        verificar_signo_por_continuidad() por separado.
+    -Omega: gap espectral maximo del sistema (escala fisica para el umbral
+        de deteccion de saltos). Obligatorio si corregir_saltos=True.
+    -margen_salto: margen multiplicativo del umbral (ver _detectar_saltos_absoluto).
+    -tol_rel_salto: tolerancia relativa para agrupar magnitudes de salto similares.
     RETURNS
     if open_system is True
     -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
@@ -114,7 +245,14 @@ def fases(sol,open_system:bool):
     -ordered_eigenvecs
     if open_system is False
     -fg_pan
-    -arg"""
+    -arg
+    Si corregir_saltos=True, se agrega un valor de retorno adicional al final:
+    -log_saltos: lista de diccionarios con el diagnostico de cada salto
+        detectado y la accion tomada (para poder auditar antes de confiar
+        en la curva corregida)."""
+    if corregir_saltos and Omega is None:
+        raise ValueError("fases(): corregir_saltos=True requiere pasar Omega (escala fisica del sistema).")
+
     # try: 
     if open_system:
         len_t=len(sol.states)
@@ -145,7 +283,19 @@ def fases(sol,open_system:bool):
             for i_1 in range(len(eigenvecs_rho)):
                     
                 psi, overlap,index = max(((autoestado, abs(autoestado.overlap(eigenvecs_t[i_1][t_i-1])),autoestado_index) for autoestado_index,autoestado in enumerate(eigenvecs_rho)),key=lambda x: x[1])
-                
+
+                # Fijar el gauge U(1) del autovector dominante para que el overlap con
+                # el paso anterior tenga parte real positiva.  Esto elimina los saltos
+                # espurios de exactamente pi que LAPACK introduce al devolver -psi en
+                # lugar de psi (o cualquier fase discreta) en cada diagonalizacion.
+                # Solo se aplica al autovector dominante (i_1==0), unico que entra en
+                # el calculo de Pan; los demas no se tocan para no introducir cambios
+                # innecesarios en eigenvals_t/eigenvecs_t.
+                if i_1 == 0:
+                    raw_overlap = psi.overlap(eigenvecs_t[0][t_i-1])
+                    if raw_overlap.real < 0:
+                        psi = -psi
+
                 psi_prob=expect(rho,psi)
                 eigenvecs_t[i_1].append(psi)
                 eigenvals_t[i_1].append(psi_prob)
@@ -173,6 +323,7 @@ def fases(sol,open_system:bool):
 
         pan = 0
         Pan = []
+        # pan_local=[]
         argumento = np.zeros(len_t)
         psi0=evec0[0]
         psi_old=psi0
@@ -180,17 +331,31 @@ def fases(sol,open_system:bool):
         for t_j in range(len(eigenvecs_t[0])):
             # print('i',i)
             psi=eigenvecs_t[0][t_j]
-            pan += np.angle(psi.overlap(psi_old))
-            Pan.append(pan - np.angle(psi.overlap(psi0)))
+            angulo_local=np.angle(psi.overlap(psi_old))
+            # pan_local.append(angulo_local)
+            pan += angulo_local
+            arg_global=np.angle(psi.overlap(psi0))
+  
+            Pan.append(pan - arg_global)
             psi_old = eigenvecs_t[0][t_j]
             # Almaceno el argumento para cada tiempo
-            argumento[t_j] = np.angle(psi0.dag().overlap(psi))
+            argumento[t_j] = arg_global
 
         Pan = np.array(Pan)
         # print(len(eigenvals_t))
         # print(len(eigenvecs_t))
         # print(len(eigenvecs_t[0]))
-        return np.unwrap(Pan), argumento, eigenvals_t, eigenvecs_t
+
+        if corregir_saltos:
+            t_arr = getattr(sol, 'times', None)
+            if t_arr is None:
+                raise ValueError("fases(): corregir_saltos=True requiere que 'sol' tenga "
+                                  "el atributo 'times' (resultado de mesolve); no disponible aqui.")
+            Pan_corr, log_saltos = _corregir_signos_saltos(
+                np.asarray(t_arr), Pan, Omega, margen=margen_salto, tol_rel=tol_rel_salto, verbose=True)
+            return Pan_corr, argumento, eigenvals_t, eigenvecs_t, log_saltos
+
+        return Pan, argumento, eigenvals_t, eigenvecs_t
     
     else:
         len_t=len(sol.states)
@@ -210,292 +375,150 @@ def fases(sol,open_system:bool):
                 raise Exception('dijiste que el sistema es cerrado pero tu evolucion es mixta.')
             psi=sol.states[i]
             pan += np.angle(psi.overlap(psi_old))
-            Pan.append(pan - np.angle(psi.overlap(psi0)))
+            arg_global=np.angle(psi.overlap(psi0))
+            Pan.append(pan - arg_global)
             psi_old = sol.states[i]
             # Almaceno el argumento para cada tiempo
-            argumento[i] = np.angle(psi0.dag() * psi)
+            argumento[i] = arg_global
     
     Pan = np.array(Pan)
-    
-    return np.unwrap(Pan), argumento
 
-def fases_viejo(sol):
-    """params:
-    -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
-    RETURNS
-    -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
-    -arg: no se
-    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
-    try: 
+    if corregir_saltos:
+        t_arr = getattr(sol, 'times', None)
+        if t_arr is None:
+            raise ValueError("fases(): corregir_saltos=True requiere que 'sol' tenga "
+                              "el atributo 'times' (resultado de mesolve); no disponible aqui.")
+        Pan_corr, log_saltos = _corregir_signos_saltos(
+            np.asarray(t_arr), Pan, Omega, margen=margen_salto, tol_rel=tol_rel_salto, verbose=True)
+        return Pan_corr, argumento, log_saltos
 
-        len_t=len(sol.states)
-        if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
-            rho0 = ket2dm(sol.states[0])
-        else:
-            rho0 = sol.states[0]
-        eval0,evec0=rho0.eigenstates(sort='high')
-        eigenvals_t = np.array([eval0])
-        max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-        psi0 = evec0[max_eigenvalue_idx]
-        psi_old = psi0
-        Psi = [psi0]
-        norma = []
-        pan = 0
-        Pan = []
-        argumento = np.zeros(len_t)
-        signo = 0
-        for i in range(len_t):
-            if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
-                rho = ket2dm(sol.states[i])
-            else:
-                rho = sol.states[i]
-            
-            eigenval,eigenvec = rho.eigenstates(sort='high')
-            eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
-
-            psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-
-            # norma.append(psi.overlap(psi0))
-
-            pan += np.angle(psi.overlap(psi_old))
-            Pan.append(pan - np.angle(psi.overlap(psi0)))
-            psi_old = psi
-            Psi.append(psi)
-            # Almaceno el argumento para cada tiempo
-            argumento[i] = np.angle(psi0.dag() * psi)
-
-    except:
-
-        if type(sol) is np.ndarray: #ya sabemos que no es un solver, asi que probamos a ver si es un ndarray. Si no, sigue al else y tira un error.
-            len_t=len(sol)
-            if sol[0].type == 'ket' or sol[0].type == 'bra':
-                rho0 = ket2dm(sol[0])
-            else:
-                rho0 = sol[0]
-            eval0,evec0=rho0.eigenstates()
-            eigenvals_t = np.array([eval0])
-            max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-            psi0 = evec0[max_eigenvalue_idx]
-            psi_old = psi0
-            Psi = [psi0]
-            norma = []
-            pan = 0
-            Pan = []
-            argumento = np.zeros(len_t)
-            signo = 0
-            for i in range(len_t):
-                if sol[i].type == 'ket' or sol[i].type == 'bra':
-                    rho = ket2dm(sol[i])
-                else:
-                    rho = sol[i]
-                
-                eigenval,eigenvec = rho.eigenstates()
-                eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
-
-                psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-
-                # norma.append(psi.overlap(psi0))
-
-                pan += np.angle(psi.overlap(psi_old))
-                Pan.append(pan - np.angle(psi.overlap(psi0)))
-                psi_old = psi
-                Psi.append(psi)
-                # Almaceno el argumento para cada tiempo
-                argumento[i] = np.angle(psi0.dag() * psi)
-
-    
-        else: 
-            raise ValueError('jcm_lib.fases() no toma como argumento estados de este tipo. Solo puede ser un Solver de qutip.mesolve() o un ndarray.')
-        
-    eigenvals_t=np.delete(eigenvals_t,0,axis=0)
-    Pan = np.array(Pan)
-
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t),Psi
-
-def fases_nuevo(result, times):
-    # Autoestado calculado diagonalizando la matriz   --->   autoestado_2
-    rho0 = result.states[0]
-    eigenval, eigenvec = rho0.eigenstates()    # Diagonalizar la matriz
-    max_eigenvalue_idx = eigenval.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-    psi0 = eigenvec[max_eigenvalue_idx]
-    psi_old = eigenvec[max_eigenvalue_idx]
-    Psi = []
-    norma = []
-    pan = 0
-    Pan = []
-    argumento = np.zeros(len(times))
-    autoval, autoval_2, autoval_3, autoval_4 = [], [], [], []
-    signo = 0
-    for i in range(len(times)):
-        # Autoestado numérico
-        rho = result.states[i]
-        eigenval, eigenvec = rho.eigenstates()    # diagonalizo la matriz
-
-        psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-        # eigenvec_list = list(eigenvec)
-        # psi_prueba, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-
-        # index = np.array([0, 1, 2, 3])
-        # autoval.append(eigenval[eigenvec_list.index(psi_prueba)])
-
-        # index = np.delete(index, int(eigenvec_list.index(psi_prueba)))
-
-        # autoval_2.append(eigenval[index[0]])       ## solo para probar
-        # autoval_3.append(eigenval[index[1]])       ## despues borrar
-        # autoval_4.append(eigenval[index[2]])
-
-        # norma.append(psi.overlap(psi0))
-
-        pan += np.angle(psi.overlap(psi_old))
-        Pan.append(pan - np.angle(psi.overlap(psi0)))
-        psi_old = psi
-
-        # Almaceno el argumento para cada tiempo
-        argumento[i] = np.angle(psi0.dag() * psi)
+    return Pan, argumento
 
 
-    Pan = np.array(Pan)
-    return Pan #, argumento, autoval, autoval_2, autoval_3, autoval_4
+def verificar_signo_por_continuidad(H, initial_state_fn, theta, t_salto_sospechoso, T, Ncyc, spc, Omega,
+                                     mesolve_fn, epsilon=None, margen_salto=5.0,
+                                     tol_rel_salto=0.15, ventana_busqueda=None, verbose=True):
+    """
+    Verificacion MAS FUERTE (pero mas cara) que la correccion local de
+    fases(corregir_saltos=True): en vez de inferir el signo correcto de un
+    salto solo a partir de la propia curva en theta, resimula la evolucion
+    UNITARIA (sin disipacion: c_ops vacios, mucho mas barata que el caso
+    disipativo) en theta+epsilon y theta-epsilon, y compara el SIGNO
+    OBSERVADO (sin corregir) del salto mas cercano a 't_salto_sospechoso' en
+    cada una de las dos curvas vecinas.
 
+    Por que se compara un salto especifico por tiempo, y no un conteo
+    global: comparar el numero total de saltos "corregidos" en toda la
+    ventana [0, Ncyc*T] resulto fragil (el numero TOTAL de cruces que entran
+    en una ventana de tiempo fija puede diferir en uno simplemente por el
+    desfasaje acumulado a lo largo de muchos ciclos, un efecto de borde de
+    muestreo sin relacion con el bug de redondeo). Comparar el salto puntual
+    mas cercano al sospechoso evita ese problema.
 
-def fases_manual(result, times):
-    # Autoestado calculado diagonalizando la matriz   --->   autoestado_2
-    rho0 = result.states[0]
-    eigenval, eigenvec = rho0.eigenstates()    # Diagonalizar la matriz
-    max_eigenvalue_idx = eigenval.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-    psi0 = eigenvec[max_eigenvalue_idx]
-    psi_old = eigenvec[max_eigenvalue_idx]
-    Psi = []
-    norma = []
-    pan = 0
-    Pan = []
-    argumento = np.zeros(len(times))
-    autoval, autoval_2, autoval_3, autoval_4 = [], [], [], []
-    signo = 0
-    for i in range(len(times)):
-        # Autoestado numérico
-        rho = result.states[i]
-        eigenval, eigenvec = rho.eigenstates()    # diagonalizo la matriz
+    Logica: un salto cuyo signo depende de un error de redondeo de
+    np.angle/np.unwrap cerca del corte de rama deberia "resolverse" de forma
+    estable apenas se perturba theta levemente (la perturbacion aleja la
+    trayectoria del punto exacto de ambiguedad numerica). Si el salto mas
+    cercano a t_salto_sospechoso tiene el MISMO signo en theta+epsilon y en
+    theta-epsilon, eso es evidencia, independiente de la heuristica de
+    mayoria de fases(corregir_saltos=True), de cual es el signo correcto en
+    theta. Si en cambio theta+epsilon y theta-epsilon NO coinciden entre si,
+    esto NO es un simple artefacto de redondeo aislado: podria ser una
+    bifurcacion/degeneracion genuina de la trayectoria geodesica en funcion
+    de theta, y se reporta como tal en vez de forzar una correccion.
 
-        psi, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
-        eigenvec_list = list(eigenvec)
-        psi_prueba, overlap_max = max(((autoestado, abs(autoestado.overlap(psi_old))) for autoestado in eigenvec), key=lambda x: x[1])
+    IMPORTANTE: esta funcion no inventa la fisica del problema; necesita que
+    quien la llama le provea como construir el Hamiltoniano y el estado
+    inicial para evaluarlos en theta+-epsilon. Por eso vive separada de
+    fases(), que es agnostica a la parametrizacion fisica del problema.
 
-        index = np.array([0, 1, 2, 3])
-        autoval.append(eigenval[eigenvec_list.index(psi_prueba)])
+    Params:
+      H                   : Qobj, el Hamiltoniano (mismo para theta+-epsilon).
+      initial_state_fn    : funcion theta -> Qobj (estado inicial).
+      theta               : valor de theta donde se sospecha el bug (centro).
+      t_salto_sospechoso  : tiempo aproximado del salto que se quiere
+                             verificar (tipicamente, uno de los 't' devueltos
+                             por el log de fases(corregir_saltos=True) en
+                             theta, marcado como 'CORREGIDO').
+      T, Ncyc, spc        : igual que en delta_phi_curve del script de barrido.
+      Omega               : gap espectral maximo (escala fisica del umbral).
+      mesolve_fn          : la funcion mesolve de qutip (se pasa explicitamente).
+      epsilon             : paso de la perturbacion en theta. Si None, 1e-3.
+      margen_salto, tol_rel_salto: pasados a la deteccion de saltos.
+      ventana_busqueda    : maxima distancia temporal para considerar que un
+                             salto detectado en el vecino "es el mismo" que
+                             el sospechoso original. Si None, se usa T/4.
+      verbose             : si True, imprime el resultado de la comparacion.
 
-        index = np.delete(index, int(eigenvec_list.index(psi_prueba)))
+    ADVERTENCIA sobre epsilon: no hay un valor universalmente seguro, probar
+    2-3 valores decrecientes y confirmar que el resultado no cambia antes de
+    confiar en una sola corrida.
 
-        autoval_2.append(eigenval[index[0]])       ## solo para probar
-        autoval_3.append(eigenval[index[1]])       ## despues borrar
-        autoval_4.append(eigenval[index[2]])
+    Devuelve un diccionario con:
+      'coincide'      : True/False/None. None si no se encontro un salto
+                         cercano a t_salto_sospechoso en alguno de los dos
+                         vecinos (dentro de ventana_busqueda) -> resultado
+                         AMBIGUO, no concluyente.
+      'signo_mas'     : signo (+1/-1) del salto encontrado en theta+epsilon,
+                         o None si no se encontro ninguno cercano.
+      'signo_menos'   : idem para theta-epsilon.
+      'epsilon_usado' : el valor de epsilon efectivamente usado.
+    """
+    if epsilon is None:
+        epsilon = 1e-3
+    if ventana_busqueda is None:
+        ventana_busqueda = T / 4.0
 
-        norma.append(psi.overlap(psi0))
+    t_arr = np.linspace(0, Ncyc * T, Ncyc * spc)
 
-        pan += np.angle(psi.overlap(psi_old))
-        Pan.append(pan - np.angle(psi.overlap(psi0)))
-        psi_old = psi
+    def salto_mas_cercano(t_s_list, mags, t_objetivo, ventana):
+        """De la lista de tiempos/magnitudes de saltos detectados, devuelve
+        el signo del que esta mas cerca de t_objetivo, si cae dentro de
+        'ventana'; si no hay ninguno dentro de la ventana, devuelve None."""
+        if len(t_s_list) == 0:
+            return None
+        t_s_arr = np.asarray(t_s_list)
+        idx_cercano = np.argmin(np.abs(t_s_arr - t_objetivo))
+        if np.abs(t_s_arr[idx_cercano] - t_objetivo) > ventana:
+            return None
+        return np.sign(mags[idx_cercano])
 
-        # Almaceno el argumento para cada tiempo
-        argumento[i] = np.angle(psi0.dag() * psi)
+    signos = {}
+    for signo_eps, etiqueta in [(+1, 'mas'), (-1, 'menos')]:
+        theta_pert = theta + signo_eps * epsilon
+        psi0 = initial_state_fn(theta_pert)
+        if psi0 is None:
+            if verbose:
+                print(f"  [verificar_signo_por_continuidad] theta{'+' if signo_eps > 0 else '-'}epsilon "
+                      f"={theta_pert:.6g} cae fuera del simplex fisico; no se puede evaluar ahi.")
+            signos[etiqueta] = None
+            continue
+        sol = mesolve_fn(H, psi0, t_arr, c_ops=[])
+        # Usamos fases() SIN corregir_saltos aca: queremos el signo OBSERVADO
+        # crudo de cada vecino, no su version ya corregida por la heuristica
+        # de mayoria (que es justamente lo que estamos tratando de validar).
+        fu_pert, _ = fases(sol, open_system=False)
+        t_s_list, mags, _, _ = _detectar_saltos_absoluto(t_arr, fu_pert, Omega, margen=margen_salto)
+        signos[etiqueta] = salto_mas_cercano(t_s_list, mags, t_salto_sospechoso, ventana_busqueda)
 
+    signo_mas = signos.get('mas')
+    signo_menos = signos.get('menos')
 
-    Pan = np.array(Pan)
-    return np.unwrap(Pan), argumento, autoval, autoval_2, autoval_3, autoval_4
+    if signo_mas is None or signo_menos is None:
+        if verbose:
+            print(f"  [verificar_signo_por_continuidad] no se encontro un salto cercano a "
+                  f"t={t_salto_sospechoso:.4g} (dentro de +-{ventana_busqueda:.4g}) en "
+                  f"alguno de los dos vecinos; resultado AMBIGUO, no se concluye nada.")
+        return {'coincide': None, 'signo_mas': signo_mas, 'signo_menos': signo_menos,
+                'epsilon_usado': epsilon}
 
+    coincide = (signo_mas == signo_menos)
+    if verbose:
+        print(f"  [verificar_signo_por_continuidad] theta={theta:.6g}, t_sospechoso={t_salto_sospechoso:.4g}, "
+              f"epsilon={epsilon:.3g}")
+        print(f"    signo del salto en theta+epsilon: {signo_mas:+.0f}")
+        print(f"    signo del salto en theta-epsilon: {signo_menos:+.0f}")
+        print(f"    {'CONSISTENTE: ambos vecinos dan el mismo signo (evidencia de bug de redondeo, no de fisica).' if coincide else 'INCONSISTENTE: los vecinos dan signos distintos; posible bifurcacion/degeneracion genuina, no solo redondeo. Revisar a mano.'}")
 
-def fases_mixta(sol):
-    """params:
-    -sol: solucion numerica de la evolucion temporal. Puede ser un Solver o un ndarray con las soluciones.
-    RETURNS
-    -fg_pan: Array de longitud len(t) donde con la FG de Pancho acumulada tiempo a tiempo
-    -arg: no se
-    -eigenvals: array de len(t)x12, entonces el elemento eigenvals[k] me da los 12 autovalores a tiempo t_k."""
-    try:
-
-        len_t=len(sol.states)
-        if sol.states[0].type == 'ket' or sol.states[0].type == 'bra':
-            rho0 = ket2dm(sol.states[0])
-        else:
-            rho0 = sol.states[0]
-        eval0,evec0=rho0.eigenstates(sort='high')
-        eigenvals_t = np.array([eval0])
-        # max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-        psi0 = evec0
-        len0=len(psi0)
-        psi_old = psi0
-        eval_old=eval0
-        # Psi = [psi0]
-        norma = []
-        pan = 0
-        Pan = []
-        argumento = np.zeros(len_t)
-        signo = 0
-        for i in range(len_t):
-            if sol.states[i].type == 'ket' or sol.states[i].type == 'bra':
-                rho = ket2dm(sol.states[i])
-            else:
-                rho = sol.states[i]
-            
-            eigenval,eigenvec = rho.eigenstates(sort='high')
-            eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
-
-            psi= [max(((autoestado, autovalor,abs(autoestado.overlap(evec_old))) for autoestado,autovalor in zip(eigenvec,eigenval)), key=lambda x: x[2]) for evec_old in psi_old]
-            psi=[psi[i][0] for i in range(len(psi_old))]
-            eigenval=[psi[i][1] for i in range(len(psi_old))]
-            # norma.append(psi.overlap(psi0))
-
-            pan += np.angle(np.sum(np.sqrt(eigenval[i]*eval_old[i])*psi[i].overlap(psi_old[i]) for i in range(len0)))
-            Pan.append(pan - np.angle(np.sum(np.sqrt(eval0[i]*eigenval[i])*psi[i].overlap(psi0[i]) for i in range(len0))))
-            psi_old = psi
-            eval_old=eigenval
-            # Psi.append(psi)
-            # Almaceno el argumento para cada tiempo
-            argumento[i] = np.angle(np.sum(psi0[i].dag() * psi[i] for i in range(len0)))
-    except:
-        if type(sol) is np.ndarray: #ya sabemos que no es un solver, asi que probamos a ver si es un ndarray. Si no, sigue al else y tira un error.
-
-            len_t=len(sol)
-            if sol[0].type == 'ket' or sol[0].type == 'bra':
-                rho0 = ket2dm(sol[0])
-            else:
-                rho0 = sol[0]
-            eval0,evec0=rho0.eigenstates(sort='high')
-            eigenvals_t = np.array([eval0])
-            # max_eigenvalue_idx = eval0.argmax()    # encuentro el autovector correspondiente al autovalor más grande en el tiempo 0
-            psi0 = evec0
-            len0=len(psi0)
-            psi_old = psi0
-            eval_old=eval0
-            # Psi = [psi0]
-            norma = []
-            pan = 0
-            Pan = []
-            argumento = np.zeros(len_t)
-            signo = 0
-            for i in range(len_t):
-                if sol[i].type == 'ket' or sol[i].type == 'bra':
-                    rho = ket2dm(sol[i])
-                else:
-                    rho = sol[i]
-                
-                eigenval,eigenvec = rho.eigenstates(sort='high')
-                eigenvals_t=np.concatenate((eigenvals_t,[eigenval]),axis=0)
-
-                psi= [max(((autoestado, autovalor,abs(autoestado.overlap(evec_old))) for autoestado,autovalor in zip(eigenvec,eigenval)), key=lambda x: x[2]) for evec_old in psi_old]
-                psi=[psi[i][0] for i in range(len(psi_old))]
-                eigenval=[psi[i][1] for i in range(len(psi_old))]
-                # norma.append(psi.overlap(psi0))
-
-                pan += np.angle(np.sum(np.sqrt(eigenval[i]*eval_old[i])*psi[i].overlap(psi_old[i]) for i in range(len0)))
-                Pan.append(pan - np.angle(np.sum(np.sqrt(eval0[i]*eigenval[i])*psi[i].overlap(psi0[i]) for i in range(len0))))
-                psi_old = psi
-                eval_old=eigenval
-                # Psi.append(psi)
-                # Almaceno el argumento para cada tiempo
-                argumento[i] = np.angle(np.sum(psi0[i].dag() * psi[i] for i in range(len0)))    
-
-    eigenvals_t=np.delete(eigenvals_t,0,axis=0)
-    Pan = np.array(Pan)
-
-    return np.unwrap(Pan), argumento, np.array(eigenvals_t)
+    return {'coincide': coincide, 'signo_mas': signo_mas, 'signo_menos': signo_menos,
+            'epsilon_usado': epsilon}
